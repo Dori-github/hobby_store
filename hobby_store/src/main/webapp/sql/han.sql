@@ -21,7 +21,7 @@ create sequence items_seq;
 --상품 정보 테이블 끝 --
 
 --상품 카테고리 테이블 시작--
-create table itmes_cate(
+create table items_cate(
 cate_num number not null,
 cate_parent number(1),
 cate_name varchar2(30) not null,
@@ -49,13 +49,15 @@ create table items_reply(
 reply_num number not null,
 items_num number not null,
 mem_num number not null,
+order_num number not null,
 reply_content varchar2(900) not null,
 reply_date date default sysdate not null,
 reply_mdate date,
 reply_photo varchar2(150),
 constraint items_reply primary key(reply_num),
 constraint items_reply_fk1 foreign key(items_num) references items (items_num),
-constraint items_reply_fk2 foreign key(mem_num) references member (mem_num)
+constraint items_reply_fk2 foreign key(mem_num) references member (mem_num),
+constraint items_reply_fk3 foreign key(order_num) references orders (order_num)
 );
 
 create sequence items_reply_seq;
