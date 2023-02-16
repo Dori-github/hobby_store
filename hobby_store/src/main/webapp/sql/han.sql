@@ -2,16 +2,16 @@
 create table items(
 items_num number not null,
 cate_num varchar2(3) not null,
-itmes_name varchar2(30) not null,
-itmes_price number(10) not null,
-itmes_quantity number(5) not null,
-itmes_photo1 varchar2(150) not null,
-itmes_photo2 varchar2(150),
-itmes_photo3 varchar2(150),
-itmes_content clob not null,
-itmes_hit number not null,
-itmes_date date default sysdate not null,
-itmes_mdate date,
+//items_name varchar2(30) not null,
+//items_price number(10) not null,
+//items_quantity number(5) not null,
+//items_photo1 varchar2(150) not null,
+//items_photo2 varchar2(150),
+//items_photo3 varchar2(150),
+//items_content clob not null,
+//items_hit number not null,
+//items_date date default sysdate not null,
+//items_mdate date,
 mem_num number not null,
 constraint items_pk primary key (items_num),
 constraint items_fk1 foreign key (mem_num) references member (mem_num)
@@ -23,7 +23,7 @@ create sequence items_seq;
 --상품 카테고리 테이블 시작--
 create table items_cate(
 cate_num number not null,
-cate_parent number(1),
+cate_parent number(1,0),
 cate_name varchar2(30) not null,
 constraint itmes_cate_pk primary key (cate_num)
 );
