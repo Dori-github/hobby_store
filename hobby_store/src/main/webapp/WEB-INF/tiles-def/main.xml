@@ -7,7 +7,7 @@
 <tiles-definitions>
     <definition name="main" 
         template="/WEB-INF/views/template/layout_basic.jsp">
-    	<put-attribute name="title" value="SpringPage"/>
+    	<put-attribute name="title" value="취미상점"/>
     	<put-attribute name="header" 
     	  value="/WEB-INF/views/template/header.jsp"/>
     	<put-attribute name="body"
