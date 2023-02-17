@@ -80,7 +80,7 @@ create table sptalk(
  constraint sptalk_fk2 foreign key (mem_num)
                 references member (mem_num)
 );
-create sequence sptalk_seq;
+create sequence sptalk_seq;   
 
 --채팅 메시지 읽기
 create table sptalk_read(
