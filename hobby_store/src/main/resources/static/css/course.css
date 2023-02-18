@@ -1,30 +1,14 @@
 @charset "UTF-8";
 
-
-/*공통
+/*공통(헤더/푸터)
 =============================*/
 #main{
 	font-family:"맑은 고딕";
 }
-#main #main_header{
-	position:fixed;
-	top:0;left:0;
-	width:100%;
-	height:120px;
-	box-shadow: 0 1px 5px 0 lightgrey;
-	background-color:#FFF;
-	
-}
-#main_body{
-	width:80%;
-	margin:120px auto;
-	padding:5px 5px 30px 5px;
-	min-height:500px;
-}
-#main_footer{
-	background-color:yellow;
-}
 
+.font-10{
+	font-size: 10pt;
+}
 a:link{
 	text-decoration:none;
 	color:#000000;
@@ -47,8 +31,8 @@ ul{
 .btn-border{
 	display:inline-block;
 	width:90px;
-	height:40px;
-	line-height:40px;
+	height:35px;
+	line-height:35px;
 	text-align: center;
 	border:2px solid gray;
 	border-radius: 20px;
@@ -77,14 +61,21 @@ ul{
 
 /*헤더
 =============================*/
-
-
-
-
+#main #main_header{
+	position:fixed;
+	top:0;left:0;
+	width:100%;
+	height:120px;
+	box-shadow: 0 1px 5px 0 lightgrey;
+	background-color:#FFF;
+}
 #main_header .size{
 	width:80%;
 	margin:0 auto;
 	height:120px;
+}
+#main_header .container-fluid{
+	padding:0;
 }
 #navbar_top{
 	display: flex;
@@ -97,10 +88,10 @@ ul{
 #search{
 	position:relative;
 	margin-right:20px;
+	width:400px;
 }
 #search .search-bar{
-	max-width:400px;
-	min-width:300px;
+	width:100%;
 	height:40px;
 	border:none;
 	border-radius: 20px;
@@ -120,28 +111,27 @@ ul{
 
 
 
-#navbarSupportedContent{
-	float:left;
+#menu_bar{
+	display:flex;
+	justify-content: space-between;
 }
 #mypage{
-	float:right;
-	margin-top:13px;
+	padding-top:13px;
 }
-#navbarSupportedContent > ul{
-	width:100%;
+#menu_bar > ul{
 	display:flex;
 	padding:0;
 	margin:0;
 }
-#navbarSupportedContent > ul > li{
+#menu_bar > ul > li{
 	padding-right:20px;
 	line-height: 60px;
 }
-#navbarSupportedContent > ul > li:hover > a{
+#menu_bar > ul > li:hover > a{
 	color:#FF4E02;
 	font-weight: bold;
 }
-#navbarSupportedContent > ul > li:nth-child(1),#navbarSupportedContent > ul > li:nth-child(5){
+#menu_bar #register_btn,#menu_bar #community_btn{
 	position:relative;
 }
 .dropdown{
@@ -151,6 +141,7 @@ ul{
 	width:100px;
 	background-color: #FFF;
 	border:1px solid lightgray;
+	border-radius:10px;
 	display:none;
 }
 #dropdown{
@@ -169,8 +160,8 @@ ul{
 .dropdown li:nth-child(1), .dropdown li:nth-child(2) {
 	border-bottom: 1px solid lightgray;
 }
-#navbarSupportedContent > ul > li:nth-child(1):hover .dropdown,
-#navbarSupportedContent > ul > li:nth-child(5):hover .dropdown{
+#menu_bar #register_btn:hover .dropdown,
+#menu_bar #community_btn:hover .dropdown{
 	display:block;
 }
 
@@ -179,42 +170,76 @@ ul{
 	height:35px;
 	border-radius: 50%;
 }
+#mypage .btn-border{
+	display: none;
+}
+
+#navbar_top .navbar-toggler{
+	margin-right:20px;
+}
+#navbar_top i{
+	font-size:20pt;
+}
+.offcanvas-header .btn-close{
+	margin-left:auto;
+}
+
+/*푸터
+=============================*/
+
+#main_footer{
+	background-color:yellow;
+}
+
+
+/*메인페이지-바디
+=============================*/
+#main_body{
+	width:80%;
+	margin:120px auto;
+	padding:5px 5px 30px 5px;
+	min-height:500px;
+}
 
 
 
-
+/*반응형
+=============================*/
 @media (max-width: 992px){/*992px 이하*/
 	#navbar_btn{
 		display:none;
 	}
-	#navbar_btn2{
-		display:block;
+	#main #main_header, #main_header .size{
+		height:80px;
+	}
+	#main #main_body{
+		margin:80px auto;
+	}
+	#menu_bar{
+		height:100%;
+		flex-direction:column;
+	}
+	#menu_bar > ul{
+		margin-left:30px;
+	}
+	#menu_bar .dropdown{
+		left:80px;
+		top:8px;
+		border-radius:0 10px 10px 10px; 
+	}
+	
+	#mypage{
+		margin:30px;
+	}
+	#mypage .btn-border{
+		display: block;
+		float:right;
+	}
+	#mypage #btn_color{
+		margin-left:10px;
 	}
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*메인페이지
-=============================*/
-
-
-
-
-
-
-/*공통
-=============================*/
 /*공통
 =============================*/
 /*공통
