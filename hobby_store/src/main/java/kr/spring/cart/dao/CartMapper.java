@@ -12,10 +12,10 @@ import kr.spring.cart.vo.CourseCartVO;
 @Mapper
 public interface CartMapper {
 	//강의 장바구니 목록
-	public List<CourseCartVO> getListCart(int count);
+	public List<CourseCartVO> getCartList(int count);
 	//총 레코드 수
 	@Select("SELECT COUNT(*) FROM course_cart")
-	public int getBoardCount();
+	public int getCartCount();
 	//강의 장바구니 등록
 	@Insert("INSERT INTO course_cart (cart_num,quantity,"
 			+ "mem_num,course_num) "

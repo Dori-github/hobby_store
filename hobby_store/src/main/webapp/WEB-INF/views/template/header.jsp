@@ -69,7 +69,7 @@
 					<!--</c:if>-->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> MY PAGE</a>
 					<span class="lightgray">|</span>
-					<a href="${pageContext.request.contextPath}/"><i class="fa-solid fa-cart-shopping"></i></a>
+					<a href="${pageContext.request.contextPath}/cart/cartList.do"><i class="fa-solid fa-cart-shopping"></i></a>
 					
 					<c:if test="${!empty user && user.auth == 9}"><!-- 관리자 -->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> 관리자 PAGE</a>
