@@ -123,7 +123,7 @@
 									<!-- 우편번호 검색 시작 -->
 									<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 									<div id="layer"
-										style="display: none; position: fixed; overflow: hidden; z-index: 1; -webkit-overflow-scrolling: touch;">
+										style="display: none; position: fixed; overflow: hidden; z-index: 998; -webkit-overflow-scrolling: touch;">
 										<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
 											id="btnCloseLayer"
 											style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"

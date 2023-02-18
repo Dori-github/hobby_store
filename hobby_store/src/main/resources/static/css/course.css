@@ -80,6 +80,7 @@ ul{
 	height:120px;
 	box-shadow: 0 1px 5px 0 lightgrey;
 	background-color:#FFF;
+	z-index:999;
 }
 #main_header .size{
 	width:80%;
