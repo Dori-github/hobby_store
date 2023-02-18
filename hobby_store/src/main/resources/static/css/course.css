@@ -84,6 +84,8 @@ ul{
 }
 #navbar_brand{
 	margin-right:20px;
+	font-size: 20pt;
+	color:#FF4E02;
 }
 #search{
 	position:relative;

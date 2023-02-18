@@ -11,7 +11,7 @@
 		      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars toggler-size"></i></span>
 		    </button>
 			<!-- 토글버튼 끝 -->
-			<a id="navbar_brand" class="navbar-brand" href="main.do">취미상점</a>
+			<a id="navbar_brand" class="navbar-brand" href="main.do"><b>취미상점</b></a>
 			<!-- 통합검색창 시작 -->
 			<form id="search" class="navbar-expand">
 				<input class="search-bar" type="search" placeholder="통합검색어를 입력하세요">
