@@ -12,9 +12,12 @@ import kr.spring.cart.vo.CourseCartVO;
 @Mapper
 public interface CartMapper {
 	//강의 장바구니 목록
-	@Select("SELECT * FROM course_cart cc "
-			+ "JOIN course c ON cc.course_num=c.course_num "
-			+ "WHERE cc.mem_num=#{mem_num}")
+	@Select("SELECT t.cate_parent, t.cate_name, c.course_photo1, "
+			+ "c.course_name, c.course_onoff, c.course_price "
+			+ "FROM course_cart cc "
+            + "JOIN course c ON cc.course_num=c.course_num "
+            + "JOIN course_cate t ON c.cate_num=t.cate_num "            
+            + "WHERE cc.mem_num=#{mem_num}")
 	public List<CourseCartVO> getCartList(int num);
 	//총 레코드 수
 	@Select("SELECT COUNT(*) FROM course_cart")
