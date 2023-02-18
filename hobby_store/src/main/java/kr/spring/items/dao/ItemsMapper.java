@@ -17,7 +17,7 @@ public interface ItemsMapper {
 	public void insertItems(ItemsVO items);
 	
 	//상품 목록
-	public List<ItemsVO> selectList(Map<String, Object> map);
+	public List<ItemsVO> selectList(Map<String, Object> map); 
 	public int selectRowCount(Map<String, Object> map);
 	
 }

@@ -11,5 +11,5 @@ public interface ItemsService {
 	
 	//상품 목록
 	public List<ItemsVO> selectList(Map<String, Object> map);
-	public int selectRowCount(Map<String, Object> map);
+	public int selectRowCount(Map<String, Object> map); 
 }
