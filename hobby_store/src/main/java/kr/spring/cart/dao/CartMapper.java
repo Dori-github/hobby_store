@@ -11,7 +11,7 @@ import kr.spring.cart.vo.CourseCartVO;
 
 @Mapper
 public interface CartMapper {
-	//강의 장바구니 목록
+	//클래스 장바구니 목록
 	@Select("SELECT t.cate_parent, t.cate_name, c.course_photo1, "
 			+ "c.course_name, c.course_onoff, c.course_price "
 			+ "FROM course_cart cc "
@@ -22,15 +22,14 @@ public interface CartMapper {
 	//총 레코드 수
 	@Select("SELECT COUNT(*) FROM course_cart")
 	public int getCartCount();
-	//강의 장바구니 등록
+	//클래스 장바구니 등록
 	@Insert("INSERT INTO course_cart (cart_num,quantity,"
 			+ "mem_num,course_num) "
 			+ "VALUES (course_cart_seq.nextval,#{quantity},"
 			+ "#{mem_num},#{course_num})")
 	public void insertCourseCart(CourseCartVO CourseCart);
-	//강의 장바구니 상세
 	//회원번호(mem_num)별 총 구입액
-	//강의 장바구니 수정(개별 상품 수량 변경)
-	//강의 장바구니 수정(상품번호와 회원변호 별 변경)
-	//강의 장바구니 삭제
+	//클래스 장바구니 수정(개별 상품 수량 변경)
+	//클래스 장바구니 수정(상품번호와 회원변호별 변경)
+	//클래스 장바구니 삭제
 }
