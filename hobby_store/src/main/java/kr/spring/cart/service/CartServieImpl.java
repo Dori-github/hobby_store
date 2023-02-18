@@ -16,9 +16,8 @@ public class CartServieImpl implements CartService{
 	private CartMapper cartmapper;
 	
 	@Override
-	public List<CourseCartVO> getCartList(int count) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CourseCartVO> getCartList(int num) {
+		return cartmapper.getCartList(num);
 	}
 
 	@Override

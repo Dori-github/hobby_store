@@ -7,7 +7,7 @@ import kr.spring.cart.vo.CourseCartVO;
 
 public interface CartService {
 	//강의 장바구니 목록
-	public List<CourseCartVO> getCartList(int count);
+	public List<CourseCartVO> getCartList(int num);
 	//총 레코드 수
 	public int getCartCount();
 	//강의 장바구니 등록
