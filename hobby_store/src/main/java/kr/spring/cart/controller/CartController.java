@@ -35,7 +35,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			//목록 호출
 			List<CourseCartVO> list = null;
 			if(count > 0) {
-				list = cartService.getCartList(count);
+				list = cartService.getCartList(100);
 			}
 			
 			ModelAndView mav = new ModelAndView();
@@ -43,6 +43,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			mav.setViewName("cartList");
 			//데이터 저장
 			mav.addObject("count", count);
+			mav.addObject("list", list);
 			
 			logger.debug("???!!???");
 			
