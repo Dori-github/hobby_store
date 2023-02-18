@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
+    
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <meta charset="UTF-8">
 
-<link href="${pageContext.request.contextPath}/css/common.css"
+<link href="${pageContext.request.contextPath}/css/member.css"
 	rel="stylesheet">
 	
 <script type="text/javascript"
