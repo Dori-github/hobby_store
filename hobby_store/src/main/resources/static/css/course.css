@@ -26,6 +26,8 @@ ul{
 .lightgray{
 	color:lightgray;
 }
+
+
 /*정렬*/
 .align-center{
 	text-align:center;
@@ -200,7 +202,55 @@ ul{
 =============================*/
 
 #main_footer{
-	background-color:yellow;
+	background-color:#F2F2F2;
+}
+#main_footer .size{
+	width:80%;
+	margin:0 auto;
+	display:flex;
+}
+#main_footer .left-info, .right-info{
+	padding:80px 0;
+}
+#main_footer .left-info{
+	width:50%;
+}
+#main_footer .right-info{
+	width:30%;
+	margin-left:auto;
+}
+.left-info ul{
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	padding:0;
+}
+.left-info > div{
+	margin-top:50px;
+}
+.left-info .com-info{
+	font-size: 10pt;
+	color:gray;
+	margin-top:5px;
+	line-height: 1.5em;
+}
+
+.right-info > div{
+	float:right;
+}
+.right-info .font-24{
+	font-size: 24pt;
+	font-weight: bold;
+	color:#404040;
+	width:250px;
+	border:1px solid gray;
+	border-radius: 10px;
+	padding:10px 20px;
+	margin:10px 0 20px 0;
+}
+.right-info span{
+	font-size: 10pt;
+	color:gray;
 }
 
 
