@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.spring.cart.controller.CartController;
 import kr.spring.cart.service.CartService;
 import kr.spring.cart.vo.CourseCartVO;
+import kr.spring.cart.vo.ItemCartVO;
 
 @Controller
 public class CartController {//메서드 생성, 데이터 처리
@@ -30,24 +31,35 @@ public class CartController {//메서드 생성, 데이터 처리
 	public ModelAndView getList() {	
 		
 			//글의 총 개수
-			int count = cartService.getCartCount();
+			int courseCount = cartService.getCartCount();
+			int itemCount = cartService.getItemCount();
 
 			//목록 호출
-			List<CourseCartVO> list = null;
-			if(count > 0) {
-				list = cartService.getCartList(100);
+			List<CourseCartVO> courseList = null;
+			if(courseCount > 0) {
+				courseList = cartService.getCourseCart(100);
+			}
+
+			List<ItemCartVO> itemList = null;
+			if(itemCount > 0) {
+				itemList = cartService.getItemList(100);
 			}
 			
 			//회원번호(mem_num)별 총 구입액	
-			int all_total = cartService.courseTotal(100);
+			int courseTotal = cartService.courseTotal(100);
+			int itemTotal = cartService.itemTotal(100);
 			
 			ModelAndView mav = new ModelAndView();
 			//뷰 이름 설정(tiles-definition name)
 			mav.setViewName("cartList");
 			//데이터 저장
-			mav.addObject("count", count);
-			mav.addObject("list", list);
-			mav.addObject("all_total", all_total);
+			mav.addObject("courseCount", courseCount);
+			mav.addObject("courseList", courseList);
+			mav.addObject("courseTotal", courseTotal);
+
+			mav.addObject("itemCount", itemCount);
+			mav.addObject("itemList", itemList);
+			mav.addObject("itemTotal", itemTotal);
 			
 			return mav;
 	}		

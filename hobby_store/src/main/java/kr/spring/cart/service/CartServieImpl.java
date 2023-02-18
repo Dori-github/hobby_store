@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.cart.dao.CartMapper;
 import kr.spring.cart.vo.CourseCartVO;
+import kr.spring.cart.vo.ItemCartVO;
 
 @Service
 public class CartServieImpl implements CartService{
@@ -16,8 +17,8 @@ public class CartServieImpl implements CartService{
 	private CartMapper cartmapper;
 	
 	@Override
-	public List<CourseCartVO> getCartList(int num) {
-		return cartmapper.getCartList(num);
+	public List<CourseCartVO> getCourseCart(int num) {
+		return cartmapper.getCourseCart(num);
 	}
 
 	@Override
@@ -34,6 +35,27 @@ public class CartServieImpl implements CartService{
 	@Override
 	public int courseTotal(int num) {
 		return cartmapper.courseTotal(num);
+	}
+
+	@Override
+	public List<ItemCartVO> getItemList(int num) {
+		return cartmapper.getItemList(num);
+	}
+
+	@Override
+	public int getItemCount() {
+		return cartmapper.getItemCount();
+	}
+
+	@Override
+	public void insertItemCart(ItemCartVO ItemCart) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int itemTotal(int num) {
+		return cartmapper.itemTotal(num);
 	}
 
 }
