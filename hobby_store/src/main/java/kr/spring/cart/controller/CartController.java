@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +26,7 @@ public class CartController {//메서드 생성, 데이터 처리
 					CartController.class);
 	
 	//=====장바구니 목록=====//
-	@RequestMapping("/cart/list.do")
+	@RequestMapping("/cart/cartList.do")
 	public ModelAndView getList() {	
 		
 			//글의 총 개수
@@ -38,8 +39,8 @@ public class CartController {//메서드 생성, 데이터 처리
 			}
 			
 			ModelAndView mav = new ModelAndView();
-			//뷰 이름 설정
-			mav.setViewName("selectList");
+			//뷰 이름 설정(tiles-definition name)
+			mav.setViewName("cartList");
 			//데이터 저장
 			mav.addObject("count", count);
 			
