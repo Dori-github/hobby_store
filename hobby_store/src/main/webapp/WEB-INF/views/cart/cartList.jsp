@@ -34,7 +34,7 @@
 		</c:forEach>
 		<tr>
 			<td colspan="2">${count}개 품목</td>
-			<td>all_total</td>
+			<td>${all_total}</td>
 		</tr>
 		<tr>
 			<td colspan="3" style="text-align:right;">

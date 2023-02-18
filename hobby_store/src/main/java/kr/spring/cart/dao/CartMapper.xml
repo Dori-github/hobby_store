@@ -1,3 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.spring.cart.dao.CartMapper"></mapper>
+<mapper namespace="kr.spring.cart.dao.CartMapper">
+	<select id="courseTotal" parameterType="integer" resultType="integer">
+	SELECT 
+	<![CDATA[
+	SUM(cc.quantity*c.course_price)
+	]]>
+    FROM course_cart cc JOIN course c
+    ON cc.course_num=c.course_num
+    WHERE cc.mem_num=#{mem_num}
+	</select>
+            
+</mapper>

@@ -31,12 +31,15 @@ public class CartController {//메서드 생성, 데이터 처리
 		
 			//글의 총 개수
 			int count = cartService.getCartCount();
-			
+
 			//목록 호출
 			List<CourseCartVO> list = null;
 			if(count > 0) {
 				list = cartService.getCartList(100);
 			}
+			
+			//회원번호(mem_num)별 총 구입액	
+			int all_total = cartService.courseTotal(100);
 			
 			ModelAndView mav = new ModelAndView();
 			//뷰 이름 설정(tiles-definition name)
@@ -44,8 +47,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			//데이터 저장
 			mav.addObject("count", count);
 			mav.addObject("list", list);
-			
-			logger.debug("???!!???");
+			mav.addObject("all_total", all_total);
 			
 			return mav;
 	}		

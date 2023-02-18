@@ -31,4 +31,9 @@ public class CartServieImpl implements CartService{
 		
 	}
 
+	@Override
+	public int courseTotal(int num) {
+		return cartmapper.courseTotal(num);
+	}
+
 }
