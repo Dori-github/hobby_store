@@ -26,7 +26,13 @@ ul{
 .lightgray{
 	color:lightgray;
 }
-
+/*정렬*/
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
+}
 
 .btn-border{
 	display:inline-block;
@@ -58,6 +64,10 @@ ul{
 .search-bar:focus{
 	outline:1px solid gray;
 }
+
+
+
+
 
 /*헤더
 =============================*/

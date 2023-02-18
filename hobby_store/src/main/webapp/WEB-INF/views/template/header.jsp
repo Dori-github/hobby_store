@@ -64,11 +64,13 @@
 					<c:if test="${!empty user}">
 					<img src="">
 					</c:if>
-					<c:if test="${!empty user && 2 <= user.auth <= 3}"><!-- 일반회원,강사 -->
+					
+					<!--<c:if test="${!empty user && 2 <= user.auth <= 3}">일반회원,강사 -->
+					<!--</c:if>-->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> MY PAGE</a>
 					<span class="lightgray">|</span>
 					<a href="${pageContext.request.contextPath}/"><i class="fa-solid fa-cart-shopping"></i></a>
-					</c:if>
+					
 					<c:if test="${!empty user && user.auth == 9}"><!-- 관리자 -->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> 관리자 PAGE</a>
 					</c:if>
