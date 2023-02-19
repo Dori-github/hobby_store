@@ -280,9 +280,11 @@ $(function(){
 										class="form-control" style="border: none;background: #eee;" />
 									<form:errors path="mem_address2" cssClass="error-color" />
 								</div>
+								
+								
 
 								<!-- 수정해야 할 부분 + -->
-								<h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5>
+								<div><h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5></div>
 
 
 								<div class="input-group mb-3">
