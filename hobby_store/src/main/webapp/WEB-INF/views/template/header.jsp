@@ -11,7 +11,7 @@
 		      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars toggler-size"></i></span>
 		    </button>
 			<!-- 토글버튼 끝 -->
-			<a id="navbar_brand" class="navbar-brand" href="main.do"><b>취미상점</b></a>
+			<a id="navbar_brand" class="navbar-brand" href="/main/main.do"><b>취미상점</b></a>
 			<!-- 통합검색창 시작 -->
 			<form id="search" class="navbar-expand">
 				<input class="search-bar" type="search" placeholder="통합검색어를 입력하세요">
@@ -39,15 +39,15 @@
 		    <div id="menu_bar">
 				<ul class="navbar-nav me-auto my-2 my-lg-0">
 					<c:if test="${!empty user && user.auth == 3}">
-					<li id="register_btn"><a href="${pageContext.request.contextPath}/">등록</a>
+					<li id="register_btn">등록
 						<ul class="dropdown">
-							<li><a href="#">클래스</a></li>
+							<li><a href="${pageContext.request.contextPath}/course/courseRegister.do">클래스</a></li>
 							<li><a href="#">스토어</a></li>
 							<li><a href="#">장소대여</a></li>
 						</ul>
 					</li>
 					</c:if>
-					<li><a href="${pageContext.request.contextPath}/course/list.do">클래스</a></li>
+					<li><a href="${pageContext.request.contextPath}/course/courseList.do">클래스</a></li>
 					<li><a href="${pageContext.request.contextPath}/">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>

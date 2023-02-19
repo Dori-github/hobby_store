@@ -1,311 +1,83 @@
 @charset "UTF-8";
 
-/*공통(헤더/푸터)
+/*강의-메인
 =============================*/
-#main{
-	font-family:"맑은 고딕";
+#course_main{
+	display:flex;
 }
-
-.font-10{
-	font-size: 10pt;
+#sidebar{
+	width:20%;
+	margin-top:80px;
 }
-a:link{
-	text-decoration:none;
-	color:#000000;
-}
-a:visited {
-	text-decoration:none;
-	color:#000000;
-}
-a:hover {
-	text-decoration:none;
-}
-ul{
-	list-style:none;
-}
-.lightgray{
-	color:lightgray;
-}
-
-
-/*정렬*/
-.align-center{
-	text-align:center;
-}
-.align-right{
-	text-align:right;
-}
-
-.btn-border{
-	display:inline-block;
-	width:90px;
-	height:35px;
-	line-height:35px;
-	text-align: center;
-	border:2px solid gray;
-	border-radius: 20px;
-}
-.btn-border a{
-	color:gray;
-	font-weight:bold;
-}
-.btn-border:hover{
-	background-color: #F2F2F2;
-}
-#btn_color{
-	border-color:#FF4E02;
-	background-color: #FF4E02;
-}
-#btn_color a{
-	color:#FFF;
-	font-weight:bold;
-}
-#btn_color:hover{
-	background-color: #E84601;
-}
-.search-bar:focus{
-	outline:1px solid gray;
-}
-
-
-
-
-
-/*헤더
-=============================*/
-#main #main_header{
-	position:fixed;
-	top:0;left:0;
-	width:100%;
-	height:120px;
-	box-shadow: 0 1px 5px 0 lightgrey;
-	background-color:#FFF;
-	z-index:999;
-}
-#main_header .size{
+#content{
 	width:80%;
-	margin:0 auto;
-	height:120px;
+	margin-top:80px;
+	background-color: pink;
 }
-#main_header .container-fluid{
+
+#sidebar ul{
 	padding:0;
-}
-#navbar_top{
-	display: flex;
-	align-items: center;
-	padding-top:20px;
-}
-#navbar_brand{
 	margin-right:20px;
-	font-size: 20pt;
-	color:#FF4E02;
 }
-#search{
-	position:relative;
-	margin-right:20px;
-	width:400px;
+#sidebar a{
+	display:block;
+	text-decoration: none;
+	color:#404040;
+	cursor: pointer;
 }
-#search .search-bar{
-	width:100%;
-	height:40px;
-	border:none;
-	border-radius: 20px;
-	background-color: #F2F2F2;
-	padding-left:20px;
-}
-#search .search-btn{
-	border:0;
-	position:absolute;
-	top:5px;
-	right:10px;
-}
-#navbar_btn{
-	margin-left:auto;
-}
-
-
-
-
-#menu_bar{
-	display:flex;
-	justify-content: space-between;
-}
-#mypage{
-	padding-top:13px;
-}
-#menu_bar > ul{
-	display:flex;
-	padding:0;
-	margin:0;
-}
-#menu_bar > ul > li{
-	padding-right:20px;
-	line-height: 60px;
-}
-#menu_bar > ul > li:hover > a{
-	color:#FF4E02;
+#sidebar .cate{
+	padding:10px;
+	font-size: 14pt;
 	font-weight: bold;
+	transition:.2s;
 }
-#menu_bar #register_btn,#menu_bar #community_btn{
-	position:relative;
+#sidebar .cate:hover, #sidebar .active-color0{
+	background-color:#F2F2F2;
+	border-radius: 10px;
+	font-size:16pt;
 }
-.dropdown{
-	position:absolute;
-	left:-30px;
-	top:60px;
-	width:100px;
-	background-color: #FFF;
-	border:1px solid lightgray;
-	border-radius:10px;
+#sidebar .active-color0{
+	color:#FF4E02;
+}
+
+#sidebar .d_cate{
+	font-size:10pt;
+	line-height:3em;
+	padding:10px 0 20px 10px;
+	margin:0;
 	display:none;
 }
-#dropdown{
-	left:-20px;
-}
-.dropdown li{
-	margin-left:-32px;
-	text-align: center;
-	line-height: 40px;
-	font-size:10pt;
-}
-.dropdown li:hover{
-	background-color:#F2F2F2;
+#sidebar .d_cate li:hover, #sidebar .active-color{
 	font-weight:bold;
+	font-size:11pt;
 }
-.dropdown li:nth-child(1), .dropdown li:nth-child(2) {
-	border-bottom: 1px solid lightgray;
+#sidebar .active-color{
+	color:#FF4E02;
 }
-#menu_bar #register_btn:hover .dropdown,
-#menu_bar #community_btn:hover .dropdown{
-	display:block;
-}
-
-#mypage img{
-	width:35px;
-	height:35px;
-	border-radius: 50%;
-}
-#mypage .btn-border{
-	display: none;
-}
-
-#navbar_top .navbar-toggler{
-	margin-right:20px;
-}
-#navbar_top i{
-	font-size:20pt;
-}
-.offcanvas-header .btn-close{
-	margin-left:auto;
-}
-
-/*푸터
-=============================*/
-
-#main_footer{
-	background-color:#F2F2F2;
-}
-#main_footer .size{
-	width:80%;
-	margin:0 auto;
-	display:flex;
-}
-#main_footer .left-info, .right-info{
-	padding:80px 0;
-}
-#main_footer .left-info{
-	width:50%;
-}
-#main_footer .right-info{
-	width:30%;
-	margin-left:auto;
-}
-.left-info ul{
-	display:flex;
-	justify-content: space-between;
-	align-items: center;
-	padding:0;
-}
-.left-info > div{
-	margin-top:50px;
-}
-.left-info .com-info{
-	font-size: 10pt;
-	color:gray;
-	margin-top:5px;
-	line-height: 1.5em;
-}
-
-.right-info > div{
-	float:right;
-}
-.right-info .font-24{
-	font-size: 24pt;
-	font-weight: bold;
+#sidebar .active-black{
 	color:#404040;
-	width:250px;
-	border:1px solid gray;
-	border-radius: 10px;
-	padding:10px 20px;
-	margin:10px 0 20px 0;
-}
-.right-info span{
-	font-size: 10pt;
-	color:gray;
-}
-
-
-/*메인페이지-바디
-=============================*/
-#main_body{
-	width:80%;
-	margin:120px auto;
-	padding:5px 5px 30px 5px;
-	min-height:500px;
 }
 
 
 
-/*반응형
-=============================*/
-@media (max-width: 992px){/*992px 이하*/
-	#navbar_btn{
-		display:none;
-	}
-	#main #main_header, #main_header .size{
-		height:80px;
-	}
-	#main #main_body{
-		margin:80px auto;
-	}
-	#menu_bar{
-		height:100%;
-		flex-direction:column;
-	}
-	#menu_bar > ul{
-		margin-left:30px;
-	}
-	#menu_bar .dropdown{
-		left:80px;
-		top:8px;
-		border-radius:0 10px 10px 10px; 
-	}
-	
-	#mypage{
-		margin:30px;
-	}
-	#mypage .btn-border{
-		display: block;
-		float:right;
-	}
-	#mypage #btn_color{
-		margin-left:10px;
-	}
-};
 
-/*공통
+
+
+
+/*강의-상세
 =============================*/
-/*공통
+
+
+
+
+
+
+/*강의-등록폼,수정폼
 =============================*/
-/*공통
+
+
+
+
+
+/*강의-
 =============================*/

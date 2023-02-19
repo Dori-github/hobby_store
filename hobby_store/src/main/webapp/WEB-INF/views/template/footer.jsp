@@ -12,7 +12,7 @@
 		</ul>
 		<div>
 			<b style="color:#404040">&copy;취미상점 사업자 정보</b>
-			<div class="com-info">
+			<p class="com-info">
 			법인명 : 취미상점 주식회사<br>
 			대표이사 : 김용만<br>
 			사업자등록번호 : 822-88-00602<br>
@@ -24,17 +24,17 @@
 			<br><br>
 			취미상점(주)는 통신판매중개자로서, 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.<br>
 			Copyright 2023. Share.IT Inc. All rights reserved.
-			</div>
+			</p>
 		</div>
 	</div>
 	<div class="right-info">
 		<div>
 			<b style="color:#404040">대표번호</b><br>
-			<div class="font-24">02-344-5667</div>
-			<span>
+			<p class="font-24">02-344-5667</p>
+			<p>
 				문의시간 : 평일 09:00 ~ 18:00 (주말, 공휴일 제외)<br>
 				점심시간 : 12:00 ~ 13:00
-			</span>
+			</p>
 		</div>
 		
 	</div>
