@@ -1,3 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.spring.cart.dao.CartMapper"></mapper>
+<mapper namespace="kr.spring.cart.dao.CartMapper">
+	<select id="courseTotal" parameterType="integer" resultType="integer">
+	SELECT 
+	<![CDATA[
+	SUM(cc.quantity*c.course_price)
+	]]>
+    FROM course_cart cc JOIN course c
+    ON cc.course_num=c.course_num
+    WHERE cc.mem_num=#{mem_num}
+	</select>
+	
+	<select id="getItemList" parameterType="integer" resultType="kr.spring.cart.vo.ItemCartVO">
+	
+	SELECT t.cate_parent, t.cate_name, i.items_photo1, i.items_name, 
+	i.items_price, ic.quantity, 
+	<![CDATA[
+	ic.quantity * i.items_price as items_total 
+	]]>
+	FROM item_cart ic 
+	JOIN items i ON ic.items_num=i.items_num 
+	JOIN items_cate t ON i.cate_num=t.cate_num 
+	WHERE ic.mem_num=#{mem_num}
+	</select>
+      
+    <select id="itemTotal" parameterType="integer" resultType="integer">
+
+    SELECT 
+	<![CDATA[
+	SUM(ic.quantity*i.items_price)
+    ]]>
+    FROM item_cart ic JOIN items i
+    ON ic.items_num=i.items_num
+    WHERE ic.mem_num=#{mem_num}
+	</select>
+	      
+</mapper>

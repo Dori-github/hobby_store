@@ -1,4 +1,4 @@
---강의 장바구니
+--클래스 장바구니
 CREATE TABLE course_cart (
     cart_num number not null,
     quantity number(3) not null,

@@ -8,12 +8,26 @@
 
 <link href="${pageContext.request.contextPath}/css/member.css"
 	rel="stylesheet">
+
 	
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="${pageContext.request.contextPath}/js/rolling.js"></script>
+<!-- 텍스트 좌우 방향 롤링 -->
+<script>
+$(function(){
+    id=rollingLeft('.box1', 'li', '800', '1500');
+    $('.box1').hover(function(){
+      clearInterval(id);
+    }, function(){
+      id= rollingLeft('.box1', 'li', '800', '1500');
+    })
+  })
+</script>
+
 
 <!-- 중앙 컨텐츠 시작  -->
 
@@ -22,23 +36,27 @@
 	<section class="h-100 gradient-form" style="background-color: #fff;">
 		<div class="container py-5 h-100">
 			<div class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-xl-5">
-					<div class="card rounded-3 text-black">
+				 <div class="col-xl-5">
 						<div class="row">
-							<div class="col-12">
-								<input type="button" class="btn-close float-right"
-									style="float: right; margin: 10px;">
-							</div>
 						</div>
 
 
 						<div class="card-body p-md-5 mx-md-4">
 							<div class="text-center mb-3">
-								<h2 style="padding-bottom: 20px; font-weight: 800;">취미상점</h2>
-								<h6 style="padding-bottom: 20px;">성장이 목마를땐, 취미상점</h6>
+								<h2 style="font-weight: 800;">회원가입</h2>
 							</div>
-
-							<div class="hr-sect">간편 회원가입</div>
+							<div>
+								<div class="view-box">
+								 	<ul class="box1">
+										<li>성장이 목마를땐, 취미상점</li>
+										<li>나의 온라인 사수, 취미상점</li>
+										<li>취미상점에서 다양한 성장의 기회를 얻으세요</li>
+									</ul>
+								</div>
+                            </div>
+						</div>
+	
+				<div class="hr-sect">간편 회원가입</div>
 							
 							<br>
 							
@@ -262,9 +280,11 @@
 										class="form-control" style="border: none;background: #eee;" />
 									<form:errors path="mem_address2" cssClass="error-color" />
 								</div>
+								
+								
 
 								<!-- 수정해야 할 부분 + -->
-								<h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5>
+								<div><h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5></div>
 
 
 								<div class="input-group mb-3">
