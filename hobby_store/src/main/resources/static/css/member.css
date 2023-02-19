@@ -1,5 +1,5 @@
 @charset "UTF-8";
-   
+ 
 
 /* 회원가입
 ---------------------------*/
@@ -34,7 +34,31 @@ a:hover {
     text-decoration: none;
 }
 
-
+.view-box{
+      height: 50px; 
+      width: 400px;
+      overflow: hidden;
+    
+    }
+    ul{
+      list-style: none; 
+      padding: 0; 
+      margin: 0; 
+      width: 400%; 
+      
+    }
+    li{
+      width: 25%; 
+      height: 50px; 
+      line-height: 50px; 
+      text-align: center; 
+      float: left;
+    }
+    ul::after{
+      display: block; 
+      content: ''; 
+      clear: both;
+    }
 
 
 
