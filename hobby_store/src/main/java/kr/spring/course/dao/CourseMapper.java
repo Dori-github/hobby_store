@@ -19,7 +19,7 @@ public interface CourseMapper {
 	public void deleteCourse(Integer course_num);
 	public void deletePhoto(Integer course_num);
 	
-	
+	 
 	//좋아요
 	
 	

@@ -1,6 +1,6 @@
 package kr.spring.util;
 
-public class StringUtil {
+public class StringUtil { 
 	/*
 	 * HTML 태그를 허용하면서 줄바꿈
 	 */

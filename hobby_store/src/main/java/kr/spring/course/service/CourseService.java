@@ -5,7 +5,7 @@ import java.util.Map;
 
 import kr.spring.course.vo.CourseVO;
 
-public interface CourseService {
+public interface CourseService { 
 	public List<CourseVO> selectList(Map<String,Object> map);
 	public int selectRowCount(Map<String,Object> map);
 	public void insertCourse(CourseVO course);

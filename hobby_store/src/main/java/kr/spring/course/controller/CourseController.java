@@ -20,7 +20,7 @@ import kr.spring.util.PagingUtil;
 public class CourseController {
 	private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
-	//private int rowCount=12;
+	//private int rowCount=12; 
 	
 	@Autowired
 	private CourseService courseService;

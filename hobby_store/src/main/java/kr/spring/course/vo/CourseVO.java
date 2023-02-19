@@ -1,6 +1,6 @@
 package kr.spring.course.vo;
 
-import java.sql.Date;
+import java.sql.Date; 
 
 public class CourseVO {
 	private int course_num;

@@ -2,7 +2,7 @@ $(function(){
 	let cate = $('#sidebar .cate');
 	let d_cate = $('#sidebar .d_cate a');
 	
-	cate.on('click',function(){
+	cate.on('click',function(){ 
 		let item = $(this);//대분류
 		
 		

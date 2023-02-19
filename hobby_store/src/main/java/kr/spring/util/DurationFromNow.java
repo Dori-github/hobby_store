@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DurationFromNow {
+public class DurationFromNow { 
 	/**
 	 * 현재부터 "yyyyMMddHHmmss" 포맷의 날짜 차이 레이블
 	 * @param date1
