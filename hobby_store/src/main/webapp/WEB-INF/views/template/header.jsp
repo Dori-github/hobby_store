@@ -38,15 +38,15 @@
 		    </div>
 		    <div id="menu_bar">
 				<ul class="navbar-nav me-auto my-2 my-lg-0">
-					<c:if test="${!empty user && user.auth == 3}">
-					<li id="register_btn">등록
+					<!--<c:if test="${!empty user && user.auth == 3}"></c:if>-->
+					<li id="register_btn"><a>등록</a>
 						<ul class="dropdown">
 							<li><a href="${pageContext.request.contextPath}/course/courseWrite.do">클래스</a></li>
 							<li><a href="#">스토어</a></li>
 							<li><a href="#">장소대여</a></li>
 						</ul>
 					</li>
-					</c:if>
+					
 					<li><a href="${pageContext.request.contextPath}/course/courseList.do">클래스</a></li>
 					<li><a href="${pageContext.request.contextPath}/">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/">장소대여</a></li>
