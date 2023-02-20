@@ -3,15 +3,20 @@ package kr.spring.course.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.course.dao.CourseMapper;
 import kr.spring.course.vo.CourseVO; 
 
 @Service
 @Transactional
 public class CourseServiceImpl implements CourseService{
 
+	@Autowired
+	private CourseMapper courseMapper;
+	
 	@Override
 	public List<CourseVO> selectList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -26,7 +31,7 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public void insertCourse(CourseVO course) {
-		// TODO Auto-generated method stub
+		courseMapper.insertCourse(course);
 		
 	}
 

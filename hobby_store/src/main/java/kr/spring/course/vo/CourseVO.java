@@ -5,7 +5,7 @@ import java.sql.Date;
 public class CourseVO {
 	private int course_num;
 	private int mem_num;
-	private int cate_num;
+	private String cate_num;
 	private String course_name;
 	private String course_content;
 	private String photo1;
@@ -43,10 +43,10 @@ public class CourseVO {
 	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
-	public int getCate_num() {
+	public String getCate_num() {
 		return cate_num;
 	}
-	public void setCate_num(int cate_num) {
+	public void setCate_num(String cate_num) {
 		this.cate_num = cate_num;
 	}
 	public String getCourse_name() {

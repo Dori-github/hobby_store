@@ -2,6 +2,8 @@
 
 /*강의-메인
 =============================*/
+
+/*사이드바*/
 #course_main{
 	display:flex;
 }
@@ -12,7 +14,6 @@
 #content{
 	width:80%;
 	margin-top:80px;
-	background-color: pink;
 }
 
 #sidebar ul{
@@ -59,9 +60,97 @@
 }
 
 
-
-
+/*오른쪽 컨텐츠*/
+#content{
+	padding-top:10px;
+}
  
+#onoff{
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+ 	width:130px;
+ 	height:40px;
+ 	margin:0 auto;
+ 	padding:0 10px;
+ 	margin-bottom:20px;
+ 	border-radius: 20px;
+ 	background-color: #076AFF;
+ 	box-shadow:inset 1px 1px 5px 0 rgb(77, 71, 71);
+}
+#onoff #on{
+	width:70%;
+ 	color:#FFF;
+ 	margin-left:10px;
+}
+#onoff #btn{
+	width:27px;
+	height:27px;
+	border-radius:50%;
+	background-color: #FFF;
+	box-shadow:1px 1px 5px 0 rgb(77, 71, 71);
+}
+ 
+ 
+#course_search{
+	width:50%;
+	min-width:400px;
+	margin:0 auto;
+	margin-bottom:50px;
+}
+#course_search #search_bar{
+	background-color: #FFF;
+	border:1px solid lightgray;
+	border-radius:10px;
+}
+#course_search #search_bar:focus{
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+}
+#course_search #search_icon{
+	background-color: #FFF;
+	border:none;
+}
+#content .form-select{
+	width:100px;
+	height:40px;
+	border-radius: 10px;
+}
+#course_search .form-select{
+	margin-right:10px;
+}
+#select .select{
+	margin-left:10px;
+}
+#select{
+	display: flex;
+	justify-content:flex-end;
+	align-items: center;
+}
+#select #total{
+	margin-right:auto;	
+	padding-top:10px;
+	color:#404040;
+	font-size:11pt;
+}
+#select #location option{
+	height:100px;
+	border-color: gray;
+}
+
+
+select:hover {
+  border-color: #888;
+}
+
+select:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+
 
 
 /*강의-상세

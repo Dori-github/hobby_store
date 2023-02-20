@@ -41,7 +41,7 @@
 					<c:if test="${!empty user && user.auth == 3}">
 					<li id="register_btn">등록
 						<ul class="dropdown">
-							<li><a href="${pageContext.request.contextPath}/course/courseRegister.do">클래스</a></li>
+							<li><a href="${pageContext.request.contextPath}/course/courseWrite.do">클래스</a></li>
 							<li><a href="#">스토어</a></li>
 							<li><a href="#">장소대여</a></li>
 						</ul>
