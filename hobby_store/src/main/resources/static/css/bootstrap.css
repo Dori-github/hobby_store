@@ -324,6 +324,13 @@ progress {
   height: auto;
 }
 
+
+[type="number"] {
+  background-color:antiquewhite;
+  font-size:18px;
+  width:45px;
+}
+
 [type="search"] {
   outline-offset: -2px;
   -webkit-appearance: none;
@@ -3175,6 +3182,49 @@ input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
   width: 100%;
+}
+
+.btn:active{
+	border:none;
+}
+
+.quan {
+	display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: #888;
+    font-size: 1.2rem;
+    border-color: white;
+    border-radius: 0.5rem;
+    width: revert;
+    height: 1.5rem;
+}
+
+.quan [type="button"]{
+	border: 1px solid #ebebeb;
+	border-radius: 0;
+	font-size: 1.5rem;
+	height: fit-content;
+	width: fit-content;
+	margin: 0 1rem;
+	padding: 0rem 0.5rem 0.2rem 0.5rem;
+	color: red;
+}
+.quan [type="button"]:active{/* 누르는 중 */
+	border:1px solid #ebebeb;
+	color:red;
+}
+
+.quan dec{
+	border:none;
+}
+
+.quan inc{
+	border:none;
 }
 
 .fade {

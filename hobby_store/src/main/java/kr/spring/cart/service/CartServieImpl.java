@@ -58,4 +58,9 @@ public class CartServieImpl implements CartService{
 		return cartmapper.itemTotal(num);
 	}
 
+	@Override
+	public void updateCart(int quantity, int cart_num) {
+		cartmapper.updateCart(quantity, cart_num);
+	}
+
 }

@@ -30,6 +30,7 @@ public interface CartService {
 	//회원번호(mem_num)별 총 구입액
 	public int itemTotal(int num);
 	//상품 장바구니 수정(개별 상품 수량 변경)
+	public void updateCart(int quantity, int cart_num);
 	//상품 장바구니 수정(상품번호와 회원변호별 변경)
 	//상품 장바구니 삭제
 }

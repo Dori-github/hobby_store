@@ -12,6 +12,7 @@ public class ItemCartVO {
 	private String items_photo1;
 	private String items_name;
 	private int items_price;
+	private int items_quantity;
 	
 	public int getCart_num() {
 		return cart_num;
@@ -73,12 +74,18 @@ public class ItemCartVO {
 	public void setItems_price(int items_price) {
 		this.items_price = items_price;
 	}
+	public int getItems_quantity() {
+		return items_quantity;
+	}
+	public void setItems_quantity(int items_quantity) {
+		this.items_quantity = items_quantity;
+	}
 	
 	@Override
 	public String toString() {
 		return "ItemCartVO [cart_num=" + cart_num + ", quantity=" + quantity + ", mem_num=" + mem_num + ", items_num="
 				+ items_num + ", items_total=" + items_total + ", cate_parent=" + cate_parent + ", cate_name="
 				+ cate_name + ", items_photo1=" + items_photo1 + ", items_name=" + items_name + ", items_price="
-				+ items_price + "]";
-	}	
+				+ items_price + ", items_quantity=" + items_quantity + "]";
+	}
 }

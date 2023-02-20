@@ -1,15 +1,14 @@
 package kr.spring.cart.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.cart.controller.CartController;
@@ -62,5 +61,14 @@ public class CartController {//메서드 생성, 데이터 처리
 			mav.addObject("itemTotal", itemTotal);
 			
 			return mav;
-	}		
+	}
+
+	//상품 장바구니 수정(개별 상품 수량 변경)
+	@ResponseBody
+	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
+	public void updateCart(int quantity, int cart_num) throws Exception {
+	 
+	 cartService.updateCart(quantity, cart_num);
+	 logger.debug("cart : " + quantity + "," + cart_num);
+	}
 }
