@@ -3,17 +3,16 @@
 /*강의-메인
 =============================*/
 
+
 /*사이드바*/
 #course_main{
 	display:flex;
 }
 #sidebar{
 	width:20%;
-	margin-top:80px;
 }
 #content{
 	width:80%;
-	margin-top:80px;
 }
 
 #sidebar ul{
@@ -63,6 +62,9 @@
 /*오른쪽 컨텐츠*/
 #content{
 	padding-top:10px;
+}
+#select{
+ 	margin-bottom:10px;
 }
  
 #onoff{
@@ -129,9 +131,8 @@
 }
 #select #total{
 	margin-right:auto;	
-	padding-top:10px;
-	color:#404040;
-	font-size:11pt;
+	line-height:40px;
+	text-align: bottom;
 }
 #select #location option{
 	height:100px;
@@ -139,17 +140,7 @@
 }
 
 
-select:hover {
-  border-color: #888;
-}
 
-select:focus {
-  border-color: #aaa;
-  box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
-  box-shadow: 0 0 0 3px -moz-mac-focusring;
-  color: #222;
-  outline: none;
-}
 
 
 
@@ -158,15 +149,214 @@ select:focus {
 
 
 
-
+.margin-top{
+	margin-top: 30px;
+}
 
 
 /*강의-등록폼,수정폼
 =============================*/
+#course_form h5{
+	color:#404040;
+	width:70%;
+	margin:0 auto;
+}
+#course_form table{
+	width:70%;
+	margin:0 auto;
+	margin-top:30px;
+	font-size:10pt;
+}
+#course_form tr{
+	border-top:1px solid lightgray;
+	border-bottom:1px solid lightgray;
+}
+#course_form td:first-child{
+	border-right:1px solid lightgray;
+	width:300px;;
+	text-align: center;
+}
+#course_form td{
+	padding:10px 20px;
+}
+.width-200{
+	width:200px;
+}
+
+
+#course_form input[type=text],
+#course_form input[type=number]{
+	width:100%;
+	outline:1px solid lightgray;
+	border:none;
+	border-radius:5px;
+	padding:5px 5px 5px 10px;
+}
+#course_form input[type=text]:hover,#course_form input[type=text]:focus,
+#course_form input[type=number]:hover,#course_form input[type=number]:focus{
+	outline:3px solid gray;
+	position:relative;
+}
+
+/*라디오버튼*/
+#course_form input[type=radio]{
+	margin-right:5px;
+}
+#course_form label{
+	margin-right:20px;
+	cursor: pointer;
+}
+
+#course_form input[type="radio"] {
+	vertical-align:middle;
+	appearance: none;/*기본속성제거*/
+	border: 2px solid gray;
+	border-radius: 50%;
+	width: 1.2em;
+	height: 1.2em;
+	transition: border 0.3s ease-in-out;/*속도 천천-보통-천천*/
+}
+#course_form input[type=radio]:checked{
+	border: 0.4em solid #FF4E02;
+}
+#course_form input[type=radio]:hover {
+	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+	cursor: pointer;
+}
 
 
 
+
+
+#course_form ul{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin:0;
+	padding:0;
+}
+#course_form tr:nth-child(3) ul{
+	width:300px;
+}
+#course_form tr:nth-child(6) ul{
+	width:300px;
+}
+
+/*수강인원수*/
+#course_form tr:nth-child(7) ul{
+	width:200px;
+	height:30px;
+	outline: 1px solid lightgray;
+	border-radius: 5px;
+}
+#course_form tr:nth-child(7) ul li:not(:nth-child(2)){
+	padding:0 20px;
+	width:50px;
+	height:100%;
+	color:gray;
+}
+#course_form tr:nth-child(7) ul li:not(:nth-child(2)):hover{
+	background-color:#F2F2F2;
+	cursor: pointer;
+}
+#course_form tr:nth-child(7) ul li:first-child:hover{
+	border-radius: 5px 0 0 5px;
+}
+#course_form tr:nth-child(7) ul li:last-child:hover{
+	border-radius: 0 5px 5px 0;
+}
+#course_form i{
+	line-height: 28px;
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+#course_form tr:nth-child(7) input[type='number']{
+	text-align: center;
+	width:100px;
+	height:28.400px;
+	border: none;
+	outline: none;
+}
+#course_form tr:nth-child(7) input[type='number']:hover,
+#course_form tr:nth-child(7) input[type='number']:focus{
+	outline:3px solid gray;
+	position:relative;
+}
+
+/*가격*/
+#course_form #number-box{
+	width:200px;
+	height:28.400px;
+	text-align: right;
+}
+
+/*우편번호*/
+#course_form #zipcode input:first-child{
+	float: left;
+	width:65%;
+}
+#course_form #zipcode input:last-child{
+	float: right;
+	width:33%;
+	font-size: 10pt;
+	font-weight:bold;
+	height:100%;
+	border:none;
+	border-radius: 5px;
+	padding:5px 10px;
+	background-color: lightgray;
+	color:#000;
+}
+#course_form #zipcode input:last-child:hover{
+	background-color: #404040;
+	color:#FFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*하단 등록,홈 버튼*/
+.form-btn{
+	width:90px;
+	height:35px;
+	text-align: center;
+	border:2px solid gray;
+	border-radius: 20px;
+	background-color: #FFF;
+	color:gray;
+	font-size:10pt;
+	font-weight:bold;
+	margin:0 5px;
+}
+.form-btn:hover{
+	background-color: #F2F2F2;
+}
 
 
 /*강의-
 =============================*/
+
+
+
+
+
+
+
+
+/*반응형
+=============================*/
+@media (max-width: 992px){/*992px 이하*/
+	#course_form h5,#course_form table{
+		width:100%;
+	}
+}

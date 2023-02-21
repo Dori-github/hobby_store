@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-/*공통(헤더/푸터)
-=============================*/
 #main{
 	font-family:"맑은 고딕";
 }
@@ -26,7 +24,9 @@ ul{
 .lightgray{
 	color:lightgray;
 }
-
+.error-color{
+	color:#ff0000;
+}
 
 /*정렬*/
 .align-center{
@@ -268,11 +268,12 @@ ul{
 }
 
 
+
 /*메인페이지-바디
 =============================*/
 #main_body{
 	width:80%;
-	margin:120px auto;
+	margin:150px auto;
 	min-height:500px;
 }
 
@@ -288,7 +289,7 @@ ul{
 		height:80px;
 	}
 	#main #main_body{
-		margin:80px auto;
+		margin:110px auto;
 	}
 	#main_header #menu_bar{
 		height:100%;
@@ -302,11 +303,6 @@ ul{
 		top:8px;
 		border-radius:0 10px 10px 10px; 
 	}
-	#main_header #menu_bar #register_btn li:first-child,
-	#main_header #menu_bar #community_btn li:first-child{
-		border-radius: 0 10px 0 0;
-	}
-	
 	
 	#mypage{
 		margin:30px;
