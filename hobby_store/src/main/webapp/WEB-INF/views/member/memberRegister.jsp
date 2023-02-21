@@ -45,6 +45,7 @@ $(function(){
 							<div class="text-center mb-3">
 								<h2 style="font-weight: 800;">회원가입</h2>
 							</div>
+							
 							<div>
 								<div class="view-box">
 								 	<ul class="box1">
@@ -54,6 +55,7 @@ $(function(){
 									</ul>
 								</div>
                             </div>
+                            
 						</div>
 	
 				<div class="hr-sect">간편 회원가입</div>
@@ -71,11 +73,14 @@ $(function(){
 							<form:form action="registerUser.do" id="register_form"
 								modelAttribute="memberVO">
 								<h5 style="font-weight: 800;">필수항목</h5>
+								
+								<br>
+								
 
 								<label for="mem_id">아이디</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_id" type="text" id="mem_id"
-										class="form-control" style="border: none;background: #eee;"
+										class="form-control" style="border: none;background: #F2F2F2;"
 										placeholder="4~12 영문,숫자만 허용" />
 									<div class="input-group-append">
 										<button class="btn btn-secondary" type="button">중복확인</button>
@@ -86,14 +91,14 @@ $(function(){
 								<label for="mem_name">이름</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_name" type="text" id="mem_name"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<form:errors path="mem_name" cssClass="error-color" />
 								</div>
 
 								<label for="mem_nickname">닉네임</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_nickname" type="text" id="mem_nickname"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<div class="input-group-append">
 										<button class="btn btn-secondary" type="button">중복확인</button>
 									</div>
@@ -102,27 +107,27 @@ $(function(){
 								<label for="mem_pw">비밀번호</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_pw" type="password" id="mem_pw"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<form:errors path="mem_pw" cssClass="error-color" />
 								</div>
 
 								<label for="mem_cell">전화번호</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_cell" type="tel" id="mem_cell"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<form:errors path="mem_cell" cssClass="error-color" />
 								</div>
 
 								<label for="mem_email">이메일</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_email" type="email" id="mem_email"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 								</div>
 
 								<!-- 수정해야 할 부분 + -->
 								<div class="input-group mb-3">
 									<input type="text" id="otp" class="form-control"
-										style="border: none; background: #eee;"
+										style="border: none; background: #F2F2F2;"
 										placeholder="인증번호 6자리를 입력하세요">
 									<div class="input-group-append">
 										<button class="btn btn-secondary" type="button">본인인증</button>
@@ -133,7 +138,7 @@ $(function(){
 								<label for="mem_zipcode">우편번호</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_zipcode" type="text" id="mem_zipcode"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<div class="input-group-append">
 										<form:button class="btn btn-secondary" type="button"
 											onclick="execDaumPostcode()">우편번호 찾기</form:button>
@@ -270,22 +275,24 @@ $(function(){
 								<label for="mem_address1">주소</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_address1" type="text" id="mem_address1"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<form:errors path="mem_address1" cssClass="error-color" />
 								</div>
 
 								<label for="mem_address2">상세주소</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_address2" type="text" id="mem_address2"
-										class="form-control" style="border: none;background: #eee;" />
+										class="form-control" style="border: none;background: #F2F2F2;" />
 									<form:errors path="mem_address2" cssClass="error-color" />
 								</div>
 								
-								
+								<br>
 
 								<!-- 수정해야 할 부분 + -->
 								<div><h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5></div>
 
+								<br>
+								
 
 								<div class="input-group mb-3">
 									<div class="input-group-prepend" style="padding-right: 20px;">
@@ -313,22 +320,16 @@ $(function(){
 									</select>
 								</div>
 								<!-- 수정해야 할 부분 + -->
+								
+								<br>
 
 								<!-- 2 column grid layout -->
 								<div class="row mb-4">
-									<div class="col-md-6 d-flex justify-content-center">
+									<div class="col-md-14 d-flex justify-content-center">
 
-										<form:button type="button" class="btn btn-dark mb-4"
-											style="width: 100%;">회원가입</form:button>
+										<form:button type="button" class="btn mb-4" style="width: 400%;background-color: #FF4E02;color: white;">가입하기</form:button>
 
-									</div>
-									<div class="col-md-6 d-flex justify-content-center">
-
-										<form:button type="button" class="btn btn-light mb-4"
-											style="width: 100%;"
-											onclick="location.href='${pageContext.request.contextPath}/main/main.do'">홈으로</form:button>
-
-									</div>
+									</div>				
 								</div>
 
 							</form:form>
@@ -336,8 +337,6 @@ $(function(){
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 	</section>
 
 

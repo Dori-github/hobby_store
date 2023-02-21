@@ -39,6 +39,8 @@ a:hover {
       height: 50px; 
       width: 400px;
       overflow: hidden;
+      text-align: center; 
+      
     
     }
     ul{
@@ -47,12 +49,12 @@ a:hover {
       margin: 0; 
       width: 400%; 
       
+      
     }
     li{
       width: 25%; 
       height: 50px; 
       line-height: 50px; 
-      text-align: center; 
       float: left;
     }
     ul::after{
@@ -60,7 +62,7 @@ a:hover {
       content: ''; 
       clear: both;
     }
-
+  
 
 
 /* 로그인
