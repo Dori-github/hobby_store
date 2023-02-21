@@ -11,7 +11,7 @@
 <link href="${pageContext.request.contextPath}/css/member.css"
 	rel="stylesheet">
 
-	
+	  
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -19,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="${pageContext.request.contextPath}/js/rolling.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
-
+  
 <!-- 텍스트 좌우 방향 롤링 -->
 <script>
 $(function(){
