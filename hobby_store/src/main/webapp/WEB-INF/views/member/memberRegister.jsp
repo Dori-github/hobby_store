@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+
+
     
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <meta charset="UTF-8">
@@ -16,6 +18,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="${pageContext.request.contextPath}/js/rolling.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
+
 <!-- 텍스트 좌우 방향 롤링 -->
 <script>
 $(function(){
@@ -69,9 +73,10 @@ $(function(){
                             
                             <br>
                        
-                            
+                            <!-- 유효성 체크 -->
 							<form:form action="registerUser.do" id="register_form"
 								modelAttribute="memberVO">
+								
 								<h5 style="font-weight: 800;">필수항목</h5>
 								
 								<br>
@@ -83,46 +88,69 @@ $(function(){
 										class="form-control" style="border: none;background: #F2F2F2;"
 										placeholder="4~12 영문,숫자만 허용" />
 									<div class="input-group-append">
-										<button class="btn btn-secondary" type="button">중복확인</button>
+										<form:button class="btn btn-secondary" type="button">중복확인</form:button>
 									</div>
-									<form:errors path="mem_id" cssClass="error-color" />
+									
+									
 								</div>
+								<form:errors element="div" path="mem_id" cssClass="error-color" />
+								
+								<br>
+								
 
 								<label for="mem_name">이름</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_name" type="text" id="mem_name"
 										class="form-control" style="border: none;background: #F2F2F2;" />
-									<form:errors path="mem_name" cssClass="error-color" />
+									
 								</div>
+								
+								<form:errors element="div" path="mem_name" cssClass="error-color" />
+								
+								<br>
 
 								<label for="mem_nickname">닉네임</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_nickname" type="text" id="mem_nickname"
 										class="form-control" style="border: none;background: #F2F2F2;" />
 									<div class="input-group-append">
-										<button class="btn btn-secondary" type="button">중복확인</button>
+										<form:button class="btn btn-secondary" type="button">중복확인</form:button>
 									</div>
 								</div>
+							
 
 								<label for="mem_pw">비밀번호</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_pw" type="password" id="mem_pw"
 										class="form-control" style="border: none;background: #F2F2F2;" />
-									<form:errors path="mem_pw" cssClass="error-color" />
+									
 								</div>
+								
+								<form:errors element="div" path="mem_pw" cssClass="error-color" />
+								
+								<br>
 
 								<label for="mem_cell">전화번호</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_cell" type="tel" id="mem_cell"
 										class="form-control" style="border: none;background: #F2F2F2;" />
-									<form:errors path="mem_cell" cssClass="error-color" />
+									
 								</div>
+								
+								<form:errors element="div" path="mem_cell" cssClass="error-color" />
+								
+								<br>
 
 								<label for="mem_email">이메일</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_email" type="email" id="mem_email"
 										class="form-control" style="border: none;background: #F2F2F2;" />
+									
 								</div>
+								
+								<form:errors element="div" path="mem_email" cssClass="error-color" />
+								
+								<br>
 
 								<!-- 수정해야 할 부분 + -->
 								<div class="input-group mb-3">
@@ -269,23 +297,36 @@ $(function(){
 									</script>
 
 									<!-- 우편번호 검색 끝 -->
-									<form:errors path="mem_zipcode" cssClass="error-color" />
+									
 								</div>
+								
+								<form:errors element="div" path="mem_zipcode" cssClass="error-color" />
+								
+								<br>
 
 								<label for="mem_address1">주소</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_address1" type="text" id="mem_address1"
 										class="form-control" style="border: none;background: #F2F2F2;" />
-									<form:errors path="mem_address1" cssClass="error-color" />
+									
 								</div>
+								
+								
+								
+								<form:errors element="div" path="mem_cell" cssClass="error-color" />
+								
+								<br>
 
 								<label for="mem_address2">상세주소</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_address2" type="text" id="mem_address2"
 										class="form-control" style="border: none;background: #F2F2F2;" />
-									<form:errors path="mem_address2" cssClass="error-color" />
+									
 								</div>
 								
+								<form:errors element="div" path="mem_address2" cssClass="error-color" />
+								
+								<br>
 								<br>
 
 								<!-- 수정해야 할 부분 + -->
@@ -327,12 +368,13 @@ $(function(){
 								<div class="row mb-4">
 									<div class="col-md-14 d-flex justify-content-center">
 
-										<form:button type="button" class="btn mb-4" style="width: 400%;background-color: #FF4E02;color: white;">가입하기</form:button>
+										<form:button type="submit" class="btn mb-4" style="width: 400%;background-color: #FF4E02;color: white;">가입하기</form:button>
 
-									</div>				
+									</div>
+													
 								</div>
-
-							</form:form>
+</form:form>
+							
 
 						</div>
 					</div>
