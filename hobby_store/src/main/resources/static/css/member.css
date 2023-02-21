@@ -48,18 +48,21 @@ a:hover {
       padding: 0; 
       width: 400%;  
       text-align: center;
+      margin: 0 auto;
     }
 .view-box ul li{
       width: 25%; 
       height: 50px; 
       line-height: 50px; 
       float:left;
+      margin: 0 auto;
       
     }
 .view-box ul::after{
       display: block; 
       content: ''; 
       clear: both;
+      margin: 0 auto;
     }
   
 
