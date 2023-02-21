@@ -6,6 +6,7 @@
 .hr-sect {
     display: flex;
     flex-basis: 100%;
+    justify-content:center;
     align-items: center;
     color: rgba(0, 0, 0, 0.35);
     font-size: 15px;
@@ -39,17 +40,15 @@ a:hover {
       height: 50px; 
       width: 400px;
       overflow: hidden;
-      text-align: center; 
-      
-    
+      text-align: center;
+      margin:0px auto;
+
     }
 .view-box ul{
       list-style: none; 
       padding: 0; 
       margin: 0; 
-      width: 400%; 
-      
-      
+      width: 400%;  
     }
 .view-box ul li{
       width: 25%; 
