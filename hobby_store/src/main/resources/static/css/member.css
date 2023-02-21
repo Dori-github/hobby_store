@@ -40,21 +40,21 @@ a:hover {
       height: 50px; 
       width: 400px;
       overflow: hidden;
-      text-align: center;
-      margin:0px auto;
+      margin: 0 auto;
 
     }
 .view-box ul{
       list-style: none; 
       padding: 0; 
-      margin: 0; 
       width: 400%;  
+      text-align: center;
     }
 .view-box ul li{
       width: 25%; 
       height: 50px; 
       line-height: 50px; 
-      float: left;
+      float:left;
+      
     }
 .view-box ul::after{
       display: block; 

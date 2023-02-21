@@ -19,11 +19,11 @@
 <!-- 텍스트 좌우 방향 롤링 -->
 <script>
 $(function(){
-    id=rollingLeft('.box1', 'li', '800', '1500');
+    id=rollingLeft('.box1', 'li', '1000', '2500');
     $('.box1').hover(function(){
       clearInterval(id);
     }, function(){
-      id= rollingLeft('.box1', 'li', '800', '1500');
+      id= rollingLeft('.box1', 'li', '1000', '2500');
     })
   })
 </script>
