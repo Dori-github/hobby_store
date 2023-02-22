@@ -42,13 +42,13 @@
 					<li id="register_btn"><a>등록</a>
 						<ul class="dropdown">
 							<li><a href="${pageContext.request.contextPath}/course/courseWrite.do">클래스</a></li>
-							<li><a href="#">스토어</a></li>
+							<li><a href="${pageContext.request.contextPath}/items/itemsRegister.do">스토어</a></li>
 							<li><a href="#">장소대여</a></li>
 						</ul>
 					</li>
 					
 					<li><a href="${pageContext.request.contextPath}/course/courseList.do">클래스</a></li>
-					<li><a href="${pageContext.request.contextPath}/">스토어</a></li>
+					<li><a href="${pageContext.request.contextPath}/items/itemsList.do">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>
 						<ul class="dropdown" id="dropdown">
