@@ -55,7 +55,7 @@ a:hover {
       height: 50px; 
       line-height: 50px; 
       float:left;
-      padding-right:3px;
+      overflow: visible;
       
     }
     
