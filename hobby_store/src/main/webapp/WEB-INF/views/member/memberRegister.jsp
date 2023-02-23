@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <meta charset="UTF-8">
@@ -19,15 +17,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="${pageContext.request.contextPath}/js/rolling.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
-  
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmNickname.js"></script>  
 <!-- 텍스트 좌우 방향 롤링 -->
 <script>
 $(function(){
-    id=rollingLeft('.box1', 'li', '1000', '2500');
+    id=rollingLeft('.box1', 'li', '1000', '2300');
     $('.box1').hover(function(){
       clearInterval(id);
     }, function(){
-      id= rollingLeft('.box1', 'li', '1000', '2500');
+      id= rollingLeft('.box1', 'li', '1000', '2300');
     })
   })
 </script>
@@ -44,20 +42,17 @@ $(function(){
 						<div class="row">
 						</div>
 
-
 						<div class="card-body p-md-5 mx-md-4">
 							<div class="text-center mb-3">
 								<h2 style="font-weight: 800;">회원가입</h2>
-							</div>
-							
-							<div>
 								<div class="view-box">
 								 	<ul class="box1">
-										<li>성장이 목마를땐, 취미상점</li>
+										<li>성장이 목마를때, 취미상점</li>
 										<li>나의 온라인 사수, 취미상점</li>
-										<li>취미상점에서 다양한 성장의 기회를 얻으세요</li>
+										<li>취미상점에서 가치를 높이세요</li>
 									</ul>
-								</div>
+							</div>
+							
                             </div>
                             
 						</div>
@@ -86,18 +81,19 @@ $(function(){
 								<div class="input-group mb-3">
 									<form:input path="mem_id" type="text" id="mem_id"
 										class="form-control" style="border: none;background: #F2F2F2;"
-										placeholder="4~12 영문,숫자만 허용" />
+										placeholder="4~12 영문,숫자만 허용" autocomplete="off" />
 									<div class="input-group-append">
-										<form:button class="btn btn-secondary" type="button">중복확인</form:button>
+										<input type="button" class="btn btn-secondary" id="confirmId" value="중복확인">
+						
 									</div>
-									
-									
 								</div>
+								
+								<span id="message_id"></span>
 								<form:errors element="div" path="mem_id" cssClass="error-color" />
 								
 								<br>
-								
-
+		                        
+		                    
 								<label for="mem_name">이름</label>
 								<div class="input-group mb-3">
 									<form:input path="mem_name" type="text" id="mem_name"
@@ -114,10 +110,11 @@ $(function(){
 									<form:input path="mem_nickname" type="text" id="mem_nickname"
 										class="form-control" style="border: none;background: #F2F2F2;" />
 									<div class="input-group-append">
-										<form:button class="btn btn-secondary" type="button">중복확인</form:button>
+										<input type="button" class="btn btn-secondary" id="confirmNickname" value="중복확인">
 									</div>
 								</div>
-							
+							     
+							     <span id="message_nickname"></span></br>
 
 								<label for="mem_pw">비밀번호</label>
 								<div class="input-group mb-3">
@@ -125,6 +122,7 @@ $(function(){
 										class="form-control" style="border: none;background: #F2F2F2;" />
 									
 								</div>
+								
 								
 								<form:errors element="div" path="mem_pw" cssClass="error-color" />
 								
@@ -162,6 +160,8 @@ $(function(){
 									</div>
 								</div>
 								<!-- 수정해야 할 부분 +  -->
+								
+								<br>
 
 								<label for="mem_zipcode">우편번호</label>
 								<div class="input-group mb-3">
@@ -246,15 +246,15 @@ $(function(){
 
 															// 우편번호와 주소 정보를 해당 필드에 넣는다.
 															document
-																	.getElementById('zipcode').value = data.zonecode;
+																	.getElementById('mem_zipcode').value = data.zonecode;
 															//(수정) + extraAddr를 추가해서 address1에 참고항목이 보여지도록 수정
 															document
-																	.getElementById("address1").value = addr
+																	.getElementById("mem_address1").value = addr
 																	+ extraAddr;
 															// 커서를 상세주소 필드로 이동한다.
 															document
 																	.getElementById(
-																			"address2")
+																			"mem_address2")
 																	.focus();
 
 															// iframe을 넣은 element를 안보이게 한다.
@@ -329,7 +329,7 @@ $(function(){
 								<br>
 								<br>
 
-								<!-- 수정해야 할 부분 + -->
+								
 								<div><h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5></div>
 
 								<br>
@@ -340,11 +340,10 @@ $(function(){
 										<label for="region">선호지역을 선택해주세요 : </label>
 									</div>
 									<select class="form-select form-select-sm"
-										aria-label=".form-select-sm example">
-										<option selected>-</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
+										aria-label=".form-select-sm example" name="country_num">
+										<c:forEach var="member" items="${countryList}">
+										<option value="${member.country_num}">${member.country_detail}</option>
+										</c:forEach>
 									</select>
 								</div>
 
@@ -353,14 +352,13 @@ $(function(){
 										<label for="region">주요 관심사를 선택해주세요 : </label>
 									</div>
 									<select class="form-select form-select-sm"
-										aria-label=".form-select-sm example">
-										<option selected>-</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
+										aria-label=".form-select-sm example" name="like_num">
+										<c:forEach var="member" items="${likeList}">
+										<option value="${member.like_num}">${member.like_detail}</option>
+										</c:forEach>
 									</select>
 								</div>
-								<!-- 수정해야 할 부분 + -->
+								
 								
 								<br>
 

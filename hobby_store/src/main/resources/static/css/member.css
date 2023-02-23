@@ -37,33 +37,41 @@ a:hover {
 
 
 .view-box{
-      height: 50px; 
-      width: 400px;
+      height:50px; 
+      min-width:100%;
+      max-width:100%;
       overflow: hidden;
       margin: 0 auto;
-
+      text-align: center;
+ 
     }
 .view-box ul{
-      list-style: none; 
-      padding: 0; 
-      width: 400%;  
-      text-align: center;
-      margin: 0 auto;
+      list-style: none;     
+      width: 400%;    
+     
     }
 .view-box ul li{
-      width: 25%; 
+      width: 23%; 
       height: 50px; 
       line-height: 50px; 
       float:left;
-      margin: 0 auto;
       
     }
+    
+    
 .view-box ul::after{
       display: block; 
       content: ''; 
       clear: both;
-      margin: 0 auto;
     }
+    
+#message_id{
+	display:block;
+}
+
+#message_nickname{
+	display:block;
+}
   
 
 

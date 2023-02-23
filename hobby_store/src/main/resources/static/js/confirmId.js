@@ -3,18 +3,17 @@ $(function(){
 	
 	//아이디 중복 체크
 	$('#confirmId').click(function(){
-		if($('#id').val().trim()==''){
-			$('#message_id').css('color','red')
-			                .text('아이디를 입력하세요');
-			$('#id').val('').focus();
-			return;
-		}
+      if($('#mem_id').val().trim()==''){
+         $('#message_id').css('color','red').text('아이디를 입력하세요');
+         $('#mem_id').val('').focus();
+         return;
+      }
 		
 		//서버와 통신
 		$.ajax({
 			url:'confirmId.do',
 			type:'post',
-			data:{id:$('#id').val()},
+			data:{mem_id:$('#mem_id').val()},
 			dataType:'json',
 			success:function(param){
 				if(param.result == 'idNotFound'){
@@ -42,7 +41,7 @@ $(function(){
 	});//end of click
 	
 	//아이디 중복 안내 메시지 초기화 및 아이디 중복 값 초기화
-	$('#register_form #id').keydown(function(){
+	$('#register_form #mem_id').keydown(function(){
 		checkId = 0;
 		$('#message_id').text('');
 	});//end of keydown
@@ -52,8 +51,8 @@ $(function(){
 		if(checkId==0){
 			$('#message_id').css('color','red')
 			                .text('아이디 중복 체크 필수!');
-			if($('#id').val().trim()==''){
-				$('#id').val('').focus();
+			if($('#mem_id').val().trim()==''){
+				$('#mem_id').val('').focus();
 			}
 			return false;
 		}

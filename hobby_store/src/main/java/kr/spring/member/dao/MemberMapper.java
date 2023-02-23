@@ -1,8 +1,11 @@
 package kr.spring.member.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
 
 import kr.spring.member.vo.MemberVO;
 
@@ -15,9 +18,9 @@ public interface MemberMapper {
 	public void insertMember(MemberVO member);
 	@Insert("INSERT INTO member_detail (mem_num,"
 			  + "mem_name,mem_pw,mem_cell,mem_email,mem_zipcode,mem_address1,"
-			  + "mem_address2) VALUES (#{mem_num},"
+			  + "mem_address2,country_num,like_num) VALUES (#{mem_num},"
 			  + "#{mem_name},#{mem_pw},#{mem_cell},#{mem_email},"
-			  + "#{mem_zipcode},#{mem_address1},#{mem_address2})")
+			  + "#{mem_zipcode},#{mem_address1},#{mem_address2},#{country_num},#{like_num})")
 	public void insertMember_detail(MemberVO member);
 	@Select("SELECT m.mem_num,m.mem_id,m.mem_auth,m.mem_au_id,"
 			  + "d.mem_pw,m.mem_nickname,d.mem_email FROM "
@@ -29,4 +32,15 @@ public interface MemberMapper {
 			  + "member m LEFT OUTER JOIN member_detail d "
 			  + "ON m.mem_num=d.mem_num WHERE m.mem_nickname=#{mem_nickname}")
 	public MemberVO selectCheckNickname(String mem_nickname);
+  
+	//선호지역
+	@Select("SELECT * FROM member_country")
+	public List<MemberVO> getCountryList();
+		
+	//주요관심사
+	@Select("SELECT * FROM member_like")
+	public List<MemberVO> getLikeList();
+	
+	
+		
 }

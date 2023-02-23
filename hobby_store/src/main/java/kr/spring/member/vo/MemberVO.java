@@ -31,7 +31,9 @@ public class MemberVO {
 	@NotEmpty
 	private String mem_address2;
 	private int country_num;
+	private String country_detail;
 	private int like_num;
+	private String like_detail;
 	private Date mem_date;
 	private Date mem_mdate;
 	public int getMem_num() {
@@ -124,11 +126,23 @@ public class MemberVO {
 	public void setCountry_num(int country_num) {
 		this.country_num = country_num;
 	}
+	public String getCountry_detail() {
+		return country_detail;
+	}
+	public void setCountry_detail(String country_detail) {
+		this.country_detail = country_detail;
+	}
 	public int getLike_num() {
 		return like_num;
 	}
 	public void setLike_num(int like_num) {
 		this.like_num = like_num;
+	}
+	public String getLike_detail() {
+		return like_detail;
+	}
+	public void setLike_detail(String like_detail) {
+		this.like_detail = like_detail;
 	}
 	public Date getMem_date() {
 		return mem_date;

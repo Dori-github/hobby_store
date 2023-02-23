@@ -21,8 +21,8 @@ create table member_detail(
  mem_zipcode varchar2(5) not null,
  mem_address1 varchar2(90) not null,
  mem_address2 varchar2(90) not null,
- country_num number(1) not null,
- like_num number(1) not null,
+ country_num number(2) not null,
+ like_num number(2) not null,
  mem_date date default sysdate not null, --등록일
  mem_mdate date, --수정일
  constraint member_detail_pk primary key (mem_num),
@@ -35,14 +35,14 @@ create sequence member_seq;
 
 -- 선호클래스 지역 테이블
 create table member_country(
- country_num number(1) not null,
+ country_num number(2) not null,
  country_detail varchar(20),
  constraint country_num_pk primary key (country_num)
  );
  
  --관심사 테이블 
  create table member_like(
-  like_num number(1) not null,
+  like_num number(2) not null,
   like_detail varchar2(20),
   constraint like_num_pk primary key (like_num)
  );
