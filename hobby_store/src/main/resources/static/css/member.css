@@ -37,12 +37,13 @@ a:hover {
 
 
 .view-box{
+	  border:1px solid black;
       height:50px; 
       min-width:100%;
       max-width:100%;
       overflow: hidden;
-      margin: 0 auto;
-      text-align: center;
+      /*margin: 0 auto;*/
+      /*text-align: center;*/
  
     }
 .view-box ul{
@@ -51,11 +52,11 @@ a:hover {
      
     }
 .view-box ul li{
-      width: 23%; 
+      width: 25%; 
       height: 50px; 
-      line-height: 50px; 
+      line-height: 60px; 
       float:left;
-      overflow: visible;
+     
       
     }
     
