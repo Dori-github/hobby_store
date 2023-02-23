@@ -44,8 +44,8 @@ $(function(){
 
 						<div class="card-body p-md-5 mx-md-4">
 							<div class="text-center mb-3">
-								<h2 style="font-weight: 800;">회원가입</h2>
 								<div class="view-box">
+									<h2 style="font-weight: 800;">회원가입</h2>
 								 	<ul class="box1">
 										<li>성장이 목마를때, 취미상점</li>
 										<li>나의 온라인 사수, 취미상점</li>

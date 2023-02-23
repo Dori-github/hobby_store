@@ -172,9 +172,11 @@
 	border-bottom:1px solid lightgray;
 }
 #course_form td:first-child{
-	border-right:1px solid lightgray;
-	width:300px;;
+	border-bottom:1px solid #FFF;
+	width:200px;
 	text-align: center;
+	font-weight:bold;	
+	background-color: lightgray;
 }
 #course_form td{
 	padding:10px 20px;
@@ -185,7 +187,7 @@
 
 
 #course_form input[type=text],
-#course_form input[type=number]{
+#course_form input[type=number],#course_vprice{
 	width:100%;
 	outline:1px solid lightgray;
 	border:none;
@@ -193,9 +195,9 @@
 	padding:5px 5px 5px 10px;
 }
 #course_form input[type=text]:hover,#course_form input[type=text]:focus,
-#course_form input[type=number]:hover,#course_form input[type=number]:focus{
+#course_form input[type=number]:hover,#course_form input[type=number]:focus,
+#course_form .btn-select:hover{
 	outline:3px solid gray;
-	position:relative;
 }
 
 /*라디오버튼*/
@@ -225,21 +227,105 @@
 }
 
 
+/*카테고리*/
+#course_form .btn-select, #course_form .btn-select2{
+	display:inline-block;
+	width: 200px;
+	height:30px;
+	padding: 5px 10px 5px 10px;
+	font-size: 13px;
+	background-color: #fff;
+	outline: 1px solid lightgray;
+	border:none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: left;
+}
+#course_form .list-box,#course_form .list-box2{
+	display:none;
+	position:relative;
+	border:none;
+}
+#course_form .list-cate,#course_form .list-cate2{
+	position: absolute;
+	top:10px;left:0;
+	width:200px;
+	margin:0;
+	padding:0;
+	border: 1px solid lightgray;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
+	z-index:997;
+}
+#course_form .list-cate li,#course_form .list-cate2 li{
+    width: 100%;
+    height:40px;
+	line-height:30px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    text-align: left;
+}
+#course_form .list-cate li:first-child,#course_form .list-cate2 li:first-child{
+	border-radius:5px 5px 0 0;
+}
+#course_form .list-cate li:last-child,#course_form .list-cate2 li:last-child{
+	border-radius:0 0 5px 5px;
+}
+
+
+#course_form .list-cate li:hover,#course_form .list-cate2 li:hover{
+    background-color: #F2F2F2;
+    font-weight:bold;
+    color:#FF4E02;
+}
 
 
 
-#course_form ul{
+
+/*요일,시간*/
+#datetime label{
+	width:80px;
+	border:1px solid lightgray;
+	border-radius: 5px;
+	padding:5px 10px;
+	text-align:center;
+	font-weight:bolder;
+	color:lightgray;
+}
+#datetime label:hover{
+	box-shadow:0 0 0 3px lightgray;
+	cursor:pointer;
+}
+#datetime input[type=checkbox]{
+	display:none;
+}
+#datetime input[type=checkbox]:checked ~ label{
+	border:none;
+	background-color:#FF4E02;
+	color:#FFF;
+}
+#datetime .time-choice{
+	display: none;
+	margin-top:20px;
+}
+
+
+
+
+
+
+
+
+
+
+#course_form ul:not(.list-cate,.list-cate2){
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin:0;
 	padding:0;
-}
-#course_form tr:nth-child(3) ul{
-	width:300px;
-}
-#course_form tr:nth-child(6) ul{
-	width:300px;
 }
 
 /*수강인원수*/
@@ -266,7 +352,7 @@
 	border-radius: 0 5px 5px 0;
 }
 #course_form i{
-	line-height: 28px;
+	line-height: 20px;
 }
 input[type='number']::-webkit-outer-spin-button,
 input[type='number']::-webkit-inner-spin-button {
@@ -287,7 +373,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*가격*/
-#course_form #number-box{
+#course_form #course_vprice{
 	width:200px;
 	height:28.400px;
 	text-align: right;
@@ -308,18 +394,62 @@ input[type='number']::-webkit-inner-spin-button {
 	border-radius: 5px;
 	padding:5px 10px;
 	background-color: lightgray;
-	color:#000;
+	color:#404040;
 }
-#course_form #zipcode input:last-child:hover{
+#course_form #zipcode input:last-child:hover,
+#course_form .image span:last-child:hover{
 	background-color: #404040;
 	color:#FFF;
 }
 
+/*이미지*/
+#course_form .image .upload-box{
+	position:relative;
+	float:left;
+	width:150px;
+	height:150px;
+	margin-bottom:30px;
+	border:1px solid lightgray;
+	color:lightgray;
+}
+#course_form .image span:last-child{
+	position:absolute;
+	top:155px;
+	left:0;
+	width:100%;
+	height:25px;
+	margin:0;
+	border-radius:5px;
+	background-color:lightgray;
+	text-align: center;
+	color:#404040;
+	font-weight:bold;
+	line-height:20pt;
+}
 
+#course_form .image #text{
+	font-size:10pt;
+	border:none;
+	
+}
+#course_form .image i{
+	color:lightgray;
+}
+#course_form .image i:first-child{
+	top:52px;
+	left:58px;
+	font-size: 25pt;
+}
+#course_form .image i:first-child:hover{
+	font-size: 30pt;
+	top:50px;
+	left:55px;
+	color:#404040;
+}
 
-
-
-
+#course_form .image i:last-child:hover{
+	font-size: 13pt;
+}
 
 
 

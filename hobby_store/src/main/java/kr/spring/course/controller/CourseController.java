@@ -1,6 +1,7 @@
 package kr.spring.course.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseVO;
@@ -31,7 +33,7 @@ public class CourseController {
 		return new CourseVO();
 	}
 	
-	//게시판 글 목록
+	//클래스 목록
 	@RequestMapping("/course/courseList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") 
 								int currentPage,String keyfield,String keyword) {
@@ -58,8 +60,16 @@ public class CourseController {
 	//글쓰기
 	//등록 폼 호출
 	@GetMapping("/course/courseWrite.do")
-	public String form() {
-		return "courseWrite";
+	public ModelAndView form() {
+		
+		List<CourseVO> course_cate = null;
+		course_cate = courseService.selectCate();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("courseWrite");
+		mav.addObject("course_cate",course_cate);
+		
+		return mav;
 	}
 	
 	//등록 폼에서 전송된 데이터 처리

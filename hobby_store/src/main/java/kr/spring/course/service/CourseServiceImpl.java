@@ -18,14 +18,12 @@ public class CourseServiceImpl implements CourseService{
 	private CourseMapper courseMapper;
 	
 	@Override
-	public List<CourseVO> selectList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+	public List<CourseVO> selectCourseList(Map<String, Object> map) {
 		return null;
 	}
 
 	@Override
-	public int selectRowCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
+	public int selectCourseCount(Map<String, Object> map) {
 		return 0;
 	}
 
@@ -37,25 +35,21 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public CourseVO selectCourse(Integer course_num) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void updateHit(Integer course_num) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateCourse(CourseVO course) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void deleteCourse(Integer course_num) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -63,6 +57,11 @@ public class CourseServiceImpl implements CourseService{
 	public void deletePhoto(Integer course_num) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<CourseVO> selectCate() {
+		return courseMapper.selectCate();
 	}
 
 }
