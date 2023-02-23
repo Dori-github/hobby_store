@@ -42,7 +42,7 @@ $(function(){
 						<div class="row">
 						</div>
 
-						<div class="card-body p-md-5 mx-md-4">
+						<div class="card-body p-md-5 mx-md-4">   
 							<div class="text-center mb-3">
 								<div class="view-box">
 									<h2 style="font-weight: 800;">회원가입</h2>
