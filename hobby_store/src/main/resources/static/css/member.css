@@ -22,15 +22,18 @@
     margin: 0px 16px;
 }
 
-.a {
+
+#find {
     color: gray;
     text-decoration: underline;
     font-size: 15px;
+    
 }
 
-.a:hover {
+#find:hover {
     color:black;
     text-decoration: none;
+   
 }
 
 

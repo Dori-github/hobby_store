@@ -11,8 +11,7 @@
     
     <!-- 중앙 컨텐츠 시작  -->
     <title>로그인</title>
-
-    <section class="h-100 gradient-form" style="background-color: #fff;">
+        <section class="h-100 gradient-form" style="background-color: #fff;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-5">
@@ -22,6 +21,7 @@
                                 <h2 style="padding-bottom: 20px;font-weight: 800;">취미상점</h2>
                             </div>
                             <!-- Pills content -->
+                           
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="pills-login" role="tabpanel"
                                     aria-labelledby="tab-login">
@@ -60,16 +60,16 @@
                                         <!-- 2 column grid layout -->
                                         <div class="row mb-4">
                                             <div class="col-md-4 d-flex justify-content-center">
-                                                <a href="#!">아이디 찾기</a>
+                                                <a id="find" href="#!">아이디 찾기</a>
                                             </div>
                                             <div class="col-md-4 d-flex justify-content-center" style="border-right: 1px solid #ddd;border-left: 1px solid;padding: 0px;">
                                                 <!-- Simple link -->
-                                                <a href="#!">비밀번호 찾기</a>
+                                                <a  id="find" href="#!">비밀번호 찾기</a>
                                             </div>
 
                                             <div class="col-md-4 d-flex justify-content-center" style="border-right: 1px solid #ddd;border-left: 1px solid;padding: 0px;">
                                                 <!-- Simple link -->
-                                                <a href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
+                                                <a id="find" class="find" href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
                                             </div>
                                         </div>
 
