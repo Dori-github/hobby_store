@@ -139,7 +139,13 @@ public class MemberController {
 		return "common/notice";
 
 	}
-
+	
+	//=========회원로그인============//
+	//로그인 폼 호출
+		@GetMapping("/member/login.do")
+		public String formLogin() {
+			return "memberLogin";
+		}
 }
 
 

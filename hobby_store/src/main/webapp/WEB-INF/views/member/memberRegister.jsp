@@ -5,16 +5,14 @@
     
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <meta charset="UTF-8">
-
 <link href="${pageContext.request.contextPath}/css/member.css"
-	rel="stylesheet">
-
-	  
+	rel="stylesheet">	  
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Plugin -->
 <script src="${pageContext.request.contextPath}/js/rolling.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmNickname.js"></script>  
@@ -62,8 +60,8 @@ $(function(){
 							<br>
 							
 							<div class="text-center mb-3">
-								<img src="${pageContext.request.contextPath}/images/kakao_talk.svg" style="height: 50px;"> <img
-									src="${pageContext.request.contextPath}/images/naver.svg" style="height: 50px;">
+								<img src="${pageContext.request.contextPath}/images/kakao_talk.svg" style="height: 50px;"> 
+								<img src="${pageContext.request.contextPath}/images/naver.svg" style="height: 50px;">
 							</div>
                             
                             <br>
@@ -114,7 +112,7 @@ $(function(){
 									</div>
 								</div>
 							     
-							     <span id="message_nickname"></span></br>
+							     <span id="message_nickname"></span>
 
 								<label for="mem_pw">비밀번호</label>
 								<div class="input-group mb-3">
