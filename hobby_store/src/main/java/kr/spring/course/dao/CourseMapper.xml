@@ -3,5 +3,33 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.course.dao.CourseMapper">
-
+	<!-- sql 태그와 include 태그를 이용해 SQL문 재사용 -->
+	<sql id="courseSearch">
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<if test="keyfield==1">
+					course_name LIKE '%' || #{keyword} || '%' OR mem_id LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==2">
+					course_name LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==3 ">
+					mem_id LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectCourseCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM course <include refid="courseSearch"></include> 
+	</select>
+	
+	<select id="selectCourseList" parameterType="map" resultType="CourseVO">
+		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course 
+			<include refid="courseSearch"></include> ORDER BY course_num DESC)a)
+			<![CDATA[
+			WHERE rnum>=#{start} AND rnum<=#{end}
+			]]>
+	</select>
+	
 </mapper> 
