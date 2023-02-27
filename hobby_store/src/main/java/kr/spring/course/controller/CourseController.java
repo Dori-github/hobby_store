@@ -24,7 +24,7 @@ import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.util.PagingUtil;
 
-//@Controller
+@Controller
 public class CourseController {
 	private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
