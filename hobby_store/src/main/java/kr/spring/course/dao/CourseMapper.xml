@@ -24,7 +24,7 @@
 		SELECT COUNT(*) FROM course <include refid="courseSearch"></include> 
 	</select>
 	
-	<select id="selectCourseList" parameterType="map" resultType="CourseVO">
+	<select id="selectCourseList" parameterType="map" resultType="kr.spring.course.vo.CourseVO">
 		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course 
 			<include refid="courseSearch"></include> ORDER BY course_num DESC)a)
 			<![CDATA[
