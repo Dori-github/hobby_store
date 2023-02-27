@@ -23,7 +23,7 @@
 	<select id="selectCourseCount" parameterType="map" resultType="integer">
 		SELECT COUNT(*) FROM course <include refid="courseSearch"></include> 
 	</select>
-	
+	 
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
 		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course 
 			<include refid="courseSearch"></include> ORDER BY course_num DESC)a)
