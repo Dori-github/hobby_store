@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CourseVO {
 	private int course_num;
 	private int mem_num;
-	private String cate_num;
+	private String cate_nums;
 	@NotEmpty
 	private String course_name;
 	@NotEmpty
@@ -24,12 +24,15 @@ public class CourseVO {
 	private String course_photo_name1;
 	private String course_photo_name2;
 	private String course_photo_name3;
-	@NotEmpty
+	@Range(min=1,max=999)
+	private int course_month;
+	@Range(min=1,max=999)
+	private int course_count;
 	@Range(min=1,max=99999999)
 	private int course_price;
 	@NotEmpty
 	@Range(min=1,max=999 )
-	private int course_limit ;
+	private int course_limit;
 	@NotEmpty
 	@Size(min=5,max=5)
 	private String course_zipcode;
@@ -49,18 +52,20 @@ public class CourseVO {
 	private int cate_parent;
 	@NotEmpty
 	private String cate_name;
-	private String id;
-	private String nick_name;
+	private int cate_num;
+	private String mem_id;
+	private String mem_nickname;
 	private byte[] mem_photo;
 	private double star;
 	private int reply;
 	private int fav;
 	@NotEmpty
-	private String course_reg_date;
+	private String[] course_reg_date;
 	@NotEmpty
-	private String course_reg_time;
+	private String[] course_reg_time;
 
 	//파일 업로드 처리
+	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
 	public void setUpload1(MultipartFile upload1)
 			throws IOException{
 		//MultipartFile -> byte[] 변환
@@ -83,7 +88,10 @@ public class CourseVO {
 		setCourse_photo_name3(upload3.getOriginalFilename());
 	}
 	
-
+	
+	public void setPrice(String price) throws Exception{
+		
+	}
 	public int getCourse_num() {
 		return course_num;
 	}
@@ -96,11 +104,11 @@ public class CourseVO {
 	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
-	public String getCate_num() {
-		return cate_num;
+	public String getCate_nums() {
+		return cate_nums;
 	}
-	public void setCate_num(String cate_num) {
-		this.cate_num = cate_num;
+	public void setCate_nums(String cate_nums) {
+		this.cate_nums = cate_nums;
 	}
 	public String getCourse_name() {
 		return course_name;
@@ -222,17 +230,23 @@ public class CourseVO {
 	public void setCate_name(String cate_name) {
 		this.cate_name = cate_name;
 	}
-	public String getId() {
-		return id;
+	public int getCate_num() {
+		return cate_num;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setCate_num(int cate_num) {
+		this.cate_num = cate_num;
 	}
-	public String getNick_name() {
-		return nick_name;
+	public String getMem_id() {
+		return mem_id;
 	}
-	public void setNick_name(String nick_name) {
-		this.nick_name = nick_name;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
 	}
 	public byte[] getMem_photo() {
 		return mem_photo;
@@ -258,34 +272,31 @@ public class CourseVO {
 	public void setFav(int fav) {
 		this.fav = fav;
 	}
-	public String getCourse_reg_date() {
+	public String[] getCourse_reg_date() {
 		return course_reg_date;
 	}
-	public void setCourse_reg_date(String course_reg_date) {
+	public void setCourse_reg_date(String[] course_reg_date) {
 		this.course_reg_date = course_reg_date;
 	}
-	public String getCourse_reg_time() {
+	public String[] getCourse_reg_time() {
 		return course_reg_time;
 	}
-	public void setCourse_reg_time(String course_reg_time) {
+	public void setCourse_reg_time(String[] course_reg_time) {
 		this.course_reg_time = course_reg_time;
 	}
 	@Override
 	public String toString() {
-		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_num=" + cate_num
+		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums
 				+ ", course_name=" + course_name + ", course_content=" + course_content + ", course_photo_name1="
 				+ course_photo_name1 + ", course_photo_name2=" + course_photo_name2 + ", course_photo_name3="
 				+ course_photo_name3 + ", course_price=" + course_price + ", course_limit=" + course_limit
 				+ ", course_zipcode=" + course_zipcode + ", course_address1=" + course_address1 + ", course_address2="
 				+ course_address2 + ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek
 				+ ", course_hit=" + course_hit + ", course_date=" + course_date + ", course_mdate=" + course_mdate
-				+ ", cate_parent=" + cate_parent + ", cate_name=" + cate_name + ", id=" + id + ", nick_name="
-				+ nick_name + ", mem_photo=" + Arrays.toString(mem_photo) + ", star=" + star + ", reply=" + reply
-				+ ", fav=" + fav + ", course_reg_date=" + course_reg_date + ", course_reg_time=" + course_reg_time
-				+ "]";
+				+ ", cate_parent=" + cate_parent + ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_id=" + mem_id
+				+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + Arrays.toString(mem_photo) + ", star=" + star
+				+ ", reply=" + reply + ", fav=" + fav + ", course_reg_date=" + Arrays.toString(course_reg_date)
+				+ ", course_reg_time=" + Arrays.toString(course_reg_time) + "]";
 	}
-
-
-
 
 }

@@ -2,7 +2,7 @@
 create table course(
     course_num number not null,
     mem_num number not null,
-    cate_num varchar2(3) not null,
+    cate_nums varchar2(3) not null,
     course_name varchar2(30) not null,
     course_content clob not null,
     course_photo1 blob not null,
@@ -11,6 +11,8 @@ create table course(
     course_photo_name1 varchar2(150) not null,
     course_photo_name2 varchar2(150),
     course_photo_name3 varchar2(150),
+    course_month number(3),
+    course_count number(3),
     course_price number(10) not null,
     course_limit number,
     course_zipcode varchar2(5) not null,

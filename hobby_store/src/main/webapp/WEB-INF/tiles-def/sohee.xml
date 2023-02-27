@@ -10,6 +10,11 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/member/memberRegister.jsp"/>        
     </definition>
+    <definition name="memberLogin" extends="main">
+    	<put-attribute name="title" value="회원로그인"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/member/memberLogin.jsp"/>        
+    </definition>
 </tiles-definitions>
 
 

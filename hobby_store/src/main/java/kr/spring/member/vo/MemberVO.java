@@ -36,6 +36,15 @@ public class MemberVO {
 	private String like_detail;
 	private Date mem_date;
 	private Date mem_mdate;
+	
+	//====비밀번호 일치 여부 체크====//
+	public boolean isCheckedPassword(String userPasswd) {
+		if(mem_auth > 1 && mem_pw.equals(userPasswd)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public int getMem_num() {
 		return mem_num;
 	}

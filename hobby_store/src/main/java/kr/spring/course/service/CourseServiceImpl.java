@@ -19,12 +19,12 @@ public class CourseServiceImpl implements CourseService{
 	
 	@Override
 	public List<CourseVO> selectCourseList(Map<String, Object> map) {
-		return null;
+		return courseMapper.selectCourseList(map);
 	}
 
 	@Override
 	public int selectCourseCount(Map<String, Object> map) {
-		return 0;
+		return courseMapper.selectCourseCount(map);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public CourseVO selectCourse(Integer course_num) {
-		return null;
+		return courseMapper.selectCourse(course_num);
 	}
 
 	@Override
@@ -62,6 +62,16 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public List<CourseVO> selectCate() {
 		return courseMapper.selectCate();
+	}
+
+	@Override
+	public void insertCourse_time(CourseVO course) {
+		courseMapper.insertCourse_time(course);
+	}
+
+	@Override
+	public int selectCate_num(CourseVO course) {
+		return courseMapper.selectCate_num(course);
 	}
 
 }
