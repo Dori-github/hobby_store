@@ -4,7 +4,7 @@ create table member(
  mem_num number not null,
  mem_id varchar2(12) unique not null,
  mem_nickname varchar2(30) unique,
- mem_auth number(1) default 1 not null, --0정지회원,1탈퇴회원,2일반회원,3강사,9관리자
+ mem_auth number(1) default 2 not null, --0정지회원,1탈퇴회원,2일반회원,3강사,9관리자
  mem_au_id varchar2(36), --자동 로그인에 사용되는 식별값
  constraint member_pk primary key (mem_num)
 );
