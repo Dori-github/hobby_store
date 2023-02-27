@@ -41,7 +41,7 @@ public class MemberController {
 	}
 
 	//=========회원가입============//
-	//아이디 중복  체크
+	//아이디 중복 체크
 	@RequestMapping("/member/confirmId.do")
 	@ResponseBody
 	public Map<String,String> Idprocess(
