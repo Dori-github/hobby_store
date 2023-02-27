@@ -268,6 +268,18 @@ public class MemberController {
 		}
 		
 		
+		//=========아이디찾기============//
+		//아이디찾기 폼 호출 
+		@GetMapping("/member/idSearch.do")
+		public String idSearchForm() {
+			logger.debug("<<아이디 찾기 진입>>");
+			
+			return "memberIdSearch";
+		}
+		//아이디찾기 폼에 전송된 데이터 처리
+		  
+		
+	
 		
 }
 
