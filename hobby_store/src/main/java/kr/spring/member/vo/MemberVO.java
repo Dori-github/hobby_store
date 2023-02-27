@@ -13,6 +13,7 @@ public class MemberVO {
 	private String mem_id;
 	private String mem_nickname;
 	private int mem_auth;
+	private String auto;
 	private String mem_au_id;
 	@NotEmpty
 	private String mem_name;
@@ -68,6 +69,12 @@ public class MemberVO {
 	}
 	public void setMem_auth(int mem_auth) {
 		this.mem_auth = mem_auth;
+	}
+	public String getAuto() {
+		return auto;
+	}
+	public void setAuto(String auto) {
+		this.auto = auto;
 	}
 	public String getMem_au_id() {
 		return mem_au_id;

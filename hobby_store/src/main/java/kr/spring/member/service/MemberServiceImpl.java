@@ -46,6 +46,23 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getLikeList();
 	}
 
+	@Override
+	public void updateAu_id(String mem_au_id, String mem_id) {
+		memberMapper.updateAu_id(mem_au_id, mem_id);
+		
+	}
+
+	@Override
+	public MemberVO selectAu_id(String mem_au_id) {
+		return memberMapper.selectAu_id(mem_au_id);
+	}
+
+	@Override
+	public void deleteAu_id(int mem_num) {
+		memberMapper.deleteAu_id(mem_num);
+		
+	}
+
 
 	
 

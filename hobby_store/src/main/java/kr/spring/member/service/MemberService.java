@@ -10,6 +10,12 @@ public interface MemberService {
 	public MemberVO selectCheckNickname(String mem_nickname);
 	public List<MemberVO> getCountryList();
 	public List<MemberVO> getLikeList();
+	
+	//자동로그인
+		public void updateAu_id(String mem_au_id,String mem_id);
+		public MemberVO selectAu_id(String mem_au_id);
+		public void deleteAu_id(int mem_num);
+
 
 
 }
