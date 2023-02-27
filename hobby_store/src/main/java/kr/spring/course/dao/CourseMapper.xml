@@ -20,13 +20,39 @@
 		</where>
 	</sql>
 	
+	<sql id="courseOrder">
+		<if test="order==1">
+			c.course_num DESC
+		</if>
+		<if test="order==2">
+			r.reply DESC
+		</if>
+		<if test="order==3">
+			f.fav DESC
+		</if>
+		<if test="order==4">
+			c.course_price ASC
+		</if>
+	
+		if(sort.equals("1")){
+			sort = "j.emp_id DESC";
+		}else if(sort.equals("2")) {
+			sort = "j.emp_hit DESC";
+		}else {
+			sort = "j.emp_id DESC";
+		}
+	</sql>
+	
 	<select id="selectCourseCount" parameterType="map" resultType="integer">
-		SELECT COUNT(*) FROM course <include refid="courseSearch"></include> 
+		SELECT * FROM course <include refid="courseSearch"></include> 
 	</select>
 	
 	<select id="selectCourseList" parameterType="map" resultType="CourseVO">
-		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course 
-			<include refid="courseSearch"></include> ORDER BY course_num DESC)a)
+		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course c JOIN member m USING(mem_num) 
+		JOIN (SELECT course_num, COUNT(*) AS fav FROM course_fav GROUP BY course_num) f USING (course_num) 
+		JOIN (SELECT course_num, COUNT(*) AS reply FROM course_reply GROUP BY course_num) r USING (course_num) 
+		JOIN (SELECT course_num, ROUND(AVG(star_auth*1.0),1) AS star FROM course_star GROUP BY course_num) s USING (course_num) 
+			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}
 			]]>
