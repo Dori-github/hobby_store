@@ -33,14 +33,6 @@
 		<if test="order==4">
 			c.course_price ASC
 		</if>
-	
-		if(sort.equals("1")){
-			sort = "j.emp_id DESC";
-		}else if(sort.equals("2")) {
-			sort = "j.emp_hit DESC";
-		}else {
-			sort = "j.emp_id DESC";
-		}
 	</sql>
 	
 	<select id="selectCourseCount" parameterType="map" resultType="integer">

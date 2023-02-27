@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 import kr.spring.course.vo.CourseVO;
 
-@Mapper
+//@Mapper
 public interface CourseMapper {
 	//부모글
 	public List<CourseVO> selectCourseList(Map<String,Object> map);

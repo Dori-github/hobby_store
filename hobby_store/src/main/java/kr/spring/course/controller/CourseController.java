@@ -24,7 +24,7 @@ import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.util.PagingUtil;
 
-@Controller
+//@Controller
 public class CourseController {
 	private static final Logger logger = LoggerFactory.getLogger(CourseController.class);
 
@@ -42,10 +42,15 @@ public class CourseController {
 	//=============클래스 목록===============//
 	@RequestMapping("/course/courseList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") 
-								int currentPage,String keyfield,String keyword) {
+								int currentPage,String keyfield,String keyword,String cate,String onoff,String location,String oneweek,String order) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
+		map.put("cate", cate);
+		map.put("onoff", onoff);
+		map.put("location", location);
+		map.put("oneweek", oneweek);
+		map.put("order", order);
 		
 		//글의 총개수 또는 검색된 글의 개수
 		int count = courseService.selectCourseCount(map);
@@ -67,6 +72,7 @@ public class CourseController {
 		list = courseService.selectCourseList(map);
 		
 		
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("courseList");
 		mav.addObject("course_cate",course_cate);
@@ -76,6 +82,23 @@ public class CourseController {
 		
 		return mav;
 	}
+	
+	//이미지 출력
+	@RequestMapping("/course/imageView.do")
+	public ModelAndView viewImage(@RequestParam int course_num) {
+		
+		CourseVO courseVO = courseService.selectCourse(course_num);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("imageView");
+		
+		mav.addObject("imageFile", courseVO.getCourse_photo1());
+		mav.addObject("filename", courseVO.getCourse_photo_name1());
+		
+		return mav;
+	}
+	
+	
 	
 	
 	//=============글쓰기==============//

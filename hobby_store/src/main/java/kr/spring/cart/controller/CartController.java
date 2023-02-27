@@ -62,13 +62,32 @@ public class CartController {//메서드 생성, 데이터 처리
 			
 			return mav;
 	}
+	
+	//상품 수량, 구입액
+	@RequestMapping(value = "/getItemQuan", method = RequestMethod.POST)
+	@ResponseBody
+	public void getItemQuan(int num) throws Exception{
+		logger.debug("zzzz" + num);
+		
+		List<ItemCartVO> getItemQuan = null;
+		getItemQuan = cartService.getItemQuan(100);
+		logger.debug("aaaaa" + num);
+		
+		ModelAndView mav = new ModelAndView();
+		//뷰 이름 설정(tiles-definition name)
+		mav.setViewName("cartList");
+		//데이터 저장
+		mav.addObject("getItemQuan", getItemQuan);
+		
+	}
+	
 
 	//상품 장바구니 수정(개별 상품 수량 변경)
 	@ResponseBody
 	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
 	public void updateCart(int quantity, int cart_num) throws Exception {
 	 
-	 cartService.updateCart(quantity, cart_num);
-	 logger.debug("cart : " + quantity + "," + cart_num);
+		 cartService.updateCart(quantity, cart_num);
+		 logger.debug("cart : " + quantity + "," + cart_num);
 	}
 }

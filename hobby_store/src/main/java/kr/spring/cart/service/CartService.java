@@ -23,6 +23,8 @@ public interface CartService {
 	//=====상품 장바구니=====//
 	//상품 장바구니 목록
 	public List<ItemCartVO> getItemList(int num);
+	//상품 수량, 구입액
+	public List<ItemCartVO> getItemQuan(int num);
 	//총 레코드 수
 	public int getItemCount();
 	//상품 장바구니 등록
