@@ -8,9 +8,46 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
+import kr.spring.interceptor.AdminCheckInterceptor;
+import kr.spring.interceptor.AutoLoginCheckInterceptor;
+import kr.spring.interceptor.LoginCheckInterceptor;
+
 //자바코드 기반 설정 클래스
 @Configuration
 public class AppConfig implements WebMvcConfigurer{
+	
+	private AutoLoginCheckInterceptor autoLogin;
+	private LoginCheckInterceptor loginCheck;
+	private AdminCheckInterceptor adminCheck;
+	
+	@Bean
+	public AutoLoginCheckInterceptor interceptor() {
+		autoLogin = new AutoLoginCheckInterceptor();
+		return autoLogin;
+	}
+	
+	@Bean
+	public LoginCheckInterceptor interceptor2() {
+		loginCheck = new LoginCheckInterceptor();
+		return loginCheck;
+	}
+	
+	@Bean
+	public AdminCheckInterceptor interceptor3() {
+		adminCheck = new AdminCheckInterceptor();
+		return adminCheck;
+	}
+	
+	//인터셉터 등록
+		@Override
+		public void addInterceptors(
+				     InterceptorRegistry registry) {
+			//AutoLoginCheckInterceptor 설정
+			registry.addInterceptor(autoLogin)
+					.addPathPatterns("/**")
+					.excludePathPatterns("/member/login.do")
+					.excludePathPatterns("/member/logout.do");
+		}
 
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
