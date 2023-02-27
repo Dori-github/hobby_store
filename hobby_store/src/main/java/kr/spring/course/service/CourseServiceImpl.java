@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.spring.course.dao.CourseMapper;
 import kr.spring.course.vo.CourseVO; 
 
-//@Service
-//@Transactional
+@Service
+@Transactional
 public class CourseServiceImpl implements CourseService{
 
 	@Autowired
