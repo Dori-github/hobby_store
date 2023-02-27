@@ -17,6 +17,7 @@ public class CourseServiceImpl implements CourseService{
 	@Autowired
 	private CourseMapper courseMapper;
 	
+	//==========부모글==========//
 	@Override
 	public List<CourseVO> selectCourseList(Map<String, Object> map) {
 		return courseMapper.selectCourseList(map);
@@ -47,7 +48,7 @@ public class CourseServiceImpl implements CourseService{
 	public void updateCourse(CourseVO course) {
 		
 	}
-
+	
 	@Override
 	public void deleteCourse(Integer course_num) {
 		
@@ -72,6 +73,32 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public int selectCate_num(CourseVO course) {
 		return courseMapper.selectCate_num(course);
+	}
+
+	
+	
+	
+	//==========좋아요============//
+	@Override
+	public int selectFavCount(Integer course_num) {
+		return courseMapper.selectFavCount(course_num);
+	}
+
+	
+	
+	
+	
+	
+	
+	//후기
+	@Override
+	public int selectReplyCount(Integer course_num) {
+		return courseMapper.selectReplyCount(course_num);
+	}
+
+	@Override
+	public int selectStarAvg(Integer course_num) {
+		return courseMapper.selectStarAvg(course_num);
 	}
 
 }

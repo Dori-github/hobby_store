@@ -53,16 +53,15 @@ public class CourseVO {
 	@NotEmpty
 	private String cate_name;
 	private int cate_num;
-	private String mem_id;
 	private String mem_nickname;
 	private byte[] mem_photo;
-	private double star;
+	private float star;
 	private int reply;
 	private int fav;
 	@NotEmpty
-	private String[] course_reg_date;
+	private String course_reg_date;
 	@NotEmpty
-	private String[] course_reg_time;
+	private String course_reg_time;
 
 	//파일 업로드 처리
 	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
@@ -236,12 +235,6 @@ public class CourseVO {
 	public void setCate_num(int cate_num) {
 		this.cate_num = cate_num;
 	}
-	public String getMem_id() {
-		return mem_id;
-	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
-	}
 	public String getMem_nickname() {
 		return mem_nickname;
 	}
@@ -257,7 +250,7 @@ public class CourseVO {
 	public double getStar() {
 		return star;
 	}
-	public void setStar(double star) {
+	public void setStar(float star) {
 		this.star = star;
 	}
 	public int getReply() {
@@ -272,16 +265,28 @@ public class CourseVO {
 	public void setFav(int fav) {
 		this.fav = fav;
 	}
-	public String[] getCourse_reg_date() {
+	public int getCourse_month() {
+		return course_month;
+	}
+	public void setCourse_month(int course_month) {
+		this.course_month = course_month;
+	}
+	public int getCourse_count() {
+		return course_count;
+	}
+	public void setCourse_count(int course_count) {
+		this.course_count = course_count;
+	}
+	public String getCourse_reg_date() {
 		return course_reg_date;
 	}
-	public void setCourse_reg_date(String[] course_reg_date) {
+	public void setCourse_reg_date(String course_reg_date) {
 		this.course_reg_date = course_reg_date;
 	}
-	public String[] getCourse_reg_time() {
+	public String getCourse_reg_time() {
 		return course_reg_time;
 	}
-	public void setCourse_reg_time(String[] course_reg_time) {
+	public void setCourse_reg_time(String course_reg_time) {
 		this.course_reg_time = course_reg_time;
 	}
 	@Override
@@ -289,14 +294,13 @@ public class CourseVO {
 		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums
 				+ ", course_name=" + course_name + ", course_content=" + course_content + ", course_photo_name1="
 				+ course_photo_name1 + ", course_photo_name2=" + course_photo_name2 + ", course_photo_name3="
-				+ course_photo_name3 + ", course_price=" + course_price + ", course_limit=" + course_limit
-				+ ", course_zipcode=" + course_zipcode + ", course_address1=" + course_address1 + ", course_address2="
-				+ course_address2 + ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek
-				+ ", course_hit=" + course_hit + ", course_date=" + course_date + ", course_mdate=" + course_mdate
-				+ ", cate_parent=" + cate_parent + ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_id=" + mem_id
-				+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + Arrays.toString(mem_photo) + ", star=" + star
-				+ ", reply=" + reply + ", fav=" + fav + ", course_reg_date=" + Arrays.toString(course_reg_date)
-				+ ", course_reg_time=" + Arrays.toString(course_reg_time) + "]";
+				+ course_photo_name3 + ", course_month=" + course_month + ", course_count=" + course_count
+				+ ", course_price=" + course_price + ", course_limit=" + course_limit + ", course_zipcode="
+				+ course_zipcode + ", course_address1=" + course_address1 + ", course_address2=" + course_address2
+				+ ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek + ", course_hit=" + course_hit
+				+ ", course_date=" + course_date + ", course_mdate=" + course_mdate + ", cate_parent=" + cate_parent
+				+ ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_nickname=" + mem_nickname + ", star="
+				+ star + ", reply=" + reply + ", fav=" + fav + ", course_reg_date=" + course_reg_date
+				+ ", course_reg_time=" + course_reg_time + "]";
 	}
-
 }

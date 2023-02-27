@@ -36,10 +36,13 @@ public interface CourseMapper {
 	
 	 
 	//좋아요
-	
+	@Select("SELECT COUNT(*) FROM course_fav WHERE course_num=#{course_num}")
+	public int selectFavCount(Integer course_num);
 	
 	
 	//후기
-	
-	
+	@Select("SELECT COUNT(*) FROM course_reply WHERE course_num=#{course_num}")
+	public int selectReplyCount(Integer course_num);
+	@Select("SELECT AVG(star_auth) FROM course_star WHERE course_num=#{course_num}")
+	public int selectStarAvg(Integer course_num);
 }

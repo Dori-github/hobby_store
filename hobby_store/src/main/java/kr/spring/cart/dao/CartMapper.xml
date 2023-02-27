@@ -13,14 +13,23 @@
 	
 	<select id="getItemList" parameterType="integer" resultType="kr.spring.cart.vo.ItemCartVO">
 	
-	SELECT ic.cart_num, t.cate_parent, t.cate_name, i.items_photo1, i.items_name, 
-	i.items_price, ic.quantity, i.items_quantity,
-	<![CDATA[
-	ic.quantity * i.items_price as items_total 
-	]]>
+	SELECT t.cate_parent, t.cate_name, i.items_photo1, i.items_name, 
+	i.items_price, i.items_quantity
 	FROM item_cart ic 
 	JOIN items i ON ic.items_num=i.items_num 
 	JOIN items_cate t ON i.cate_num=t.cate_num 
+	WHERE ic.mem_num=#{mem_num}
+    ORDER BY ic.cart_num DESC
+	</select>
+	
+	<select id="getItemQuan" parameterType="integer" resultType="kr.spring.cart.vo.ItemCartVO">
+	
+	SELECT ic.cart_num, ic.quantity,
+	<![CDATA[
+	ic.quantity * i.items_price as items_total
+	]]>
+	FROM item_cart ic 
+	JOIN items i ON ic.items_num=i.items_num
 	WHERE ic.mem_num=#{mem_num}
     ORDER BY ic.cart_num DESC
 	</select>

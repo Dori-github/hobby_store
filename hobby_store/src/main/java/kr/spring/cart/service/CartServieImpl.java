@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.cart.dao.CartMapper;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
 
 @Service
+@Transactional
 public class CartServieImpl implements CartService{
 
 	@Autowired
@@ -61,6 +63,11 @@ public class CartServieImpl implements CartService{
 	@Override
 	public void updateCart(int quantity, int cart_num) {
 		cartmapper.updateCart(quantity, cart_num);
+	}
+
+	@Override
+	public List<ItemCartVO> getItemQuan(int num) {
+		return cartmapper.getItemQuan(num);
 	}
 
 }

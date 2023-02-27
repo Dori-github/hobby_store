@@ -38,7 +38,7 @@
 		    </div>
 		    <div id="menu_bar">
 				<ul class="navbar-nav me-auto my-2 my-lg-0">
-					<!--<c:if test="${!empty user && user.mem_auth == 3}"></c:if>-->
+					<!--<c:if test="${!empty user && user.auth == 3}"></c:if>-->
 					<li id="register_btn"><a>등록</a>
 						<ul class="dropdown">
 							<li><a href="${pageContext.request.contextPath}/course/courseWrite.do">클래스</a></li>
@@ -65,13 +65,13 @@
 					<img src="">
 					</c:if>
 					
-					<!--<c:if test="${!empty user && 2 <= user.mem_auth <= 3}">일반회원,강사 -->
+					<!--<c:if test="${!empty user && 2 <= user.auth <= 3}">일반회원,강사 -->
 					<!--</c:if>-->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> MY PAGE</a>
 					<span class="lightgray">|</span>
 					<a href="${pageContext.request.contextPath}/cart/cartList.do"><i class="fa-solid fa-cart-shopping"></i></a>
 					
-					<c:if test="${!empty user && user.mem_auth == 9}"><!-- 관리자 -->
+					<c:if test="${!empty user && user.auth == 9}"><!-- 관리자 -->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> 관리자 PAGE</a>
 					</c:if>
 					<c:if test="${!empty user}">
