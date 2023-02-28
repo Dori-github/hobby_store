@@ -20,7 +20,7 @@ public class DownloadView extends AbstractView{
 			HttpServletResponse response) throws Exception {
 		byte[] file = (byte[])model.get("downloadFile");
 		String filename = (String)model.get("filename");
-		
+		 
 		response.setContentType("application/download; charset=utf-8");
 		response.setContentLength(file.length);
 		
