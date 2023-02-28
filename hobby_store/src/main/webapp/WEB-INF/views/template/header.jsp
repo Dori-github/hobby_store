@@ -43,7 +43,7 @@
 						<ul class="dropdown">
 							<li><a href="${pageContext.request.contextPath}/course/courseWrite.do">클래스</a></li>
 							<li><a href="${pageContext.request.contextPath}/items/itemsRegister.do">스토어</a></li>
-							<li><a href="#">장소대여</a></li>
+							<li><a href="${pageContext.request.contextPath}/space/admin_write.do">장소대여</a></li>
 						</ul>
 					</li>
 					
