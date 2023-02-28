@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.order.dao.OrderMapper">  
+  	
+  	<insert id="insertOrder" parameterType="orderVO">
+	  	INSERT INTO order (
+	  	  order_num,
+	  	  item_name,
+	  	  order_total,
+	  	  payment,
+	  	  receive_name,
+	  	  receive_post,
+	  	  receive_address1,
+	  	  receive_address2,
+	  	  receive_phone,
+	  	  notice,
+	  	  mem_num)
+	  	VALUES (
+	  	  #{order_num},
+	  	  #{item_name},
+	  	  #{order_total},
+	  	  #{payment},
+	  	  #{receive_name},
+	  	  #{receive_post},
+	  	  #{receive_address1},
+	  	  #{receive_address2},
+	  	  #{receive_phone},
+	  	  #{notice},
+	  	  #{mem_num})  
+  	</insert>
+</mapper>

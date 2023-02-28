@@ -10,6 +10,11 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/cart/cartList.jsp"/>        
     </definition>
+   <definition name="orderForm" extends="main">
+    	<put-attribute name="title" value="주문폼"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/order/orderForm.jsp"/>        
+    </definition>
 </tiles-definitions>
 
 
