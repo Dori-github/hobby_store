@@ -4,15 +4,18 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
 
 <div style="padding: 7rem 7rem;">
 	<!-- 클래스 장바구니 -->
-	<h5>Course Cart [ ${courseCount} items ]</h5>
-	
-	<c:if test="${courseCount == 0}">
-		<div>장바구니에 담은 클래스가 없습니다</div>
+	<c:if test="${courseCount < 1 && itemCount < 1}">
+	<h4>장바구니가 비어있습니다</h4>
 	</c:if>
+	<form id="cart_order" action="${pageContext.request.contextPath}/order/orderForm.do"
+	                                  method="post">
+	
 	<c:if test="${courseCount > 0}">
+	<h5>Course Cart [ ${courseCount} items ]</h5>	
 		<table class="table table-borderless">
 		<colgroup>
 			<col style="width: 1rem">
@@ -24,6 +27,9 @@
 			<th style="border-bottom: 1px solid #ccc;">Price</th>
 		</tr>
 		<c:forEach var="cart" items="${courseList}">
+		<c:if test="${courseCount == 0}">
+		<div>장바구니가 비어있습니다</div>
+		</c:if>
 		<tr style="border-bottom: 1px solid #ccc">
 			<td style="text-align:left;">
 			<img src="${pageContext.request.contextPath}/images/${cart.course_photo1}"></td>
@@ -44,20 +50,16 @@
 		</tr>
 		<tr>
 			<td colspan="3" style="text-align:right;">
-			<input type="button" value="구매하기">
+			<input type="submit" id="order_btn" value="구매하기">
 			</td>
 		</tr>
 		</table>
 	</c:if>
-	
 	<br>
-	
-	<!-- 상품 장바구니 -->
+
+	<!-- 상품 장바구니 -->	
+	<c:if test="${itemCount > 0}">	
 	<h5>Item Cart List [ ${itemCount} items ]</h5>
-	<c:if test="${itemCount == 0}">
-		<div>장바구니에 담은 상품이 없습니다</div>
-	</c:if>
-	<c:if test="${itemCount > 0}">
 		<table class="table table-borderless">
 		<colgroup>
 			<col style="width: 1rem">
@@ -72,9 +74,11 @@
 			<th style="border-bottom: 1px solid #ccc;">Quantity</th>
 			<th style="border-bottom: 1px solid #ccc;">TotalPrice</th>
 		</tr>
-		<c:forEach var="cart" items="${itemList}">
-  
-		<tr style="border-bottom: 1px solid #ccc;">
+		<c:forEach var="cart" items="${itemList}" varStatus="statusQuan">
+  		<c:if test="${itemCount == 0}">
+		<div>장바구니가 비어있습니다</div>
+		</c:if>
+  		<tr style="border-bottom: 1px solid #ccc;">
 			
 		<td style="text-align:left;">
 			<img src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
@@ -84,70 +88,40 @@
 				${cart.cate_parent}/</c:if>
 				${cart.cate_name}
 			</td>
-			<td>${cart.items_price}</td>
+			<td>${cart.items_price}
 			<td>
-			<input class="cart_num" type="text" value="${cart.cart_num}"/>
-			<input class="item_quan" type="text" value="${cart.items_quantity}"/>
-						
-			<input type="button" value="-" class="quan_dec" data-cartnum="${cart.cart_num}">
-			<input type="number" class="quantity" value="${cart.quantity}">						
+			<input class="item_quan" type="text" value="재고:${cart.items_quantity}"/>
 			
-			<input class="quan_inc" type="button" value="증가"/>
- 			</td>
-			<td>${cart.items_total}</td>
+			<c:forEach var="quan" items="${itemQuan}" begin="${statusQuan.index}" end="${statusQuan.index}">
+			
+			<input class="cart_num" type="text" value="${quan.cart_num}"/>
+			<input class="quan_dec" type="button" value="-"/>			
+			
+			<div id="quan"></div>
+			
+			<input type="number" class="quantity" value="${quan.quantity}">
+			<input class="quan_inc" type="button" value="+"/>
+			
+			</td>
+			<!-- <div class="items_total"> -->
+			<td>${quan.items_total}</td>
+			
+			</c:forEach>
 		</tr>
 		</c:forEach>
-		<tr>
+		
+			<tr>
 			<td colspan="4"></td>
+			<!-- <div class="itemTotal"> -->
 			<td>${itemTotal}</td>
 		</tr>
 		<tr>
 			<td colspan="5" style="text-align:right;">
-			<input type="button" value="구매하기">
+			<input type="submit" id="order_btn" value="구매하기">
 			</td>
 		</tr>
 		</table>
-	</c:if>
+	
+		</form>
+		</c:if>
 </div>
-
-<script>
-	$(".quan_inc").click(function() {
-		var quantity = $(this).parent().find('.quantity').val();
-		quantity = Number(quantity) + Number(1);
-
-		var item_quan = $(this).parent().find('.item_quan').val();
-
-		/*  
-			수량 차감할 때
-			if(quantity < 1){
-			alert('상품을 1개 이상 넣어주세요');
-			return;
-		}
-		 */
-
-		if (quantity > item_quan) {
-			alert('주문 가능한 수량을 초과했습니다');
-			return;
-		}
-
-		var cart_num = $(this).parent().find('.cart_num').val();
-
-		var data = {
-			quantity : quantity,
-			cart_num : cart_num
-		};
-
-		$.ajax({
-			url : "/updateCart",
-			type : "post",
-			data : data,
-			success : function(result) {
-				console.log("수량+1\n"+"cart_num:"+cart_num+" quantity:"+quantity);
-
-			},
-			error : function() {
-				alert("수량 변경 실패");
-			}
-		});
-	});
-</script>
