@@ -10,6 +10,7 @@
 }
 #sidebar{
 	width:20%;
+	margin-top:70px;
 }
 #content{
 	width:80%;
@@ -59,7 +60,11 @@
 }
 
 
-/*오른쪽 컨텐츠*/
+
+
+
+/*강의-목록
+=============================*/
 #content{
 	padding-top:10px;
 }
@@ -69,31 +74,44 @@
  
 #onoff{
 	display:flex;
-	justify-content:space-between;
 	align-items:center;
- 	width:130px;
+ 	width:200px;
  	height:40px;
  	margin:0 auto;
- 	padding:0 10px;
  	margin-bottom:20px;
- 	border-radius: 20px;
- 	background-color: #076AFF;
- 	box-shadow:inset 1px 1px 5px 0 rgb(77, 71, 71);
+ 	border:1px solid lightgray;
+ 	border-radius: 10px;
+ 	text-align: center;
 }
-#onoff #on{
-	width:70%;
+#onoff label{
+	width:50%;
+	height:100%;
+ 	line-height:40px;
+	text-align: center;
+	color:gray;
+ 	cursor:pointer;
+}
+#onoff .off{
+	border-radius:10px 0 0 10px; 
+	box-shadow: inset 5px 5px 9px rgba(255,255,255,0.45), inset -5px -5px 9px rgba(94,104,121,0.3);
+}
+#onoff .on{
+	border-radius:0 10px 10px 0; 
+	box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);
+}
+#onoff .click1{
+ 	background-color:blue;
+ 	box-shadow:none;
  	color:#FFF;
- 	margin-left:10px;
+ 	
 }
-#onoff #btn{
-	width:27px;
-	height:27px;
-	border-radius:50%;
-	background-color: #FFF;
-	box-shadow:1px 1px 5px 0 rgb(77, 71, 71);
-}
- 
- 
+#onoff .click2{
+ 	background-color:blue;
+ 	box-shadow:none;
+ 	color:#FFF;
+ 	
+ 	box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
+} 
 #course_search{
 	width:50%;
 	min-width:400px;
@@ -131,27 +149,51 @@
 }
 #select #total{
 	margin-right:auto;	
-	line-height:40px;
-	text-align: bottom;
+	padding:15px 0 0 5px;
+	display:inline-block ;
 }
 #select #location option{
-	height:100px;
 	border-color: gray;
 }
 
-
-
-
-
-
-/*강의-상세
-=============================*/
-
-
-
-.margin-top{
-	margin-top: 30px;
+#content .card-body{
+	color:#404040;
 }
+#content span{
+	font-size:10pt;
+}
+#content .card-hit{
+	float:right;
+	color:gray;
+}
+#content .red-heart{
+	position: relative;
+	color:red;
+	font-size:15pt;
+}
+#content .color-gray{
+	color:gray;
+	margin-top: 10px;
+	line-height: 20px;
+}
+#content .card-title{
+	margin:5px 0;
+}
+#content .fa-star{
+	color:orange;
+}
+#content .card-text{
+	margin-top:10px;
+}
+
+
+
+
+
+
+
+
+
 
 
 /*강의-등록폼,수정폼
@@ -178,7 +220,7 @@
 	border-bottom:1px solid lightgray;
 	border-right:1px solid lightgray;
 	min-width:150px;
-	width:200px;
+	width:300px;
 	text-align: center;
 	font-weight:bolder;	
 	background-color: #FFF;
@@ -333,9 +375,8 @@
 	text-align:center;
 	cursor: pointer;
 }
-#course_form #datetime #mon1,#course_form #datetime #tues1,
-#course_form #datetime #wed1,#course_form #datetime #thur1,
-#course_form #datetime #fri1,#course_form #datetime #sat1,#course_form #datetime #sun1{
+#course_form #datetime .time-choice.time1, #course_form #datetime .time-choice .time2, #datetime.time-choice.time3,
+#datetime.time-choice.time4,#datetime.time-choice.time5,#datetime.time-choice.time6,#datetime.time-choice.time7{
 	margin-right:30px;
 }
 #course_form #datetime span{
@@ -393,26 +434,33 @@ li.ui-timepicker-selected, .ui-timepicker-list li:hover{
 }
 
 /*수강인원수*/
-#course_form tr:nth-child(7) ul{
+#course_form .monthCount td input{
+	width:200px;
+	text-align: right;
+}
+
+
+/*수강인원수*/
+#course_form .limit ul{
 	width:200px;
 	height:30px;
 	outline: 1px solid lightgray;
 	border-radius: 5px;
 }
-#course_form tr:nth-child(7) ul li:not(:nth-child(2)){
+#course_form .limit li:not(:nth-child(2)){
 	padding:0 20px;
 	width:50px;
 	height:100%;
 	color:gray;
 }
-#course_form tr:nth-child(7) ul li:not(:nth-child(2)):hover{
+#course_form .limit li:not(:nth-child(2)):hover{
 	background-color:#F2F2F2;
 	cursor: pointer;
 }
-#course_form tr:nth-child(7) ul li:first-child:hover{
+#course_form .limit li:first-child:hover{
 	border-radius: 5px 0 0 5px;
 }
-#course_form tr:nth-child(7) ul li:last-child:hover{
+#course_form .limit li:last-child:hover{
 	border-radius: 0 5px 5px 0;
 }
 #course_form i{
@@ -423,15 +471,15 @@ input[type='number']::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
-#course_form tr:nth-child(7) input[type='number']{
+#course_form .limit input[type='number']{
 	text-align: center;
 	width:100px;
 	height:28.400px;
 	border: none;
 	outline: none;
 }
-#course_form tr:nth-child(7) input[type='number']:hover,
-#course_form tr:nth-child(7) input[type='number']:focus{
+#course_form .limit input[type='number']:hover,
+#course_form .limit input[type='number']:focus{
 	outline:3px solid gray;
 	position:relative;
 }
@@ -559,9 +607,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 
-/*강의-
+/*강의-상세
 =============================*/
-
+.margin-top{
+	margin-top: 30px;
+}
 
 
 

@@ -3,6 +3,7 @@ package kr.spring.course.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 
 public interface CourseService { 
@@ -10,7 +11,6 @@ public interface CourseService {
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
 	public int selectCourseCount(Map<String,Object> map);
 	public void insertCourse(CourseVO course);
-	public void insertCourse_time(CourseVO cou);
 	public List<CourseVO> selectCate();
 	public int selectCate_num(CourseVO course);
 	public CourseVO selectCourse(Integer course_num);
@@ -27,5 +27,4 @@ public interface CourseService {
 	//후기
 	public int selectReplyCount(Integer course_num);
 	public int selectStarAvg(Integer course_num);
-
 }

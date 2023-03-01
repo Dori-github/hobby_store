@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.course.service.CourseService;
+import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -41,8 +43,8 @@ public class CourseController {
 	
 	//=============클래스 목록===============//
 	@RequestMapping("/course/courseList.do")
-	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") 
-								int currentPage,String keyfield,String keyword,String cate,String onoff,String location,String oneweek,String order) {
+	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage, @RequestParam(value="order",defaultValue="1") int order,
+								String keyfield,String keyword,String cate,String onoff,String location,String oneweek) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
@@ -52,14 +54,12 @@ public class CourseController {
 		map.put("oneweek", oneweek);
 		map.put("order", order);
 		
+		
+		
 		//글의 총개수 또는 검색된 글의 개수
 		int count = courseService.selectCourseCount(map);
 		
 		logger.debug("<<상품 목록 개수>> : " + count);
-		
-		//카테고리 목록
-		List<CourseVO> course_cate = null;
-		course_cate = courseService.selectCate();
 		
 		//페이지 처리
 		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, "courseList.do");
@@ -69,8 +69,12 @@ public class CourseController {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
 		}
-		list = courseService.selectCourseList(map);
 		
+		//카테고리 목록
+		List<CourseVO> course_cate = null;
+		course_cate = courseService.selectCate();
+		
+		list = courseService.selectCourseList(map);
 		
 		
 		ModelAndView mav = new ModelAndView();
@@ -85,15 +89,23 @@ public class CourseController {
 	
 	//이미지 출력
 	@RequestMapping("/course/imageView.do")
-	public ModelAndView viewImage(@RequestParam int course_num) {
+	public ModelAndView viewImage(@RequestParam int course_num,@RequestParam int item_type) {
 		
 		CourseVO courseVO = courseService.selectCourse(course_num);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("imageView");
 		
-		mav.addObject("imageFile", courseVO.getCourse_photo1());
-		mav.addObject("filename", courseVO.getCourse_photo_name1());
+		if(item_type==1) {
+			mav.addObject("imageFile", courseVO.getCourse_photo1());
+			mav.addObject("filename", courseVO.getCourse_photo_name1());
+		}else if(item_type==2) {
+			mav.addObject("imageFile", courseVO.getCourse_photo2());
+			mav.addObject("filename", courseVO.getCourse_photo_name2());
+		}else if(item_type==3) {
+			mav.addObject("imageFile", courseVO.getCourse_photo3());
+			mav.addObject("filename", courseVO.getCourse_photo_name3());
+		}
 		
 		return mav;
 	}
@@ -141,24 +153,24 @@ public class CourseController {
 		
 		//유효성 체크 결과 오류가 있으면 폼 호출
 		if(result.hasErrors()) {
+			logger.debug("<<강의 등록 오류 >> :" + result.getFieldErrors());
 			return form();
 		}
 		
+		///session에 저장된 회원번호를 VO에 저장 
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		courseVO.setMem_num(user.getMem_num());
+		
 		//카테고리
-		//상세 카테고리 번호
-		int cate_num = courseService.selectCate_num(courseVO);
 		//대분류 카테고리 번호
 		int cate_parent = courseVO.getCate_parent();
+		//상세 카테고리 번호
+		int cate_num = courseService.selectCate_num(courseVO);
 		
-		courseVO.setCate_nums(cate_parent + "," + cate_num);
+		courseVO.setCate_nums(cate_parent+"" + "," + cate_num+"");
+		logger.debug("<<cate_nums>> :" + cate_parent + "," + cate_num);
 		
-		
-		//요일,날짜 
-		
-		
-		
-		
-		
+		logger.debug("<<courseVO>> : " + courseVO);
 		//클래스 데이터 등록
 		courseService.insertCourse(courseVO);
 		

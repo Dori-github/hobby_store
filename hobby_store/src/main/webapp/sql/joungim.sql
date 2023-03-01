@@ -15,9 +15,9 @@ create table course(
     course_count number(3),
     course_price number(10) not null,
     course_limit number,
-    course_zipcode varchar2(5) not null,
-    course_address1 varchar2(90) not null,
-    course_address2 varchar2(90) not null,
+    course_zipcode varchar2(5),
+    course_address1 varchar2(90),
+    course_address2 varchar2(90),
     course_onoff varchar2(12) not null,
     course_oneweek varchar2(9),
     course_hit number default 0 not null,
@@ -31,9 +31,12 @@ create sequence course_seq;
 
 --강의 날짜/시간
 create table course_time(
+	ctime_num number,
     course_num number not null,
+    mem_num number not null,
     course_reg_date varchar2 not null,
     course_reg_time varchar2 not null,
+    constraint course_time_pk primary key (ctime_num),
     constraint course_time_fk foreign key (course_num) references course (course_num)
 );
 
