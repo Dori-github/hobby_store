@@ -170,7 +170,6 @@ public class CourseController {
 		courseVO.setCate_nums(cate_parent+"" + "," + cate_num+"");
 		logger.debug("<<cate_nums>> :" + cate_parent + "," + cate_num);
 		
-		logger.debug("<<courseVO>> : " + courseVO);
 		//클래스 데이터 등록
 		courseService.insertCourse(courseVO);
 		

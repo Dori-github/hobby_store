@@ -27,7 +27,6 @@ public class CourseVO {
 	private String course_photo_name3;
 	private int course_month;
 	private int course_count;
-	@Range(min=1,max=99999999)
 	private int course_price;
 	@Range(min=1,max=999)
 	private int course_limit;
@@ -42,7 +41,6 @@ public class CourseVO {
 	private Date course_date;
 	private Date course_mdate;
 
-	@NotEmpty
 	private int cate_parent;
 	@NotEmpty
 	private String cate_name;

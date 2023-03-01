@@ -252,9 +252,9 @@ $(function(){
 		
 		
 	//===============기간/횟수===================//	
-	if($('.monthCount input[type=number]').val()==0){
+	/*if($('.monthCount input[type=number]').val()==0){
 		$('.monthCount input[type=number]').val('');
-	}
+	}*/
 	
 	
 	//===============가격===================//
