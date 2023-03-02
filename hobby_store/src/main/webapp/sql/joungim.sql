@@ -39,7 +39,7 @@ create table course_time(
     constraint course_time_pk primary key (ctime_num),
     constraint course_time_fk foreign key (course_num) references course (course_num)
 );
-
+create sequence course_time_seq;
 
 --강의 카테고리
 create table course_cate(

@@ -24,8 +24,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.member.service.EmailSender;
 import kr.spring.member.service.MemberService;
+import kr.spring.member.vo.Email;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
 
@@ -38,6 +41,10 @@ public class MemberController {
 
 	@Autowired //memberSerVice 주입 
 	private MemberService memberService;
+	@Autowired
+	private EmailSender emailSender;
+	@Autowired
+	private Email email;
 
 	//폼을 호출하기 위한 자바빈(VO) 초기화
 	@ModelAttribute
@@ -276,10 +283,39 @@ public class MemberController {
 			
 			return "memberIdSearch";
 		}
-		//아이디찾기 폼에 전송된 데이터 처리
-		  
 		
-	
+		//아이디찾기 폼에 전송된 데이터 처리
+		
+		@RequestMapping("/member/idSearchResult.do")
+		public String idSearchprocess(@Valid MemberVO vo,BindingResult result,Model model) {
+			
+			if(result.hasFieldErrors("mem_email") || result.hasFieldErrors("mem_cell")) {
+				return idSearchForm();
+			}
+			
+			//아이디찾기
+			String mem_id = memberService.selectIdSearch(vo);
+			
+			logger.debug("<<회원 아이디 찾기>> : " + mem_id);
+			
+			model.addAttribute("mem_id", mem_id);
+			
+			return "memberIdSearchResult";
+		}  
+		
+		
+		//이메일 인증 
+		@RequestMapping("/test/send.do")
+	    public String sendEmail() throws Exception {
+	    	email.setContent("임시 비밀번호는 랄라라 입니다.");
+			email.setReceiver("shkim_114@naver.com");
+			email.setSubject("소희님 비밀번호 찾기 메일입니다.");
+		
+			
+			emailSender.sendEmail(email);
+
+			return "redirect:/main/main.do";
+	    }
 		
 }
 
