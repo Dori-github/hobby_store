@@ -2,9 +2,49 @@
 <!DOCTYPE mapper   
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
 <mapper namespace="kr.spring.items.dao.ItemsMapper">  
-  
-  	
+	<!-- sql id = 재사용 가능한 쿼리 정의 -->
+	<!-- 상품 표시가 되있는 제품 중 상품명, 상품설명, 상품명+상품설명으로 검색하는 기능  -->
+	<sql id="itemsSearch">
+  		WHERE status > #{status}
+  		<if test="keyword!=null and keyword!=''">
+  			<if test="keyfield == 1">
+  				AND items_name LIKE '%' || #{keyword} || '%'
+  			</if>
+  			<if test="keyfield == 2">
+  				AND items_content LIKE '%' || #{keyword} || '%'
+  			</if>
+  			<if test="keyfield == 3">
+  				AND (items_name LIKE '%' || #{keyword} || '%'
+  				     OR items_content LIKE '%' || #{keyword} || '%')
+  			</if>
+  		</if>
+  	</sql>
+<!-- ========================================================================== -->
+    <select id="selectItemsCount" parameterType="map" resultType="Integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM items
+  		    <!--refid = 재사용할 쿼리 선언   -->
+  		<include refid="itemsSearch"></include>
+  	</select>	
+<!-- ========================================================================== -->  
+  	<select id="selectItemsList" parameterType="map" resultType="itemsVO">
+  	   SELECT
+  	       *
+  	    FROM (SELECT
+  	            a.*,
+  	            rownum rnum
+  	          FROM (SELECT
+  	                  *
+  	                FROM items
+  	                <include refid="itemsSearch"></include>
+  	                ORDER BY items_num DESC)a)
+  	   <![CDATA[
+  	   WHERE rnum >= #{start} AND rnum <= #{end}
+  	   ]]>
+  	</select>
 </mapper>
 
 

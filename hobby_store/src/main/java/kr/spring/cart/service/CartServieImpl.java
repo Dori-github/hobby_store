@@ -35,13 +35,13 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public int courseTotal(int num) {
+	public Integer courseTotal(int num) {
 		return cartmapper.courseTotal(num);
 	}
 
 	@Override
-	public List<ItemCartVO> getItemList(int num) {
-		return cartmapper.getItemList(num);
+	public List<ItemCartVO> getItemCart(int num) {
+		return cartmapper.getItemCart(num);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public int itemTotal(int num) {
+	public Integer itemTotal(int num) {
 		return cartmapper.itemTotal(num);
 	}
 

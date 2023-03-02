@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.course.dao.CourseMapper;
+import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO; 
 
 @Service
@@ -31,7 +32,19 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public void insertCourse(CourseVO course) {
 		courseMapper.insertCourse(course);
-		
+		for(CourseTimeVO vo : course.getCourseTimeVO()) {
+			if(vo.getCourse_reg_date()!=null) {
+				vo.setCourse_num(course.getCourse_num());
+				vo.setMem_num(course.getMem_num());
+				String output = "";
+				for(int i=0;i<vo.getCourse_reg_times().size();i++) {
+					if(i>0) output += ",";
+					output += vo.getCourse_reg_times().get(i);
+				}
+				vo.setCourse_reg_time(output);
+				courseMapper.insertCourse_time(vo);
+			}
+		}
 	}
 
 	@Override
@@ -63,11 +76,6 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public List<CourseVO> selectCate() {
 		return courseMapper.selectCate();
-	}
-
-	@Override
-	public void insertCourse_time(CourseVO course) {
-		courseMapper.insertCourse_time(course);
 	}
 
 	@Override

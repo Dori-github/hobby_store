@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <meta charset="UTF-8">
 <link href="${pageContext.request.contextPath}/css/member.css"
-	rel="stylesheet">	  
+	rel="stylesheet">
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,8 +16,10 @@
 
 <!-- Plugin -->
 <script src="${pageContext.request.contextPath}/js/rolling.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmId.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/confirmNickname.js"></script>  
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/confirmId.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/confirmNickname.js"></script>
 <!-- 텍스트 좌우 방향 롤링 -->
 <script>
 $(function(){
@@ -33,155 +37,159 @@ $(function(){
 
 <title>회원가입</title>
 
-	<section class="h-100 gradient-form" style="background-color: #fff;">
-		<div class="container py-5 h-100">
-			<div class="row d-flex justify-content-center align-items-center h-100">
-				 <div class="col-xl-5">
-						<div class="row">
+<section class="h-100 gradient-form" style="background-color: #fff;">
+	<div class="container py-5 h-100">
+		<div
+			class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col-xl-5">
+				<div class="row"></div>
+
+				<div class="card-body p-md-5 mx-md-4">
+					<div class="text-center mb-3">
+						<div class="view-box">
+							<h2 style="font-weight: 800;">회원가입</h2>
+							<ul class="box1">
+								<li>성장이 목마를때, 취미상점</li>
+								<li>나의 온라인 사수, 취미상점</li>
+								<li>취미상점에서 가치를 높이세요</li>
+							</ul>
 						</div>
 
-						<div class="card-body p-md-5 mx-md-4">   
-							<div class="text-center mb-3">
-								<div class="view-box">
-									<h2 style="font-weight: 800;">회원가입</h2>
-								 	<ul class="box1">
-										<li>성장이 목마를때, 취미상점</li>
-										<li>나의 온라인 사수, 취미상점</li>
-										<li>취미상점에서 가치를 높이세요</li>
-									</ul>
-							</div>
-							
-                            </div>
-                            
-						</div>
-	
+					</div>
+
+				</div>
+
 				<div class="hr-sect">간편 회원가입</div>
-							
-							<br>
-							
-							<div class="text-center mb-3">
-								<img src="${pageContext.request.contextPath}/images/kakao_talk.svg" style="height: 50px;"> 
-								<img src="${pageContext.request.contextPath}/images/naver.svg" style="height: 50px;">
-							</div>
-                            
-                            <br>
-                       
-                            <!-- 유효성 체크 -->
-							<form:form action="registerUser.do" id="register_form"
-								modelAttribute="memberVO">
-								
-								<h5 style="font-weight: 800;">필수항목</h5>
-								
-								<br>
-								
 
-								<label for="mem_id">아이디</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_id" type="text" id="mem_id"
-										class="form-control" style="border: none;background: #F2F2F2;"
-										placeholder="4~12 영문,숫자만 허용" autocomplete="off" />
-									<div class="input-group-append">
-										<input type="button" class="btn btn-secondary" id="confirmId" value="중복확인">
-						
-									</div>
-								</div>
-								
-								<span id="message_id"></span>
-								<form:errors element="div" path="mem_id" cssClass="error-color" />
-								
-								<br>
-		                        
-		                    
-								<label for="mem_name">이름</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_name" type="text" id="mem_name"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									
-								</div>
-								
-								<form:errors element="div" path="mem_name" cssClass="error-color" />
-								
-								<br>
+				<br>
 
-								<label for="mem_nickname">닉네임</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_nickname" type="text" id="mem_nickname"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									<div class="input-group-append">
-										<input type="button" class="btn btn-secondary" id="confirmNickname" value="중복확인">
-									</div>
-								</div>
-							     
-							     <span id="message_nickname"></span>
+				<div class="text-center mb-3">
+					<img src="${pageContext.request.contextPath}/images/kakao_talk.svg"
+						style="height: 50px;"> <img
+						src="${pageContext.request.contextPath}/images/naver.svg"
+						style="height: 50px;">
+				</div>
 
-								<label for="mem_pw">비밀번호</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_pw" type="password" id="mem_pw"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									
-								</div>
-								
-								
-								<form:errors element="div" path="mem_pw" cssClass="error-color" />
-								
-								<br>
+				<br>
 
-								<label for="mem_cell">전화번호</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_cell" type="tel" id="mem_cell"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									
-								</div>
-								
-								<form:errors element="div" path="mem_cell" cssClass="error-color" />
-								
-								<br>
+				<!-- 유효성 체크 -->
+				<form:form action="registerUser.do" id="register_form"
+					modelAttribute="memberVO">
 
-								<label for="mem_email">이메일</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_email" type="email" id="mem_email"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									
-								</div>
-								
-								<form:errors element="div" path="mem_email" cssClass="error-color" />
-								
-								<br>
+					<h5 style="font-weight: 800;">필수항목</h5>
 
-								<!-- 수정해야 할 부분 + -->
-								<div class="input-group mb-3">
-									<input type="text" id="otp" class="form-control"
-										style="border: none; background: #F2F2F2;"
-										placeholder="인증번호 6자리를 입력하세요">
-									<div class="input-group-append">
-										<button class="btn btn-secondary" type="button">본인인증</button>
-									</div>
-								</div>
-								<!-- 수정해야 할 부분 +  -->
-								
-								<br>
+					<br>
 
-								<label for="mem_zipcode">우편번호</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_zipcode" type="text" id="mem_zipcode"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									<div class="input-group-append">
-										<form:button class="btn btn-secondary" type="button"
-											onclick="execDaumPostcode()">우편번호 찾기</form:button>
-									</div>
-									<!-- 우편번호 검색 시작 -->
-									<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-									<div id="layer"
-										style="display: none; position: fixed; overflow: hidden; z-index: 998; -webkit-overflow-scrolling: touch;">
-										<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
-											id="btnCloseLayer"
-											style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
-											onclick="closeDaumPostcode()" alt="닫기 버튼">
-									</div>
 
-									<script
-										src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-									<script>
+					<label for="mem_id">아이디</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_id" type="text" id="mem_id"
+							class="form-control" style="border: none;background: #F2F2F2;"
+							placeholder="4~12 영문,숫자만 허용" autocomplete="off" />
+						<div class="input-group-append">
+							<input type="button" class="btn btn-secondary" id="confirmId"
+								value="중복확인">
+
+						</div>
+					</div>
+
+					<span id="message_id"></span>
+					<form:errors element="div" path="mem_id" cssClass="error-color" />
+
+					<br>
+
+
+					<label for="mem_name">이름</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_name" type="text" id="mem_name"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+
+					</div>
+
+					<form:errors element="div" path="mem_name" cssClass="error-color" />
+
+					<br>
+
+					<label for="mem_nickname">닉네임</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_nickname" type="text" id="mem_nickname"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+						<div class="input-group-append">
+							<input type="button" class="btn btn-secondary"
+								id="confirmNickname" value="중복확인">
+						</div>
+					</div>
+
+					<span id="message_nickname"></span>
+
+					<label for="mem_pw">비밀번호</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_pw" type="password" id="mem_pw"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+
+					</div>
+
+
+					<form:errors element="div" path="mem_pw" cssClass="error-color" />
+
+					<br>
+
+					<label for="mem_cell">전화번호</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_cell" type="tel" id="mem_cell"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+
+					</div>
+
+					<form:errors element="div" path="mem_cell" cssClass="error-color" />
+
+					<br>
+
+					<label for="mem_email">이메일</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_email" type="email" id="mem_email"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+
+					</div>
+
+					<form:errors element="div" path="mem_email" cssClass="error-color" />
+
+					<br>
+
+					<!-- 수정해야 할 부분 + -->
+					<div class="input-group mb-3">
+						<input type="text" id="mem_email" name="mem_email"
+							class="form-control" style="border: none; background: #F2F2F2;"
+							placeholder="인증번호 6자리를 입력하세요">
+						<div class="input-group-append">
+							<button id=class= "btn btn-secondary" type="button">본인인증</button>
+						</div>
+					</div>
+					<!-- 수정해야 할 부분 +  -->
+
+					<br>
+
+					<label for="mem_zipcode">우편번호</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_zipcode" type="text" id="mem_zipcode"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+						<div class="input-group-append">
+							<form:button class="btn btn-secondary" type="button"
+								onclick="execDaumPostcode()">우편번호 찾기</form:button>
+						</div>
+						<!-- 우편번호 검색 시작 -->
+						<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+						<div id="layer"
+							style="display: none; position: fixed; overflow: hidden; z-index: 998; -webkit-overflow-scrolling: touch;">
+							<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
+								id="btnCloseLayer"
+								style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
+								onclick="closeDaumPostcode()" alt="닫기 버튼">
+						</div>
+
+						<script
+							src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+						<script>
 
 										// 우편번호 찾기 화면을 넣을 element
 										var element_layer = document
@@ -294,88 +302,93 @@ $(function(){
 										}
 									</script>
 
-									<!-- 우편번호 검색 끝 -->
-									
-								</div>
-								
-								<form:errors element="div" path="mem_zipcode" cssClass="error-color" />
-								
-								<br>
+						<!-- 우편번호 검색 끝 -->
 
-								<label for="mem_address1">주소</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_address1" type="text" id="mem_address1"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									
-								</div>
-								
-								
-								
-								<form:errors element="div" path="mem_cell" cssClass="error-color" />
-								
-								<br>
+					</div>
 
-								<label for="mem_address2">상세주소</label>
-								<div class="input-group mb-3">
-									<form:input path="mem_address2" type="text" id="mem_address2"
-										class="form-control" style="border: none;background: #F2F2F2;" />
-									
-								</div>
-								
-								<form:errors element="div" path="mem_address2" cssClass="error-color" />
-								
-								<br>
-								<br>
+					<form:errors element="div" path="mem_zipcode"
+						cssClass="error-color" />
 
-								
-								<div><h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5></div>
+					<br>
 
-								<br>
-								
+					<label for="mem_address1">주소</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_address1" type="text" id="mem_address1"
+							class="form-control" style="border: none;background: #F2F2F2;" />
 
-								<div class="input-group mb-3">
-									<div class="input-group-prepend" style="padding-right: 20px;">
-										<label for="region">선호지역을 선택해주세요 : </label>
-									</div>
-									<select class="form-select form-select-sm"
-										aria-label=".form-select-sm example" name="country_num">
-										<c:forEach var="member" items="${countryList}">
-										<option value="${member.country_num}">${member.country_detail}</option>
-										</c:forEach>
-									</select>
-								</div>
+					</div>
 
-								<div class="input-group mb-3">
-									<div class="input-group-prepend" style="padding-right: 20px;">
-										<label for="region">주요 관심사를 선택해주세요 : </label>
-									</div>
-									<select class="form-select form-select-sm"
-										aria-label=".form-select-sm example" name="like_num">
-										<c:forEach var="member" items="${likeList}">
-										<option value="${member.like_num}">${member.like_detail}</option>
-										</c:forEach>
-									</select>
-								</div>
-								
-								
-								<br>
 
-								<!-- 2 column grid layout -->
-								<div class="row mb-4">
-									<div class="col-md-14 d-flex justify-content-center">
 
-										<form:button type="submit" class="btn mb-4" style="width: 400%;background-color: #FF4E02;color: white;">가입하기</form:button>
+					<form:errors element="div" path="mem_cell" cssClass="error-color" />
 
-									</div>
-													
-								</div>
-</form:form>
-							
+					<br>
+
+					<label for="mem_address2">상세주소</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_address2" type="text" id="mem_address2"
+							class="form-control" style="border: none;background: #F2F2F2;" />
+
+					</div>
+
+					<form:errors element="div" path="mem_address2"
+						cssClass="error-color" />
+
+					<br>
+					<br>
+
+
+					<div>
+						<h5 style="font-weight: 800;">당신에 대해 알고싶어요!</h5>
+					</div>
+
+					<br>
+
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend" style="padding-right: 20px;">
+							<label for="region">선호지역을 선택해주세요 : </label>
+						</div>
+						<select class="form-select form-select-sm"
+							aria-label=".form-select-sm example" name="country_num">
+							<c:forEach var="member" items="${countryList}">
+								<option value="${member.country_num}">${member.country_detail}</option>
+							</c:forEach>
+						</select>
+					</div>
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend" style="padding-right: 20px;">
+							<label for="region">주요 관심사를 선택해주세요 : </label>
+						</div>
+						<select class="form-select form-select-sm"
+							aria-label=".form-select-sm example" name="like_num">
+							<c:forEach var="member" items="${likeList}">
+								<option value="${member.like_num}">${member.like_detail}</option>
+							</c:forEach>
+						</select>
+					</div>
+
+
+					<br>
+
+					<!-- 2 column grid layout -->
+					<div class="row mb-4">
+						<div class="col-md-14 d-flex justify-content-center">
+
+							<form:button type="submit" class="btn mb-4"
+								style="width: 400%;background-color: #FF4E02;color: white;">가입하기</form:button>
 
 						</div>
+
 					</div>
-				</div>
-	</section>
+				</form:form>
+
+
+			</div>
+		</div>
+	</div>
+</section>
 
 
 <!-- 중앙 컨텐츠 끝 -->

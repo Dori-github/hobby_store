@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-
+import org.apache.ibatis.annotations.Update;
 
 import kr.spring.member.vo.MemberVO;
 
@@ -41,6 +42,21 @@ public interface MemberMapper {
 	@Select("SELECT * FROM member_like")
 	public List<MemberVO> getLikeList();
 	
+	//자동로그인
+	@Update("UPDATE member SET mem_au_id=#{mem_au_id} WHERE mem_id=#{mem_id}")
+	public void updateAu_id(@Param("mem_au_id") String mem_au_id, @Param("mem_id") String mem_id);
+	@Select("SELECT m.mem_num,m.mem_id,m.mem_auth,m.mem_au_id,"
+		  + "d.mem_pw,m.mem_nickname,d.mem_email FROM "
+		  + "member m JOIN member_detail d ON "
+		  + "m.mem_num=d.mem_num WHERE m.mem_au_id=#{mem_au_id}")
+	public MemberVO selectAu_id(String mem_au_id);
+	@Update("UPDATE member SET mem_au_id='' WHERE mem_num=#{mem_num}")
+	public void deleteAu_id(int mem_num);
 	
+	//아이디찾기
+	@Select("SELECT mem_id FROM member m LEFT OUTER JOIN "
+			+ "member_detail d ON m.mem_num=d.mem_num "
+			+ "WHERE d.mem_email=#{mem_email} AND d.mem_cell=#{mem_cell}")
+	public String selectIdSearch(MemberVO vo);	
 		
 }

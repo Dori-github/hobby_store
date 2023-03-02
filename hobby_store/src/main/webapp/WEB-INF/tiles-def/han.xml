@@ -9,6 +9,13 @@
     	<put-attribute name="title" value="상품등록"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/items/itemsRegister.jsp"/>        
+      </definition>
+
+    
+      <definition name="itemsList" extends="main">
+    	<put-attribute name="title" value="상품목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/items/itemsList.jsp"/>        
     </definition>
 </tiles-definitions>
 

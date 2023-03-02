@@ -3,6 +3,7 @@ package kr.spring.course.vo;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -24,31 +25,22 @@ public class CourseVO {
 	private String course_photo_name1;
 	private String course_photo_name2;
 	private String course_photo_name3;
-	@Range(min=1,max=999)
 	private int course_month;
-	@Range(min=1,max=999)
 	private int course_count;
-	@Range(min=1,max=99999999)
 	private int course_price;
-	@NotEmpty
-	@Range(min=1,max=999 )
+	@Range(min=1,max=999)
 	private int course_limit;
-	@NotEmpty
 	@Size(min=5,max=5)
 	private String course_zipcode;
-	@NotEmpty
 	private String course_address1;
-	@NotEmpty
 	private String course_address2;
 	@NotEmpty
 	private String course_onoff;
-	@NotEmpty
 	private String course_oneweek;
 	private int course_hit;
 	private Date course_date;
 	private Date course_mdate;
 
-	@NotEmpty
 	private int cate_parent;
 	@NotEmpty
 	private String cate_name;
@@ -58,9 +50,10 @@ public class CourseVO {
 	private float star;
 	private int reply;
 	private int fav;
-	@NotEmpty
+	
+	private List<CourseTimeVO> courseTimeVO;
+	
 	private String course_reg_date;
-	@NotEmpty
 	private String course_reg_time;
 
 	//파일 업로드 처리
@@ -289,6 +282,12 @@ public class CourseVO {
 	public void setCourse_reg_time(String course_reg_time) {
 		this.course_reg_time = course_reg_time;
 	}
+	public List<CourseTimeVO> getCourseTimeVO() {
+		return courseTimeVO;
+	}
+	public void setCourseTimeVO(List<CourseTimeVO> courseTimeVO) {
+		this.courseTimeVO = courseTimeVO;
+	}
 	@Override
 	public String toString() {
 		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums
@@ -300,7 +299,7 @@ public class CourseVO {
 				+ ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek + ", course_hit=" + course_hit
 				+ ", course_date=" + course_date + ", course_mdate=" + course_mdate + ", cate_parent=" + cate_parent
 				+ ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_nickname=" + mem_nickname + ", star="
-				+ star + ", reply=" + reply + ", fav=" + fav + ", course_reg_date=" + course_reg_date
-				+ ", course_reg_time=" + course_reg_time + "]";
+				+ star + ", reply=" + reply + ", fav=" + fav + ", courseTimeVO=" + courseTimeVO + ", course_reg_date="
+				+ course_reg_date + ", course_reg_time=" + course_reg_time + "]";
 	}
 }

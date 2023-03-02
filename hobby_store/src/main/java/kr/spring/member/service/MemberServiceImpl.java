@@ -1,6 +1,7 @@
 package kr.spring.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,28 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MemberVO> getLikeList() {
 		return memberMapper.getLikeList();
+	}
+
+	@Override
+	public void updateAu_id(String mem_au_id, String mem_id) {
+		memberMapper.updateAu_id(mem_au_id, mem_id);
+		
+	}
+
+	@Override
+	public MemberVO selectAu_id(String mem_au_id) {
+		return memberMapper.selectAu_id(mem_au_id);
+	}
+
+	@Override
+	public void deleteAu_id(int mem_num) {
+		memberMapper.deleteAu_id(mem_num);
+		
+	}
+
+	@Override
+	public String selectIdSearch(MemberVO vo) {
+		return memberMapper.selectIdSearch(vo);
 	}
 
 

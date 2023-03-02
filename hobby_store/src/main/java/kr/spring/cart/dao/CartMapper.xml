@@ -11,9 +11,9 @@
     WHERE cc.mem_num=#{mem_num}
 	</select>
 	
-	<select id="getItemList" parameterType="integer" resultType="kr.spring.cart.vo.ItemCartVO">
+	<select id="getItemCart" parameterType="integer" resultType="itemCartVO">
 	
-	SELECT t.cate_parent, t.cate_name, i.items_photo1, i.items_name, 
+	SELECT t.cate_parent, t.cate_name, i.items_photo_name1, i.items_name, 
 	i.items_price, i.items_quantity
 	FROM item_cart ic 
 	JOIN items i ON ic.items_num=i.items_num 
@@ -22,7 +22,7 @@
     ORDER BY ic.cart_num DESC
 	</select>
 	
-	<select id="getItemQuan" parameterType="integer" resultType="kr.spring.cart.vo.ItemCartVO">
+	<select id="getItemQuan" parameterType="integer" resultType="itemCartVO">
 	
 	SELECT ic.cart_num, ic.quantity,
 	<![CDATA[

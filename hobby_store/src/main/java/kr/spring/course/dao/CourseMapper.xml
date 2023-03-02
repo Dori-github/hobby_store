@@ -22,28 +22,27 @@
 	
 	<sql id="courseOrder">
 		<if test="order==1">
-			c.course_num DESC
+			course_num DESC
 		</if>
 		<if test="order==2">
-			r.reply DESC
+			reply DESC
 		</if>
 		<if test="order==3">
-			f.fav DESC
+			fav DESC
 		</if>
 		<if test="order==4">
-			c.course_price ASC
+			course_price ASC
 		</if>
 	</sql>
 	
-	<select id="selectCourseCount" parameterType="map" resultType="integer">
-		SELECT * FROM course <include refid="courseSearch"></include> 
-	</select>
 	
-	<select id="selectCourseList" parameterType="map" resultType="CourseVO">
-		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course c JOIN member m USING(mem_num) 
-		JOIN (SELECT course_num, COUNT(*) AS fav FROM course_fav GROUP BY course_num) f USING (course_num) 
-		JOIN (SELECT course_num, COUNT(*) AS reply FROM course_reply GROUP BY course_num) r USING (course_num) 
-		JOIN (SELECT course_num, ROUND(AVG(star_auth*1.0),1) AS star FROM course_star GROUP BY course_num) s USING (course_num) 
+	<select id="selectCourseCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM course <include refid="courseSearch"></include> 
+	</select>
+	 
+	<select id="selectCourseList" parameterType="map" resultType="courseVO">
+		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course JOIN member USING(mem_num)
+	 
 			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}
