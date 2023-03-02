@@ -79,38 +79,34 @@
  	height:40px;
  	margin:0 auto;
  	margin-bottom:20px;
- 	border:1px solid lightgray;
+ 	border:2px solid #FF4E02;
  	border-radius: 10px;
+ 	box-shadow:3px 3px 3px 0px lightgray;
  	text-align: center;
 }
 #onoff label{
 	width:50%;
-	height:100%;
  	line-height:40px;
 	text-align: center;
-	color:gray;
+	color:lightgray;
  	cursor:pointer;
+}
+#onoff input[name=onoff]{
+ 	display:none;
 }
 #onoff .off{
 	border-radius:10px 0 0 10px; 
-	box-shadow: inset 5px 5px 9px rgba(255,255,255,0.45), inset -5px -5px 9px rgba(94,104,121,0.3);
 }
 #onoff .on{
-	border-radius:0 10px 10px 0; 
-	box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);
+	border-radius:0 10px 10px 0;
 }
 #onoff .click1{
- 	background-color:blue;
- 	box-shadow:none;
+ 	background-color:#FF4E02;
  	color:#FFF;
- 	
 }
 #onoff .click2{
- 	background-color:blue;
- 	box-shadow:none;
+ 	background-color:#FF4E02;
  	color:#FFF;
- 	
- 	box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
 } 
 #course_search{
 	width:50%;
@@ -156,24 +152,47 @@
 	border-color: gray;
 }
 
+/*카드 목록*/
+#content .card{
+	cursor:pointer;
+}
 #content .card-body{
 	color:#404040;
 }
 #content span{
 	font-size:10pt;
 }
+/*hover 이미지 확대*/
+.card-img-top{
+	height:200px;
+	overflow: hidden;
+}
+.card-img-top:hover img{
+	transform: scale(1.2);
+}
+.card-img-top img{
+	transition: all 0.2s linear;
+}
+
 #content .card-hit{
 	float:right;
 	color:gray;
 }
-#content .red-heart{
-	position: relative;
+#content #red-heart{
+	display:block;
+	text-align:right;
+	position:absolute;
+	top:5px;
+	right:10px;
+	color:red;
+	font-size:15pt;
+}
+#content #red-heart .fa-heart{
 	color:red;
 	font-size:15pt;
 }
 #content .color-gray{
 	color:gray;
-	margin-top: 10px;
 	line-height: 20px;
 }
 #content .card-title{
@@ -186,7 +205,9 @@
 	margin-top:10px;
 }
 
-
+#content .list-page{
+	margin-top:50px;
+}
 
 
 

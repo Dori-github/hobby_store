@@ -1,5 +1,6 @@
 package kr.spring.course.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,16 +32,21 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public void insertCourse(CourseVO course) {
+		course.setCourse_num(courseMapper.selectCourse_num());
 		courseMapper.insertCourse(course);
 		for(CourseTimeVO vo : course.getCourseTimeVO()) {
 			if(vo.getCourse_reg_date()!=null) {
 				vo.setCourse_num(course.getCourse_num());
 				vo.setMem_num(course.getMem_num());
 				String output = "";
+				List<String> time = vo.getCourse_reg_times();
+				//공백 또는 null 제거
+				time.removeAll(Arrays.asList("",null));
 				for(int i=0;i<vo.getCourse_reg_times().size();i++) {
-					if(i>0) output += ",";
 					output += vo.getCourse_reg_times().get(i);
+					if(i<vo.getCourse_reg_times().size()-1) output += ",";
 				}
+				System.out.println("~~~~~~~~~~~~~~~"+output);
 				vo.setCourse_reg_time(output);
 				courseMapper.insertCourse_time(vo);
 			}

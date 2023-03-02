@@ -30,7 +30,7 @@ public class CourseVO {
 	private int course_price;
 	@Range(min=1,max=999)
 	private int course_limit;
-	@Size(min=5,max=5)
+	//@Size(min=5,max=5)
 	private String course_zipcode;
 	private String course_address1;
 	private String course_address2;

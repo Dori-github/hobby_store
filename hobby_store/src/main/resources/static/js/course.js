@@ -7,6 +7,8 @@ $(function(){
 	cate.on('click',function(){ 
 		let item = $(this);//대분류
 		
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]').val();
+		
 		cate.parent().find('.d_cate').stop().slideUp();
 		cate.not(item).removeClass('active');
 		cate.removeClass('active-color0');
@@ -26,12 +28,35 @@ $(function(){
 	d_cate.on('click',function(){
 		let item = $(this);//대분류
 		
+		location.href="courseList.do?cate=item.text()&onoff=$('input[name=onoff]').val()";
+		
 		if(d_cate.hasClass('active-color')){
 			d_cate.removeClass('active-color');
 		}
 		cate.addClass('active-black');
 		item.addClass('active-color');
 	});
+	
+		
+		
+		
+	//==============클래스 목록==================//
+	$('#content #onoff').click(function(){
+		if($('#content #off').is(':checked')){
+			$('#onoff .on').removeClass('click2');
+			$('#onoff .off').addClass('click1');
+			
+			location.href='courseList.do?onoff=1';
+		}
+		if($('#content #on').is(':checked')){
+			$('#onoff .on').addClass('click2');
+			$('#onoff .off').removeClass('click1');
+
+			location.href='courseList.do?onoff=2';
+		}
+	});
+	
+	
 	
 	
 	
@@ -401,26 +426,7 @@ $(function(){
 	
 	
 	
-	
-	//==============클래스 목록==================//
-	if($('#content #off').is(':checked')){
-		//alert('클릭');
-		$(this).prev().addClass('click1');
-		$(this).next().removeClass('click2');
-	}
-	if($('#content #on:checked')){
-		//alert('클릭');
-		$(this).addClass('click2');
-		$(this).prev().removeClass('click1');
-	}
-	
-	
-	
-	//왼쪽 사이드바 클릭시
-	$('#course_main .cate').click(function(){
-		//location.href='courseList.do?onoff='+$(this).text();
-	});
-	
+
 	
 
 	

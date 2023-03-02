@@ -42,7 +42,6 @@
 	 
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
 		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course JOIN member USING(mem_num)
-	 
 			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}

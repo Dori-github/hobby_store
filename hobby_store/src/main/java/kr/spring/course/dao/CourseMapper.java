@@ -14,23 +14,26 @@ import kr.spring.course.vo.CourseVO;
 public interface CourseMapper {
 	//부모글
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
+	@Select("SELECT course_seq.nextval FROM dual")
+	public int selectCourse_num();
 	public int selectCourseCount(Map<String,Object> map);
 	@Insert("INSERT INTO course (course_num,mem_num,course_name,course_onoff,course_oneweek,cate_nums,course_zipcode,course_address1,course_address2,"
 			+ "course_photo1,course_photo_name1,course_photo2,course_photo_name2,course_photo3,course_photo_name3,"
 			+ "course_month,course_count,course_limit,course_price,course_content) VALUES "
-			+ "(course_seq.nextval,#{mem_num},#{course_name},#{course_onoff},#{course_oneweek},#{cate_nums},#{course_zipcode},"
+			+ "(#{course_num},#{mem_num},#{course_name},#{course_onoff},#{course_oneweek, jdbcType=VARCHAR},#{cate_nums},#{course_zipcode},"
 			+ "#{course_address1},#{course_address2},#{course_photo1},#{course_photo_name1},#{course_photo2},#{course_photo_name2},#{course_photo3},#{course_photo_name3},"
-			+ "#{course_month},#{course_count},#{course_limit},${course_price},${course_content})")
+			+ "#{course_month},#{course_count},#{course_limit},#{course_price},#{course_content})")
 	public void insertCourse(CourseVO course);
 	
-	@Insert("INSERT INTO course_time (course_num,mem_num,course_reg_date,course_reg_time) VALUES "
-			+ "(#{course_num},#{mem_num},#{course_reg_date},#{course_reg_time})")
+	@Insert("INSERT INTO course_time (ctime_num,course_num,mem_num,course_reg_date,course_reg_time) VALUES "
+			+ "(course_time_seq.nextval,#{course_num},#{mem_num},#{course_reg_date},#{course_reg_time})")
 	public void insertCourse_time(CourseTimeVO vo);
 	
-	@Select("SELECT cate_num,cate_parent,cate_name FROM course_cate")
+	@Select("SELECT * FROM course_cate")
 	public List<CourseVO> selectCate();
 	@Select("SELECT cate_num FROM course_cate WHERE cate_name=#{cate_name}")
 	public int selectCate_num(CourseVO course);
+	@Select("SELECT * FROM course WHERE course_num = #{course_num}")
 	public CourseVO selectCourse(Integer course_num);
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);

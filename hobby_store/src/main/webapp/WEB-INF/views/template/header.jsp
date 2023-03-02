@@ -47,7 +47,7 @@
 						</ul>
 					</li>
 					
-					<li><a href="${pageContext.request.contextPath}/course/courseList.do">클래스</a></li>
+					<li><a href="${pageContext.request.contextPath}/course/courseList.do?onoff=1&oneweek=1">클래스</a></li>
 					<li><a href="${pageContext.request.contextPath}/items/itemsList.do">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/space/list.do">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>

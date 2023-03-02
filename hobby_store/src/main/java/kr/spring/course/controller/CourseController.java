@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.course.service.CourseService;
@@ -43,16 +44,17 @@ public class CourseController {
 	
 	//=============클래스 목록===============//
 	@RequestMapping("/course/courseList.do")
-	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage, @RequestParam(value="order",defaultValue="1") int order,
-								String keyfield,String keyword,String cate,String onoff,String location,String oneweek) {
+	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
+								@RequestParam(value="order",defaultValue="1") int order,
+								String keyfield,String keyword,String cate, String location) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		map.put("cate", cate);
-		map.put("onoff", onoff);
+		map.put("onoff", "1");
 		map.put("location", location);
-		map.put("oneweek", oneweek);
-		map.put("order", order);
+		map.put("oneweek", "1");
+		map.put("order", "1");
 		
 		
 		
@@ -93,6 +95,8 @@ public class CourseController {
 		
 		CourseVO courseVO = courseService.selectCourse(course_num);
 		
+		logger.debug("<<courseVO>> :" + courseVO);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("imageView");
 		
@@ -109,6 +113,9 @@ public class CourseController {
 		
 		return mav;
 	}
+	
+	
+	
 	
 	
 	
