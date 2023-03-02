@@ -28,21 +28,17 @@
 }
 #sidebar .cate{
 	padding:10px;
-	font-size: 14pt;
+	font-size: 16pt;
 	font-weight: bold;
 	transition:.2s;
 }
 #sidebar .cate:hover, #sidebar .active-color0{
+	color:#FF4E02;
 	background-color:#F2F2F2;
 	border-radius: 10px;
-	font-size:16pt;
+	font-size:18pt;
 }
-#sidebar .active-color0{
-	color:#FF4E02;
-}
-
 #sidebar .d_cate{
-	font-size:10pt;
 	line-height:3em;
 	padding:10px 0 20px 10px;
 	margin:0;
@@ -50,13 +46,10 @@
 }
 #sidebar .d_cate li:hover, #sidebar .active-color{
 	font-weight:bold;
-	font-size:11pt;
+	font-size:14pt;
 }
 #sidebar .active-color{
 	color:#FF4E02;
-}
-#sidebar .active-black{
-	color:#404040;
 }
 
 

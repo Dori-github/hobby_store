@@ -4,57 +4,43 @@ $(function(){
 	let cate = $('#sidebar .cate');
 	let d_cate = $('#sidebar .d_cate a');
 	
+	//카테고리 대분류 클릭시 세부카테고리 드롭다운
 	cate.on('click',function(){ 
 		let item = $(this);//대분류
 		
-		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]').val();
-		
-		cate.parent().find('.d_cate').stop().slideUp();
-		cate.not(item).removeClass('active');
-		cate.removeClass('active-color0');
-		cate.removeClass('active-black');
-		
-		if(item.hasClass('active')){
-			item.parent().find('.d_cate').stop().slideUp();
-			item.removeClass('active');
-			d_cate.removeClass('active-color');
-		}else{
-			item.parent().find('.d_cate').stop().slideDown();
-			item.addClass('active');
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val();
+	});
+	cate.each(function(){
+		if($(this).hasClass('active')){
+			$(this).parent().find('.d_cate').stop().slideDown();
 		}
-			item.addClass('active-color0');
 	});
 	
+	//세부카테고리 클릭시 드롭다운 고정
 	d_cate.on('click',function(){
 		let item = $(this);//대분류
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val();
 		
-		location.href="courseList.do?cate=item.text()&onoff=$('input[name=onoff]').val()";
-		
-		if(d_cate.hasClass('active-color')){
-			d_cate.removeClass('active-color');
-		}
-		cate.addClass('active-black');
-		item.addClass('active-color');
+		//cate.addClass('active-black');
 	});
-	
-		
+	d_cate.each(function(){
+		if($(this).hasClass('active-color')){
+			$(this).parents('.d_cate').stop().slideDown();
+		}
+	});
 		
 		
 	//==============클래스 목록==================//
-	$('#content #onoff').click(function(){
-		if($('#content #off').is(':checked')){
-			$('#onoff .on').removeClass('click2');
-			$('#onoff .off').addClass('click1');
-			
-			location.href='courseList.do?onoff=1';
-		}
-		if($('#content #on').is(':checked')){
-			$('#onoff .on').addClass('click2');
-			$('#onoff .off').removeClass('click1');
-
-			location.href='courseList.do?onoff=2';
-		}
-	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

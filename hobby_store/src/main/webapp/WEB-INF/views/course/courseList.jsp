@@ -29,16 +29,16 @@
 	<div id="sidebar">
 		<ul>
 			<li>
-				<a class="cate">전체</a>
+				<a class="cate <c:if test="${param.cate=='전체'}">active active-color0</c:if>">전체</a>
 			</li>
 			
 			<c:forEach begin="0" end="5" var="parent">
 				<li>
-					<a class="cate">${course_cate[parent].cate_name}</a>
+					<a class="cate <c:if test="${param.cate==course_cate[parent].cate_name}">active active-color0</c:if>">${course_cate[parent].cate_name}</a>
 					<ul class="d_cate">
 						<c:forEach var="cate" items="${course_cate}">
 							<c:if test="${cate.cate_parent==parent+1}">
-							<li><a>${cate.cate_name}</a></li>
+							<li><a <c:if test="${param.cate==cate.cate_name}">class="active-color"</c:if>>${cate.cate_name}</a></li>
 							</c:if>
 						</c:forEach>
 					</ul>
@@ -46,16 +46,19 @@
 			</c:forEach>
 		</ul>
 	</div>
+	
 	<!-- 사이즈바 끝 -->
 	
 	<!-- 오른쪽 컨텐츠 시작 -->
 	<div id="content">
 		<!-- 검색 시작 -->
 		<div id="onoff">
-			<label for="off" class="off click1"><b>오프라인</b></label>
-			<input type="radio" id="off" name="onoff" value="1"checked="checked">
-			<label for="on" class="on"><b>온라인</b></label>
-			<input type="radio" id="on" name="onoff" value="2">
+			<label for="off" class="off <c:if test="${param.onoff==1}">click1</c:if>"><b>오프라인</b></label>
+			<input type="radio" id="off" name="onoff" value="1" <c:if test="${param.onoff==1}">checked="checked"</c:if>
+					onclick="location.href='courseList.do?onoff=1'">
+			<label for="on" class="on  <c:if test="${param.onoff==2}">click1</c:if>"><b>온라인</b></label>
+			<input type="radio" id="on" name="onoff" value="2" <c:if test="${param.onoff==2}">checked="checked"</c:if>
+					onclick="location.href='courseList.do?onoff=2'">
 		</div>
 		<div id="course_search">
 			<form action="/course/courseList2.do?" method="post" class="navbar-expand search-form d-flex" id="search_form">
@@ -144,7 +147,7 @@
 		<!-- 클래스 목록 끝 -->
 		
 		<!-- 페이지처리 시작 -->
-		<div class="align-center" class="list-page">${page}</div>
+		<div class="align-center list-page">${page}</div>
 		<!-- 페이지처리 끝 -->
 		</c:if>
 	</div>
