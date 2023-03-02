@@ -34,17 +34,19 @@
                                         <div class="form-outline mb-4">
                                             <form:input path="mem_email" type="email" id="mem_email" class="form-control"
                                                 style="border: none;background: #eee;" placeholder="이메일" />
+                                        <form:errors element="div" path="mem_email" cssClass="error-color" />
                                         </div>
                                         
-                                        <form:errors element="div" path="mem_email" cssClass="error-color" />
+                                        
 
                                         <!-- cell input -->
                                         <div class="form-outline mb-4">
-                                            <form:input path="mem_cell" type="tel" id="mem_pw" class="form-control"
+                                            <form:input path="mem_cell" type="tel" id="mem_cell" class="form-control"
                                                 style="border: none;background: #eee;" placeholder="전화번호" />
+                                            <form:errors element="div" path="mem_cell" cssClass="error-color" />
                                         </div>
                                         
-                                        <form:errors element="div" path="mem_cell" cssClass="error-color" />
+                                        
                                         
 
                                        <form:button type="submit" class="btn mb-4" style="width: 100%;background-color: #FF4E02;color: white;">아이디 찾기</form:button>

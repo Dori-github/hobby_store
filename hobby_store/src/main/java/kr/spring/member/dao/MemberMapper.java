@@ -53,6 +53,10 @@ public interface MemberMapper {
 	@Update("UPDATE member SET mem_au_id='' WHERE mem_num=#{mem_num}")
 	public void deleteAu_id(int mem_num);
 	
-	
+	//아이디찾기
+	@Select("SELECT mem_id FROM member m LEFT OUTER JOIN "
+			+ "member_detail d ON m.mem_num=d.mem_num "
+			+ "WHERE d.mem_email=#{mem_email} AND d.mem_cell=#{mem_cell}")
+	public String selectIdSearch(MemberVO vo);	
 		
 }

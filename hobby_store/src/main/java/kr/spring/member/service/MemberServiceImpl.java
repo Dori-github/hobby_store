@@ -1,6 +1,7 @@
 package kr.spring.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,11 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteAu_id(int mem_num) {
 		memberMapper.deleteAu_id(mem_num);
 		
+	}
+
+	@Override
+	public String selectIdSearch(MemberVO vo) {
+		return memberMapper.selectIdSearch(vo);
 	}
 
 

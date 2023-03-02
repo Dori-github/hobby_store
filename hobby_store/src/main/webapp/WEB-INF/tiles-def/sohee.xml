@@ -19,6 +19,10 @@
     	<put-attribute name="title" value="아이디 찾기"/>
     	<put-attribute name="body" value="/WEB-INF/views/member/idSearch.jsp"/>
     </definition>
+    <definition name="memberIdSearchResult" extends="main">
+    	<put-attribute name="title" value="아이디 찾기 결과"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/idSearchResult.jsp"/>
+    </definition>
 </tiles-definitions>
 
 
