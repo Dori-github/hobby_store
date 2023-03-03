@@ -17,9 +17,9 @@
 <!-- Plugin -->
 <script src="${pageContext.request.contextPath}/js/rolling.js"></script>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/confirmId.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/confirmNickname.js"></script>
+	src="${pageContext.request.contextPath}/js/member.js"></script>
+	
+	
 <!-- 텍스트 좌우 방향 롤링 -->
 <script>
 $(function(){
@@ -59,17 +59,6 @@ $(function(){
 
 				</div>
 
-				<div class="hr-sect">간편 회원가입</div>
-
-				<br>
-
-				<div class="text-center mb-3">
-					<img src="${pageContext.request.contextPath}/images/kakao_talk.svg"
-						style="height: 50px;"> <img
-						src="${pageContext.request.contextPath}/images/naver.svg"
-						style="height: 50px;">
-				</div>
-
 				<br>
 
 				<!-- 유효성 체크 -->
@@ -89,6 +78,7 @@ $(function(){
 						<div class="input-group-append">
 							<input type="button" class="btn btn-secondary" id="confirmId"
 								value="중복확인">
+								
 
 						</div>
 					</div>
@@ -113,7 +103,7 @@ $(function(){
 					<label for="mem_nickname">닉네임</label>
 					<div class="input-group mb-3">
 						<form:input path="mem_nickname" type="text" id="mem_nickname"
-							class="form-control" style="border: none;background: #F2F2F2;" />
+							class="form-control" style="border: none;background: #F2F2F2;" autocomplete="off" />
 						<div class="input-group-append">
 							<input type="button" class="btn btn-secondary"
 								id="confirmNickname" value="중복확인">
@@ -121,11 +111,13 @@ $(function(){
 					</div>
 
 					<span id="message_nickname"></span>
+					
+					<br>
 
 					<label for="mem_pw">비밀번호</label>
 					<div class="input-group mb-3">
 						<form:input path="mem_pw" type="password" id="mem_pw"
-							class="form-control" style="border: none;background: #F2F2F2;" />
+							class="form-control" style="border: none;background: #F2F2F2;" autocomplete="off" />
 
 					</div>
 
@@ -149,23 +141,28 @@ $(function(){
 					<div class="input-group mb-3">
 						<form:input path="mem_email" type="email" id="mem_email"
 							class="form-control" style="border: none;background: #F2F2F2;" />
+						<div class="input-group-append">
+							<button id="email_send_button" class="btn btn-secondary" type="button">본인인증</button>
+						</div>
 
 					</div>
-
+					
+                    <span id="message_email"></span>
 					<form:errors element="div" path="mem_email" cssClass="error-color" />
 
 					<br>
 
-					<!-- 수정해야 할 부분 + -->
 					<div class="input-group mb-3">
-						<input type="text" id="mem_email" name="mem_email"
+						<input type="text" id="email_check" name="email_check"
 							class="form-control" style="border: none; background: #F2F2F2;"
 							placeholder="인증번호 6자리를 입력하세요">
 						<div class="input-group-append">
-							<button id=class= "btn btn-secondary" type="button">본인인증</button>
+							<button id="email_check_button" class="btn btn-secondary" type="button">인증확인</button>
 						</div>
 					</div>
-					<!-- 수정해야 할 부분 +  -->
+					
+					
+					 <span id="message_emailCheck"></span>
 
 					<br>
 

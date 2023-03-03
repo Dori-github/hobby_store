@@ -4,6 +4,7 @@ package kr.spring.member.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.member.service.EmailSender;
 import kr.spring.member.service.MemberService;
@@ -46,6 +46,8 @@ public class MemberController {
 	@Autowired
 	private Email email;
 
+
+
 	//폼을 호출하기 위한 자바빈(VO) 초기화
 	@ModelAttribute
 	public MemberVO initCommand() {
@@ -57,13 +59,13 @@ public class MemberController {
 	@RequestMapping("/member/confirmId.do")
 	@ResponseBody
 	public Map<String,String> Idprocess(
-			             @RequestParam String mem_id){
+			@RequestParam String mem_id){
 		logger.debug("<<id>> : " + mem_id);
-		
+
 		//Map에 담아서 데이터를 처리
 		Map<String,String> mapAjax = 
 				new HashMap<String,String>();
-		
+
 		MemberVO member = 
 				memberService.selectCheckMember(mem_id);
 		if(member!=null) {
@@ -78,52 +80,54 @@ public class MemberController {
 				mapAjax.put("result", "idNotFound");
 			}
 		}
-		
+
 		return mapAjax;
 	}
-	
+
 	//닉네임 중복 체크
-		@RequestMapping("/member/confirmNickname.do")
-		@ResponseBody
-		public Map<String,String> Nicknameprocess(
-				             @RequestParam String mem_nickname){
-			logger.debug("<<nickname>> : " + mem_nickname);
-			
-			//Map에 담아서 데이터를 처리
-			Map<String,String> mapAjax = 
-					new HashMap<String,String>();
-			
-			MemberVO member = 
-					memberService.selectCheckNickname(mem_nickname);
-			if(member!=null) {
-				//닉네임 중복
-				mapAjax.put("result", "nicknameDuplicated");
-			}else {
-				//닉네임 미중복
-					mapAjax.put("result", "nicknameNotFound");
-			}
-			
-			return mapAjax;
+	@RequestMapping("/member/confirmNickname.do")
+	@ResponseBody
+	public Map<String,String> Nicknameprocess(
+			@RequestParam String mem_nickname){
+		logger.debug("<<nickname>> : " + mem_nickname);
+
+		//Map에 담아서 데이터를 처리
+		Map<String,String> mapAjax = 
+				new HashMap<String,String>();
+
+		MemberVO member = 
+				memberService.selectCheckNickname(mem_nickname);
+		if(member!=null) {
+			//닉네임 중복
+			mapAjax.put("result", "nicknameDuplicated");
+		}else {
+			//닉네임 미중복
+			mapAjax.put("result", "nicknameNotFound");
 		}
 
-	
-	
+		return mapAjax;
+	}
+
+
+
 	//회원가입 폼 호출
 	@GetMapping("/member/registerUser.do")
 	public String form(Model model) {
-		
+
 		//선호지역 목록 
 		List<MemberVO> countryList = memberService.getCountryList();
 		logger.debug("<<회원가입 - countryList>> : " + countryList);
 		model.addAttribute("countryList", countryList);
-		
+
 		//관심사 목록
 		List<MemberVO> likeList = memberService.getLikeList();
 		logger.debug("<<회원가입 - likeList>> : " + likeList);	
 		model.addAttribute("likeList", likeList);
-		
-  	  
-		
+
+
+
+
+
 		return "memberRegister";//타일스 설정값
 	}
 
@@ -151,172 +155,249 @@ public class MemberController {
 		return "common/notice";
 
 	}
-	
+
 	//=========회원로그인============//
 	//로그인 폼 호출
-		@GetMapping("/member/login.do")
-		public String formLogin() {
-			return "memberLogin";
-		}
-		
-	
-	//로그인 폼에 전송된 데이터 처리
-		@PostMapping("/member/login.do")
-		                      //자동 로그인 처리에 필요한 session,response 저장 
-		public String submitLogin(@Valid MemberVO memberVO,
-				              BindingResult result,
-				              HttpSession session,
-				              HttpServletResponse response) {
-			
-			logger.debug("<<회원로그인>> : " + memberVO);
-			
-			//유효성 체크 결과 오류가 있으면 폼을 호출
-			//id와 passwd 필드만 체크
-			if(result.hasFieldErrors("mem_id") || 
-					result.hasFieldErrors("mem_pw")) {
-				return formLogin();
-			}
-			
-			//로그인 체크
-			MemberVO member = null;
-			//예외를 던지는 방법을 사용 
-			                   //id를 selectCheckMember에 넘겨서 존재하는지 안하는지 체크 
-			try {
-				member = memberService.selectCheckMember(
-						                   memberVO.getMem_id());
-				//check가 false면 로그인 실패
-				boolean check = false;
-				
-				if(member!=null) {
-					//비밀번호 일치 여부 체크
-					                  //입력한 비밀번호 넣어주기
-					check = member.isCheckedPassword(
-							       memberVO.getMem_pw());
-				}
-				if(check) {//인증 성공(chect값 확인하기)
-					
-					//자동로그인 체크
-					boolean autoLogin = memberVO.getAuto() != null 
-							          && memberVO.getAuto().equals("on");
-					if(autoLogin) {
-						//자동로그인 체크를 한 경우
-						String mem_au_id = member.getMem_au_id();
-						if(mem_au_id==null) {
-							//자동로그인 체크 식별값 생성
-							mem_au_id = UUID.randomUUID().toString();
-							logger.debug("<<au_id>> : " + mem_au_id);
-							memberService.updateAu_id(mem_au_id, 
-									           memberVO.getMem_id());
-						}
-						
-						Cookie auto_cookie = 
-								  new Cookie("au-log",mem_au_id);
-						//쿠키의 유효기간은 1주일
-						auto_cookie.setMaxAge(60*60*24*7);
-						auto_cookie.setPath("/");
-						
-						//생성한 쿠키를 클라이언트에 전송
-						response.addCookie(auto_cookie);
-						
-					}
-					
-					//인증 성공, 로그인 처리
-					//필요한 내용을 user에 저장해서 필요하면 가져다쓰기 
-					session.setAttribute("user", member);
-					
-					logger.debug("<<인증 성공>> : " + member.getMem_id());
-					
-					
-					//관리자는 관리자 메인으로 이동
-					if(member.getMem_auth() == 9) {
-						return "redirect:/main/admin.do";
-						
-					//사용자는 사용자 메인으로 이동
-					}else {
-						return "redirect:/main/main.do";
-					}
-				}
-				//인증 실패 > 예외 처리
-				throw new AuthCheckException();
-				 //예외처리 
-			}catch(AuthCheckException e) {
-				//인증 실패로 로그인폼 호출
-				if(member!=null && member.getMem_auth()==0) {
-					//정지회원 메시지 표시
-					result.reject("noAuthority");
-				}else {
-					result.reject("invalidIdOrPassword");
-				}
-				
-				logger.debug("<<인증 실패>>");
-				
-				return formLogin();
-			}
-		}
-		//=========회원로그아웃============//
-		@RequestMapping("/member/logout.do")
-		public String processLogout(HttpSession session,
-				          HttpServletResponse response) {
-			
-			//로그아웃
-			session.invalidate();
-			
-			//자동로그인 클라이언트 쿠키 처리
-			//자동로그인 쿠키 삭제
-			Cookie auto_cookie = new Cookie("au-log","");
-			
-			auto_cookie.setMaxAge(0);//쿠키 유효시간 만료
-			auto_cookie.setPath("/");
-			
-			//클라이언트에 쿠키 전송
-			response.addCookie(auto_cookie);		
-			
-			return "redirect:/main/main.do";
-		}
-		
-		
-		//=========아이디찾기============//
-		//아이디찾기 폼 호출 
-		@GetMapping("/member/idSearch.do")
-		public String idSearchForm() {
-			logger.debug("<<아이디 찾기 진입>>");
-			
-			return "memberIdSearch";
-		}
-		
-		//아이디찾기 폼에 전송된 데이터 처리
-		
-		@RequestMapping("/member/idSearchResult.do")
-		public String idSearchprocess(@Valid MemberVO vo,BindingResult result,Model model) {
-			
-			if(result.hasFieldErrors("mem_email") || result.hasFieldErrors("mem_cell")) {
-				return idSearchForm();
-			}
-			
-			//아이디찾기
-			String mem_id = memberService.selectIdSearch(vo);
-			
-			logger.debug("<<회원 아이디 찾기>> : " + mem_id);
-			
-			model.addAttribute("mem_id", mem_id);
-			
-			return "memberIdSearchResult";
-		}  
-		
-		
-		//이메일 인증 
-		@RequestMapping("/test/send.do")
-	    public String sendEmail() throws Exception {
-	    	email.setContent("임시 비밀번호는 랄라라 입니다.");
-			email.setReceiver("shkim_114@naver.com");
-			email.setSubject("소희님 비밀번호 찾기 메일입니다.");
-		
-			
-			emailSender.sendEmail(email);
+	@GetMapping("/member/login.do")
+	public String formLogin() {
+		return "memberLogin";
+	}
 
-			return "redirect:/main/main.do";
-	    }
-		
+
+	//로그인 폼에 전송된 데이터 처리
+	@PostMapping("/member/login.do")
+	//자동 로그인 처리에 필요한 session,response 저장 
+	public String submitLogin(@Valid MemberVO memberVO,
+			BindingResult result,
+			HttpSession session,
+			HttpServletResponse response) {
+
+		logger.debug("<<회원로그인>> : " + memberVO);
+
+		//유효성 체크 결과 오류가 있으면 폼을 호출
+		//id와 passwd 필드만 체크
+		if(result.hasFieldErrors("mem_id") || 
+				result.hasFieldErrors("mem_pw")) {
+			return formLogin();
+		}
+
+		//로그인 체크
+		MemberVO member = null;
+		//예외를 던지는 방법을 사용 
+		//id를 selectCheckMember에 넘겨서 존재하는지 안하는지 체크 
+		try {
+			member = memberService.selectCheckMember(
+					memberVO.getMem_id());
+			//check가 false면 로그인 실패
+			boolean check = false;
+
+			if(member!=null) {
+				//비밀번호 일치 여부 체크
+				//입력한 비밀번호 넣어주기
+				check = member.isCheckedPassword(
+						memberVO.getMem_pw());
+			}
+			if(check) {//인증 성공(chect값 확인하기)
+
+				//자동로그인 체크
+				boolean autoLogin = memberVO.getAuto() != null 
+						&& memberVO.getAuto().equals("on");
+				if(autoLogin) {
+					//자동로그인 체크를 한 경우
+					String mem_au_id = member.getMem_au_id();
+					if(mem_au_id==null) {
+						//자동로그인 체크 식별값 생성
+						mem_au_id = UUID.randomUUID().toString();
+						logger.debug("<<au_id>> : " + mem_au_id);
+						memberService.updateAu_id(mem_au_id, 
+								memberVO.getMem_id());
+					}
+
+					Cookie auto_cookie = 
+							new Cookie("au-log",mem_au_id);
+					//쿠키의 유효기간은 1주일
+					auto_cookie.setMaxAge(60*60*24*7);
+					auto_cookie.setPath("/");
+
+					//생성한 쿠키를 클라이언트에 전송
+					response.addCookie(auto_cookie);
+
+				}
+
+				//인증 성공, 로그인 처리
+				//필요한 내용을 user에 저장해서 필요하면 가져다쓰기 
+				session.setAttribute("user", member);
+
+				logger.debug("<<인증 성공>> : " + member.getMem_id());
+
+
+				//관리자는 관리자 메인으로 이동
+				if(member.getMem_auth() == 9) {
+					return "redirect:/main/admin.do";
+
+					//사용자는 사용자 메인으로 이동
+				}else {
+					return "redirect:/main/main.do";
+				}
+			}
+			//인증 실패 > 예외 처리
+			throw new AuthCheckException();
+			//예외처리 
+		}catch(AuthCheckException e) {
+			//인증 실패로 로그인폼 호출
+			if(member!=null && member.getMem_auth()==0) {
+				//정지회원 메시지 표시
+				result.reject("noAuthority");
+			}else {
+				result.reject("invalidIdOrPassword");
+			}
+
+			logger.debug("<<인증 실패>>");
+
+			return formLogin();
+		}
+	}
+	//=========회원로그아웃============//
+	@RequestMapping("/member/logout.do")
+	public String processLogout(HttpSession session,
+			HttpServletResponse response) {
+
+		//로그아웃
+		session.invalidate();
+
+		//자동로그인 클라이언트 쿠키 처리
+		//자동로그인 쿠키 삭제
+		Cookie auto_cookie = new Cookie("au-log","");
+
+		auto_cookie.setMaxAge(0);//쿠키 유효시간 만료
+		auto_cookie.setPath("/");
+
+		//클라이언트에 쿠키 전송
+		response.addCookie(auto_cookie);		
+
+		return "redirect:/main/main.do";
+	}
+
+
+	//=========아이디찾기============//
+	//아이디찾기 폼 호출 
+	@GetMapping("/member/idSearch.do")
+	public String idSearchForm() {
+		logger.debug("<<아이디 찾기 진입>>");
+
+		return "memberIdSearch";
+	}
+
+	//아이디찾기 폼에 전송된 데이터 처리
+	@RequestMapping("/member/idSearchResult.do")
+	public String idSearchprocess(@Valid MemberVO vo,BindingResult result,Model model) {
+
+		if(result.hasFieldErrors("mem_email") || result.hasFieldErrors("mem_cell")) {
+			return idSearchForm();
+		}
+
+		//아이디찾기
+		String mem_id = memberService.selectIdSearch(vo);
+
+		logger.debug("<<회원 아이디 찾기>> : " + mem_id);
+
+		model.addAttribute("mem_id", mem_id);
+
+		return "memberIdSearchResult";
+	}  
+
+	//=========비밀번호 찾기============//
+
+
+
+
+	//=========이메일 인증 난수 생성및 이메일 발송 컨트롤러============//
+	@RequestMapping("/member/mailCheck.do")
+	@ResponseBody
+	public Map<String,String> mailCheck(String mem_email,HttpSession session) throws Exception {
+
+		//뷰(View)로부터 넘어온 데이터 확인
+		logger.info("이메일 데이터 전송 확인");
+		logger.info("수신자 이메일 : " + mem_email);
+
+		// JAVA Random 객체를 사용하여 숫자 + 문자 8자리 난수 생성
+		String emailCheckCode = excuteGenerate();
+		session.setAttribute("emailCheckCode", emailCheckCode);
+		logger.info("인증번호 : " + emailCheckCode);	
+
+		email.setContent(
+				"홈페이지를 방문해주셔서 정말 감사합니다." +
+						"<br><br>" +
+						"취미상점 인증번호는 :  <b style='font-size : 13px; color: red;'>" + emailCheckCode+ "</b>입니다."
+						+"<br><br>" +
+				"해당 인증 번호를 확인란에 입력해주세요.");
+		email.setReceiver(mem_email);
+		email.setSubject("취미상점 인증 메일입니다.");
+		emailSender.sendEmail(email);
+
+		//Map에 담아서 데이터 처리 
+		Map<String,String> mapAjax = new HashMap<String,String>();
+		mapAjax.put("result","success");
+
+
+		return mapAjax;
+	}
+
+	//=========인증번호 중복체크============//
+	@RequestMapping("/member/mailCheckcode.do")
+	@ResponseBody
+	public Map<String,String> mailCheckprocess
+	(@RequestParam String userInputcode,HttpSession session) throws Exception {
+
+		//뷰(View)로부터 넘어온 데이터 확인
+		logger.info("<<userInputcode>> : " + userInputcode);
+
+		//Map에 담아서 데이터를 처리
+		Map<String,String> mapAjax = 
+				new HashMap<String,String>();
+
+		//session에 저장된 인증번호
+		String code = (String)session.getAttribute("emailCheckCode");
+		logger.info("<<session 인증 코드>> : " + code);
+		if(code.equals(userInputcode)) {
+			//인증 성공
+			mapAjax.put("result", "success");
+		}else {
+			//인증 실패
+			mapAjax.put("result", "failure");
+		}
+
+		return mapAjax;
+	}
+
+
+	//=========이메일 인증 난수 생성및 이메일 발송 컨트롤러============//
+	private int certCharLength = 8;
+
+	private final char[] characterTable = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
+			'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 
+			'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+
+	public String excuteGenerate() {
+		Random random = new Random(System.currentTimeMillis());
+		int tablelength = characterTable.length;
+		StringBuffer buf = new StringBuffer();
+
+		for(int i = 0; i < certCharLength; i++) {
+			buf.append(characterTable[random.nextInt(tablelength)]);
+		}
+
+		return buf.toString();
+	}
+
+	public int getCertCharLength() {
+		return certCharLength;
+	}
+
+	public void setCertCharLength(int certCharLength) {
+		this.certCharLength = certCharLength;
+	}
+
 }
 
 

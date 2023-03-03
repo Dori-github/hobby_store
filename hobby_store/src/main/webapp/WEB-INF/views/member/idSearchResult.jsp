@@ -52,27 +52,28 @@
 					</c:if>
 
 					<c:if test="${!empty mem_id}">
-						<table class="table">
-							<tr>
-								<th scope="col"><div align="center">회원님의 아이디는</div></th>
-							</tr>
+					
+						<div class="table">
+							
+								<div align="center"style="padding-bottom:10px;">회원님의 아이디는</div>
+							
 
-							<tr>
-								<td align="center">
+			
+								<div align="center">
 									<div align="center"
-										style="font-weight: bold; font-size: 24px; background-color: #f5f5ff; width: 60%; height: 60%;">
+										style="font-weight: bold; font-size: 24px; color:#FF4E02; width: 60%; height: 60%;">
 										${mem_id}</div>
-								</td>
+								</div>
 
-							</tr>
+							
 
-							<tr>
-								<th scope="col"><div align="center">입니다.</div></th>
-							</tr>
-						</table>
+							<div>
+								<div align="center"style="padding-top:10px;">입니다.</div>
+							</div>
+							</div>
 						
 						<div class="row mb-4">
-						<div class="col-md-14 d-flex justify-content-center">
+						<div class="col-md-14 d-flex justify-content-center" style="padding-top:10px;" >
 
 							<button type="button" class="btn mb-4" onclick="location.href='${pageContext.request.contextPath}/member/login.do';"
 								style="width: 400%;background-color: #FF4E02;color: white;">로그인</button>
@@ -83,7 +84,6 @@
 					</c:if>
 
 
-					
 
 					</div>
 
@@ -91,9 +91,9 @@
 
 				</div>
 			</div>
-
-		</div>
-	</div>
+</div>
+		
+		
 
 
 </section>

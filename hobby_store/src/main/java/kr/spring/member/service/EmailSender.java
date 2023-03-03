@@ -1,5 +1,5 @@
 package kr.spring.member.service;
-  
+
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
