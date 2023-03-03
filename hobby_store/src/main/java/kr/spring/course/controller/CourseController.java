@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -41,6 +42,79 @@ public class CourseController {
 	public CourseVO initCommand() {
 		return new CourseVO();
 	}
+	
+
+	
+	//=============글쓰기==============//
+	//등록 폼 호출
+	@GetMapping("/course/courseWrite.do")
+	public ModelAndView form() {
+		
+		List<CourseVO> course_cate = null;
+		course_cate = courseService.selectCate();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("courseWrite");
+		mav.addObject("course_cate",course_cate);
+		
+		return mav;
+	}
+	
+	//등록 폼에서 전송된 데이터 처리
+	@PostMapping("/course/courseWrite.do")
+	public ModelAndView submit(@Valid CourseVO courseVO,BindingResult result,
+							HttpServletRequest request,HttpSession session) {
+		logger.debug("<<courseVO>> : " + courseVO);
+		
+		//클래스 이미지 유효성 체크
+		//MultipartFile -> byte[]로 변환할 경우 파일을
+		//업로드하지 않으면 byte[]은 생성되고 length는 0
+		if(courseVO.getCourse_photo1().length==0) {
+			result.rejectValue("course_photo1", "required");
+		}
+		//이미지용량체크
+		if(courseVO.getCourse_photo1().length > 5*1024*1024) {//5MB
+			result.reject("limitUploadSize",new Object[] {"5MB"},null);
+		}
+		if(courseVO.getCourse_photo2().length > 5*1024*1024) {//5MB
+			result.reject("limitUploadSize",new Object[] {"5MB"},null);
+		}
+		if(courseVO.getCourse_photo3().length > 5*1024*1024) {//5MB
+			result.reject("limitUploadSize",new Object[] {"5MB"},null);
+		}
+		
+		//유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			logger.debug("<<강의 등록 오류 >> :" + result.getFieldErrors());
+			return form();
+		}
+		
+		///session에 저장된 회원번호를 VO에 저장 
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		courseVO.setMem_num(user.getMem_num());
+		
+		//카테고리
+		//대분류 카테고리 번호
+		int cate_parent = courseVO.getCate_parent();
+		//상세 카테고리 번호
+		int cate_num = courseService.selectCate_num(courseVO);
+		
+		courseVO.setCate_nums(cate_parent+"" + "," + cate_num+"");
+		logger.debug("<<cate_nums>> :" + cate_parent + "," + cate_num);
+		
+		//클래스 데이터 등록
+		courseService.insertCourse(courseVO);
+		
+		//View에 표시할 메시지
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("common/resultView");
+		mav.addObject("message","클래스 등록이 완료되었습니다.");
+		mav.addObject("url",request.getContextPath()+"/course/courseList.do?onoff=1&oneweek=1&cate=전체");
+		
+		return mav;
+	}
+	
+	
 	
 	//=============클래스 목록===============//
 	@RequestMapping("/course/courseList.do")
@@ -118,80 +192,17 @@ public class CourseController {
 	
 	
 	
-	
-	
-	
-	//=============글쓰기==============//
-	//등록 폼 호출
-	@GetMapping("/course/courseWrite.do")
-	public ModelAndView form() {
-		
-		List<CourseVO> course_cate = null;
-		course_cate = courseService.selectCate();
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("courseWrite");
-		mav.addObject("course_cate",course_cate);
-		
-		return mav;
-	}
-	
-	//등록 폼에서 전송된 데이터 처리
-	@PostMapping("/course/courseWrite.do")
-	public ModelAndView submit(@Valid CourseVO courseVO,BindingResult result,
-							HttpServletRequest request,HttpSession session) {
-		logger.debug("<<courseVO>> : " + courseVO);
-		
-		//클래스 이미지 유효성 체크
-		//MultipartFile -> byte[]로 변환할 경우 파일을
-		//업로드하지 않으면 byte[]은 생성되고 length는 0
-		if(courseVO.getCourse_photo1().length==0) {
-			result.rejectValue("course_photo1", "required");
-		}
-		//이미지용량체크
-		if(courseVO.getCourse_photo1().length > 5*1024*1024) {//5MB
-			result.reject("limitUploadSize",new Object[] {"5MB"},null);
-		}
-		if(courseVO.getCourse_photo2().length > 5*1024*1024) {//5MB
-			result.reject("limitUploadSize",new Object[] {"5MB"},null);
-		}
-		if(courseVO.getCourse_photo3().length > 5*1024*1024) {//5MB
-			result.reject("limitUploadSize",new Object[] {"5MB"},null);
-		}
-		
-		//유효성 체크 결과 오류가 있으면 폼 호출
-		if(result.hasErrors()) {
-			logger.debug("<<강의 등록 오류 >> :" + result.getFieldErrors());
-			return form();
-		}
-		
-		///session에 저장된 회원번호를 VO에 저장 
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		courseVO.setMem_num(user.getMem_num());
-		
-		//카테고리
-		//대분류 카테고리 번호
-		int cate_parent = courseVO.getCate_parent();
-		//상세 카테고리 번호
-		int cate_num = courseService.selectCate_num(courseVO);
-		
-		courseVO.setCate_nums(cate_parent+"" + "," + cate_num+"");
-		logger.debug("<<cate_nums>> :" + cate_parent + "," + cate_num);
-		
-		//클래스 데이터 등록
-		courseService.insertCourse(courseVO);
-		
-		//View에 표시할 메시지
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("common/resultView");
-		mav.addObject("message","클래스 등록이 완료되었습니다.");
-		mav.addObject("url",request.getContextPath()+"/course/courseList.do");
-		
-		return mav;
-	}
-	
 	//==========게시판 글상세============//
-	
+	@RequestMapping("/course/courseDetail.do")
+	public String detail(@RequestParam int course_num,
+			                  Model model) {
+		logger.debug("<<클래스상세>> : " + course_num);
+		
+		CourseVO course = courseService.selectCourse(course_num);
+		model.addAttribute("course", course);
+		
+		return "courseView";
+	}
 	
 	
 	

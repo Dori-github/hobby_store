@@ -3,9 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/course.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <!-- 중앙 컨텐츠 시작 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.js"></script>
 <script type="text/javascript">
 	$(function(){
@@ -122,8 +120,8 @@
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
 			<c:forEach var="course" items="${list}">
 			<div class="col">
-			<a href="courseDetail.do?course_num=${course.course_num}" style="display:block;">
-					<div class="card h-100" style="position:relative;">
+				<div class="card h-100" style="position:relative;">
+					<a href="courseDetail.do?course_num=${course.course_num}" style="display:block;">
 						<div class="card-img-top">
 						  <img src="/course/imageView.do?course_num=${course.course_num}&item_type=1" width="100%" height="100%">
 						</div>
@@ -140,8 +138,8 @@
 						  		<br><b><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</b><span style="color:gray;"> / 1인</span>
 						  	</p>
 						</div>
-					</div>
-			</a>
+					</a>
+				</div>
 			</div>
 			</c:forEach>
 		</div>

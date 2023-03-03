@@ -33,7 +33,7 @@ public interface CourseMapper {
 	public List<CourseVO> selectCate();
 	@Select("SELECT cate_num FROM course_cate WHERE cate_name=#{cate_name}")
 	public int selectCate_num(CourseVO course);
-	@Select("SELECT * FROM course WHERE course_num = #{course_num}")
+	@Select("SELECT * FROM course JOIN member USING (mem_num) WHERE course_num = #{course_num}")
 	public CourseVO selectCourse(Integer course_num);
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);

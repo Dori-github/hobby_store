@@ -116,7 +116,7 @@
 							<label for="mon"><i class="fa-solid fa-check"></i> 월</label>
 						</th>
 						<td>
-							<input type="text" name="courseTimeVO[0].course_reg_times" class="time-choice time1" placeholder="시간 선택">
+							<input type="text" name="courseTimeVO[0].course_reg_times" class="time-choice time1" placeholder="시간 선택" autocomplete="off">
 							<span>추가</span>
 						</td>					
 					</tr>
