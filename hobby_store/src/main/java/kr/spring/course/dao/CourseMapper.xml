@@ -4,22 +4,47 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.course.dao.CourseMapper">
 	<!-- sql 태그와 include 태그를 이용해 SQL문 재사용 -->
+	<!-- ====================키필드,키워드====================== -->
 	<sql id="courseSearch">
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<if test="keyfield==1">
-					course_name LIKE '%' || #{keyword} || '%' OR mem_id LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+					course_name LIKE '%' || #{keyword} || '%' OR course_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
 				</if>
 				<if test="keyfield==2">
 					course_name LIKE '%' || #{keyword} || '%'
 				</if>
-				<if test="keyfield==3 ">
-					mem_id LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+				<if test="keyfield==3">
+					course_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==4">
+					mem_nickname LIKE '%' || #{keyword} || '%'
 				</if>
 			</if>
 		</where>
 	</sql>
 	
+	<!-- ====================온라인,오프라인====================== -->
+	<sql id="courseOnoff">
+		<where>
+			<if test="keyword!=null and keyword!=''">
+				<if test="keyfield==1">
+					course_name LIKE '%' || #{keyword} || '%' OR course_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==2">
+					course_name LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==3">
+					course_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==4">
+					mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<!-- ====================정렬====================== -->
 	<sql id="courseOrder">
 		<if test="order==1">
 			course_num DESC
@@ -37,11 +62,12 @@
 	
 	
 	<select id="selectCourseCount" parameterType="map" resultType="integer">
-		SELECT COUNT(*) FROM course <include refid="courseSearch"></include> 
+		SELECT COUNT(*) FROM course JOIN member USING(mem_num) <include refid="courseSearch"></include> 
 	</select>
 	 
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
-		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course JOIN member USING(mem_num)
+		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course 
+		JOIN member USING(mem_num) 
 			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}

@@ -46,15 +46,16 @@ public class CourseController {
 	@RequestMapping("/course/courseList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
 								@RequestParam(value="order",defaultValue="1") int order,
-								String keyfield,String keyword,String cate, String location) {
+								@RequestParam(value="oneweek",defaultValue="1") int oneweek,
+								String keyfield,String keyword,String onoff, String cate, String location) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		map.put("cate", cate);
-		map.put("onoff", "1");
+		map.put("onoff", onoff);
 		map.put("location", location);
-		map.put("oneweek", "1");
-		map.put("order", "1");
+		map.put("oneweek", oneweek);
+		map.put("order", order);
 		
 		
 		

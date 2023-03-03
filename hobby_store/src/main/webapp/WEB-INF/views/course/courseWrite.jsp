@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.timepicker.css">
 <link href="${pageContext.request.contextPath}/css/course.css" rel="stylesheet"> 
 <style>
@@ -39,7 +40,7 @@
 </script>
 <!-- 중앙 컨텐츠 시작 -->
 <form:form action="/course/courseWrite.do" id="course_form" modelAttribute="courseVO" enctype="multipart/form-data">
-	<div class="title"><i class="fa-solid fa-caret-right"></i>&nbsp; 클래스 등록</div>
+	<div class="title">클래스 등록</div>
 	<table class="reg-form">
 		<tr>
 			<td>온라인 / 오프라인</td>
@@ -74,12 +75,12 @@
 				</div>
 				<div class="list-box">
 			        <ul class="list-cate">
-			            <li value="1">공예</li>
-			            <li value="2">쿠킹</li>
-			            <li value="3">디자인</li>
-			            <li value="4">운동</li>
-			            <li value="5">뷰티</li>
-			            <li value="6">기타</li>
+			            <li data-value="1">공예</li>
+			            <li data-value="2">쿠킹</li>
+			            <li data-value="3">디자인</li>
+			            <li data-value="4">운동</li>
+			            <li data-value="5">뷰티</li>
+			            <li data-value="6">기타</li>
 			        </ul>
 		        </div>
 				<form:errors element="div" path="cate_parent" cssClass="error-color"/>
@@ -96,7 +97,7 @@
 				<div class="list-box2">
 			        <ul class="list-cate2"></ul>
 		        </div>
-				<form:errors element="div" path="cate_parent" cssClass="error-color"/>
+				<form:errors element="div" path="cate_name" cssClass="error-color"/>
 			</td>
 		</tr>
 		<tr>
@@ -188,7 +189,9 @@
 		<tr class="monthCount" style="display:none;">
 			<td>기간 / 횟수</td>
 			<td>
-				<div><form:input type="number" path="course_month"/> 개월 <form:input type="number" path="course_count"/> 회</div>
+				<div>
+				<input type="number" id="course_month" name="course_month" value="${fn:replace(courseVO.course_month,'0','')}"> 개월 
+				<input type="number" id="course_count" name="course_count" value="${fn:replace(courseVO.course_count,'0','')}"/> 회</div>
 				<form:errors element="div" path="course_month" cssClass="error-color"/>
 				<form:errors element="div" path="course_count" cssClass="error-color"/>
 			</td>

@@ -6,7 +6,7 @@
 <nav class="navbar-expand-lg size">
 	<div class="container-fluid">
 		<div id="navbar_top">
-			<!-- 토글버튼 시작 -->
+			<!-- 토글버튼 시작 -->  
 			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
 		      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars toggler-size"></i></span>
 		    </button>
@@ -47,7 +47,7 @@
 						</ul>
 					</li>
 					
-					<li><a href="${pageContext.request.contextPath}/course/courseList.do?onoff=1&oneweek=1">클래스</a></li>
+					<li><a href="${pageContext.request.contextPath}/course/courseList.do?onoff=1&oneweek=1&cate=공예">클래스</a></li>
 					<li><a href="${pageContext.request.contextPath}/items/itemsList.do">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/space/list.do">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>

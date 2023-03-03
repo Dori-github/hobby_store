@@ -35,7 +35,7 @@
 #sidebar .cate:hover, #sidebar .active-color0{
 	color:#FF4E02;
 	background-color:#F2F2F2;
-	border-radius: 10px;
+	border-radius: 5px;
 	font-size:18pt;
 }
 #sidebar .d_cate{
@@ -73,7 +73,7 @@
  	margin:0 auto;
  	margin-bottom:20px;
  	border:2px solid #FF4E02;
- 	border-radius: 10px;
+ 	border-radius: 5px;
  	box-shadow:3px 3px 3px 0px lightgray;
  	text-align: center;
 }
@@ -88,10 +88,10 @@
  	display:none;
 }
 #onoff .off{
-	border-radius:10px 0 0 10px; 
+	border-radius:5px 0 0 5px; 
 }
 #onoff .on{
-	border-radius:0 10px 10px 0;
+	border-radius:0 5px 5px 0;
 }
 #onoff .click1{
  	background-color:#FF4E02;
@@ -110,25 +110,39 @@
 #course_search #search_bar{
 	background-color: #FFF;
 	border:1px solid lightgray;
-	border-radius:10px;
+	border-radius:5px;
+	outline:none;
 }
 #course_search #search_bar:focus{
 	outline:5px solid #E0E0E0;
 	transition:.2s;
+	background-color: #FFF;
 }
 #course_search #search_icon{
-	background-color: #FFF;
+	background: none;
 	border:none;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+    display:none;
 }
 #content .form-select{
 	width:100px;
 	height:40px;
-	border-radius: 10px;
+	border-radius: 5px;
+	transition: none;
+}
+#content .form-select:focus{
+	outline:5px solid #E0E0E0;
+	border:none;
 }
 #course_search .form-select{
 	margin-right:10px;
 }
 #select .select{
+	width:130px;
 	margin-left:10px;
 }
 #select{
@@ -144,6 +158,8 @@
 #select #location option{
 	border-color: gray;
 }
+
+
 
 /*카드 목록*/
 #content .card{
@@ -209,19 +225,18 @@
 
 
 
-
 /*강의-등록폼,수정폼
 =============================*/
 #course_form .title{
-	width:70%;
+	width:80%;
 	margin:0 auto;
 	color:#404040;
-	font-size:23px;
-	font-weight:bold;
+	font-size:35px;
+	text-align: center;
 }
 #course_form .reg-form{
 	position:relative;
-	width:70%;
+	width:80%;
 	margin:0 auto;
 	margin-top:20px;
 	font-size:10pt;
@@ -257,7 +272,7 @@
 }
 #course_form input[type=text]:hover,#course_form input[type=text]:focus,
 #course_form input[type=number]:hover,#course_form input[type=number]:focus,
-#course_form .btn-select:hover{
+.btn-select:hover,#course_vprice:hover{
 	outline:3px solid gray;
 }
 
@@ -289,7 +304,7 @@
 
 
 /*카테고리*/
-#course_form .btn-select, #course_form .btn-select2{
+.btn-select, #course_form .btn-select2{
 	display:inline-block;
 	width: 200px;
 	height:30px;
@@ -302,12 +317,12 @@
 	cursor: pointer;
 	text-align: left;
 }
-#course_form .list-box,#course_form .list-box2{
+.list-box,#course_form .list-box2{
 	display:none;
 	position:relative;
 	border:none;
 }
-#course_form .list-cate,#course_form .list-cate2{
+.list-cate,#course_form .list-cate2{
 	position: absolute;
 	top:10px;left:0;
 	width:200px;
@@ -318,7 +333,7 @@
 	border-radius: 5px;
 	z-index:997;
 }
-#course_form .list-cate li,#course_form .list-cate2 li{
+.list-cate li,#course_form .list-cate2 li{
     width: 100%;
     height:40px;
 	line-height:30px;
@@ -328,15 +343,15 @@
     cursor: pointer;
     text-align: left;
 }
-#course_form .list-cate li:first-child,#course_form .list-cate2 li:first-child{
+.list-cate li:first-child,#course_form .list-cate2 li:first-child{
 	border-radius:5px 5px 0 0;
 }
-#course_form .list-cate li:last-child,#course_form .list-cate2 li:last-child{
+.list-cate li:last-child,#course_form .list-cate2 li:last-child{
 	border-radius:0 0 5px 5px;
 }
 
 
-#course_form .list-cate li:hover,#course_form .list-cate2 li:hover{
+.list-cate li:hover,#course_form .list-cate2 li:hover{
     background-color: #F2F2F2;
     font-weight:bold;
     color:#FF4E02;
@@ -504,7 +519,9 @@ input[type='number']::-webkit-inner-spin-button {
 	height:28.400px;
 	text-align: right;
 }
-
+#course_form #course_vprice:focus{
+	outline:3px solid gray;
+}
 /*우편번호*/
 #course_form #zipcode input:first-child{
 	float: left;

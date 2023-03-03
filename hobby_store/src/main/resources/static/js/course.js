@@ -8,7 +8,7 @@ $(function(){
 	cate.on('click',function(){ 
 		let item = $(this);//대분류
 		
-		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val();
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
 	});
 	cate.each(function(){
 		if($(this).hasClass('active')){
@@ -19,9 +19,7 @@ $(function(){
 	//세부카테고리 클릭시 드롭다운 고정
 	d_cate.on('click',function(){
 		let item = $(this);//대분류
-		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val();
-		
-		//cate.addClass('active-black');
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
 	});
 	d_cate.each(function(){
 		if($(this).hasClass('active-color')){
@@ -31,11 +29,24 @@ $(function(){
 		
 		
 	//==============클래스 목록==================//
+	//원데이,정기 선택
+	$('#select #oneweek').on('change',function(){
+		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$(this).val();
+	});
 	
+	//지역 선택
+	$('#select #location').on('change',function(){
+		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
+									'&cate='+$('#sidebar').data('param')+'&location='+$(this).val();
+
+	});
 	
-	
-	
-	
+	//최신순 선택
+	$('#select #order').on('change',function(){
+		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
+									'&cate='+$('#sidebar').data('param')+'&location'+$('#location').val()+'&order='+$(this).val();
+
+	});
 	
 	
 	
@@ -84,12 +95,13 @@ $(function(){
 	
 	
 	
-	
+
 	
 	
 	
 	
 	//===============카테고리 분류===================//
+	//카테고리 분류
 	let formCate = $('#course_form .btn-select');
 	let whole = $('#course_form .btn-select span');
 	let formList = $('#course_form .list-box');
@@ -124,12 +136,11 @@ $(function(){
 		let value = $(this).html();
 		whole.html(value);
 		
-		let num = $(this).val();
+		let num = $(this).attr('data-value');
 		$('#course_form #cate_parent').val(num);
 		
 		//상세카테고리 노출
 		$('#d_cate').show();
-		$('#course_form .btn-select2 .whole2').text('전체');
 		
 		//카테고리 상세 hover 스타일 활성화
 		$('#course_form .btn-select2').on('mouseover',function(){
@@ -150,7 +161,6 @@ $(function(){
 	let formCate2 = $('#course_form .btn-select2');
 	let whole2 = $('#course_form .btn-select2 span');
 	let formList2 = $('#course_form .list-box2');
-	let list2 = $('#course_form .list-cate2 li');
 	
 	//전체버튼 클릭
 	formCate2.on('click',function(){
@@ -185,10 +195,10 @@ $(function(){
 		let value = $(this).html();
 		whole2.html(value);
 		
-		let name = $(this).text();
-		$('#course_form #cate_name').val(name);
+		$('#course_form #cate_name').val(value);
 		
 	});
+		
 		
 		
 	

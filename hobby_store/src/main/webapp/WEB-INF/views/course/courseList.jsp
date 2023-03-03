@@ -26,7 +26,7 @@
 </script>
 <div id="course_main">
 	<!-- 사이즈바 시작 -->
-	<div id="sidebar">
+	<div id="sidebar" data-param="${param.cate}">
 		<ul>
 			<li>
 				<a class="cate <c:if test="${param.cate=='전체'}">active active-color0</c:if>">전체</a>
@@ -61,13 +61,14 @@
 					onclick="location.href='courseList.do?onoff=2'">
 		</div>
 		<div id="course_search">
-			<form action="/course/courseList2.do?" method="post" class="navbar-expand search-form d-flex" id="search_form">
+			<form action="/course/courseList.do?onoff=${param.onoff}&oneweek=${param.oneweek}&cate=${param.cate}" method="post" class="navbar-expand search-form d-flex" id="search_form">
 				<select class="form-select" name="keyfield">
 					<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>전체</option>
 					<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>제목</option>
-					<option value="3" <c:if test="${param.keyfield==3}">selected</c:if>>작성자</option>
+					<option value="3" <c:if test="${param.keyfield==3}">selected</c:if>>내용</option>
+					<option value="4" <c:if test="${param.keyfield==4}">selected</c:if>>작성자</option>
 				</select> 
-				<input type="search" name="keyword" class="search-bar" id="search_bar" value="${param.keyword}" placeholder="주변에 다양한 클래스를 찾아보세요!">
+				<input type="search" name="keyword" class="search-bar" id="search_bar" value="${param.keyword}" placeholder="주변에 다양한 클래스를 찾아보세요!" autocomplete="off">
 				<button type="submit" class="search-btn" id="search_icon"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</form>
 		</div>
