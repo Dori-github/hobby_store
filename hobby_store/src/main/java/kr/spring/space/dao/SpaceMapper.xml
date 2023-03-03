@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.space.dao.SpaceMapper">  
+  
+  	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
+  	<sql id="spaceSearch">
+  		<where>
+  		  <if test="cate!=null and cate!=''">
+  		  cate_num = #{cate}
+  		  </if>
+  		<if test="keyword!=null and keyword!=''">
+  		    <if test="cate!=null and cate!=''">
+  		    	AND
+  		    </if>
+  			<if test="keyfield == 1">
+  			     (space_name LIKE '%' || #{keyword} || '%'
+  				     OR space_content LIKE '%' || #{keyword} || '%')
+  			</if>
+  			<if test="keyfield == 2">
+  				 space_name LIKE '%' || #{keyword} || '%'
+  			</if>
+  			<if test="keyfield == 3">
+  				 mem_nickName LIKE '%' || #{keyword} || '%'
+  			</if>
+  		</if>
+  		</where>
+  	</sql>
+  	
+  	<select id="selectSpaceCount" parameterType="map"
+  	                               resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM space
+  		<include refid="spaceSearch"></include>
+  	</select>
+  	
+  	<select id="selectSpaceList" parameterType="map"
+  	                              resultType="spaceVO">
+  	    SELECT
+  	       *
+  	    FROM (SELECT
+  	            a.*,
+  	            rownum rnum
+  	          FROM (SELECT
+  	                  *
+  	                FROM space
+  	                <include refid="spaceSearch"></include>
+  	                ORDER BY space_num DESC)a)
+  	    <![CDATA[
+  	    WHERE rnum >= #{start} AND rnum <= #{end}
+  	    ]]>             
+  	</select>
+  	
+  	<update id="updateSpace" parameterType="spaceVO">
+  		UPDATE space SET
+  		  <if test="space_photo_name !=''">
+  		  	space_photo=#{space_photo},
+  		  	space_photo_name=#{space_photo_name},
+  		  </if>  		
+  		  <if test="space_photo_name1 !=''">
+  		  	space_photo1=#{space_photo1},
+  		  	space_photo_name1=#{space_photo_name1},
+  		  </if>
+  		  <if test="space_photo_name2 !=''">
+  		  	space_photo2=#{space_photo2},
+  		  	space_photo_name2=#{space_photo_name2},
+  		  </if>
+  		   <if test="space_photo_name3 !=''">
+  		  	space_photo3=#{space_photo3},
+  		  	space_photo_name3=#{space_photo_name3},
+  		  </if>
+  		  space_name=#{space_name},
+  		  space_price=#{space_price},
+  		  space_np=#{space_np},
+  		  space_limit=#{space_limit},
+
+  		  space_content=#{space_content},
+  		  space_modate=SYSDATE
+
+  		WHERE space_num=#{space_num}    
+  	</update>
+</mapper>
