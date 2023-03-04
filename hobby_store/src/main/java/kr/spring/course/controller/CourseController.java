@@ -118,16 +118,17 @@ public class CourseController {
 	//=============클래스 목록===============//
 	@RequestMapping("/course/courseList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
-								@RequestParam(value="order",defaultValue="1") int order,
-								@RequestParam(value="oneweek",defaultValue="1") int oneweek,
-								String keyfield,String keyword,String onoff, String cate, String location) {
+								@RequestParam(value="order",defaultValue="1") String order,
+								@RequestParam(value="oneweek",defaultValue="1") String oneweek,
+								String onoff,String cate,
+								String keyfield,String keyword, String location) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
-		map.put("cate", cate);
 		map.put("onoff", onoff);
-		map.put("location", location);
 		map.put("oneweek", oneweek);
+		map.put("cate", cate);
+		map.put("location", location);
 		map.put("order", order);
 		
 		
@@ -138,7 +139,7 @@ public class CourseController {
 		logger.debug("<<상품 목록 개수>> : " + count);
 		
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, "courseList.do");
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, "courseList.do",onoff,oneweek,cate,location,order);
 		
 		List<CourseVO> list = null;
 		if(count>0) {
