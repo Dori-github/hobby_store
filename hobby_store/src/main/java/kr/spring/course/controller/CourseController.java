@@ -42,7 +42,6 @@ public class CourseController {
 	public CourseVO initCommand() {
 		return new CourseVO();
 	}
-	
 
 	
 	//=============글쓰기==============//
