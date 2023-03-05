@@ -71,6 +71,10 @@
   		  	space_photo3=#{space_photo3},
   		  	space_photo_name3=#{space_photo_name3},
   		  </if>
+  		  space_cate=#{space_cate},
+  		  space_zipcode=#{space_zipcode},
+  		  space_address1=#{space_address1},
+  		  space_address2=#{space_address2},
   		  space_name=#{space_name},
   		  space_price=#{space_price},
   		  space_np=#{space_np},
