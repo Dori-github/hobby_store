@@ -326,14 +326,12 @@ public class MemberController {
 		logger.info("인증번호 : " + emailCheckCode);	
 
 		email.setContent(
-				"홈페이지를 방문해주셔서 정말 감사합니다." +
-						"<br><br>" +
-						"취미상점 인증번호는 :  <b style='font-size : 13px; color: red;'>" + emailCheckCode+ "</b>입니다."
-						+"<br><br>" +
-				"해당 인증 번호를 확인란에 입력해주세요.");
+				"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다." + "임시 비밀번호는 "
+				        + emailCheckCode+ " 입니다.");
 		email.setReceiver(mem_email);
 		email.setSubject("취미상점 인증 메일입니다.");
 		emailSender.sendEmail(email);
+		
 
 		//Map에 담아서 데이터 처리 
 		Map<String,String> mapAjax = new HashMap<String,String>();
