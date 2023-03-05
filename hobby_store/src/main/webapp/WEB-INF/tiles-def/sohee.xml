@@ -25,11 +25,11 @@
     </definition>
       <definition name="memberPasswdSearch" extends="main">
     	<put-attribute name="title" value="비밀번호 찾기"/>
-    	<put-attribute name="body" value="/WEB-INF/views/member/passwdSearch.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/pwSearch.jsp"/>
     </definition>
     <definition name="memberPasswdSearchResult" extends="main">
     	<put-attribute name="title" value="비밀번호 찾기결과"/>
-    	<put-attribute name="body" value="/WEB-INF/views/member/passwdSearchResult.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/pwSearchResult.jsp"/>
     </definition>
 </tiles-definitions>
 

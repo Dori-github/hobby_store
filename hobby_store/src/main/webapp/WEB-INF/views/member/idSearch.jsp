@@ -50,28 +50,33 @@
                                         
 
                                        <form:button type="submit" class="btn mb-4" style="width: 100%;background-color: #FF4E02;color: white;">아이디 찾기</form:button>
-                                        
-                                      
 
 
-                                        <!-- 2 column grid layout -->
-                                        <div class="row mb-4">
-                                            <div class="col-md-4 d-flex justify-content-center">
-                                                <a id="find" href="${pageContext.request.contextPath}/member/idSearch.do">아이디 찾기</a>
-                                            </div>
-                                            <div class="col-md-4 d-flex justify-content-center" style="border-right: 1px solid #ddd;border-left: 1px solid;padding: 0px;">
-                                                <!-- Simple link -->
-                                                <a  id="find" href="${pageContext.request.contextPath}/member/login.do">로그인</a>
-                                            </div>
 
-                                            <div class="col-md-4 d-flex justify-content-center" style="border-right: 1px solid #ddd;border-left: 1px solid;padding: 0px;">
-                                                <!-- Simple link -->
-                                                <a id="find" class="find" href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
-                                            </div>
-                                        </div>
 
-                      
-                                    </form:form>
+								<!-- 2 column grid layout -->
+								<div class="row mb-4">
+									<div class="col-md-4 d-flex justify-content-center" style="padding: 0px;">
+										<a id="find"
+											href="${pageContext.request.contextPath}/member/pwSearch.do">비밀번호 찾기</a>
+									</div>
+									<div class="col-md-4 d-flex justify-content-center"
+										style="border-right: 1px solid #ddd; border-left: 1px solid; padding: 0px;">
+										<!-- Simple link -->
+										<a id="find"
+											href="${pageContext.request.contextPath}/member/login.do">로그인</a>
+									</div>
+
+									<div class="col-md-4 d-flex justify-content-center"
+										style="border-left: 1px solid; padding: 0px;">
+										<!-- Simple link -->
+										<a id="find" class="find"
+											href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
+									</div>
+								</div>
+
+
+							</form:form>
                                 </div>
                             </div>
                        
