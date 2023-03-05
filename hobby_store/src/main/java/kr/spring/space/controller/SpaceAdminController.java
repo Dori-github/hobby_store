@@ -39,29 +39,7 @@ public class SpaceAdminController {
 	public SpaceVO initCommand() {
 		return new SpaceVO();
 	}
-	
-	
-
-	
-
-	// =========공간등록=========//
-	/*
-	 * //카테고리 //1. 공간 등록//
-	 * 
-	 * @GetMapping("/space/admin_write.do") public ModelAndView form() { //Model =
-	 * interface(객체를 인자로 사용) ModelAndView = class(내부에 객체 생성) ModelAndView mav = new
-	 * ModelAndView();
-	 * 
-	 * List<SpaceVO> space_cate = null;
-	 * 
-	 * space_cate = spaceService.selectCate(); logger.debug("<<space_cate>> : " +
-	 * space_cate);
-	 * 
-	 * mav.setViewName("adminWrite"); mav.addObject("space_cate", space_cate);
-	 * 
-	 * 
-	 * return mav; }
-	 */	// 공간등록 폼 호출
+  // 공간등록 폼 호출
 	@GetMapping("/space/admin_write.do")
 	public String form() {
 		return "spaceAdminWrite";
