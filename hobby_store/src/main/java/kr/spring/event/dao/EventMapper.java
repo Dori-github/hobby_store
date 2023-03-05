@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventApplyVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
@@ -49,4 +50,8 @@ public interface EventMapper {
 	public List<ItemsVO> selectSearchItems(int mem_num);
 	@Select("SELECT course_num, course_name FROM course WHERE mem_num=#{mem_num}")
 	public List<CourseVO> selectSearchCourse(int mem_num);
+	
+	//이벤트 신청
+	@Insert("INSERT INTO event_apply (event_a_num,event_num,mem_num) VALUES(event_apply_seq.nextval,#{event_num},#{mem_num})")
+	public void insertEventApply(EventApplyVO eventApplyVO);
 }

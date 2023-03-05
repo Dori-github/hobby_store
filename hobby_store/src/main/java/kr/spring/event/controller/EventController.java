@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.course.vo.CourseVO;
 import kr.spring.event.service.EventService;
+import kr.spring.event.vo.EventApplyVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
@@ -139,7 +140,7 @@ public class EventController {
 	}
 	
 	@PostMapping("/event/update.do")
-	public String submitUpdate(@Valid EventVO eventVO, BindingResult result, Model model) {
+	public String submitUpdate(@Valid EventVO eventVO, BindingResult result, HttpServletRequest request, Model model) {
 		
 		logger.debug("<<글수정>> : " + eventVO);
 		logger.debug("<<업로드 파일 용량>> : " 
@@ -158,7 +159,11 @@ public class EventController {
 		//이벤트 수정
 		eventService.updateEvent(eventVO);
 		
-		return "commom/resultView";
+		//View에 메시지 표시
+		model.addAttribute("message","이벤트 수정이 완료되었습니다.");
+		model.addAttribute("url",request.getContextPath()+"/event/list.do");
+		
+		return "common/resultView";
 	}
 	
 	//=====이벤트 글삭제=======//
@@ -172,6 +177,28 @@ public class EventController {
 			
 			return "redirect:/event/list.do";
 		}
+	
+	//======이벤트 신청======//
+	@RequestMapping("/event/user_regis.do")
+	public String userRegisForm(@RequestParam int event_num, HttpSession session,HttpServletRequest request, Model model) {
+		
+		logger.debug("<<이벤트 신청>> : " + event_num);
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user!=null & user.getMem_auth() == 2){
+			EventApplyVO apply = new EventApplyVO();
+			apply.setEvent_num(event_num);
+			apply.setMem_num(user.getMem_num());
+			eventService.insertEventApply(apply);
+		}
+		
+		//View에 메시지 표시
+		model.addAttribute("message","이벤트 신청이 완료되었습니다.");
+		model.addAttribute("url",request.getContextPath()+"/event/list.do");
+		
+		return "common/resultView";
+	}
 	
 	//======이벤트 삭제======//
 	/*@PostMapping("/event/delete.do")

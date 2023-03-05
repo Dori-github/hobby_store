@@ -92,11 +92,16 @@
 	cursor:pointer;
 	display:inline-block;
 	width:300px;
-	height:250px;
+	height:300px;
 	text-align:left;
 	margin:10px;
 	padding:10px;
 	font-size:8pt;
+	border-radius:5px;
+}
+.event-list li:hover{
+	transition:.2s;
+	background-color:#E0E0E0;
 }
 
 .event-space .float-clear{

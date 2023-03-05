@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.course.vo.CourseVO;
 import kr.spring.event.dao.EventMapper;
+import kr.spring.event.vo.EventApplyVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
@@ -66,6 +67,11 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public List<CourseVO> selectSearchCourse(int mem_num) {
 		return eventMapper.selectSearchCourse(mem_num);
+	}
+
+	@Override
+	public void insertEventApply(EventApplyVO eventApplyVO) {
+		eventMapper.insertEventApply(eventApplyVO);
 	}
 
 }

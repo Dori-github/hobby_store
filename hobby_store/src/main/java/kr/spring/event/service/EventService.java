@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventApplyVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
@@ -26,4 +27,7 @@ public interface EventService {
 		//이벤트 관련 클래스/상품 목록 조회
 		public List<ItemsVO> selectSearchItems(int mem_num);
 		public List<CourseVO> selectSearchCourse(int mem_num);
+		
+		//이벤트 신청
+		public void insertEventApply(EventApplyVO eventApplyVO);
 }

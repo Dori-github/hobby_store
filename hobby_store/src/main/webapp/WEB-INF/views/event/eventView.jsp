@@ -24,6 +24,9 @@
 		<div id="event_detail">
 			${event.event_detail}
 		</div>
+		<c:if test="${event.course_num=='' && event.items_num==''}">
+		<input type="button" value="신청하기" onclick="location.href='user_regis.do?event_num=${event.event_num}'">
+		</c:if>
 	</div>
 	<div class="end-btn">
 	<c:if test="${user.mem_auth>2}">

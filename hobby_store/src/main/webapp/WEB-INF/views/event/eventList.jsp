@@ -7,6 +7,7 @@
 <div class="event-main">
 <div id="event_search">
 	<form id="search_form" action="list.do" method="get">
+	<h2>이벤트</h2>
 		<ul>
 			<li>
 				<select class="select-form" name="keyfield">
@@ -36,7 +37,7 @@
 			<fmt:formatDate value="${now}" pattern="yyyyMMdd" var="today"/>
 			<fmt:formatDate value="${event.event_end}" pattern="yyyyMMdd" var="endDate"/>
 				<li>
-				<a href="detail.do?event_num=${event.event_num}" <c:if test="${endDate < today}">class="disabled"</c:if>>
+				<a href="detail.do?event_num=${event.event_num}" <c:if test="${endDate < today or event.event_attr == 0}">class="disabled" style="cursor:default;"</c:if>>
 					<div class="event-image">
 					<img src="imageView.do?event_num=${event.event_num}" width="300" height="200"></div>
 					<div class="event-content"><br>
