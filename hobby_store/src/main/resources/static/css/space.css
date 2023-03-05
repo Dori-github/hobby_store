@@ -619,3 +619,49 @@ input[type='number']::-webkit-inner-spin-button {
       width:100%;
    }
 }
+
+/* 상세페이지 */
+  .flex-container{
+            display: inline-flex;
+        }
+
+.image3 img{
+	display : inline;
+	width:190px;
+	height:100px;
+
+}
+.img img{
+	width:570px;
+	height:400px;
+}
+
+.carousel-control-prev{
+
+	margin-left:-10px;
+}
+
+.carousel-control-next{
+	margin-right: 30px;
+
+	
+} 
+.carousel-item{
+	width:0px;
+}
+	
+.left{
+	 width: 50%;
+        float: left;
+        box-sizing: border-box;
+}
+
+.space-detail{
+	width: 50%;
+        float: right;
+        box-sizing: border-box;
+}
+
+.card{
+	border:none;
+}

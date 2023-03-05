@@ -100,7 +100,7 @@
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
 			<c:forEach var="space" items="${list}">
 			<div class="col">
-			<a href="spaceDetail.do?space_num=${space.space_num}" style="display:block;">
+			<a href="detail.do?space_num=${space.space_num}" style="display:block;">
 					<div class="card h-100" style="position:relative;">
 						<div class="card-img-top">
 						  <img src="imageView.do?space_num=${space.space_num}&space_type=1" width="100%" height="100%">
@@ -115,7 +115,7 @@
 						  	<span><i class="fa-regular fa-star"></i> ${space.star} (후기 ${space.reply})</span>
 						  	<p class="card-text">
 						  		<span>${space.space_address1}</span>
-						  		<br><b><fmt:formatNumber>${space.space_price}</fmt:formatNumber>원</b><span style="color:gray;"> / 1인</span>
+						  		<br><b><fmt:formatNumber>${space.space_price}</fmt:formatNumber>원</b><span style="color:gray;"><b><fmt:formatNumber>${space.space_np} </fmt:formatNumber>인</b></span>
 						  	</p>
 						</div>
 					</div>
