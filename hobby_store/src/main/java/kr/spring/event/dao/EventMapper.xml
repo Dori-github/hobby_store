@@ -3,8 +3,86 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.event.dao.EventMapper">  
+
+	<sql id="eventSearch">
+	FROM event JOIN event_detail USING(event_num)
+		<if test="keyword!='' and keyword!=null">
+			<if test="keyfield==1">
+			WHERE event_title LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield==2">
+			WHERE event_detail LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="keyfield==3">
+			WHERE event_title LIKE '%' || #{keyword} || '%' OR event_detail LIKE '%' || #{keyword} || '%'
+			</if>
+		</if>
+	</sql>
+
+  <insert id="insertEvent" parameterType="EventVO">
+  	  INSERT INTO event(
+  		event_num,
+  		event_title,
+  		event_attr,
+  		event_end,
+  		event_rdate,
+  		event_content,
+  		mem_num,
+  		<if test="course_num!=''">course_num,</if>
+  		<if test="items_num!=''">items_num,</if>
+  		event_photo,
+  		event_photo_name
+  		) VALUES (
+  			#{event_num},
+	  		#{event_title},
+	  		#{event_attr},
+	  		#{event_end},
+	  		#{event_rdate},
+	  		#{event_content},
+	  		#{mem_num},
+	  		<if test="course_num!=''">#{course_num},</if>
+	  		<if test="items_num!=''">#{items_num},</if>
+	  		#{event_photo},
+	  		#{event_photo_name}
+  			)
+  </insert>
   
-  	
+  <select id="selectRowCount" parameterType="map" resultType="Integer">
+  	SELECT
+  		COUNT(*)
+  	<include refid="eventSearch"></include>
+  </select>
+  
+  <select id="selectList" parameterType="map" resultType="eventVO">
+  	SELECT 
+  		*
+  	FROM (SELECT
+  			a.*,
+  			rownum rnum
+  		  FROM (SELECT
+  		  			*
+  		  		<include refid="eventSearch"></include>
+  		  		ORDER BY event_end DESC)a)
+  		  <![CDATA[
+  		  WHERE rnum >= #{start} and rnum <= #{end}
+  		  ]]>
+  </select>
+  
+  <update id="updateEvent" parameterType="eventVO">
+  	UPDATE event SET
+  		<if test="event_photo_name != ''">
+  		event_photo=#{event_photo},
+  		event_photo_name=#{event_photo_name},
+  		</if>
+  		<if test="course_num!=''">course_num=#{course_num},</if>
+  		<if test="items_num!=''">items_num=#{items_num},</if>
+  		event_title=#{event_title},
+  		event_attr=#{event_attr},
+  		event_content=#{event_content},
+  		event_end=#{event_end},
+  		event_rdate=#{event_rdate}
+   	WHERE event_num=#{event_num}
+  </update>
 </mapper>
 
 
