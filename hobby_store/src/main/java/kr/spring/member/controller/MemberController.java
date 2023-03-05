@@ -286,7 +286,7 @@ public class MemberController {
 	public String idSearchForm() {
 		logger.debug("<<아이디 찾기 진입>>");
 
-		return "memberIdSearch";
+		return "memberIdSearch"; //타일스 식별자
 	}
 
 	//아이디찾기 폼에 전송된 데이터 처리
@@ -308,7 +308,13 @@ public class MemberController {
 	}  
 
 	//=========비밀번호 찾기============//
-
+	//비밀번호 폼 호출 
+	@GetMapping("/member/passwdSearch.do")
+	public String passwdSerchForm() {
+		logger.debug("<<비밀번호 찾기 진입>>");
+		
+		return "memberPasswdSearch";	// 타일스 식별자
+	}
 
 
 
