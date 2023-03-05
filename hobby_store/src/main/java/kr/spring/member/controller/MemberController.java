@@ -232,8 +232,9 @@ public class MemberController {
 
 
 				//관리자는 관리자 메인으로 이동
+				//관리자 페이지 만들어지면 수정 예정 
 				if(member.getMem_auth() == 9) {
-					return "redirect:/main/admin.do";
+					return "redirect:/main/main.do";
 
 					//사용자는 사용자 메인으로 이동
 				}else {
@@ -311,7 +312,7 @@ public class MemberController {
 
 
 
-	//=========이메일 인증 난수 생성및 이메일 발송 컨트롤러============//
+	//=========이메일 발송 ============//
 	@RequestMapping("/member/mailCheck.do")
 	@ResponseBody
 	public Map<String,String> mailCheck(String mem_email,HttpSession session) throws Exception {
@@ -326,7 +327,7 @@ public class MemberController {
 		logger.info("인증번호 : " + emailCheckCode);	
 
 		email.setContent(
-				"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다." + "임시 비밀번호는 "
+				"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다. " + "임시 비밀번호는 "
 				        + emailCheckCode+ " 입니다.");
 		email.setReceiver(mem_email);
 		email.setSubject("취미상점 인증 메일입니다.");
@@ -369,7 +370,7 @@ public class MemberController {
 	}
 
 
-	//=========이메일 인증 난수 생성및 이메일 발송 컨트롤러============//
+	//=========이메일 인증 난수 생성 컨트롤러============//
 	private int certCharLength = 8;
 
 	private final char[] characterTable = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
