@@ -146,10 +146,22 @@ $(function(){
 				success:function(data){
 					email_Check.attr("disabled",false);		// 인증번호 입력란 활성화
 					emailCheckCode = data;					// 변수에 인증번호 담기
-					alert("인증번호 전송 완료")
+					Swal.fire({
+                    icon: 'success',
+                    title:'인증번호 전송 완료',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
 				},
 				error : function(){
-					alert("네트워크 오류 발생");
+					Swal.fire({
+                    icon: 'error',
+                    title:'네트워크 오류 발생',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
 				}
 			});
 				
