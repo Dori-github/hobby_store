@@ -30,29 +30,17 @@
 					</div>
 
 
-					<div class="table">
-
-						<div align="center" style="padding-bottom: 10px;">${mem_id}
-							님의 비밀번호 찾기 결과</div>
-
-
-
-						<div align="center"
-							style="font-size: 18px; background-color: #f5f5ff; width: 60%; height: 60%;">
-							<b style="font-size: 24px;">${memberVO.mem_name}</b>님 입력하신 이메일 <b
-								style="font-size: 24px; color: red;">(${memberVO.mem_email})</b>로 <br>임시
-							비밀번호를 보내드렸습니다.<br> 언제나 저희 취미상점을 이용해주셔서 감사합니다.
-						</div>
-
-
-
-
-
+                   <div class="table">
+					<div align="center">
+						입력하신 이메일 <b style="color: red;">(${memberVO.mem_email})</b> 로 임시
+						비밀번호를 보내드렸습니다.<br> 언제나 취미상점을 이용해주셔서 감사합니다.
 					</div>
-
+					</div>
+					
+					
 					<div class="row mb-4">
 						<div class="col-md-14 d-flex justify-content-center"
-							style="padding-top: 10px;">
+							style="padding-top: 20px;">
 
 							<button type="button" class="btn mb-4"
 								onclick="location.href='${pageContext.request.contextPath}/member/login.do';"
@@ -60,7 +48,7 @@
 
 						</div>
 
-					</div>
+				
 
 					<div class="row mb-4">
 						<div class="col-md-4 d-flex justify-content-center"
@@ -83,10 +71,6 @@
 							<a id="find"
 								href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
 						</div>
-
-
-
-
 
 					</div>
 
