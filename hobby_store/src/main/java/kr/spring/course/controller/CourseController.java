@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.course.service.CourseService;
+import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
@@ -121,7 +122,7 @@ public class CourseController {
 								@RequestParam(value="order",defaultValue="1") String order,
 								@RequestParam(value="oneweek",defaultValue="1") String oneweek,
 								String onoff,String cate,
-								String keyfield,String keyword, String location) {
+								String keyfield,String keyword, String location,HttpSession session) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
@@ -131,15 +132,19 @@ public class CourseController {
 		map.put("location", location);
 		map.put("order", order);
 		
+		//로그인한 회원정보
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		//로그인한 회원이 누른 하트 체크
+		List<CourseVO> favCheck = courseService.selectFavCheck();
 		
 		//글의 총개수 또는 검색된 글의 개수
 		int count = courseService.selectCourseCount(map);
 		
-		logger.debug("<<상품 목록 개수>> : " + count);
+		logger.debug("<<클래스 목록 개수>> : " + count);
 		
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, "courseList.do",onoff,oneweek,cate,location,order);
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, "courseList.do");
 		
 		List<CourseVO> list = null;
 		if(count>0) {
@@ -153,6 +158,8 @@ public class CourseController {
 		
 		list = courseService.selectCourseList(map);
 		
+		logger.debug("<<리스트>> : " + list);
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("courseList");
@@ -160,6 +167,8 @@ public class CourseController {
 		mav.addObject("count",count);
 		mav.addObject("list",list);
 		mav.addObject("page",page.getPage());
+		mav.addObject("user",user);
+		mav.addObject("favCheck",favCheck);
 		
 		return mav;
 	}
@@ -198,6 +207,9 @@ public class CourseController {
 			                  Model model) {
 		logger.debug("<<클래스상세>> : " + course_num);
 		
+		//조회수 증가
+		courseService.updateHit(course_num);
+		
 		CourseVO course = courseService.selectCourse(course_num);
 		model.addAttribute("course", course);
 		
@@ -225,15 +237,71 @@ public class CourseController {
 	
 	
 	
-	//이미지 출력
+	
 	
 	
 	
 	//===============좋아요================//
-	//부모글 좋아요 읽기
-	
+	//좋아요 읽기
+	@RequestMapping("/course/getFav.do")
+	@ResponseBody
+	public Map<String,Object> getFav(CourseFavVO fav, HttpSession session){
+		logger.debug("<<클래스 좋아요>> : " + fav);
+		
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("status", "noFav");
+		}else {
+			//로그인된 아이디 셋팅
+			fav.setFmem_num(user.getMem_num());
+			
+			CourseFavVO courseFav = courseService.selectFav(fav);
+			if(courseFav!=null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", courseService.selectFavCount(fav.getCourse_num()));
+		
+		return mapJson;
+	}
 	
 	//좋아요 등록
+	@RequestMapping("/course/writeFav.do")
+	@ResponseBody
+	public Map<String,Object> writeFav(CourseFavVO fav,HttpSession session){
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			//로그인된 회원번호 셋팅
+			fav.setFmem_num(user.getMem_num());
+			
+			logger.debug("<<부모글 좋아요 등록>> : " + fav);
+			
+			CourseFavVO courseFav = courseService.selectFav(fav);
+			if(courseFav!=null) {
+				//좋아요가 이미 등록되어있으면 삭제
+				courseService.deleteFav(courseFav.getFav_num());
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "noFav");
+			}else {
+				//좋아요 미등록이면 등록
+				courseService.insertFav(fav);
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "yesFav");
+			}
+			mapJson.put("count", courseService.selectFavCount(fav.getCourse_num()));
+		}
+		return mapJson;
+	}
 	
 	
 	

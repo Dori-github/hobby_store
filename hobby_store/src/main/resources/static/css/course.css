@@ -187,16 +187,15 @@ input::-webkit-search-results-decoration{
 	float:right;
 	color:gray;
 }
-#content #red-heart{
+#content .red-heart{
 	display:block;
 	text-align:right;
 	position:absolute;
-	top:5px;
+	top:10px;
 	right:10px;
-	color:red;
-	font-size:15pt;
+	z-index:990;
 }
-#content #red-heart .fa-heart{
+#content .red-heart .fa-heart{
 	color:red;
 	font-size:15pt;
 }
@@ -641,13 +640,15 @@ input[type='number']::-webkit-inner-spin-button {
 .margin-top{
 	margin-top: 30px;
 }
-.left-img{
-	width:50%;
+/*왼쪽 이미지*/
+.carousel-inner{
+	border-radius:10px;
+	width:700px;
 }
-#carouselExampleControls img{
+#carouselExampleIndicators img{
 	width:100%;
 	height:480px;
-	border-radius:5px;
+	border:1px solid lightgray;
 }
 .left-img ul{
 	display:flex;
@@ -659,13 +660,162 @@ input[type='number']::-webkit-inner-spin-button {
 .left-img ul img{
 	width:210px;
 	height:150px;
-	border-radius:5px;
+	border-radius:10px;
 	transition:all .2s linear;
+	border:1px solid lightgray;
 	cursor: pointer;
 }
 .left-img ul img:hover{
 	transform:scale(1.1);
 }
+
+/*오른쪽 클래스 설명*/
+.course-info{
+	display:flex;
+	justify-content: space-between;
+}
+.right-class{
+	position:relative;
+	width:50%;
+	min-width:400px;
+	margin:0 0 16px 70px;
+	padding:70px;
+	text-align:left;
+	font-size:14pt;
+	border-radius:10px;
+	box-shadow:0 0 5px 3px #F0F0F0;
+}
+.right-class .gray{
+	color:gray;
+}
+.right-class .heart{
+	float:right;
+	line-height: 20px;
+}
+.right-class .fa-heart{
+	font-size:18pt;
+}
+.right-class .heart:hover{
+	cursor: pointer;
+}
+.right-class .reservation{
+	position: absolute;
+	bottom:70px;
+	width:100%;
+	padding-right:140px;
+}
+.right-class .price{
+	font-size: 20pt;
+	font-weight: bold;
+	line-height:18px;
+	float:right;
+}
+.right-class .buy{
+	display:block;
+	width:48%;
+	height:50px;
+	border:none;
+	border-radius:5px;
+	background-color: #FF4E02;
+	color:#FFF;
+	text-align:center;
+	font-weight: bold;
+	line-height: 50px;
+	cursor: pointer;
+}
+.right-class .buy:hover{
+	background-color: #E84601;
+}
+.right-class .fa-cart-plus{
+	font-size:15pt;
+	line-height: 50px;
+	margin-right:10px;
+}
+
+
+.course-d-info{
+	margin-top:150px;
+}
+.course-d-info .title ,.course-d-info .reply-avg{
+	display:flex;
+	align-items: center;
+	justify-content:flex-start;
+	margin:0;
+	padding:0;
+}
+.course-d-info .title li,.course-d-info .reply-avg li{
+	padding:20px 50px;
+	font-size:14pt;
+	font-weight:bold;
+	cursor:pointer;
+}
+.course-d-info .title li:hover{
+	background-color:#F2F2F2;
+}
+.course-d-info .title .active{
+	border-bottom:5px solid #FF4E02;
+}
+.badge{
+	background-color: gray;
+}
+.course-d-info .c-content,.course-d-info .reply,.course-d-info .qna{
+	margin-top:70px;
+}
+
+/*클래스 후기*/
+.reply .reply-avg{
+	justify-content: center;
+	margin:40px 0;
+}
+.reply .reply-avg li:first-child{
+	margin-right:30px;
+	font-size: 30pt;
+	padding-left:0;
+}
+.reply .reply-avg li:last-child{
+	background-color: #F2F2F2;
+	border-radius: 10px;
+	text-align: center;
+}
+/*후기 정렬*/
+.course-d-info .btn-select{
+	float: right;
+	margin-bottom:10px;
+	width:100px;
+}
+.course-d-info .list-box{
+	position:absolute;
+	top:30px;
+	right:100px;
+}
+.course-d-info .list-cate{
+	width:100px;
+	font-size: 10pt;
+}
+.course-d-info .icon{
+	line-height:20px;
+}
+.reply-form{
+	margin:40px 0;
+}
+.reply-form .reply-content{
+	width:100%;
+	height:300px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

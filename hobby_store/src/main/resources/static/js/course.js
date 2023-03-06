@@ -48,12 +48,51 @@ $(function(){
 
 	});
 	
-	
-	
-	
-	
-	
-	
+	//좋아요 클릭 
+	$(document).on('click','.red-heart',function(){
+		let heart = $(this);
+		$.ajax({
+			url:'writeFav.do',
+			type:'post',
+			data:{course_num:$(this).attr('data-num')},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					Swal.fire({
+				        icon: 'warning',
+				        title:'로그인 후 좋아요를 눌러주세요',
+				        showCancelButton: false,
+				        confirmButtonText: "확인",
+				        confirmButtonColor: "#FF4E02"
+				        });
+				}else if(param.result == 'success'){
+					if(param.status == 'yesFav'){
+						heart.find('.fa-heart').css('font-weight', 'bold');
+					}else{
+						heart.find('.fa-heart').css('font-weight', 'normal');
+					}
+				}else{
+					Swal.fire({
+				        icon: 'error',
+				        title:'등록시 오류 발생',
+				        showCancelButton: false,
+				        confirmButtonText: "확인",
+				        confirmButtonColor: "#FF4E02"
+				        });
+				}
+			},
+			error:function(){
+				Swal.fire({
+			        icon: 'error',
+			        title:'네트워크 오류',
+			        showCancelButton: false,
+			        confirmButtonText: "확인",
+			        confirmButtonColor: "#FF4E02"
+			        });
+			}
+		});
+	});
+
 	
 	
 	
@@ -95,30 +134,27 @@ $(function(){
 	
 	
 	
-
-	
 	
 	
 	
 	//===============카테고리 분류===================//
 	//카테고리 분류
-	let formCate = $('#course_form .btn-select');
-	let whole = $('#course_form .btn-select span');
-	let formList = $('#course_form .list-box');
-	let list = $('#course_form .list-cate li');
+	let formCate = $('.btn-select');
+	let whole = $('.btn-select span');
+	let formList = $('.list-box');
+	let list = $('.list-cate li');
 	
 	formCate.on('click',function(){
-		
 		if($(this).hasClass('active')){
 			formList.hide();
 			$(this).removeClass('active');
-			$('#course_form .btn-select .fa-chevron-up').hide();
-			$('#course_form .btn-select .fa-chevron-down').show();//v
+			$('.btn-select .fa-chevron-up').hide();
+			$('.btn-select .fa-chevron-down').show();//v
 		}else{
 			formList.show();
 			$(this).addClass('active');
-			$('#course_form .btn-select .fa-chevron-down').hide();
-			$('#course_form .btn-select .fa-chevron-up').show();//^
+			$('.btn-select .fa-chevron-down').hide();
+			$('.btn-select .fa-chevron-up').show();//^
 		}
 	});
 	
@@ -126,8 +162,8 @@ $(function(){
 		if(!$(e.target).hasClass('btn-select') && !$(e.target).hasClass('whole') && !$(e.target).hasClass('icon') ){
 			formList.hide();
 			formCate.removeClass('active');
-			$('#course_form .btn-select .fa-chevron-up').hide();
-			$('#course_form .btn-select .fa-chevron-down').show();//v
+			$('.btn-select .fa-chevron-up').hide();
+			$('.btn-select .fa-chevron-down').show();//v
 		}
 		
 	});
@@ -402,9 +438,10 @@ $(function(){
 	});
 	
 	
-	//유효성 체크
+	//등록폼 submit
 	$('#course_form').submit(function(){
-		if($('#course_onoff1').is(':checked')){
+		//개월,횟수 유효성 체크
+		if($('#course_onoff2').is(':checked')){
 			if($('#course_month').val().trim()==''){
 				let month = '<div class="error-color">개월수를 입력하세요</div>';
 				$('input[name=course_month]').parent().after(month);
@@ -417,12 +454,18 @@ $(function(){
 				$('#course_count').val().focus();
 				return false;
 			}
+			
+		}
+		if($('#course_month').val().trim()==''){
+			$('#course_month').val(0);
+		}
+		if($('#course_count').val().trim()==''){
+			$('#course_count').val(0);
 		}
 	});	
 	
-	
-	
-
+	//===============클래스 상세페이지================//
+	//이미지 캐러셀
 	
 
 	

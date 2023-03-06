@@ -121,12 +121,17 @@
 			<c:forEach var="course" items="${list}">
 			<div class="col">
 				<div class="card h-100" style="position:relative;">
+				
+					<c:forEach var="fav" items="${favCheck}">
+				 	<span class="red-heart" data-num="${course.course_num}"><i class="fa-regular fa-heart" <c:if test="${fav.fmem_num==user.mem_num&&fav.course_num==course.course_num}">
+				 		style="font-weight:bold;"</c:if>></i></span>
+				 	</c:forEach>
+				 	
 					<a href="courseDetail.do?course_num=${course.course_num}" style="display:block;">
 						<div class="card-img-top">
 						  <img src="/course/imageView.do?course_num=${course.course_num}&item_type=1" width="100%" height="100%">
 						</div>
 						<div class="card-body">
-						 	<span id="red-heart"><i class="fa-regular fa-heart"></i></span>
 						  	<div class="color-gray">
 						  		<span>${course.mem_nickname}</span>
 						  		<span class="card-hit"><i class="fa-solid fa-eye"></i> ${course.course_hit} <i class="fa-solid fa-heart"></i> ${course.fav}</span>

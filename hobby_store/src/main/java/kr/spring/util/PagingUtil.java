@@ -1,6 +1,6 @@
 package kr.spring.util;
 
-public class PagingUtil { 
+public class PagingUtil {
 	private int startRow;	 // 한 페이지에서 보여줄 게시글의 시작 번호
 	private int endRow;	 // 한 페이지에서 보여줄 게시글의 끝 번호
 	private StringBuffer page;// 페이지 표시 문자열
@@ -15,35 +15,22 @@ public class PagingUtil {
 	 * */
 	public PagingUtil(int currentPage, int count, int rowCount,
 			int pageCount, String pageUrl) {
-		this(null,null,currentPage,count,rowCount,pageCount,pageUrl,null,null,null,null,null,null);
+		this(null,null,currentPage,count,rowCount,pageCount,pageUrl,null);
 	}
 	public PagingUtil(int currentPage, int count, int rowCount,
 			int pageCount, String pageUrl, String addKey) {
-		this(null,null,currentPage,count,rowCount,pageCount,pageUrl,addKey,null,null,null,null,null);
+		this(null,null,currentPage,count,rowCount,pageCount,pageUrl,addKey);
 	}
 	public PagingUtil(String keyfield, String keyword, int currentPage, int count, int rowCount,
 			int pageCount,String pageUrl) {
-		this(keyfield,keyword,currentPage,count,rowCount,pageCount,pageUrl,null,null,null,null,null,null);
+		this(keyfield,keyword,currentPage,count,rowCount,pageCount,pageUrl,null);
 	}
 	public PagingUtil(String keyfield, String keyword, int currentPage, int count, int rowCount,
 			int pageCount,String pageUrl,String addKey) {
-		this(keyfield,keyword,currentPage,count,rowCount,pageCount,pageUrl,addKey,null,null,null,null,null);
-	}
-	public PagingUtil(String keyfield, String keyword, int currentPage, int count, int rowCount,
-			int pageCount,String pageUrl,String onoff,String oneweek,String cate,String location,String order) {
-		this(keyfield,keyword,currentPage,count,rowCount,pageCount,pageUrl,null,onoff,oneweek,cate,location,order);
-	}
-	public PagingUtil(String keyfield, String keyword, int currentPage, int count, int rowCount,
-			int pageCount,String pageUrl,String addKey,String onoff,String oneweek,String cate,String location,String order) {
 		
 		String sub_url = "";
 		if(keyword != null) sub_url = "&keyfield="+keyfield+"&keyword="+keyword;
 		if(addKey != null) sub_url += addKey;
-		
-		String c_sub_url = "";
-		if(onoff != null) {
-			c_sub_url = "&onoff="+onoff+"&oneweek="+oneweek+"&cate="+cate+"&location="+location+"&order="+order;
-		}
 		
 		// 전체 페이지 수
 		int totalPage = (int) Math.ceil((double) count / rowCount);
@@ -67,7 +54,7 @@ public class PagingUtil {
 		// 이전 block 페이지
 		page = new StringBuffer();
 		if (currentPage > pageCount) {
-			page.append("<a href="+pageUrl+"?pageNum="+ (startPage - 1) + sub_url + c_sub_url+">");
+			page.append("<a href="+pageUrl+"?pageNum="+ (startPage - 1) + sub_url +">");
 			page.append("[이전]");
 			page.append("</a>");
 		}
@@ -91,7 +78,7 @@ public class PagingUtil {
 		}
 		// 다음 block 페이지
 		if (totalPage - startPage >= pageCount) {
-			page.append("<a href="+pageUrl+"?pageNum="+ (endPage + 1) + sub_url + c_sub_url +">");
+			page.append("<a href="+pageUrl+"?pageNum="+ (endPage + 1) + sub_url +">");
 			page.append("[다음]");
 			page.append("</a>");
 		}

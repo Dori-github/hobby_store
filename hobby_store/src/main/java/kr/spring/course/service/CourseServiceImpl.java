@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.course.dao.CourseMapper;
+import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO; 
 
@@ -94,8 +95,30 @@ public class CourseServiceImpl implements CourseService{
 	
 	//==========좋아요============//
 	@Override
+	public List<CourseVO> selectFavCheck() {
+		return courseMapper.selectFavCheck();
+	}
+	@Override
 	public int selectFavCount(Integer course_num) {
 		return courseMapper.selectFavCount(course_num);
+	}
+	@Override
+	public CourseFavVO selectFav(CourseFavVO fav) {
+		return courseMapper.selectFav(fav);
+	}
+	@Override
+	public void insertFav(CourseFavVO fav) {
+		courseMapper.insertFav(fav);
+	}
+
+	@Override
+	public void deleteFav(Integer fav_num) {
+		courseMapper.deleteFav(fav_num);
+	}
+
+	@Override
+	public void deleteFavByCourseNum(Integer course_num) {
+		courseMapper.deleteFavByCourseNum(course_num);
 	}
 
 	
@@ -115,4 +138,8 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.selectStarAvg(course_num);
 	}
 
+	
+
+	
+	
 }
