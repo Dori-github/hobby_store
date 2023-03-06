@@ -3,6 +3,11 @@ package kr.spring.course.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+
+import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 
@@ -21,7 +26,12 @@ public interface CourseService {
 	
 	
 	//좋아요
+	public List<CourseVO> selectFavCheck();
+	public CourseFavVO selectFav(CourseFavVO fav);
 	public int selectFavCount(Integer course_num);
+	public void insertFav(CourseFavVO fav);
+	public void deleteFav(Integer fav_num);
+	public void deleteFavByCourseNum(Integer course_num);
 
 
 	//후기

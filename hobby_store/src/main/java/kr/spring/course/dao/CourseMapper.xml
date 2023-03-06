@@ -66,12 +66,43 @@
 	</select>
 	 
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
-		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM course 
-		JOIN member USING(mem_num) 
+		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * 
+			FROM course c JOIN member USING(mem_num) LEFT JOIN (SELECT course_num,COUNT(fav_num) AS fav FROM course_fav GROUP BY course_num) USING(course_num)
 			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}
 			]]>
 	</select>
+	
+	
+	
+	<!-- 댓글 목록 -->
+  	<select id="selectListReply" parameterType="map"
+  	                       resultType="courseReplyVO">
+  		SELECT
+  		   *
+  		FROM(SELECT
+  		       a.*,
+  		       rownum rnum
+  		     FROM(SELECT
+  		            reply_num,
+  		            <![CDATA[
+  		            REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') reply_content,
+  		            ]]>
+  		            reply_date,
+  		            re_mdate,
+  		            board_num,
+  		            mem_num,
+  		            id,
+  		            nick_name
+  		          FROM course_reply JOIN member 
+  		          USING (mem_num)
+  		          WHERE board_num = #{board_num}
+  		          ORDER BY re_num DESC)a)
+  		    <![CDATA[
+  		    WHERE rnum >= #{start} AND rnum <= #{end}
+  		    ]]>          
+  	</select>
+	
 	
 </mapper> 

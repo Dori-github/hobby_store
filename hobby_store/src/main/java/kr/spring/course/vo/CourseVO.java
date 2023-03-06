@@ -50,9 +50,10 @@ public class CourseVO {
 	private float star;
 	private int reply;
 	private int fav;
+	private int fmem_num;
+	private int fav_num;
 	
 	private List<CourseTimeVO> courseTimeVO;
-	
 	private String course_reg_date;
 	private String course_reg_time;
 
@@ -288,6 +289,20 @@ public class CourseVO {
 	public void setCourseTimeVO(List<CourseTimeVO> courseTimeVO) {
 		this.courseTimeVO = courseTimeVO;
 	}
+	public int getFmem_num() {
+		return fmem_num;
+	}
+	public void setFmem_num(int fmem_num) {
+		this.fmem_num = fmem_num;
+	}
+	public int getFav_num() {
+		return fav_num;
+	}
+	public void setFav_num(int fav_num) {
+		this.fav_num = fav_num;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums
