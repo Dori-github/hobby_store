@@ -27,9 +27,9 @@
                                     aria-labelledby="tab-login">
                                     
                                     <!-- 유효성 체크 -->
-                                    <form:form action="passwdSearch.do" id="passwdSearch_form" modelAttribute="memberVO">
+                                    <form:form action="pwSearchResult.do" id="passwdSearch_form" modelAttribute="memberVO">
                                    
-                                    
+                                    	<form:errors element="div" cssClass="error-color" />
                                         <!-- id input -->
                                         <div class="form-outline mb-4">
                                             <form:input path="mem_id" type="id" id="mem_id" class="form-control"

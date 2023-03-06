@@ -24,7 +24,7 @@ public interface MemberMapper {
 			  + "#{mem_zipcode},#{mem_address1},#{mem_address2},#{country_num},#{like_num})")
 	public void insertMember_detail(MemberVO member);
 	@Select("SELECT m.mem_num,m.mem_id,m.mem_auth,m.mem_au_id,"
-			  + "d.mem_pw,m.mem_nickname,d.mem_email FROM "
+			  + "d.mem_pw,m.mem_nickname,d.mem_email,d.mem_cell FROM "
 			  + "member m LEFT OUTER JOIN member_detail d "
 			  + "ON m.mem_num=d.mem_num WHERE m.mem_id=#{mem_id}")
 	public MemberVO selectCheckMember(String mem_id);
@@ -58,5 +58,9 @@ public interface MemberMapper {
 			+ "member_detail d ON m.mem_num=d.mem_num "
 			+ "WHERE d.mem_email=#{mem_email} AND d.mem_cell=#{mem_cell}")
 	public String selectIdSearch(MemberVO vo);	
-		
+	
+	//비밀번호 변경 
+	@Update("UPDATE member_detail SET mem_pw = #{mem_pw} WHERE mem_num=#{mem_num}")
+	public void updateMemberPasswd(MemberVO member); // 마이페이지 - 회원 비밀번호 변경
+
 }

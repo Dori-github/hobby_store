@@ -68,6 +68,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectIdSearch(vo);
 	}
 
+	@Override
+	public void updateMemberPasswd(MemberVO member) {
+		memberMapper.updateMemberPasswd(member);
+		
+	}
+
 
 	
 

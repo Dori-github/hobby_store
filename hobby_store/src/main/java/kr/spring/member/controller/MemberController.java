@@ -309,14 +309,74 @@ public class MemberController {
 
 	//=========비밀번호 찾기============//
 	//비밀번호 폼 호출 
-	@GetMapping("/member/passwdSearch.do")
+	@GetMapping("/member/pwSearch.do")
 	public String passwdSerchForm() {
 		logger.debug("<<비밀번호 찾기 진입>>");
-		
+
 		return "memberPasswdSearch";	// 타일스 식별자
 	}
 
+	//비밀번호찾기 폼에 전송된 데이터 처리
+	// 비밀번호 찾기 - 데이터 처리
+	@PostMapping("/member/pwSearchResult.do")
+	public String passwdSerchProcess(@Valid MemberVO memberVO,BindingResult result,
+			HttpSession session) throws Exception {
 
+		logger.debug("<<비밀번호 찾기 데이터 확인>> : " + memberVO);
+		//유효성 체크 결과 오류가 있으면 폼 호출
+		//id와 passwd 필드만 체크
+		if(result.hasFieldErrors("mem_id") || result.hasFieldErrors("mem_cell") || result.hasFieldErrors("mem_email")) {
+			logger.debug("<<비밀번호 찾기 오류>> : " + result.getFieldErrors());
+			return passwdSerchForm();
+		}
+
+		//로그인 체크(id,phone,email 일치 여부 체크)
+		try {
+			// 새로운 자바빈 객체에 담기								// 입력된 ID
+			MemberVO member = memberService.selectCheckMember(memberVO.getMem_id());	// 입력된 ID를 토대로 회원 정보 담기	
+			// 입력 아이디 넣어서 생성 존재하지 않다면 null
+
+			boolean check = false;
+
+			if(member!=null) {	//아이디 일치한 경우 이메일과 전화번호 인증 작업
+				if(member.getMem_id().equals(memberVO.getMem_id()) && member.getMem_email().equals(memberVO.getMem_email()) && member.getMem_cell().equals(memberVO.getMem_cell())) {
+					// 입력한 email과 phone가 DB에 저장된 회원 정보(email, phone)와 같은 경우
+					check = true;
+
+				}
+			}
+
+			if(check) {	//인증 성공, 로그인 처리
+
+				//이메일 내용 작성 
+				// JAVA Random 객체를 사용하여 숫자 + 문자 8자리 난수 생성
+				String emailCheckCode = excuteGenerate();
+				session.setAttribute("pwCode", emailCheckCode);
+				logger.info("임시 비밀번호 : " + emailCheckCode);	
+
+				email.setContent(
+						"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다. " + "임시 비밀번호는 "
+								+ emailCheckCode+ " 입니다.");
+				email.setReceiver(memberVO.getMem_email());
+				email.setSubject("취미상점 인증 메일입니다.");
+				emailSender.sendEmail(email); //이메일 전송 
+
+				// 회원 비밀번호 변경
+				member.setMem_pw(emailCheckCode); 		// 생성한 난수 코드 비밀번호 지정
+				memberService.updateMemberPasswd(member);
+
+				return "memberPasswdSearchResult";
+
+			}else {
+				//인증 실패
+				throw new AuthCheckException();
+			}
+		}catch(AuthCheckException e) {
+			//인증 실패로 메시지 생성 및 로그인 폼 호출
+			result.reject("invalidSearchPassword");
+			return passwdSerchForm();
+		}
+	}
 
 	//=========이메일 발송 ============//
 	@RequestMapping("/member/mailCheck.do")
@@ -333,12 +393,12 @@ public class MemberController {
 		logger.info("인증번호 : " + emailCheckCode);	
 
 		email.setContent(
-				"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다. " + "임시 비밀번호는 "
-				        + emailCheckCode+ " 입니다.");
+				"안녕하세요. 취미상점 인증번호 안내 관련 이메일 입니다. " + "인증번호는 "
+						+ emailCheckCode+ " 입니다.");
 		email.setReceiver(mem_email);
 		email.setSubject("취미상점 인증 메일입니다.");
 		emailSender.sendEmail(email);
-		
+
 
 		//Map에 담아서 데이터 처리 
 		Map<String,String> mapAjax = new HashMap<String,String>();
