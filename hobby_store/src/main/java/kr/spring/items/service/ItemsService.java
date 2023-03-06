@@ -3,8 +3,7 @@ package kr.spring.items.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Select;
-
+import kr.spring.items.vo.ItemsFavVO;
 import kr.spring.items.vo.ItemsVO;
 
 public interface ItemsService {
@@ -26,6 +25,19 @@ public interface ItemsService {
 	public List<ItemsVO> selectCate1();
 	
 	public List<ItemsVO> selectCate2(Integer cate_num);
-
+	
+	public List<ItemsVO> selectCate();
+	
+	public ItemsFavVO selectItemsFav(ItemsFavVO fav);
+	
+	public void deleteItemsFav(Integer fav_num);
+	
+	public void insertItemsFav(ItemsFavVO fav);
+	
+	public int selectItemsFavCount(Integer items_num);
+	
+	public void updateHit(Integer items_num);
+	
+	public List<ItemsVO> selectFavMem();
 
 }
