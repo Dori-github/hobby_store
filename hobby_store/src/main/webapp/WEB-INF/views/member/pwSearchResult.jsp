@@ -32,7 +32,7 @@
 
                    <div class="table">
 					<div align="center">
-						입력하신 이메일 <b style="color: red;">(${memberVO.mem_email})</b> 로 임시
+						<!--  ${memberVO.mem_name}님--> 입력하신 이메일 <b style="color: red;">(${memberVO.mem_email})</b> 로 임시
 						비밀번호를 보내드렸습니다.<br> 언제나 취미상점을 이용해주셔서 감사합니다.
 					</div>
 					</div>

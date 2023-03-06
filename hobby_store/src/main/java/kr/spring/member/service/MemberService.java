@@ -2,6 +2,8 @@ package kr.spring.member.service;
 
 import java.util.List;
 
+
+
 import kr.spring.member.vo.MemberVO;
 
 public interface MemberService {
@@ -11,7 +13,8 @@ public interface MemberService {
 	public List<MemberVO> getCountryList();
 	public List<MemberVO> getLikeList();
 	public String selectIdSearch(MemberVO vo);
-	public void updateMemberPasswd(MemberVO member); 
+	public void updateMemberPasswd(MemberVO member);
+	public String getMem_name(int mem_num);
 
 	//자동로그인
 	public void updateAu_id(String mem_au_id,String mem_id);

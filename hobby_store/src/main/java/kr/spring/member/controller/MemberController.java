@@ -320,7 +320,7 @@ public class MemberController {
 	// 비밀번호 찾기 - 데이터 처리
 	@PostMapping("/member/pwSearchResult.do")
 	public String passwdSerchProcess(@Valid MemberVO memberVO,BindingResult result,
-			HttpSession session) throws Exception {
+			HttpSession session, String mem_name) throws Exception {
 
 		logger.debug("<<비밀번호 찾기 데이터 확인>> : " + memberVO);
 		//유효성 체크 결과 오류가 있으면 폼 호출
@@ -347,13 +347,17 @@ public class MemberController {
 			}
 
 			if(check) {	//인증 성공, 로그인 처리
+				
 
 				//이메일 내용 작성 
 				// JAVA Random 객체를 사용하여 숫자 + 문자 8자리 난수 생성
 				String emailCheckCode = excuteGenerate();
 				session.setAttribute("pwCode", emailCheckCode);
 				logger.info("임시 비밀번호 : " + emailCheckCode);	
-
+				
+				//수정해야할 부분 
+				//String mem_name = memberService.getMem_name(memberVO.getMem_num());
+				
 				email.setContent(
 						"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다. " + "임시 비밀번호는 "
 								+ emailCheckCode+ " 입니다.");

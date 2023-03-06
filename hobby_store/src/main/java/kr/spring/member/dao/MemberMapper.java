@@ -62,5 +62,8 @@ public interface MemberMapper {
 	//비밀번호 변경 
 	@Update("UPDATE member_detail SET mem_pw = #{mem_pw} WHERE mem_num=#{mem_num}")
 	public void updateMemberPasswd(MemberVO member); // 마이페이지 - 회원 비밀번호 변경
+	
+	@Select("SELECT mem_name FROM member_detail WHERE mem_num=#{mem_num}")
+	public String getMem_name(int mem_num);
 
 }

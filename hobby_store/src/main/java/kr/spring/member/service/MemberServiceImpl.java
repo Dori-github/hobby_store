@@ -74,6 +74,11 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public String getMem_name(int mem_num) {
+		return memberMapper.getMem_name(mem_num);
+	}
+
 
 	
 
