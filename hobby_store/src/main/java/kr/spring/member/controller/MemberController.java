@@ -358,7 +358,7 @@ public class MemberController {
 						"안녕하세요. 취미상점 임시비밀번호 안내 관련 이메일 입니다. " + "임시 비밀번호는 "
 								+ emailCheckCode+ " 입니다.");
 				email.setReceiver(memberVO.getMem_email());
-				email.setSubject("취미상점 인증 메일입니다.");
+				email.setSubject("취미상점 임시비밀번호 안내 메일입니다.");
 				emailSender.sendEmail(email); //이메일 전송 
 
 				// 회원 비밀번호 변경
