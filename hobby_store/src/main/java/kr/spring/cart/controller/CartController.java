@@ -39,7 +39,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			MemberVO user = 
 					 (MemberVO)session.getAttribute("user");
 				
-			//목록 호출
+			//목록 호출(장바구니 비었을 때 처리 추가)
 			List<CourseCartVO> courseList = null;
 			if(courseCount > 0) {
 				courseList = cartService.getCourseCart(user.getMem_num());
@@ -53,6 +53,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			//회원번호(mem_num)별 총 구입액	
 			Integer courseTotal = cartService.courseTotal(user.getMem_num());
 			Integer itemTotal = cartService.itemTotal(user.getMem_num());
+//			Integer allTotal = courseTotal + itemTotal;
 			
 			//
 			List<ItemCartVO> itemQuan = null;
@@ -70,6 +71,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			mav.addObject("itemList", itemList);
 			mav.addObject("itemTotal", itemTotal);
 			
+//			mav.addObject("allTotal", allTotal);
 			mav.addObject("itemQuan", itemQuan);
 			
 			return mav;

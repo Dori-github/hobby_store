@@ -107,6 +107,14 @@ $(function(){
 
 });
 
+
+
+
+
+
+
+
+/*
 $(function() {
 	function getItemCart() {
 		$
@@ -121,8 +129,8 @@ $(function() {
 						count = param.count;
 						rowCount = param.rowCount;
 
-						/* //처음 호출시 해당 ID의 div의 내부 내용물 제거
-						$('#output').empty(); */
+						//처음 호출시 해당 ID의 div의 내부 내용물 제거
+						$('#output').empty(); 
 
 						//댓글 목록 작업
 						$(param.list)
@@ -157,3 +165,4 @@ $(function() {
 	}
 	;
 });
+*/

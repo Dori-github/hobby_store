@@ -48,11 +48,6 @@
 			<td colspan="2"></td>
 			<td>${courseTotal}</td>
 		</tr>
-		<tr>
-			<td colspan="3" style="text-align:right;">
-			<input type="submit" id="order_btn" value="구매하기">
-			</td>
-		</tr>
 		</table>
 	</c:if>
 	<br>
@@ -99,7 +94,7 @@
 			
 			<div id="quan"></div>
 			
-			<input type="number" class="quantity" value="${quan.quantity}">
+			<input type="number" name="quantity" class="quantity" value="${quan.quantity}">
 			<input class="quan_inc" type="button" value="+"/>
 			
 			</td>
@@ -113,15 +108,15 @@
 			<tr>
 			<td colspan="4"></td>
 			<!-- <div class="itemTotal"> -->
-			<td>${itemTotal}</td>
-		</tr>
-		<tr>
-			<td colspan="5" style="text-align:right;">
-			<input type="submit" id="order_btn" value="구매하기">
+			<td>
+			<span class="itemTotal" data-itemTotal="${itemTotal}">${itemTotal}원</span>
 			</td>
 		</tr>
 		</table>
-	
+	</c:if>
+	<c:if test="${courseCount > 0 || itemCount > 0}">
+	<input type="submit" id="order_btn" value="구매하기">
+	</c:if>		
 		</form>
-		</c:if>
+		
 </div>
