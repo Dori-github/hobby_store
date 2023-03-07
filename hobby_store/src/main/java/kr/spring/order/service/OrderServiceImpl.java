@@ -1,8 +1,57 @@
 package kr.spring.order.service;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import kr.spring.order.controller.OrderController;
+import kr.spring.order.dao.OrderMapper;
+import kr.spring.order.vo.OrderDetailVO;
+import kr.spring.order.vo.OrderVO;
 
 @Service
 public class OrderServiceImpl implements OrderService{
+	private static final Logger logger = 
+			LoggerFactory.getLogger(OrderController.class);
 
+	@Autowired
+	private OrderMapper orderMapper;
+	
+	@Override
+	public void insertOrder(OrderVO order,
+							List<OrderDetailVO> list) {
+		//주문 정보 추가
+		order.setOrder_num(orderMapper.selectOrderNum());
+		orderMapper.insertOrder(order);
+		
+		for(OrderDetailVO vo : list) {
+			//주문 상세 정보 추가
+			vo.setOrder_num(order.getOrder_num());
+			orderMapper.insertOrderDetail(vo);
+			//재고 업데이트
+			logger.debug("<<업뎃전>> : " + vo); 
+			logger.debug("<<업뎃전>> : " + vo.getItems_num()); 
+			
+			orderMapper.updateQuantity(vo);
+			
+
+			logger.debug("<<업뎃후>> : " + vo); 
+			logger.debug("<<업뎃후>> : " + vo.getItems_num());
+			//장바구니에서 주문 상품 삭제
+			orderMapper.deleteCartCourse(
+					vo.getCourse_num(), order.getMem_num());
+			orderMapper.deleteCartItem(
+					vo.getItems_num(), order.getMem_num());
+			logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num()); 
+			logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num()); 
+			
+		}
+	}
+
+
+	
+	
 }

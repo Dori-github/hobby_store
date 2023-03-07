@@ -4,8 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 
 <!DOCTYPE html>
-<h4>주문폼</h4>
 <form method="post" action="order.do" id="order_register">
+		<h5>구매하기</h5>	
 		<c:if test="${courseCount > 0}">
 		<h5>Course Cart [ ${courseCount} items ]</h5>	
 		<table class="table table-borderless">
@@ -60,7 +60,7 @@
 			<th style="border-bottom: 1px solid #ccc;">Quantity</th>
 			<th style="border-bottom: 1px solid #ccc;">TotalPrice</th>
 		</tr>
-		<c:forEach var="cart" items="${itemList}" varStatus="statusQuan">
+		<c:forEach var="cart" items="${itemCart}" varStatus="statusQuan">
   		<c:if test="${itemCount == 0}">
 		<div>장바구니가 비어있습니다</div>
 		</c:if>
@@ -75,9 +75,7 @@
 				${cart.cate_name}
 			</td>
 			<td>${cart.items_price}
-			<td>
-			<input class="item_quan" type="text" value="재고:${cart.items_quantity}"/>
-			
+			<td>			
 			<c:forEach var="quan" items="${itemQuan}" begin="${statusQuan.index}" end="${statusQuan.index}">
 			<div id="quan"></div>
 			<input type="number" class="quantity" value="${quan.quantity}">
@@ -93,14 +91,17 @@
 			<tr>
 			<td colspan="4"></td>
 			<!-- <div class="itemTotal"> -->
-			<td>${itemTotal}</td>
+			<td>${allTotal}</td>
 		</tr>
 		
 		</table>
 		</c:if>
-		<ul>
+		<ul>			
 			<li>
-				<label for="receive_name">받는 사람</label>
+				<h4>배송지 정보</h4>       
+			</li>
+			<li>
+				<label for="receive_name">이름</label>
 				<input type="text" name="receive_name"
 				       id="receive_name" maxlength="10">       
 			</li>
@@ -124,25 +125,25 @@
 				       id="address2" maxlength="30">       
 			</li>
 			<li>
-				<label for="receive_phone">전화번호</label>
+				<label for="receive_phone">휴대전화</label>
 				<input type="text" name="receive_phone"
 				       id="receive_phone" maxlength="15">       
 			</li>
 			<li>
-				<label for="notice">남기실 말씀</label>
+				<label for="notice">배송 메시지</label>
 				<input type="text" name="notice"
 				       id="notice" maxlength="300">       
 			</li>
-			<li>
+<!-- 			<li>
 				<label>결제수단</label>
 				<input type="radio" name="payment" value="1"
 				    class="payment" id="payment1">통장입금
 				<input type="radio" name="payment" value="2"
 				    class="payment" id="payment2">카드결제           
-			</li>
+			</li> -->
 		</ul>
 		<div class="align-center">
-			<input type="submit" value="주문상품 결제하기" id="general_btn">
+			<input type="submit" value="결제하기" id="general_btn">
 			<input type="button" value="홈으로"
 			       onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>
