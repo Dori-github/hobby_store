@@ -15,6 +15,11 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/order/orderForm.jsp"/>        
     </definition>
+   <definition name="pointsList" extends="main">
+    	<put-attribute name="title" value="포인트"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/pointsList.jsp"/>        
+    </definition>
 </tiles-definitions>
 
 
