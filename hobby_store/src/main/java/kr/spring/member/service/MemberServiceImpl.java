@@ -79,6 +79,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.getMem_name(mem_num);
 	}
 
+	@Override
+	public MemberVO selectMember(Integer mem_num) {
+		return memberMapper.selectMember(mem_num);
+	}
+
 
 	
 

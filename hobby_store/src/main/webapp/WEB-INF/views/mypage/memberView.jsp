@@ -8,22 +8,20 @@
 <!-- 회원정보 시작 -->
 	<div id="content">
 		<img src="${pageContext.request.contextPath}/mypage/photoView.do" width="200" height="200" class="my-photo">
-		<h2><c:if test="${!empty member.nick_name}">${member.nick_name}</c:if>
-			<c:if test="${empty member.nick_name}">${member.name}</c:if>
+		<h2><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if>
+			<c:if test="${empty member.mem_nickname}">${member.mem_nickname}</c:if>
 			 님 환영합니다!
 		 <input type="button" value="회원정보수정"
 		       onclick="location.href='update.do'"></h2>
 		<ul>
-			<li>이름 : ${member.name}</li>
-			<li>별명 : ${member.nick_name}</li>
-			<li>취미 : ${member.hobby}</li>
-			<li>전화번호 : ${member.phone}</li>
-			<li>이메일 : ${member.email}</li>
-			<li>우편번호 : ${member.zipcode}</li>
-			<li>주소 : ${member.address1} ${member.address2}</li>
-			<li>가입날짜 : ${member.reg_date}</li>
-			<c:if test="${!empty member.modify_date}">
-			<li>정보 수정일 : ${member.modify_date}</li>
+			<li>이름 : ${member.mem_name}</li>
+			<li>전화번호 : ${member.mem_cell}</li>
+			<li>이메일 : ${member.mem_email}</li>
+			<li>우편번호 : ${member.mem_zipcode}</li>
+			<li>주소 : ${member.mem_address1} ${member.mem_address2}</li>
+			<li>가입날짜 : ${member.mem_date}</li>
+			<c:if test="${!empty member.mem_mdate}">
+			<li>정보 수정일 : ${member.mem_mdate}</li>
 			</c:if>
 		</ul>       
 	</div>

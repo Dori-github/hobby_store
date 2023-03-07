@@ -37,7 +37,7 @@ public class MypageController {
 	}
 	
 	//======회원 상세======//
-	@RequestMapping("/member/myPage.do")
+	/*@RequestMapping("/member/myPage.do")
 	public String process(HttpSession session, Model model) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
@@ -47,7 +47,7 @@ public class MypageController {
 		model.addAttribute("member", member);
 		
 		return "myPage";
-	}
+	}*/
 	
 	//=====프로필 사진 업로드======//
 	@RequestMapping("/member/updateMyPhoto.do")

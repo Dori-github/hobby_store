@@ -2,7 +2,7 @@ package kr.spring.member.service;
 
 import java.util.List;
 
-
+import org.apache.ibatis.annotations.Select;
 
 import kr.spring.member.vo.MemberVO;
 
@@ -21,6 +21,6 @@ public interface MemberService {
 	public MemberVO selectAu_id(String mem_au_id);
 	public void deleteAu_id(int mem_num);
 
-
-
+	//회원번호 상세
+	public MemberVO selectMember(Integer mem_num);
 }

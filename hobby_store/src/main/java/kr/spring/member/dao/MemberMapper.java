@@ -66,4 +66,7 @@ public interface MemberMapper {
 	@Select("SELECT mem_name FROM member_detail WHERE mem_num=#{mem_num}")
 	public String getMem_name(int mem_num);
 
+	//회원번호 상세
+	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
+	public MemberVO selectMember(Integer mem_num);
 }

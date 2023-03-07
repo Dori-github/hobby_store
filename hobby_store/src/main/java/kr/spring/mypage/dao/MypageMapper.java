@@ -12,7 +12,7 @@ import kr.spring.mypage.vo.MypageVO;
 public interface MypageMapper {
 	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
 	public MemberVO selectMember(Integer mem_num);
-	@Update("UPDATE member SET mem_id=#{mem_id}, mem_nick_name=#{mem_nick_name} WHERE mem_num=#{mem_num}")
+	@Update("UPDATE member SET mem_id=#{mem_id}, mem_nickname=#{mem_nickname} WHERE mem_num=#{mem_num}")
 	public void updateMember(MemberVO member);
 	@Update("UPDATE member_detail SET mem_name=#{mem_name},mem_cell=#{mem_cell},mem_email=#{mem_email},mem_zipcode=#{mem_zipcode},mem_address1=#{mem_address1},mem_address2=#{mem_address2},mem_mdate=SYSDATE")
 	public void updateMember_detail(MemberVO member);

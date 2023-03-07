@@ -466,7 +466,19 @@ public class MemberController {
 	public void setCertCharLength(int certCharLength) {
 		this.certCharLength = certCharLength;
 	}
-
+	
+	//======회원 상세======//
+	@RequestMapping("/member/myPage.do")
+	public String process(HttpSession session, Model model) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		MemberVO member = memberService.selectMember(user.getMem_num());
+		logger.debug("<<회원상세정보>> : " + member);
+			
+		model.addAttribute("member", member);
+			
+		return "myPage";
+		}
 }
 
 
