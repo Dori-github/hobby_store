@@ -8,7 +8,7 @@
    <label for="expand-menu"><div>메뉴</div></label>
     <input type="checkbox" id="expand-menu" name="expand-menu">
     <ul>
-        <li><a href="#" class="item"><div>나의 프로필</div></a></li>
+        <li><a href="${pageContext.request.contextPath}/member/myPage.do" class="item"><div>나의 프로필</div></a></li>
         <li><a href="#" class="item"><div>나의 활동내역</div></a></li>
         <li><a href="#" class="item"><div>배송목록</div></a></li>
         <li><a href="#" class="item"><div>나의 구매내역</div></a></li>
