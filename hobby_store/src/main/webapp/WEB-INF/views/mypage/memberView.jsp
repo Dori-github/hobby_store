@@ -7,7 +7,7 @@
 <!-- 사이드바 끝 -->
 <!-- 회원정보 시작 -->
 	<div id="content">
-		<img src="${pageContext.request.contextPath}/mypage/photoView.do" width="200" height="200" class="my-photo">
+		<img src="${pageContext.request.contextPath}/member/photoView.do" width="200" height="200" class="my-photo">
 		<h2><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if>
 			<c:if test="${empty member.mem_nickname}">${member.mem_nickname}</c:if>
 			 님 환영합니다!

@@ -32,6 +32,7 @@ import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.Email;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
+import kr.spring.util.FileUtil;
 
 
 @Controller
@@ -517,6 +518,50 @@ public class MemberController {
 		model.addAttribute("url",request.getContextPath()+"/member/myPage.do");
 				
 		return "common/resultView";
+	}
+	
+	//프로필 사진 출력(로그인 전용)
+	@RequestMapping("/member/photoView.do")
+	public String getProfile(HttpSession session, HttpServletRequest request, Model model) {
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		logger.debug("<<photoView>> : " + user);
+
+		if(user==null) {
+			byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
+
+			model.addAttribute("imageFile",readbyte);
+			model.addAttribute("filename","face.png");
+		}else {
+			MemberVO memberVO = memberService.selectMember(user.getMem_num());
+			logger.debug("<<프로필 사진 처리(memberVO)>> : " + memberVO);
+			viewProfile(memberVO,request,model);
+		}
+
+		return "imageView";
+	}
+
+	//프로필 사진 출력(회원번호 지정)
+	@RequestMapping("/member/viewProfile.do")
+	public String getProfileByMem_num(@RequestParam int mem_num,HttpSession session,HttpServletRequest request,Model model) {
+
+		MemberVO memberVO = memberService.selectMember(mem_num);
+		viewProfile(memberVO,request,model);
+
+		return "imageView";
+	}
+
+	//프로필 사진 처리
+	public void viewProfile(MemberVO memberVO, HttpServletRequest request, Model model) {
+		if(memberVO==null || memberVO.getMem_pname()==null) {
+			byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
+			model.addAttribute("imageFile",readbyte);
+			model.addAttribute("filename","face.png");
+		}else {
+			model.addAttribute("imageFile",memberVO.getMem_photo());
+			model.addAttribute("filename",memberVO.getMem_pname());
+		}
 	}
 }
 
