@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -478,7 +479,45 @@ public class MemberController {
 		model.addAttribute("member", member);
 			
 		return "myPage";
+	}
+	
+	//=====회원정보수정======//
+	//수정 폼 호출
+	@RequestMapping("/member/update.do")
+	public String formUpdate(HttpSession session, Model model) {
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		MemberVO memberVO = memberService.selectMember(user.getMem_num());
+
+		model.addAttribute("memberVO", memberVO);
+
+		return "memberModify";
+	}
+
+	//수정 폼에서 전송된 데이터 호출
+	@PostMapping("/member/update.do")
+	public String submitUpdate(@Valid MemberVO memberVO,BindingResult result,HttpSession session, Model model, HttpServletRequest request) {
+
+		logger.debug("<<회원정보수정 처리>> : " + memberVO);
+
+		//유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasErrors()) {
+			return "memberModify";
 		}
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		memberVO.setMem_num(user.getMem_num());
+
+		//회원정보수정
+		memberService.updateMember(memberVO);	
+		
+		//View에 메시지 표시
+		model.addAttribute("message","회원정보 수정이 완료되었습니다.");
+		model.addAttribute("url",request.getContextPath()+"/member/myPage.do");
+				
+		return "common/resultView";
+	}
 }
 
 

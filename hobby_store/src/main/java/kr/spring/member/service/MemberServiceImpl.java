@@ -89,6 +89,12 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectSearchMember(mem_id);
 	}
 
+	@Override
+	public void updateMember(MemberVO member) {
+		memberMapper.updateMember(member);
+		memberMapper.updateMember_detail(member);
+	}
+
 
 	
 

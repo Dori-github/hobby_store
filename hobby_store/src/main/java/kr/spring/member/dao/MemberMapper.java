@@ -64,10 +64,6 @@ public interface MemberMapper {
 	public void updateMemberPasswd(MemberVO member); // 마이페이지 - 회원 비밀번호 변경
 	
 
-	//회원번호 상세
-	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
-	public MemberVO selectMember(Integer mem_num);
-
 	//채팅 회원이름 검색
 	@Select("SELECT mem_num,mem_id,mem_nickname FROM member "
 			+ "WHERE mem_auth >= 2 AND mem_id LIKE '%' || #{mem_id} || '%'")
@@ -75,4 +71,19 @@ public interface MemberMapper {
 
 	@Select("SELECT mem_name FROM member WHERE mem_num=#{mem_num}")
 	public String getMem_name(int mem_num);
+	
+	
+	
+	
+	
+	
+	//======마이페이지======//
+	//회원 상세
+	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
+	public MemberVO selectMember(Integer mem_num);
+	//회원정보 업데이트
+	@Update("UPDATE member SET mem_nickname=#{mem_nickname} WHERE mem_num=#{mem_num}")
+	public void updateMember(MemberVO member);
+	@Update("UPDATE member_detail SET mem_name=#{mem_name},mem_cell=#{mem_cell},mem_email=#{mem_email},mem_zipcode=#{mem_zipcode},mem_address1=#{mem_address1},mem_address2=#{mem_address2},mem_mdate=SYSDATE WHERE mem_num=#{mem_num}")
+	public void updateMember_detail(MemberVO member);
 }

@@ -47,7 +47,7 @@ public class MypageController {
 		model.addAttribute("member", member);
 		
 		return "myPage";
-	}*/
+	}
 	
 	//=====프로필 사진 업로드======//
 	@RequestMapping("/member/updateMyPhoto.do")
@@ -145,5 +145,5 @@ public class MypageController {
 			model.addAttribute("imageFile",memberVO.getMem_photo());
 			model.addAttribute("filename",memberVO.getMem_pname());
 		}
-	}
+	}*/
 }

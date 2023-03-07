@@ -39,11 +39,11 @@
     	<put-attribute name="footer"
     	  value="/WEB-INF/views/template/footer.jsp"/>          
     </definition>
-     <!-- <definition name="myPage" extends="main">
-    	<put-attribute name="title" value="myPage"/>
+    <definition name="memberModify" extends="myPage">
+    	<put-attribute name="title" value="회원정보 수정"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/mypage/memberView.jsp"/>
-    </definition> -->
+    	  value="/WEB-INF/views/mypage/memberModify.jsp"/>
+    </definition>
 </tiles-definitions>
 
 
