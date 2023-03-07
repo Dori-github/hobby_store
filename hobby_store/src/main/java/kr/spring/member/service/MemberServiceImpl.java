@@ -84,6 +84,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectMember(mem_num);
 	}
 
+	@Override
+	public List<MemberVO> selectSearchMember(String mem_id) {
+		return memberMapper.selectSearchMember(mem_id);
+	}
+
 
 	
 

@@ -63,10 +63,16 @@ public interface MemberMapper {
 	@Update("UPDATE member_detail SET mem_pw = #{mem_pw} WHERE mem_num=#{mem_num}")
 	public void updateMemberPasswd(MemberVO member); // 마이페이지 - 회원 비밀번호 변경
 	
-	@Select("SELECT mem_name FROM member_detail WHERE mem_num=#{mem_num}")
-	public String getMem_name(int mem_num);
 
 	//회원번호 상세
 	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
 	public MemberVO selectMember(Integer mem_num);
+
+	//채팅 회원이름 검색
+	@Select("SELECT mem_num,mem_id,mem_nickname FROM member "
+			+ "WHERE mem_auth >= 2 AND mem_id LIKE '%' || #{mem_id} || '%'")
+	public List<MemberVO> selectSearchMember(String mem_id);
+
+	@Select("SELECT mem_name FROM member WHERE mem_num=#{mem_num}")
+	public String getMem_name(int mem_num);
 }
