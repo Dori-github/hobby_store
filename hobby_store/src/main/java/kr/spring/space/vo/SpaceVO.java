@@ -46,10 +46,11 @@ public class SpaceVO {
 
 	private String space_reg_date;
 	private String space_reg_time;
-    private int fav;//좋아요 갯수 
-    private int reply;//후기 갯수
+    private int fav_num;//좋아요 갯수 
+    private int reply_num;//후기 갯수
     private double star;//별점평균
     private int cate_num;
+    private int fav_cnt;
     
     public int getCate_num() {
 		return cate_num;
@@ -244,23 +245,32 @@ public class SpaceVO {
 	public void setSpace_reg_time(String space_reg_time) {
 		this.space_reg_time = space_reg_time;
 	}
-	public int getFav() {
-		return fav;
+
+	public int getFav_num() {
+		return fav_num;
 	}
-	public void setFav(int fav) {
-		this.fav = fav;
+	public void setFav_num(int fav_num) {
+		this.fav_num = fav_num;
 	}
-	public int getReply() {
-		return reply;
+	public int getReply_num() {
+		return reply_num;
 	}
-	public void setReply(int reply) {
-		this.reply = reply;
+	public void setReply_num(int reply_num) {
+		this.reply_num = reply_num;
 	}
+
 	public double getStar() {
 		return star;
 	}
 	public void setStar(double star) {
 		this.star = star;
+	}
+	
+	public int getFav_cnt() {
+		return fav_cnt;
+	}
+	public void setFav_cnt(int fav_cnt) {
+		this.fav_cnt = fav_cnt;
 	}
 	@Override
 	public String toString() {
@@ -271,10 +281,8 @@ public class SpaceVO {
 				+ ", mdate=" + mdate + ", mem_num=" + mem_num + ", id=" + id + ", mem_nickname=" + mem_nickname
 				+ ", space_photo_name=" + space_photo_name + ", space_photo_name1=" + space_photo_name1
 				+ ", space_photo_name2=" + space_photo_name2 + ", space_photo_name3=" + space_photo_name3
-				+ ", space_reg_date=" + space_reg_date + ", space_reg_time=" + space_reg_time + ", fav=" + fav
-				+ ", reply=" + reply + ", star=" + star + ", cate_num=" + cate_num + "]";
+				+ ", space_reg_date=" + space_reg_date + ", space_reg_time=" + space_reg_time + ", fav_num=" + fav_num
+				+ ", reply_num=" + reply_num + ", star=" + star + ", cate_num=" + cate_num + ", fav_cnt=" + fav_cnt
+				+ "]";
 	}
-	
-	
-
 }

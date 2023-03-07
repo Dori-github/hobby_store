@@ -5,6 +5,7 @@
 <link  rel="stylesheet" href="${pageContext.request.contextPath}/css/space.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <!-- 상품목록 시작 -->
+<script src="${pageContext.request.contextPath}/js/space.fav.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <script type="text/javascript">
@@ -39,7 +40,8 @@
 	<!-- 사이즈바 끝 -->
 
 
-<div class="content">
+
+<div id="content">
 
 <!-- 검색폼 시작 -->
 <div id="space_search">
@@ -95,34 +97,47 @@
 			</tr>
 		</table>
 	</c:if>
-
 	<c:if test="${count > 0}">
-	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-			<c:forEach var="space" items="${list}">
-			<div class="col">
-			<a href="detail.do?space_num=${space.space_num}" style="display:block;">
-					<div class="card h-100" style="position:relative;">
-						<div class="card-img-top">
-						  <img src="imageView.do?space_num=${space.space_num}&space_type=1" width="100%" height="100%">
-						</div>
-						<div class="card-body">
-						 	<span id="red-heart"><i class="fa-regular fa-heart"></i></span>
-						  	<div class="color-gray">
-						  		<span>${space.mem_nickname}</span>
-						  		<span class="card-hit"><i class="fa-solid fa-eye"></i> ${space.space_hit} <i class="fa-solid fa-heart"></i> ${space.fav}</span>
-						  	</div>
-						  	<h5 class="card-title"><b>${space.space_name}</b></h5>
-						  	<span><i class="fa-regular fa-star"></i> ${space.star} (후기 ${space.reply})</span>
-						  	<p class="card-text">
-						  		<span>${space.space_address1}</span>
-						  		<br><b><fmt:formatNumber>${space.space_price}</fmt:formatNumber>원</b><span style="color:gray;"><b><fmt:formatNumber>${space.space_np} </fmt:formatNumber>인</b></span>
-						  	</p>
-						</div>
-					</div>
-			</a>
-			</div>
+   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+         <c:forEach var="space" items="${list}">
+         <div class="col">
+         
+               <div class="card h-100" style="position:relative;">
+                  <div class="card-img-top">
+                  <a href="detail.do?space_num=${space.space_num}" style="display:block;">
+                    <img src="imageView.do?space_num=${space.space_num}&space_type=1" width="100%" height="200">
+                  </a>  
+                  </div>
+                  <div class="card-body">
+                       <div class="color-gray">
+                           <span class="red-heart" data-num="${space.space_num}">
+                           <c:if test="${space.fav_num != 0}">
+                           <i class="heart fa-regular fa-heart" style="font-weight:bold;"></i>
+                           </c:if>
+                           <c:if test="${space.fav_num == 0}">
+                           <i class="heart fa-regular fa-heart"></i>
+                           </c:if>
+                           </span>
+                          <span>${member.mem_nickname}</span>
+                          <span class="card-hit"><i class="fa-solid fa-eye"></i> ${space.space_hit} <i class="fa-solid fa-heart"></i> <span class="fav_cnt">${space.fav_cnt}</span></span>
+                       </div>
+                       <a href="detail.do?space_num=${space.space_num}" style="display:block;">
+                       <h5 class="card-title"><b>${space.space_name}</b></h5>
+                       <span><i class="fa-regular fa-star"></i> ${space.star} (후기 ${space.reply_num})</span>
+                       <p class="card-text">
+                          <span>${space.space_address1}</span>
+                          <br><b><fmt:formatNumber>${space.space_price}</fmt:formatNumber>원</b><span style="color:gray;"><b><fmt:formatNumber>${space.space_np} </fmt:formatNumber>인</b></span>
+                       </p>
+                       </a>
+                  </div>
+               </div>
+         </div>
        </c:forEach>
+	
+
+	
       </div>
+
 
  
 
@@ -133,7 +148,6 @@
 	</c:if>
 </div>
 </div>
-
 	<!-- 공간 목록 (관리자용) 끝 -->
 
 

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 
 <script src="${pageContext.request.contextPath}/js/space.js"></script>
+<script src="${pageContext.request.contextPath}/js/space.fav.js"></script>
 <!-- 상품목록 시작 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
@@ -40,11 +41,6 @@
   
 </div>
 
-<!-- dddddddddddddddddddddddd -->
-<%--     <div class="img">
-      <img src="imageView.do?space_num=${space.space_num}&space_type=1" >
-
-     </div> --%>
      <div class="image3">
   
 		<span><img src="imageView.do?space_num=${space.space_num}&space_type=2" class="img-fluid rounded-start"></span>
@@ -66,19 +62,26 @@
 			    value="${space.space_limit}" id="space_limit"> 
   
         <h5 class="card-title">${space.space_name}</h5>
-        <p class="card-text">${space.space_zipcode}</p>
+        <p class="card-text">${space.space_address1}</p>
         <p class="card-text">${space.space_date}</p>
         <hr class='hr-solid'/>
         <p class="card-text">날짜선택</p>
         <p class="card-text">인원 : <b><fmt:formatNumber> ${space.space_np} </fmt:formatNumber></b></p>
         <p class="card-text">공간 재고 : <b><fmt:formatNumber> ${space.space_limit} </fmt:formatNumber></b></p>
+        
+         <span id="red-heart-detail" data-num="${space.space_num}">
+              <i class="heart fa-regular fa-heart"></i>
+         </span>
+        <span class="fav_cnt">${space.fav_cnt}</span>
+		
         <c:if test="${space.space_limit > 0}">
 				<li>
-					<label for="order_space_limit">공간대여수량</label>
+					<label for="order_space_limit">구매수량</label>
 					<input type="number" name="order_space_limit"
 					   min="1" max="${space.space_limit}" autocomplete="off"
 					   id="order_space_limit" class="space_limit-width">
 				</li>
+			
 					<li>
 					<span id="space_total_txt">총주문 금액 : 0원</span>
 				</li>

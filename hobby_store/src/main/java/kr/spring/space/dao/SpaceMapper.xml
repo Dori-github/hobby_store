@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.space.dao.SpaceMapper">  
-  
+    <!-- 카테코길 페이지 넘김에 따른 keyfield, keyword  -->
   	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
   	<sql id="spaceSearch">
   		<where>
@@ -14,17 +14,20 @@
   		    <if test="cate!=null and cate!=''">
   		    	AND
   		    </if>
-  			<if test="keyfield == 1">
-  			     (space_name LIKE '%' || #{keyword} || '%'
-  				     OR space_content LIKE '%' || #{keyword} || '%')
-  			</if>
-  			<if test="keyfield == 2">
-  				 space_name LIKE '%' || #{keyword} || '%'
-  			</if>
-  			<if test="keyfield == 3">
-  				 mem_nickName LIKE '%' || #{keyword} || '%'
-  			</if>
-  		</if>
+				<if test="keyfield==1">
+					space_name LIKE '%' || #{keyword} || '%' OR space_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==2">
+					space_name LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==3">
+					space_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==4">
+					mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+
   		</where>
   	</sql>
   	
@@ -35,7 +38,7 @@
   		FROM space
   		<include refid="spaceSearch"></include>
   	</select>
-  	
+  	<!-- 리스트 좋아요 처리 -->
   	<select id="selectSpaceList" parameterType="map"
   	                              resultType="spaceVO">
   	    SELECT
@@ -43,16 +46,17 @@
   	    FROM (SELECT
   	            a.*,
   	            rownum rnum
-  	          FROM (SELECT
-  	                  *
-  	                FROM space
+  	          FROM (SELECT 
+  	                   * 
+  	                 FROM space LEFT OUTER JOIN (SELECT * FROM space_fav WHERE fmem_num=#{mem_num}) USING(space_num)
+  	                            LEFT OUTER JOIN (SELECT space_num, COUNT(*) fav_cnt FROM space_fav GROUP BY space_num) USING(space_num)
   	                <include refid="spaceSearch"></include>
   	                ORDER BY space_num DESC)a)
   	    <![CDATA[
   	    WHERE rnum >= #{start} AND rnum <= #{end}
   	    ]]>             
   	</select>
-  	
+  	  	
   	<update id="updateSpace" parameterType="spaceVO">
   		UPDATE space SET
   		  <if test="space_photo_name !=''">
