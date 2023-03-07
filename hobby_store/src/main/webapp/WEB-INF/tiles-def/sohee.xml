@@ -5,6 +5,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
+<!-- 회원 가입 및 로그인  -->
    <definition name="memberRegister" extends="main">
     	<put-attribute name="title" value="회원가입"/>
     	<put-attribute name="body"
@@ -31,6 +32,12 @@
     	<put-attribute name="title" value="비밀번호 찾기결과"/>
     	<put-attribute name="body" value="/WEB-INF/views/member/pwSearchResult.jsp"/>
     </definition>
+    <!-- 채팅 -->
+	<definition name="talkRoomWrite" extends="myPage">
+		<put-attribute name="title" value="채팅방 생성" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/talk/talkRoomWrite.jsp" />
+	</definition>
 </tiles-definitions>
 
 

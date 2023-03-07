@@ -14,7 +14,7 @@
         <li><a href="#" class="item"><div>나의 구매내역</div></a></li>
         <li><a href="#" class="item"><div>예약목록</div></a></li>
         <li><a href="#" class="item"><div>회원탈퇴</div></a></li>
-        <li><a href="#" class="item"><div>채팅</div></a></li>
+        <li><a href="${pageContext.request.contextPath}/talk/talkList.do" class="item"><div>채팅</div></a></li>
     </ul>
 </div>
 <!-- MyPage 메뉴 끝 -->
