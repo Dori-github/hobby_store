@@ -61,37 +61,24 @@ public interface CourseMapper {
 	
 	
 	//후기
-	@Select("SELECT COUNT(*) FROM course_reply WHERE course_num=#{course_num}")
-	public int selectReplyCount(Integer course_num);
 	@Select("SELECT AVG(star_auth) FROM course_star WHERE course_num=#{course_num}")
-	public int selectStarAvg(Integer course_num);
+	public float selectStarAvg(Integer course_num);
+	public List<CourseReplyVO> selectListReply(Map<String,Object> map);
+	public int selectReplyCount(Map<String,Object> map);
+	@Select("SELECT * FROM course_reply WHERE reply_num=#{reply_num}")
+	public CourseReplyVO selectReply(Integer reply_num);
+	@Insert("INSERT INTO course_reply (reply_num,reply_content,reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,course_num,mem_num) "
+			+ "VALUES (course_reply_seq.nextval,#{reply_content},#{reply_photo1,jdbcType=BLOB},#{reply_photo2,jdbcType=BLOB},#{reply_photo3,jdbcType=BLOB},"
+			+ "#{reply_photo_name1,jdbcType=VARCHAR},#{reply_photo_name2,jdbcType=VARCHAR},#{reply_photo_name3,jdbcType=VARCHAR},#{course_num},#{mem_num})")
+	public void insertReply(CourseReplyVO courseReply);
+	@Update("UPDATE course_reply SET reply_content=#{reply_content},reply_photo1=#{reply_photo1},reply_photo2=#{reply_photo2},"
+			+ "reply_photo3=#{reply_photo3},reply_mdate=SYSDATE WHERE reply_num=#{reply_num}")
+	public void updateReply(CourseReplyVO boardReply);
+	@Delete("DELETE FROM course_reply WHERE reply_num=#{reply_num}")
+	public void deleteReply(Integer reply_num);
+	@Delete("DELETE FROM course_reply WHERE course_num=#{course_num}")
+	public void deleteReplyByBoardNum(Integer board_num);
 	
-	/*
-	 * public List<CourseReplyVO> selectListReply(Map<String,Object> map);
-	 * 
-	 * @Select("SELECT COUNT(*) FROM spboard_reply JOIN " +
-	 * "spmember USING(mem_num) " + "WHERE board_num=#{board_num}") public int
-	 * selectRowCountReply( Map<String,Object> map);
-	 * 
-	 * @Select("SELECT * FROM spboard_reply WHERE re_num=#{re_num}") public
-	 * CourseReplyVO selectReply(Integer re_num);
-	 * 
-	 * @Insert("INSERT INTO spboard_reply (re_num,re_content," +
-	 * "re_ip,board_num,mem_num) VALUES (" +
-	 * "spreply_seq.nextval,#{re_content},#{re_ip}," + "#{board_num},#{mem_num})")
-	 * public void insertReply(CourseReplyVO boardReply);
-	 * 
-	 * @Update("UPDATE spboard_reply SET " +
-	 * "re_content=#{re_content},re_ip=#{re_ip}," +
-	 * "re_mdate=SYSDATE WHERE re_num=#{re_num}") public void
-	 * updateReply(CourseReplyVO boardReply);
-	 * 
-	 * @Delete("DELETE FROM spboard_reply WHERE re_num=#{re_num}") public void
-	 * deleteReply(Integer re_num);
-	 * 
-	 * @Delete("DELETE FROM spboard_reply WHERE board_num=#{board_num}") public void
-	 * deleteReplyByBoardNum(Integer board_num);
-	 */
 	
 	
 	

@@ -1,6 +1,9 @@
 package kr.spring.course.vo;
 
+import java.io.IOException;
 import java.util.Arrays;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class CourseReplyVO { 
 	private int reply_num;
@@ -24,6 +27,35 @@ public class CourseReplyVO {
 	private int star;
 	private float star_avg;
 	private float star5_per;
+	
+	
+	//파일 업로드 처리
+		//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
+		public void setUpload1(MultipartFile upload1)
+				throws IOException{
+			//MultipartFile -> byte[] 변환
+			setReply_photo1(upload1.getBytes());
+			//파일명 구하기
+			setReply_photo_name1(upload1.getOriginalFilename());
+		}
+		public void setUpload2(MultipartFile upload2)
+				throws IOException{
+			//MultipartFile -> byte[] 변환
+			setReply_photo2(upload2.getBytes());
+			//파일명 구하기
+			setReply_photo_name2(upload2.getOriginalFilename());
+		}
+		public void setUpload3(MultipartFile upload3)
+				throws IOException{
+			//MultipartFile -> byte[] 변환
+			setReply_photo3(upload3.getBytes());
+			//파일명 구하기
+			setReply_photo_name3(upload3.getOriginalFilename());
+		}
+		
+	
+	
+	
 	public int getReply_num() {
 		return reply_num;
 	}
@@ -113,6 +145,30 @@ public class CourseReplyVO {
 	}
 	public void setStar5_per(float star5_per) {
 		this.star5_per = star5_per;
+	}
+	public byte[] getReply_photo1() {
+		return reply_photo1;
+	}
+	public void setReply_photo1(byte[] reply_photo1) {
+		this.reply_photo1 = reply_photo1;
+	}
+	public byte[] getReply_photo2() {
+		return reply_photo2;
+	}
+	public void setReply_photo2(byte[] reply_photo2) {
+		this.reply_photo2 = reply_photo2;
+	}
+	public byte[] getReply_photo3() {
+		return reply_photo3;
+	}
+	public void setReply_photo3(byte[] reply_photo3) {
+		this.reply_photo3 = reply_photo3;
+	}
+	public byte[] getMem_photo() {
+		return mem_photo;
+	}
+	public void setMem_photo(byte[] mem_photo) {
+		this.mem_photo = mem_photo;
 	}
 	@Override
 	public String toString() {

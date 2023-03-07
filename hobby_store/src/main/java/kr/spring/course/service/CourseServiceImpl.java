@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.course.dao.CourseMapper;
 import kr.spring.course.vo.CourseFavVO;
+import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO; 
 
@@ -61,23 +62,22 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public void updateHit(Integer course_num) {
-		
+		courseMapper.updateHit(course_num);
 	}
 
 	@Override
 	public void updateCourse(CourseVO course) {
-		
+		courseMapper.updateCourse(course);
 	}
 	
 	@Override
 	public void deleteCourse(Integer course_num) {
-		
+		courseMapper.deleteCourse(course_num);
 	}
 
 	@Override
 	public void deletePhoto(Integer course_num) {
-		// TODO Auto-generated method stub
-		
+		courseMapper.deletePhoto(course_num);
 	}
 
 	@Override
@@ -121,25 +121,40 @@ public class CourseServiceImpl implements CourseService{
 		courseMapper.deleteFavByCourseNum(course_num);
 	}
 
-	
-	
-	
-	
-	
+
 	
 	//후기
 	@Override
-	public int selectReplyCount(Integer course_num) {
-		return courseMapper.selectReplyCount(course_num);
+	public float selectStarAvg(Integer course_num) {
+		return 0;
 	}
-
+	
 	@Override
-	public int selectStarAvg(Integer course_num) {
-		return courseMapper.selectStarAvg(course_num);
+	public List<CourseReplyVO> selectListReply(Map<String, Object> map) {
+		return courseMapper.selectListReply(map);
 	}
-
-	
-
-	
-	
+	@Override
+	public int selectReplyCount(Map<String, Object> map) {
+		return courseMapper.selectReplyCount(map);
+	}
+	@Override
+	public CourseReplyVO selectReply(Integer reply_num) {
+		return courseMapper.selectReply(reply_num);
+	}
+	@Override
+	public void insertReply(CourseReplyVO courseReply) {
+		courseMapper.insertReply(courseReply);
+	}
+	@Override
+	public void updateReply(CourseReplyVO boardReply) {
+		courseMapper.updateReply(boardReply);
+	}
+	@Override
+	public void deleteReply(Integer re_num) {
+		courseMapper.deleteReply(re_num);
+	}
+	@Override
+	public void deleteReplyByBoardNum(Integer board_num) {
+		courseMapper.deleteReplyByBoardNum(board_num);
+	}
 }

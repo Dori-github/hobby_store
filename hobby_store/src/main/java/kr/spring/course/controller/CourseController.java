@@ -1,5 +1,6 @@
 package kr.spring.course.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseFavVO;
-import kr.spring.course.vo.CourseTimeVO;
+import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
@@ -307,12 +308,71 @@ public class CourseController {
 	
 	//===============후기================//
 	//후기등록
-	
-	
+	@RequestMapping("/course/writeReply.do")
+	@ResponseBody
+	public Map<String,String> writeReply(CourseReplyVO vo,HttpSession session,HttpServletRequest request){
+		
+		logger.debug("<<댓글 등록>> : " + vo);
+		
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			//로그인 안 됨
+			mapJson.put("result","logout");
+		}else {
+			//회원번호 등록
+			vo.setMem_num(user.getMem_num());
+			//댓글 등록
+			courseService.insertReply(vo);
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
 	
 	
 	//후기목록
-	
+	@RequestMapping("/course/listReply.do")
+	@ResponseBody
+	public Map<String,Object> getList(@RequestParam(value="pageNum",defaultValue="1") int currentPage,@RequestParam(value="order",defaultValue="1") int order,
+										@RequestParam int course_num,HttpSession session){
+		
+		logger.debug("<<currentPage>> : " + currentPage);
+		logger.debug("<<course_num>> : " + course_num);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("course_num", course_num);
+		map.put("order", order);
+		
+		//총 글의 개수
+		int count = courseService.selectReplyCount(map);
+		
+		//페이지 처리
+		PagingUtil page = new PagingUtil(currentPage,count,5,3,null);
+		map.put("start", page.getStartRow());
+		map.put("end", page.getEndRow());
+		
+		//목록 데이터 읽기
+		List<CourseReplyVO> list = null;
+		if(count > 0) {
+			list = courseService.selectListReply(map);
+		}else {
+			list = Collections.emptyList();
+		}
+		
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		mapJson.put("list", list);
+		mapJson.put("count", count);
+		
+		//===== 로그인 한 회원정보 셋팅 =====//
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user!=null) {
+			mapJson.put("user_num", user.getMem_num());
+		}	
+		
+		return mapJson;
+	}
+
 	
 	
 	

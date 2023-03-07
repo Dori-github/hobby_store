@@ -68,8 +68,10 @@ $(function(){
 				}else if(param.result == 'success'){
 					if(param.status == 'yesFav'){
 						heart.find('.fa-heart').css('font-weight', 'bold');
+						heart.parent().find('.countFav').text(param.count);
 					}else{
 						heart.find('.fa-heart').css('font-weight', 'normal');
+						heart.parent().find('.countFav').text(param.count);
 					}
 				}else{
 					Swal.fire({
@@ -305,14 +307,7 @@ $(function(){
 			});
 			
 		});
-		
-		
-		
-	//===============기간/횟수===================//	
-	/*if($('.monthCount input[type=number]').val()==0){
-		$('.monthCount input[type=number]').val('');
-	}*/
-	
+
 	
 	//===============가격===================//
 	//콤마 표시
@@ -348,12 +343,12 @@ $(function(){
 	//이미지 미리 보기
 	let course_photo;//선택한 이미지 저장
 	//대표이미지
-	$('#course_form .image #upload1').change(function(){
+	$('.image #upload1').change(function(){
 		course_photo = this.files[0];
 		if(!course_photo){//취소한 경우
-			$('#course_form .course-photo1').hide();	
-			$('#course_form .l1').show();
-			$('#course_form .d1').hide();
+			$('.course-photo1').hide();	
+			$('.l1').show();
+			$('.d1').hide();
 		}
 		if(course_photo.size > 1024*1024){
 			alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
@@ -365,20 +360,20 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('#course_form .course-photo1').show().attr('src',reader.result);	
-			$('#course_form .l1').hide();
-			$('#course_form .d1').show();
+			$('.course-photo1').show().attr('src',reader.result);	
+			$('.l1').hide();
+			$('.d1').show();
 		};
 	});//end of change
 	
 	//추가이미지1
-	$('#course_form .image #upload2').change(function(){
+	$('.image #upload2').change(function(){
 		course_photo = this.files[0];
 		
 		if(!course_photo){//취소한 경우
-			$('#course_form .course-photo2').hide();	
-			$('#course_form .l2').show();
-			$('#course_form .d2').hide();
+			$('.course-photo2').hide();	
+			$('.l2').show();
+			$('.d2').hide();
 		}
 		
 		if(course_photo.size > 1024*1024){
@@ -391,20 +386,20 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('#course_form .course-photo2').show().attr('src',reader.result);	
-			$('#course_form .l2').hide();
-			$('#course_form .d2').show();
+			$('.course-photo2').show().attr('src',reader.result);	
+			$('.l2').hide();
+			$('.d2').show();
 		};
 	});//end of change
 	
 	//추가이미지2
-	$('#course_form .image #upload3').change(function(){
+	$('.image #upload3').change(function(){
 		course_photo = this.files[0];
 		
 		if(!course_photo){//취소한 경우
-			$('#course_form .course-photo3').hide();	
-			$('#course_form .l3').show();
-			$('#course_form .d3').hide();
+			$('.course-photo3').hide();	
+			$('.l3').show();
+			$('.d3').hide();
 		}
 		
 		if(course_photo.size > 1024*1024){
@@ -417,19 +412,31 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('#course_form .course-photo3').show().attr('src',reader.result);	
-			$('#course_form .l3').hide();
-			$('#course_form .d3').show();
+			$('.course-photo3').show().attr('src',reader.result);	
+			$('.l3').hide();
+			$('.d3').show();
 		};
 	});//end of change
 	
 	
 	//취소 버튼 처리
-	$('#course_form .image .d1').click(function(){
-		$('#course_form .course-photo1').hide();
-		$('#course_form .image #upload1').val('');	
-		$('#course_form .l1').show();
-		$('#course_form .d1').hide();
+	$('.image .d1').click(function(){
+		$('.course-photo1').hide();
+		$('.image #upload1').val('');	
+		$('.l1').show();
+		$('.d1').hide();
+	});
+	$('.image .d2').click(function(){
+		$('.course-photo2').hide();
+		$('.image #upload2').val('');	
+		$('.l2').show();
+		$('.d2').hide();
+	});
+	$('.image .d3').click(function(){
+		$('.course-photo3').hide();
+		$('.image #upload3').val('');	
+		$('.l3').show();
+		$('.d3').hide();
 	});
 	
 	
@@ -465,7 +472,7 @@ $(function(){
 	});	
 	
 	//===============클래스 상세페이지================//
-	//이미지 캐러셀
+	
 	
 
 	

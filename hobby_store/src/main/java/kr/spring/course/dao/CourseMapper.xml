@@ -77,8 +77,24 @@
 	
 	
 	<!-- 댓글 목록 -->
-  	<select id="selectListReply" parameterType="map"
-  	                       resultType="courseReplyVO">
+	<sql id="replyOrder">
+		<if test="order==1"><!-- 최신순 -->
+			reply_num DESC
+		</if>
+		<if test="order==2"><!-- 별점순 -->
+			star DESC
+		</if>
+		<if test="order==3"><!-- 추천순 -->
+			fav_cnt DESC
+		</if>
+	</sql>
+
+	<select id="selectReplyCount" parameterType="map" resultType="integer">
+		SELECT COUNT(*) FROM course_reply JOIN member USING(mem_num) JOIN member_detail USING(mem_num) WHERE course_num=#{course_num}
+			 ORDER BY <include refid="replyOrder"></include> 
+	</select>
+	
+  	<select id="selectListReply" parameterType="map" resultType="courseReplyVO">
   		SELECT
   		   *
   		FROM(SELECT
@@ -87,18 +103,19 @@
   		     FROM(SELECT
   		            reply_num,
   		            <![CDATA[
-  		            REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') reply_content,
+  		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
   		            ]]>
+  		            reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
   		            reply_date,
-  		            re_mdate,
-  		            board_num,
+  		            reply_mdate,
+  		            course_num,
   		            mem_num,
-  		            id,
-  		            nick_name
-  		          FROM course_reply JOIN member 
-  		          USING (mem_num)
-  		          WHERE board_num = #{board_num}
-  		          ORDER BY re_num DESC)a)
+  		            mem_id,
+  		            mem_nickname,
+  		            mem_photo
+  		          FROM course_reply JOIN member USING (mem_num) JOIN member_detail USING(mem_num) 
+  		          WHERE course_num = #{course_num}
+  		          ORDER BY <include refid="replyOrder"></include>)a)
   		    <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>          

@@ -134,7 +134,7 @@
 						<div class="card-body">
 						  	<div class="color-gray">
 						  		<span>${course.mem_nickname}</span>
-						  		<span class="card-hit"><i class="fa-solid fa-eye"></i> ${course.course_hit} <i class="fa-solid fa-heart"></i> ${course.fav}</span>
+						  		<span class="card-hit"><i class="fa-solid fa-eye"></i> ${course.course_hit} <i class="fa-solid fa-heart"></i> <span class="countFav">${course.fav}</span></span>
 						  	</div>
 						  	<h5 class="card-title"><b>${course.course_name}</b></h5>
 						  	<span><i class="fa-regular fa-star"></i> ${course.star} (후기 ${course.reply})</span>
