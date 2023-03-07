@@ -27,23 +27,23 @@
     </definition>
     
      <!-- 마이페이지 -->
-     <!--  <definition name="myPage" extends="main">
-    	<put-attribute name="title" value="myPage"/>
-    	<put-attribute name="body"
-    	  value="/WEB-INF/views/mypage/memberView.jsp"/>        
-    </definition> -->
-    <definition name="myPage" 
-        template="/WEB-INF/views/template/layout_basic.jsp">
-    	<put-attribute name="title" value="취미상점"/>
-    	<put-attribute name="header" 
+      <definition name="myPage" 
+     template="/WEB-INF/views/template/layout_mypage2.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="header"
     	  value="/WEB-INF/views/template/header.jsp"/>
     	  <put-attribute name="nav"
     	  value="/WEB-INF/views/template/mypage_nav.jsp"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/mypage/memberView.jsp"/> 
+    	  value="/WEB-INF/views/mypage/memberView.jsp"/>
     	<put-attribute name="footer"
-    	  value="/WEB-INF/views/template/footer.jsp"/>         
+    	  value="/WEB-INF/views/template/footer.jsp"/>          
     </definition>
+     <!-- <definition name="myPage" extends="main">
+    	<put-attribute name="title" value="myPage"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/memberView.jsp"/>
+    </definition> -->
 </tiles-definitions>
 
 
