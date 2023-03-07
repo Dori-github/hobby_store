@@ -989,8 +989,8 @@ input[type='number']::-webkit-inner-spin-button {
 
 
 #mreply_form{
-	height:500px;
-	padding:0 70px;
+	height:380px;
+	padding:0 50px;
 }
 .mletter-count{
 	top:-10px;

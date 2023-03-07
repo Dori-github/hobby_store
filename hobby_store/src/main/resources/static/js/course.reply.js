@@ -6,7 +6,7 @@ $(function(){
     let totalItem;//총 레코드 수
 
 	
-	//댓글 목록
+	//후기 목록
 	function selectList(pageNum){
 		currentPage = pageNum;
 		
@@ -26,7 +26,7 @@ $(function(){
 				$('#output').empty();
 				$('.paging-btn').empty();
 				
-				//댓글 목록 작업
+				//후기 목록 작업
 				$(param.list).each(function(index,item){
 					let output = '<div class="wid"><span class="r-list-star">';
 					for(let i=1;i<=5;i++){
@@ -37,8 +37,7 @@ $(function(){
 					output += '<div class="item">';
 					output += '<ul class="detail-info">';
 					output += '<li>';
-					output += '<img width="50" height="50" class="my-photo">';
-					//output += '<img src="../member/viewProfile.do?mem_num='+item.mem_num+'" width="50" height="50" class="my-photo">';
+					output += '<img src="../member/viewProfile.do?mem_num='+item.mem_num+'" width="50" height="50" class="my-photo">';
 					output += '</li>';
 					output += '<li>';
 					if(item.mem_nickname){
@@ -62,13 +61,13 @@ $(function(){
 						output += '</div>'
 					}
 					output += '</div>';
-					output += '<hr size="1" noshade style="width:70%;margin:16px auto;color:gray;">'
+					output += '<hr size="1" noshade style="width:70%;margin:16px auto;color:gray;">';
 					
 					//문서 객체에 추가
 					$('#output').append(output);
 				});	
 					
-				//댓글 페이징 처리	
+				//후기 페이징 처리	
 				totalItem = param.count;
                 if(totalItem == 0){
                    return;
@@ -146,12 +145,14 @@ $(function(){
 			return false;
 		}
 		
-		let form_data = $(this).serialize();
+		
 		$.ajax({
 			url:'writeReply.do',
 			type:'post',
-			data:form_data,
+			data: new FormData($('#reply_form')[0]),
 			dataType:'json',
+			processData: false,
+		    contentType: false,
 			success:function(param){
 				if(param.result == 'logout'){
 					alert('로그인해야 작성할 수 있습니다.');
@@ -181,6 +182,12 @@ $(function(){
 	function initForm(){
 		$('textarea').val('');
 		$('#reply_form .letter-count').text('300/300');
+		$('#upload1').val('');
+		$('#upload2').val('');
+		$('#upload3').val('');
+		$('.image img').hide();
+		$('.image .fa-circle-xmark').hide();
+		$('.image .label1').show();
 	}
 	
 	
@@ -207,8 +214,8 @@ $(function(){
 		
 	});
 	
-	//댓글 수정
-	//댓글 수정 버튼 클릭시 수정폼 노출
+	//후기 수정
+	//후기 수정 버튼 클릭시 수정폼 노출
 	$(document).on('click','.modify-btn',function(){
 		//댓글 글번호 
 		let reply_num = $(this).attr('data-num');
@@ -225,7 +232,7 @@ $(function(){
 		modifyUI += '<ul class="image">';
 		for(let i=1;i<=3;i++){
 			modifyUI += '<li>';
-			modifyUI += '<img class="course-photo'+i+'">';
+			modifyUI += '<img src="replyImageView.do?reply_num='+reply_num+'&reply_type='+i+'" class="course-photo'+i+'">';
 			modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'">';
 			modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 			modifyUI += '</label>';
@@ -257,16 +264,25 @@ $(function(){
 		$('#mreply_form .letter-count').text(remain);		
 	});
 	
+	
+	
 	//수정폼에서 취소 버튼 클릭시 수정폼 초기화
 	$(document).on('click','.reply-reset',function(){
 		initModifyForm();
 	});
+	
+	
+	
 	
 	//댓글 수정 폼 초기화
 	function initModifyForm(){
 		$('.sub-item').show();
 		$('#mreply_form').remove();
 	}
+	
+	
+	
+	
 	
 	//댓글 수정 처리
 	$(document).on('submit','#mre_form',function(event){

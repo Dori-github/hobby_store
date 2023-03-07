@@ -375,6 +375,30 @@ public class CourseController {
 
 	
 	
+	//후기 이미지 출력
+		@RequestMapping("/course/replyImageView.do")
+		public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
+			
+			CourseReplyVO vo = courseService.selectReply(reply_num);
+			
+			logger.debug("<<courseReplyVO>> :" + vo);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("imageView");
+			
+			if(reply_type==1) {
+				mav.addObject("imageFile", vo.getReply_photo1());
+				mav.addObject("filename", vo.getReply_photo_name1());
+			}else if(reply_type==2) {
+				mav.addObject("imageFile", vo.getReply_photo2());
+				mav.addObject("filename", vo.getReply_photo_name2());
+			}else if(reply_type==3) {
+				mav.addObject("imageFile", vo.getReply_photo3());
+				mav.addObject("filename", vo.getReply_photo_name3());
+			}
+			return mav;
+		}
+	
 	
 	
 }
