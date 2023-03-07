@@ -77,6 +77,33 @@
   	   WHERE rnum >= #{start} AND rnum <= #{end}
   	   ]]>
 	</select>
+	
+	<!--  ======================================================================= -->
+	<select id="selectListReply" parameterType="map" resultType="itemsReplyVO">
+		SELECT
+  		   *
+  		FROM(SELECT
+  		       a.*,
+  		       rownum rnum
+  		     FROM(SELECT
+  		            reply_num,
+  		            <![CDATA[
+  		            REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') reply_content,
+  		            ]]>
+  		            reply_date,
+  		            re_mdate,
+  		            board_num,
+  		            mem_num,
+  		            id,
+  		            nick_name
+  		          FROM items_reply JOIN member 
+  		          USING (mem_num)
+  		          WHERE items_num = #{items_num}
+  		          ORDER BY reply_num DESC)a)
+  		    <![CDATA[
+  		    WHERE rnum >= #{start} AND rnum <= #{end}
+  		    ]]>          
+	</select>
 </mapper>
 
 

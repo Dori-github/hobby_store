@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 
 @Mapper
@@ -56,6 +57,21 @@ public interface ItemsMapper {
 	//상품 좋아요를 누른 사람 찾기 
 	@Select("select * from items a join items_fav b ON a.items_num = b.items_num  ")
 	public List<ItemsVO> selectFavMem();
+	
+	//리뷰
+	public List<ItemsReplyVO> selectListReply(Map<String, Object> map);
+	@Select("SELECT COUNT(*) FROM items_reply JOIN member USING(mem_num) WHERE items_num = #{items_num}")
+	public int selectRowCountReply(Map<String, Object> map);
+	@Insert("INSERT INTO items_reply(reply_num, reply_content, items_num, mem_num, reply_photo1, reply_photo_name1 ,reply_photo2, reply_photo_name2 ,reply_photo3, reply_photo_name3) VALUES (items_reply_seq.nextval, #{reply_content}, #{items_num}, #{mem_num}, #{reply_photo1, jdbcType=BLOB}, #{reply_photo_name1, jdbcType=VARCHAR},#{reply_photo2, jdbcType=BLOB}, #{reply_photo_name2, jdbcType=VARCHAR}, #{reply_photo3, jdbcType=BLOB}, #{reply_photo_name3, jdbcType=VARCHAR})")
+	public void insertReply(ItemsReplyVO itemsReply);
+	@Insert("INSERT INTO items_star (star_num, items_num, mem_num, star_auth) VALUES(items_star_seq.nextval, #{items_num}, #{mem_num}, #{star_auth})")
+	public void insertStar(ItemsReplyVO itemsStar);
+	@Select("SELECT * FROM items_reply WHERE reply_num = #{reply_num}")
+	public ItemsReplyVO selectReply(Integer reply_num);
+	
+	public void updateReply(ItemsReplyVO itemsReply);
+	public void deleteReply(Integer reply_num);
+	public void deleteReplyByItemsNum(Integer items_num);
 	
 	
 	

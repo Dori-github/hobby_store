@@ -1,11 +1,11 @@
 package kr.spring.items.controller;
 
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -25,12 +25,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.items.service.ItemsService;
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
   
 @Controller
 public class ItemsController {
+	
+	private int rowCount = 20;
 	@Autowired
 	private ItemsService itemsService;
 	
@@ -126,7 +129,7 @@ public class ItemsController {
 		return mav;
 	}
 	
-	//2 상품 목록 
+	//2. 상품 목록 
 	@RequestMapping("/items/itemsList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
 								@RequestParam(value="check",defaultValue="1")String check, 
@@ -148,8 +151,6 @@ public class ItemsController {
 			logger.debug("<<check>> :"+(String) map.get("check"));
 	
 			logger.debug("<<cate>> :"+(String) map.get("cate"));
-			
-			
 			
 			//상품 개수, 검색된 상품 개수 
 			int count = itemsService.selectItemsCount(map);
@@ -196,7 +197,11 @@ public class ItemsController {
 			mav.addObject("page",page.getPage());
 		return mav;
 	}
-	//이미지 출력
+	
+	//2-1 상품 수정
+	//2-2 상품 삭제 
+	
+	//3. 이미지 출력
 	@RequestMapping("/items/imageView.do")
 	public ModelAndView viewImage(
 			@RequestParam int items_num,
@@ -223,7 +228,7 @@ public class ItemsController {
 		return mav;
 	}
 	
-	//아이템 상세정보 출력 
+	//4. 아이템 상세정보 출력 
 	@RequestMapping("/items/itemsDetail.do")
 	public String detail (@RequestParam int items_num, Model model) {
 		
@@ -238,7 +243,7 @@ public class ItemsController {
 		return "itemsView";
 	}
 	
-	//아이템 좋아요 등록
+	//5-1 아이템 좋아요 등록
 	@RequestMapping("/items/itemsWriteFav.do")
 	@ResponseBody
 	public Map<String, Object> itemsWriteFav(ItemsFavVO fav, HttpSession session){
@@ -281,7 +286,7 @@ public class ItemsController {
 
 	}
 	
-	//아이템 좋아요 읽기
+	//5-2 아이템 좋아요 읽기
 	@RequestMapping("/items/itemsGetFav.do")
 	@ResponseBody
 	public Map<String,Object> itemsGetFav(ItemsFavVO fav,
@@ -310,4 +315,74 @@ public class ItemsController {
 		
 		return mapJson;
 	}
+	//5-3 아이템 좋아요 삭제
+	
+	//6. 후기 등록
+	@RequestMapping("/items/itemsReply.do")
+	@ResponseBody
+	public Map<String, String> writeReply(ItemsReplyVO vo, HttpSession session, HttpServletRequest request){
+		logger.debug("<<댓글 등록을 위한 VO>>" + vo);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		//추가 조건 : 접속한 회원이 해당 상품을 구매했을 경우에만 리뷰 등록이 가능할 수 있도록 
+		//로그아웃 상태일 때 
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}
+		else {
+			//mem_num 저장 	
+			vo.setMem_num(user.getMem_num());
+			
+			//리뷰 등록 
+			itemsService.insertReply(vo);
+			
+			itemsService.insertStar(vo);
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
+
+	//6-2 후기 목록
+	@RequestMapping("/items/itemsReplyList.do") 
+	@ResponseBody
+	public Map<String, Object> getList(@RequestParam(value = "pageNum", defaultValue="1")int currentPage,
+									   @RequestParam(value="check",defaultValue="1")String check,
+									   @RequestParam int items_num, HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("items_num", items_num);
+		map.put("check", check);
+		//해당 글의 전체 리뷰 갯수
+		int count = itemsService.selectRowCountReply(map);
+		//pageSize, pageBlock, totalItems
+		//페이지 처리
+		/*		PagingUtil page = 
+						new PagingUtil(currentPage,count,rowCount,1,null);
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+		*/
+		
+		//목록 데이터 읽기
+		List<ItemsReplyVO> list = null;
+		if(count > 0) {
+			list = itemsService.selectListReply(map);
+		}
+		else {
+			//list<ItemsReplyVO> 타입으로 텅텅 빈 객체를 반환 
+			list = Collections.emptyList();
+		}
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("count", count);
+		mapJson.put("rowCount", rowCount);
+		mapJson.put("list", list);
+		
+		MemberVO user =(MemberVO)session.getAttribute("user");
+		if(user != null) {
+			mapJson.put("user_num", user.getMem_num());
+		}		
+		return mapJson;
+	}
+	
+	
+	
 }

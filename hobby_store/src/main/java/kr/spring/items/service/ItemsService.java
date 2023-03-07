@@ -3,7 +3,11 @@ package kr.spring.items.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 
 public interface ItemsService {
@@ -39,5 +43,18 @@ public interface ItemsService {
 	public void updateHit(Integer items_num);
 	
 	public List<ItemsVO> selectFavMem();
+	
+	public List<ItemsReplyVO> selectListReply(Map<String, Object> map);
+	
+	public int selectRowCountReply(Map<String, Object> map);
+	
+	public void insertReply(ItemsReplyVO itemsReply);
+	
+	public ItemsReplyVO selectReply(Integer reply_num);
+	
+	public void updateReply(ItemsReplyVO itemsReply);
+	public void deleteReply(Integer reply_num);
+	public void deleteReplyByItemsNum(Integer items_num);
 
+	public void insertStar(ItemsReplyVO itemsStar);
 }
