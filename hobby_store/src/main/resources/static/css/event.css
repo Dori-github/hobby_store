@@ -108,9 +108,9 @@
 	clear:both;
 }
 
-#limit{
+.limit{
 	display:inline-block;
-	align-items:right;
+	margin-left:70%;
 }
 .disabled{
 	pointer-events:none;
@@ -289,4 +289,13 @@
 	background-color: #F2F2F2;
 	outline:5px solid #E0E0E0;
 	transition:.2s;
+}
+
+/*기본
+====================*/
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
 }

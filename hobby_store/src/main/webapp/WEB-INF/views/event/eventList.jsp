@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 이벤트 목록 시작 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/event.css">
 <div class="event-main">
 <div id="event_search">
@@ -41,14 +42,14 @@
 					<div class="event-image">
 					<img src="imageView.do?event_num=${event.event_num}" width="300" height="200"></div>
 					<div class="event-content"><br>
-					<strong>${event.event_title}</strong>
-					<c:if test="${endDate >= today and event.event_attr != 0}"><span id="ongoing">진행중</span></c:if>
-					<c:if test="${endDate < today or event.event_attr == 0}"><span id="end">마감</span></c:if>
+					<b><strong>${event.event_title}</strong></b>
+					<c:if test="${endDate >= today and event.event_attr != 0}"><span class="badge bg-primary limit">진행중</span></c:if>
+					<c:if test="${endDate < today or event.event_attr == 0}"><span class="badge bg-danger limit">마감</span></c:if>
 					<br>
 					<span>${event.event_content}</span><br>
 					<span>기간 : ${event.event_date} ~ ${event.event_end}</span>
 					<span>조회 : ${event.event_hit}</span>
-					<hr>
+					<hr size="1" style="background-color:black;">
 					</div>
 				</a>
 				</li>
