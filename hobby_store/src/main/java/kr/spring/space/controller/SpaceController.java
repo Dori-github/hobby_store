@@ -4,6 +4,7 @@ package kr.spring.space.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.space.service.SpaceService;
 import kr.spring.space.vo.SpaceFavVO;
+import kr.spring.space.vo.SpaceReplyVO;
 import kr.spring.space.vo.SpaceVO;
 import kr.spring.util.PagingUtil;
 
@@ -222,4 +224,146 @@ public class SpaceController {
 			}
 			return mapJson;
 		}
-}
+			
+			//===============후기================//
+			//후기등록
+			@RequestMapping("/space/writeReply.do")
+			@ResponseBody
+			public Map<String,String> writeReply(SpaceReplyVO vo,HttpSession session,HttpServletRequest request){
+				
+				logger.debug("<<댓글 등록>> : " + vo);
+				
+				Map<String,String> mapJson = new HashMap<String,String>();
+				
+				MemberVO user = (MemberVO)session.getAttribute("user");
+				if(user==null) {
+					//로그인 안 됨
+					mapJson.put("result","logout");
+				}else {
+					//회원번호 등록
+					vo.setMem_num(user.getMem_num());
+					//댓글 등록
+					spaceService.insertReply(vo);
+					mapJson.put("result", "success");
+				}
+				return mapJson;
+			}
+			
+			
+			//후기목록
+			@RequestMapping("/space/listReply.do")
+			@ResponseBody
+			public Map<String,Object> getList(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
+					                          @RequestParam(value="order",defaultValue="1") int order,
+											  @RequestParam int space_num,
+											  HttpSession session){
+				
+				logger.debug("<<currentPage>> : " + currentPage);
+				logger.debug("<<space_num>> : " + space_num);
+				
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("space_num", space_num);
+				map.put("order", order);
+				
+				//총 글의 개수
+				int count = spaceService.selectReplyCount(map);
+				
+				//페이지 처리
+				PagingUtil page = new PagingUtil(currentPage,count,5,3,null);
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				
+				//목록 데이터 읽기
+				List<SpaceReplyVO> list = null;
+				if(count > 0) {
+					list = spaceService.selectListReply(map);
+				}else {
+					list = Collections.emptyList();
+				}
+				
+				Map<String,Object> mapJson = new HashMap<String,Object>();
+				mapJson.put("list", list);
+				mapJson.put("count", count);
+				
+				//===== 로그인 한 회원정보 셋팅 =====//
+				MemberVO user = (MemberVO)session.getAttribute("user");
+				if(user!=null) {
+					mapJson.put("user_num", user.getMem_num());
+				}	
+				
+				return mapJson;
+			}
+			//==========댓글수정==========//
+			@RequestMapping("/space/updateReply.do")
+			@ResponseBody
+			public Map<String,String> modifyReply(
+					        SpaceReplyVO spaceReplyVO,
+					        HttpSession session,
+					        HttpServletRequest request){
+				
+				logger.debug("<<댓글수정>> : " + spaceReplyVO);
+				
+				Map<String,String> mapJson =
+						new HashMap<String,String>();
+				
+				MemberVO user = 
+						(MemberVO)session.getAttribute("user");
+				SpaceReplyVO db_reply = 
+						spaceService.selectReply(
+								spaceReplyVO.getReply_num());
+				if(user==null) {
+					//로그인이 안 되어있는 경우
+					mapJson.put("result", "logout");
+				}else if(user!=null && 
+						user.getMem_num()==db_reply.getMem_num()) {
+					//로그인 회원번호와 작성자 회원번호 일치
+					
+					/*
+					 * //ip등록 spaceReplyVO.setRe_ip(request.getRemoteAddr());
+					 */
+					
+					//댓글 수정
+					spaceService.updateReply(spaceReplyVO);
+					mapJson.put("result", "success");			
+				}else {
+					//로그인 회원번호와 작성자 회원번호 불일치
+					mapJson.put("result", "wrongAccess");
+				}
+				
+				return mapJson;
+			}
+			
+			//======댓글 삭제========//
+			@RequestMapping("/space/deleteReply.do")
+			@ResponseBody
+			public Map<String,String> deleteReply(
+					          @RequestParam int reply_num,
+					               HttpSession session){
+				logger.debug("<<댓글 삭제>> : " + reply_num);
+				
+				Map<String,String> mapJson = 
+						new HashMap<String,String>();
+				
+				MemberVO user = 
+						(MemberVO)session.getAttribute("user");
+				SpaceReplyVO db_reply = 
+						spaceService.selectReply(reply_num);
+				if(user==null) {
+					//로그인이 되어있지 않음
+					mapJson.put("result", "logout");
+				}else if(user!=null && 
+					user.getMem_num()==db_reply.getMem_num()) {
+					//로그인한 회원번호와 작성자 회원번호 일치
+					spaceService.deleteReply(reply_num);
+					mapJson.put("result", "success");
+				}else {
+					//로그인한 회원번호와 작성자 회원번호 불일치
+					mapJson.put("result", "wrongAccess");
+				}
+				
+				return mapJson;
+			}
+			
+
+
+		}

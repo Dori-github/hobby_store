@@ -22,7 +22,7 @@
 <div id="space_main"><!-- main이었음 -->
 	<!-- 사이드바 시작 -->
 <div id="sidebar">
-<ul>
+
   
 
 		<li><a class="cate" href="${pageContext.request.contextPath}/space/list.do"> 전체 </a></li>
@@ -35,7 +35,6 @@
 	
 
 
-</ul>
 </div>
 	<!-- 사이즈바 끝 -->
 
