@@ -57,7 +57,7 @@
 							<li><a href="#">Q & A</a></li>
 						</ul>
 					</li>
-					<li><a href="${pageContext.request.contextPath}/">이벤트</a></li>
+					<li><a href="${pageContext.request.contextPath}/event/list.do">이벤트</a></li>
 				</ul>
 				<!-- 마이페이지 시작 -->
 				<div id="mypage">
