@@ -26,13 +26,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventVO;
 import kr.spring.member.service.EmailSender;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.Email;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
 
 
 @Controller
@@ -469,6 +473,18 @@ public class MemberController {
 		this.certCharLength = certCharLength;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===========마이페이지===========//
 	//======회원 상세======//
 	@RequestMapping("/member/myPage.do")
 	public String process(HttpSession session, Model model) {
@@ -562,6 +578,35 @@ public class MemberController {
 			model.addAttribute("imageFile",memberVO.getMem_photo());
 			model.addAttribute("filename",memberVO.getMem_pname());
 		}
+	}
+	
+	//좋아요 게시물 조회
+	@RequestMapping("/member/fav.do")
+	public ModelAndView favList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, @RequestParam Integer mem_num, HttpSession session) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		int count = memberService.selectCourseFavCount(mem_num);
+		
+		PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+		
+		List<CourseVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			map.put("mem_num", mem_num);
+			list = memberService.selectCourseFav(map);
+		}
+		
+		logger.debug("<<좋아요 목록>> : " + count);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("favList");
+		mav.addObject("count",count);
+		mav.addObject("list",list);
+		mav.addObject("page",page.getPage());
+		
+		return mav;
 	}
 }
 
