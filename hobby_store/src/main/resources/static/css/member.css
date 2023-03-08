@@ -72,6 +72,23 @@
 #message_nickname{
 	display:block;
 }
+
+#message_email{
+	display:block;
+}
+
+#message_emailCheck{
+	display:block;
+}
+
+.findid{
+	text-align:center;
+	margin-bottom:30px;
+}
+
+.table td{
+	border:none;
+}
   
 
 

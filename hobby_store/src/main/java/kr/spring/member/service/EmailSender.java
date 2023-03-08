@@ -1,5 +1,6 @@
 package kr.spring.member.service;
   
+
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -16,6 +17,8 @@ public class EmailSender{
 	
 	@Autowired
 	protected JavaMailSender mailSender;
+	
+	
 
 	public void sendEmail(Email email) throws Exception {
 

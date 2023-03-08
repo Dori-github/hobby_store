@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.spring.items.dao.ItemsMapper;
+import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 
- 
+
+
 @Service
 public class ItemsServiceImpl implements ItemsService  {
 	
@@ -66,22 +69,101 @@ public class ItemsServiceImpl implements ItemsService  {
 		return itemsMapper.selectItemsList(map);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	@Override
+	public List<ItemsVO> selectCate() {
 		
+		return itemsMapper.selectCate();
+	}
+
+	@Override
+	public ItemsFavVO selectItemsFav(ItemsFavVO fav) {
+			
+		return itemsMapper.selectItemsFav(fav);
+	}
+
+	@Override
+	public void deleteItemsFav(Integer fav_num) {
+		itemsMapper.deleteItemsFav(fav_num);
+		
+	}
+
+	@Override
+	public void insertItemsFav(ItemsFavVO fav) {
+		itemsMapper.insertItemsFav(fav);
+		
+	}
+
+	@Override
+	public int selectItemsFavCount(Integer items_num) {
+	
+		return itemsMapper.selectItemsFavCount(items_num);
+	}
+
+	@Override
+	public void updateHit(Integer items_num) {
+		itemsMapper.updateHit(items_num);
+		
+	}
+
+	@Override
+	public List<ItemsVO> selectFavMem() {
+		
+		return itemsMapper.selectFavMem();
+	}
+
+	@Override
+	public List<ItemsReplyVO> selectListReply(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectRowCountReply(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void insertReply(ItemsReplyVO itemsReply) {
+		itemsMapper.insertReply(itemsReply);
+		
+	}
+
+	@Override
+	public ItemsReplyVO selectReply(Integer reply_num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateReply(ItemsReplyVO itemsReply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteReply(Integer reply_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteReplyByItemsNum(Integer items_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertStar(ItemsReplyVO itemsStar) {
+		itemsMapper.insertStar(itemsStar);
+		
+	}
 
 	
-	
-	
+
+
+
+
+
+
 }

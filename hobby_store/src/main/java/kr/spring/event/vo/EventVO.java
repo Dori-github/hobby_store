@@ -1,21 +1,39 @@
 package kr.spring.event.vo;
 
+import java.io.IOException;
 import java.sql.Date;
+
+import javax.validation.constraints.NotEmpty;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class EventVO {
 	private int event_num;
+	@NotEmpty
 	private String event_title;
 	private int event_attr;
 	private Date event_end;
 	private int event_hit;
+	@NotEmpty
 	private String event_content;
-	private String event_photo;
+	@NotEmpty
+	private byte[] event_photo;
+	private String event_photo_name;
 	private Date event_date;
 	private Date event_rdate;
 	private int mem_num;
 	private int course_num;
 	private int items_num;
+	@NotEmpty
 	private String event_detail;
+	
+	//업로드 파일 처리
+	public void setUpload(MultipartFile upload) throws IOException {
+		//Multipart -> byte[] 배열로 변환
+		setEvent_photo(upload.getBytes());
+		//파일명
+		setEvent_photo_name(upload.getOriginalFilename());
+	}
 	
 	public int getEvent_num() {
 		return event_num;
@@ -53,10 +71,10 @@ public class EventVO {
 	public void setEvent_content(String event_content) {
 		this.event_content = event_content;
 	}
-	public String getEvent_photo() {
+	public byte[] getEvent_photo() {
 		return event_photo;
 	}
-	public void setEvent_photo(String event_photo) {
+	public void setEvent_photo(byte[] event_photo) {
 		this.event_photo = event_photo;
 	}
 	public Date getEvent_date() {
@@ -95,14 +113,19 @@ public class EventVO {
 	public void setEvent_detail(String event_detail) {
 		this.event_detail = event_detail;
 	}
-	
+	public String getEvent_photo_name() {
+		return event_photo_name;
+	}
+	public void setEvent_photo_name(String event_photo_name) {
+		this.event_photo_name = event_photo_name;
+	}
 	@Override
 	public String toString() {
 		return "EventVO [event_num=" + event_num + ", event_title=" + event_title + ", event_attr=" + event_attr
 				+ ", event_end=" + event_end + ", event_hit=" + event_hit + ", event_content=" + event_content
-				+ ", event_photo=" + event_photo + ", event_date=" + event_date + ", event_rdate=" + event_rdate
-				+ ", mem_num=" + mem_num + ", course_num=" + course_num + ", items_num=" + items_num + ", event_detail="
-				+ event_detail + "]";
+				+ ", event_photo_name=" + event_photo_name + ", event_date=" + event_date + ", event_rdate="
+				+ event_rdate + ", mem_num=" + mem_num + ", course_num=" + course_num + ", items_num=" + items_num
+				+ ", event_detail=" + event_detail + "]";
 	}
 	
 }

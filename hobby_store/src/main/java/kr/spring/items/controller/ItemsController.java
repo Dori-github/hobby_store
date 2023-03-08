@@ -1,6 +1,7 @@
 package kr.spring.items.controller;
 
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,21 +23,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import kr.spring.items.service.ItemsService;
+import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
   
 @Controller
 public class ItemsController {
+	
+	private int rowCount = 20;
 	@Autowired
 	private ItemsService itemsService;
+	
+
 	
 	@ModelAttribute //컨트롤러 접근 후 VO 초기화 
 	public ItemsVO initCommend() {
 		return new ItemsVO();
 	}
+
+	
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(ItemsController.class);
 	
@@ -87,9 +96,8 @@ public class ItemsController {
 		
 		//이미지 유효성 체크 (photo1만 not null)
 		if(vo.getItems_photo1().length==0) {
-			//upload1은 자바빈(vo)에 필드가 없기때문에 명시
-			//할 수 없음
-			result.rejectValue("photo1", "required");
+			//upload1은 자바빈(vo)에 필드가 없기때문에 명시할 수 없음
+			result.rejectValue("items_photo1", "required");
 		}
 		//이미지 용량 체크 
 		if(vo.getItems_photo1().length > 5*1024*1024) {//5MB
@@ -110,48 +118,90 @@ public class ItemsController {
 				}
 		//회원번호 조회 후 회원번호 -> VO에 저장 
 		vo.setMem_num(((MemberVO)session.getAttribute("user")).getMem_num());
+		vo.setMem_nickname(((MemberVO)session.getAttribute("user")).getMem_nickname());
 				
 		//상품 등록 
 		itemsService.insertItems(vo);
 		
 		mav.setViewName("itemsList");
 		mav.addObject("itemsVO", vo);
+		mav.addObject("url", request.getContextPath()+"/items/itemsList.do");
 		return mav;
 	}
 	
-	//2 상품 목록 
+	//2. 상품 목록 
 	@RequestMapping("/items/itemsList.do")
-	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1")int currentPage, String keyfield, String keyword) {
+	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1")int currentPage,
+								@RequestParam(value="check",defaultValue="1")String check, 
+								String packaging, String keyfield, String keyword, String cate,
+								HttpSession session) {
 			Map<String, Object> map = new HashMap<String, Object>();
+			//검색
 			map.put("keyfield", keyfield);	
 			map.put("keyword", keyword);
+			//상품 표시 여부 
 			map.put("status", 1);
-			//keyword : 검색 키워드 , keyfield :검색 키필드 
+			//정렬(최신 ~ 가격)
+			map.put("check",check);
+			//정렬(포장 가능 여부)
+			map.put("packaging", packaging);
+			
+			//사이드바 카테고리 
+			map.put("cate", cate);
+			logger.debug("<<check>> :"+(String) map.get("check"));
+	
+			logger.debug("<<cate>> :"+(String) map.get("cate"));
 			
 			//상품 개수, 검색된 상품 개수 
 			int count = itemsService.selectItemsCount(map);
+		
+			// 사이드바 카테고리 적용
+			// 인기, 좋아요, 조회순 적용
+			// 가격 정렬 적용 
 			logger.debug("<<상품 목록>> :  "+count);
 			
-			PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 20, 10,"itemsList.do");
+			PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 12, 4,"itemsList.do");
 			
 			List<ItemsVO> list = null;
+	
 			
 			if(count > 0) {
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
 				
 				list = itemsService.selectItemsList(map);
+
 				logger.debug("<<상품 리스트 >> : "+list);
 			}
+			//cate_num, name, parent 
+			List<ItemsVO> items_cate = null;
+			items_cate = itemsService.selectCate();
+			
+			// 현재 접속중인 회원의 mem_num 전달
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			
+			// 좋아요를 누른 사람을 리스트로 
+			List<ItemsVO> Favlist = null;
+			Favlist = itemsService.selectFavMem();			
+			
 			//model 객체에 데이터를 담아 view에 전달
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("itemsList");
 			mav.addObject("count",count);
+			mav.addObject("items_cate",items_cate);
 			mav.addObject("list",list);
+			//<c:foreach 로 list를 뿌릴 때 각 list마다 현재 접속 중인 회원(user) = 좋아요를 누른 회원인지 체크, 같다면 좋아요 등록,삭제 가능  
+			mav.addObject("user", user);
+			mav.addObject("Favlist",Favlist);
+	
 			mav.addObject("page",page.getPage());
 		return mav;
 	}
-	//이미지 출력
+	
+	//2-1 상품 수정
+	//2-2 상품 삭제 
+	
+	//3. 이미지 출력
 	@RequestMapping("/items/imageView.do")
 	public ModelAndView viewImage(
 			@RequestParam int items_num,
@@ -161,6 +211,7 @@ public class ItemsController {
 				itemsService.selectItems(items_num);
 		
 		ModelAndView mav = new ModelAndView();
+		// ImageView Class/ renderMergedOuputModel에서 model 사용 
 		mav.setViewName("imageView");
 		
 		if(items_type==1) {
@@ -173,9 +224,165 @@ public class ItemsController {
 			mav.addObject("imageFile", itemsVO.getItems_photo3());
 			mav.addObject("filename", itemsVO.getItems_photo_name3());
 		}
-		
+		 
 		return mav;
 	}
 	
+	//4. 아이템 상세정보 출력 
+	@RequestMapping("/items/itemsDetail.do")
+	public String detail (@RequestParam int items_num, Model model) {
+		
+		ItemsVO items = itemsService.selectItems(items_num);
+		
+		
+		
+		itemsService.updateHit(items_num);
+		logger.debug("<<상세 보기할 상품의 정보  >> : "+ items);
+		model.addAttribute("items", items);
+		
+		return "itemsView";
+	}
+	
+	//5-1 아이템 좋아요 등록
+	@RequestMapping("/items/itemsWriteFav.do")
+	@ResponseBody
+	public Map<String, Object> itemsWriteFav(ItemsFavVO fav, HttpSession session){
+		logger.debug("<<아이템 좋아요 등록1 >>: "+fav);
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user == null) {
+			mapJson.put("result", "logout");
+		}
+		
+		else {
+			//fav (mem_num)
+			fav.setFmem_num(user.getMem_num());
+			
+			logger.debug("<<아이템 좋아요 등록2 >>: "+fav);
+			
+			ItemsFavVO itemsFav = itemsService.selectItemsFav(fav);
+			logger.debug("<<좋아요가 있나 ? >>"+itemsFav);
+			
+			//좋아요 삭제
+			if(itemsFav != null) {
+				itemsService.deleteItemsFav(itemsFav.getFav_num());
+				mapJson.put("result", "success");
+				mapJson.put("status", "noFav");
+			}
+			//좋아요 등록
+			else {
+				itemsService.insertItemsFav(fav);
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "yesFav");
+			}
+			
+			
+			mapJson.put("count", itemsService.selectItemsFavCount(fav.getItems_num()));
+		}
+		return mapJson;
 
+	}
+	
+	//5-2 아이템 좋아요 읽기
+	@RequestMapping("/items/itemsGetFav.do")
+	@ResponseBody
+	public Map<String,Object> itemsGetFav(ItemsFavVO fav,
+			                    HttpSession session){
+		logger.debug("<<아이템 좋아요 읽기 1>> : " + fav);
+		
+		Map<String,Object> mapJson = 
+				new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(user==null) {
+			mapJson.put("status", "noFav");
+		}else {
+			//로그인된 아이디 셋팅
+			fav.setFmem_num(user.getMem_num());
+			
+			ItemsFavVO itemsFav = itemsService.selectItemsFav(fav);
+			if(itemsFav!=null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", itemsService.selectItemsFavCount(fav.getItems_num()));
+		
+		return mapJson;
+	}
+	//5-3 아이템 좋아요 삭제
+	
+	//6. 후기 등록
+	@RequestMapping("/items/itemsReply.do")
+	@ResponseBody
+	public Map<String, String> writeReply(ItemsReplyVO vo, HttpSession session, HttpServletRequest request){
+		logger.debug("<<댓글 등록을 위한 VO>>" + vo);
+		
+		Map<String, String> mapJson = new HashMap<String, String>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		//추가 조건 : 접속한 회원이 해당 상품을 구매했을 경우에만 리뷰 등록이 가능할 수 있도록 
+		//로그아웃 상태일 때 
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}
+		else {
+			//mem_num 저장 	
+			vo.setMem_num(user.getMem_num());
+			
+			//리뷰 등록 
+			itemsService.insertReply(vo);
+			
+			itemsService.insertStar(vo);
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
+
+	//6-2 후기 목록
+	@RequestMapping("/items/itemsReplyList.do") 
+	@ResponseBody
+	public Map<String, Object> getList(@RequestParam(value = "pageNum", defaultValue="1")int currentPage,
+									   @RequestParam(value="check",defaultValue="1")String check,
+									   @RequestParam int items_num, HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("items_num", items_num);
+		map.put("check", check);
+		//해당 글의 전체 리뷰 갯수
+		int count = itemsService.selectRowCountReply(map);
+		//pageSize, pageBlock, totalItems
+		//페이지 처리
+		/*		PagingUtil page = 
+						new PagingUtil(currentPage,count,rowCount,1,null);
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+		*/
+		
+		//목록 데이터 읽기
+		List<ItemsReplyVO> list = null;
+		if(count > 0) {
+			list = itemsService.selectListReply(map);
+		}
+		else {
+			//list<ItemsReplyVO> 타입으로 텅텅 빈 객체를 반환 
+			list = Collections.emptyList();
+		}
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("count", count);
+		mapJson.put("rowCount", rowCount);
+		mapJson.put("list", list);
+		
+		MemberVO user =(MemberVO)session.getAttribute("user");
+		if(user != null) {
+			mapJson.put("user_num", user.getMem_num());
+		}		
+		return mapJson;
+	}
+	
+	
+	
 }

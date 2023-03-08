@@ -46,54 +46,79 @@
 
 						</div>
 						
+						
+						
 						</div>
 					
 					
 					</c:if>
 
 					<c:if test="${!empty mem_id}">
-						<table class="table">
-							<tr>
-								<th scope="col"><div align="center">회원님의 아이디는</div></th>
-							</tr>
 
-							<tr>
-								<td align="center">
-									<div align="center"
-										style="font-weight: bold; font-size: 24px; background-color: #f5f5ff; width: 60%; height: 60%;">
-										${mem_id}</div>
-								</td>
+						<div class="table">
 
-							</tr>
+							<div align="center" style="padding-bottom: 10px;">회원님의 아이디는</div>
 
-							<tr>
-								<th scope="col"><div align="center">입니다.</div></th>
-							</tr>
-						</table>
-						
-						<div class="row mb-4">
-						<div class="col-md-14 d-flex justify-content-center">
 
-							<button type="button" class="btn mb-4" onclick="location.href='${pageContext.request.contextPath}/member/login.do';"
-								style="width: 400%;background-color: #FF4E02;color: white;">로그인</button>
 
+							<div align="center">
+								<div align="center"
+									style="font-weight: bold; font-size: 24px; color: #FF4E02; width: 60%; height: 60%;">
+									${mem_id}</div>
+							</div>
+
+
+
+							<div>
+								<div align="center" style="padding-top: 10px;">입니다.</div>
+							</div>
 						</div>
-						
+
+						<div class="row mb-4">
+							<div class="col-md-14 d-flex justify-content-center"
+								style="padding-top: 10px;">
+
+								<button type="button" class="btn mb-4"
+									onclick="location.href='${pageContext.request.contextPath}/member/login.do';"
+									style="width: 400%; background-color: #FF4E02; color: white;">로그인</button>
+
+							</div>
+
+							<div class="row mb-4">
+								<div class="col-md-4 d-flex justify-content-center" style="padding: 0px;">
+									<a id="find"
+										href="${pageContext.request.contextPath}/member/pwSearch.do">비밀번호 찾기</a>
+								</div>
+	
+								<div class="col-md-4 d-flex justify-content-center"
+									style="border-right: 1px solid #ddd; border-left: 1px solid; padding: 0px;">
+									<!-- Simple link -->
+									<a id="find" class="find"
+										href="${pageContext.request.contextPath}/main/main.do">홈으로</a>
+								</div>
+								
+								<div class="col-md-4 d-flex justify-content-center"
+									style=" border-left: 1px solid; padding: 0px;">
+									<!-- Simple link -->
+									<a id="find"
+										href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
+								</div>
+								
+							</div>
 						</div>
 					</c:if>
 
 
-					
 
-					</div>
+				</div>
 
 
 
 				</div>
 			</div>
-
-		</div>
-	</div>
+</div>
+		
+		
 
 
 </section>

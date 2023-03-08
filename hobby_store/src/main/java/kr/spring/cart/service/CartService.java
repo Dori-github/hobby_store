@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
+import kr.spring.course.vo.CourseVO;
 
 public interface CartService {
 	//클래스 장바구니 목록
@@ -15,7 +16,7 @@ public interface CartService {
 	//총 레코드 수
 	public int getCartCount();
 	//클래스 장바구니 등록
-	public void insertCourseCart(CourseCartVO CourseCart);
+	public void insertCourseCart(CourseVO Course);
 	//회원번호(mem_num)별 총 구입액
 	public Integer courseTotal(int num);
 	//클래스 장바구니 삭제

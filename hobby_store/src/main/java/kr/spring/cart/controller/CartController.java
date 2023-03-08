@@ -2,12 +2,15 @@ package kr.spring.cart.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +20,10 @@ import kr.spring.cart.controller.CartController;
 import kr.spring.cart.service.CartService;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
+import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderVO;
+import kr.spring.points.vo.PointsVO;
 
 @Controller
 public class CartController {//메서드 생성, 데이터 처리
@@ -39,7 +45,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			MemberVO user = 
 					 (MemberVO)session.getAttribute("user");
 				
-			//목록 호출
+			//목록 호출(장바구니 비었을 때 처리 추가)
 			List<CourseCartVO> courseList = null;
 			if(courseCount > 0) {
 				courseList = cartService.getCourseCart(user.getMem_num());
@@ -53,6 +59,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			//회원번호(mem_num)별 총 구입액	
 			Integer courseTotal = cartService.courseTotal(user.getMem_num());
 			Integer itemTotal = cartService.itemTotal(user.getMem_num());
+//			Integer allTotal = courseTotal + itemTotal;
 			
 			//
 			List<ItemCartVO> itemQuan = null;
@@ -70,6 +77,7 @@ public class CartController {//메서드 생성, 데이터 처리
 			mav.addObject("itemList", itemList);
 			mav.addObject("itemTotal", itemTotal);
 			
+//			mav.addObject("allTotal", allTotal);
 			mav.addObject("itemQuan", itemQuan);
 			
 			return mav;
@@ -94,6 +102,12 @@ public class CartController {//메서드 생성, 데이터 처리
 		//데이터 저장
 		mav.addObject("getItemQuan", getItemQuan);
 		
+	}
+	
+	//장바구니에 클래스 추가
+	public void insertCourseCart(CourseVO courseVO) {
+		cartService.insertCourseCart(courseVO);
+		logger.debug("장바구니에 클래스 추가" + courseVO);
 	}
 	
 

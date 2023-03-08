@@ -4,7 +4,7 @@
 	<select id="courseTotal" parameterType="integer" resultType="integer">
 	SELECT 
 	<![CDATA[
-	SUM(cc.quantity*c.course_price)
+	SUM(c.course_price)
 	]]>
     FROM course_cart cc JOIN course c
     ON cc.course_num=c.course_num
@@ -13,7 +13,7 @@
 	
 	<select id="getItemCart" parameterType="integer" resultType="itemCartVO">
 	
-	SELECT t.cate_parent, t.cate_name, i.items_photo_name1, i.items_name, 
+	SELECT t.cate_parent, t.cate_name, i.items_num, i.items_photo_name1, i.items_name, 
 	i.items_price, i.items_quantity
 	FROM item_cart ic 
 	JOIN items i ON ic.items_num=i.items_num 

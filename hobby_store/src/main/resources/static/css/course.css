@@ -28,21 +28,17 @@
 }
 #sidebar .cate{
 	padding:10px;
-	font-size: 14pt;
+	font-size: 16pt;
 	font-weight: bold;
 	transition:.2s;
 }
 #sidebar .cate:hover, #sidebar .active-color0{
-	background-color:#F2F2F2;
-	border-radius: 10px;
-	font-size:16pt;
-}
-#sidebar .active-color0{
 	color:#FF4E02;
+	background-color:#F2F2F2;
+	border-radius: 5px;
+	font-size:18pt;
 }
-
 #sidebar .d_cate{
-	font-size:10pt;
 	line-height:3em;
 	padding:10px 0 20px 10px;
 	margin:0;
@@ -50,13 +46,10 @@
 }
 #sidebar .d_cate li:hover, #sidebar .active-color{
 	font-weight:bold;
-	font-size:11pt;
+	font-size:14pt;
 }
 #sidebar .active-color{
 	color:#FF4E02;
-}
-#sidebar .active-black{
-	color:#404040;
 }
 
 
@@ -79,38 +72,34 @@
  	height:40px;
  	margin:0 auto;
  	margin-bottom:20px;
- 	border:1px solid lightgray;
- 	border-radius: 10px;
+ 	border:2px solid #FF4E02;
+ 	border-radius: 5px;
+ 	box-shadow:3px 3px 3px 0px lightgray;
  	text-align: center;
 }
 #onoff label{
 	width:50%;
-	height:100%;
  	line-height:40px;
 	text-align: center;
-	color:gray;
+	color:lightgray;
  	cursor:pointer;
 }
+#onoff input[name=onoff]{
+ 	display:none;
+}
 #onoff .off{
-	border-radius:10px 0 0 10px; 
-	box-shadow: inset 5px 5px 9px rgba(255,255,255,0.45), inset -5px -5px 9px rgba(94,104,121,0.3);
+	border-radius:5px 0 0 5px; 
 }
 #onoff .on{
-	border-radius:0 10px 10px 0; 
-	box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);
+	border-radius:0 5px 5px 0;
 }
 #onoff .click1{
- 	background-color:blue;
- 	box-shadow:none;
+ 	background-color:#FF4E02;
  	color:#FFF;
- 	
 }
 #onoff .click2{
- 	background-color:blue;
- 	box-shadow:none;
+ 	background-color:#FF4E02;
  	color:#FFF;
- 	
- 	box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
 } 
 #course_search{
 	width:50%;
@@ -121,25 +110,39 @@
 #course_search #search_bar{
 	background-color: #FFF;
 	border:1px solid lightgray;
-	border-radius:10px;
+	border-radius:5px;
+	outline:none;
 }
 #course_search #search_bar:focus{
 	outline:5px solid #E0E0E0;
 	transition:.2s;
+	background-color: #FFF;
 }
 #course_search #search_icon{
-	background-color: #FFF;
+	background: none;
 	border:none;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+    display:none;
 }
 #content .form-select{
 	width:100px;
 	height:40px;
-	border-radius: 10px;
+	border-radius: 5px;
+	transition: none;
+}
+#content .form-select:focus{
+	outline:5px solid #E0E0E0;
+	border:none;
 }
 #course_search .form-select{
 	margin-right:10px;
 }
 #select .select{
+	width:130px;
 	margin-left:10px;
 }
 #select{
@@ -156,24 +159,48 @@
 	border-color: gray;
 }
 
+
+
+/*카드 목록*/
+#content .card{
+	cursor:pointer;
+}
 #content .card-body{
 	color:#404040;
 }
 #content span{
 	font-size:10pt;
 }
+/*hover 이미지 확대*/
+.card-img-top{
+	height:200px;
+	overflow: hidden;
+}
+.card-img-top:hover img{
+	transform: scale(1.15);
+}
+.card-img-top img{
+	transition: all 0.2s linear;
+}
+
 #content .card-hit{
 	float:right;
 	color:gray;
 }
 #content .red-heart{
-	position: relative;
+	display:block;
+	text-align:right;
+	position:absolute;
+	top:10px;
+	right:10px;
+	z-index:990;
+}
+#content .red-heart .fa-heart{
 	color:red;
 	font-size:15pt;
 }
 #content .color-gray{
 	color:gray;
-	margin-top: 10px;
 	line-height: 20px;
 }
 #content .card-title{
@@ -186,8 +213,9 @@
 	margin-top:10px;
 }
 
-
-
+#content .list-page{
+	margin-top:50px;
+}
 
 
 
@@ -199,15 +227,15 @@
 /*강의-등록폼,수정폼
 =============================*/
 #course_form .title{
-	width:70%;
+	width:80%;
 	margin:0 auto;
 	color:#404040;
-	font-size:23px;
-	font-weight:bold;
+	font-size:35px;
+	text-align: center;
 }
 #course_form .reg-form{
 	position:relative;
-	width:70%;
+	width:80%;
 	margin:0 auto;
 	margin-top:20px;
 	font-size:10pt;
@@ -243,7 +271,7 @@
 }
 #course_form input[type=text]:hover,#course_form input[type=text]:focus,
 #course_form input[type=number]:hover,#course_form input[type=number]:focus,
-#course_form .btn-select:hover{
+.btn-select:hover,#course_vprice:hover{
 	outline:3px solid gray;
 }
 
@@ -275,7 +303,7 @@
 
 
 /*카테고리*/
-#course_form .btn-select, #course_form .btn-select2{
+.btn-select, #course_form .btn-select2{
 	display:inline-block;
 	width: 200px;
 	height:30px;
@@ -288,12 +316,12 @@
 	cursor: pointer;
 	text-align: left;
 }
-#course_form .list-box,#course_form .list-box2{
+.list-box,#course_form .list-box2{
 	display:none;
 	position:relative;
 	border:none;
 }
-#course_form .list-cate,#course_form .list-cate2{
+.list-cate,#course_form .list-cate2{
 	position: absolute;
 	top:10px;left:0;
 	width:200px;
@@ -304,7 +332,7 @@
 	border-radius: 5px;
 	z-index:997;
 }
-#course_form .list-cate li,#course_form .list-cate2 li{
+.list-cate li,#course_form .list-cate2 li{
     width: 100%;
     height:40px;
 	line-height:30px;
@@ -314,15 +342,15 @@
     cursor: pointer;
     text-align: left;
 }
-#course_form .list-cate li:first-child,#course_form .list-cate2 li:first-child{
+.list-cate li:first-child,#course_form .list-cate2 li:first-child{
 	border-radius:5px 5px 0 0;
 }
-#course_form .list-cate li:last-child,#course_form .list-cate2 li:last-child{
+.list-cate li:last-child,#course_form .list-cate2 li:last-child{
 	border-radius:0 0 5px 5px;
 }
 
 
-#course_form .list-cate li:hover,#course_form .list-cate2 li:hover{
+.list-cate li:hover,#course_form .list-cate2 li:hover{
     background-color: #F2F2F2;
     font-weight:bold;
     color:#FF4E02;
@@ -341,7 +369,6 @@
 	padding:5px 0 15px 0;
 }
 #course_form #datetime td{
-	width:100%;
 	padding:5px 20px;
 }
 #course_form #datetime label{
@@ -367,20 +394,19 @@
 	background-color:#FF4E02;
 	color:#FFF;
 }
-#course_form #datetime input[type=text]{
+#course_form #datetime .time-choice{
 	display: none;
 	width:120px;
-	margin:0 15px 10px 0;
+	margin:0 10px 10px 0;
 	padding-left:5px;
 	text-align:center;
 	cursor: pointer;
 }
-#course_form #datetime .time-choice.time1, #course_form #datetime .time-choice .time2, #datetime.time-choice.time3,
-#datetime.time-choice.time4,#datetime.time-choice.time5,#datetime.time-choice.time6,#datetime.time-choice.time7{
-	margin-right:30px;
+#course_form #datetime .time1, #course_form #datetime .time2,#course_form #datetime .time3,
+#course_form #datetime .time4,#course_form #datetime .time5,#course_form #datetime .time6,#course_form #datetime .time7{
+	margin-right:21px;
 }
 #course_form #datetime span{
-	display:inline-block;
 	width:100px;
 	padding:5px;
 	margin:0 0 10px 0;
@@ -402,7 +428,7 @@
 	display:none;
 	color:#404040;
 	top:-14px;
-	left:-25px;
+	left:-20px;
 	background-color:#FFF;
 	cursor: pointer;
 }
@@ -428,7 +454,7 @@ li.ui-timepicker-selected, .ui-timepicker-list li:hover{
 #course_form ul:not(.list-cate,.list-cate2){
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 	margin:0;
 	padding:0;
 }
@@ -490,7 +516,9 @@ input[type='number']::-webkit-inner-spin-button {
 	height:28.400px;
 	text-align: right;
 }
-
+#course_form #course_vprice:focus{
+	outline:3px solid gray;
+}
 /*우편번호*/
 #course_form #zipcode input:first-child{
 	float: left;
@@ -509,18 +537,19 @@ input[type='number']::-webkit-inner-spin-button {
 	color:#404040;
 }
 #course_form #zipcode input:last-child:hover,
-#course_form .image span:last-child:hover{
+.image span:last-child:hover{
 	background-color: #404040;
 	color:#FFF;
 }
 
 /*이미지*/
-#course_form .image img{
+.image img{
 	width:150px; 
 	height:150px;
 	display:none;
+	border:1px solid lightgray;
 }
-#course_form .image .label1{
+.image .label1{
 	position:relative;
 	display:inline-block;
 	top:0;
@@ -531,24 +560,24 @@ input[type='number']::-webkit-inner-spin-button {
 	border:1px solid lightgray;
 	cursor: pointer;
 }
-#course_form .image .fa-circle-plus{
+.image .fa-circle-plus{
 	position: absolute;
 	top:60px;
 	left:53px;
 	font-size: 30pt;
 	color:lightgray;
 }
-#course_form .image .label1:hover i{
+.image .label1:hover i{
 	left:51px;
 	font-size: 35pt;
 	color:#404040;
 }
-#course_form .image span{
+.image span{
 	position: absolute;
 	top:95px;
 	left:12px;
 }
-#course_form .image .label2{/*파일 선택 버튼*/
+.image .label2{/*파일 선택 버튼*/
 	position:relative;
 	top:2px;
 	left:0px;
@@ -562,11 +591,11 @@ input[type='number']::-webkit-inner-spin-button {
 	line-height:22pt;
 	cursor: pointer;
 }
-#course_form .image .label2:hover{
+.image .label2:hover{
 	background-color:#404040;
 	color:#FFF;
 }
-#course_form .image .fa-circle-xmark{
+.image .fa-circle-xmark{
 	position:relative;
 	top:-173px;
 	left:124px;
@@ -575,13 +604,13 @@ input[type='number']::-webkit-inner-spin-button {
 	cursor: pointer;
 	display:none;
 }
-#course_form .image .fa-circle-xmark:hover{
+.image .fa-circle-xmark:hover{
 	color:#FF4E02;
 }
-#course_form .image ul{
+.image ul{
 	justify-content:flex-start;
 }
-#course_form .image ul li{
+.image ul li{
 	width:150px;
 	height:182px;
 	margin-right: 20px;
@@ -612,6 +641,387 @@ input[type='number']::-webkit-inner-spin-button {
 .margin-top{
 	margin-top: 30px;
 }
+/*왼쪽 이미지*/
+.carousel-inner{
+	border-radius:10px;
+	width:700px;
+}
+#carouselExampleIndicators img{
+	width:100%;
+	height:480px;
+	border:1px solid lightgray;
+}
+.left-img ul{
+	display:flex;
+	align-items: center;
+	justify-content: space-between;
+	padding:0;
+	margin-top:20px;
+}
+.left-img ul img{
+	width:210px;
+	height:150px;
+	border-radius:10px;
+	transition:all .2s linear;
+	border:1px solid lightgray;
+	cursor: pointer;
+}
+.left-img ul img:hover{
+	transform:scale(1.1);
+}
+
+/*오른쪽 클래스 설명*/
+.course-info{
+	display:flex;
+	justify-content: space-between;
+}
+.right-class{
+	position:relative;
+	width:50%;
+	min-width:500px;
+	margin:0 0 16px 70px;
+	padding:70px;
+	text-align:left;
+	font-size:14pt;
+	border-radius:10px;
+	box-shadow:0 0 5px 3px #F0F0F0;
+}
+.right-class .gray{
+	color:gray;
+}
+.right-class .heart{
+	float:right;
+	line-height: 20px;
+}
+.right-class .fa-heart{
+	font-size:18pt;
+}
+.right-class .heart:hover{
+	cursor: pointer;
+}
+.right-class .reservation{
+	position: absolute;
+	bottom:70px;
+	width:100%;
+	padding-right:140px;
+}
+.right-class .price{
+	font-size: 20pt;
+	font-weight: bold;
+	line-height:18px;
+	float:right;
+}
+.right-class .buy{
+	display:block;
+	width:48%;
+	height:50px;
+	border:none;
+	border-radius:5px;
+	background-color: #FF4E02;
+	color:#FFF;
+	text-align:center;
+	font-weight: bold;
+	line-height: 50px;
+	cursor: pointer;
+}
+.right-class .buy:hover{
+	background-color: #E84601;
+}
+.right-class .fa-cart-plus{
+	font-size:15pt;
+	line-height: 50px;
+	margin-right:10px;
+}
+
+
+.course-d-info{
+	margin-top:150px;
+}
+.course-d-info .title ,.course-d-info .reply-avg{
+	display:flex;
+	justify-content:flex-start;
+	margin:0;
+	padding:0;
+}
+.course-d-info .title li,.course-d-info .reply-avg li{
+	padding:20px 50px;
+	font-size:14pt;
+	font-weight:bold;
+	cursor:pointer;
+}
+.course-d-info .title li:hover{
+	background-color:#F2F2F2;
+}
+.course-d-info .title .active{
+	border-bottom:5px solid #FF4E02;
+}
+.badge{
+	background-color: gray;
+}
+.course-d-info .c-content,.course-d-info .reply,.course-d-info .qna{
+	margin-top:150px;
+}
+
+/*클래스 후기*/
+.reply .reply-avg{
+	justify-content: center;
+	margin:40px 0;
+}
+.reply .reply-avg li:first-child{
+	margin-right:30px;
+	font-size: 30pt;
+	padding-left:0;
+}
+.reply .reply-avg li:last-child{
+	background-color: #F2F2F2;
+	border-radius: 10px;
+	text-align: center;
+}
+/*후기 정렬*/
+.course-d-info .btn-select{
+	float: right;
+	margin-bottom:10px;
+	width:100px;
+}
+.course-d-info .list-box{
+	position:absolute;
+	top:30px;
+	right:100px;
+}
+.course-d-info .list-cate{
+	width:100px;
+	font-size: 10pt;
+}
+.course-d-info .icon{
+	line-height:20px;
+}
+.course-d-info h5{
+	margin-left:20px;
+}
+/*후기 등록 폼*/
+#reply_form{
+	width:70%;
+	height:540px;
+	margin:0 auto;
+	padding:70px;
+}
+#reply_form .star-choice{
+	margin-bottom:20px;
+	font-size:15pt;
+	padding-left:10px;
+}
+#reply_form .star-choice i{
+	color:lightgray;
+	cursor:pointer;
+}
+.reply-content{
+	width:100%;
+	height:200px;
+	padding:10px 20px;
+	border:2px solid lightgray;
+	border-radius: 10px;
+}
+.reply-content:hover,
+.reply-content:focus{
+	outline:3px solid gray;
+	border:none;
+}
+/*후기 사진등록 및 버튼*/
+.reply-photo{
+	margin-top:10px;
+}
+.reply-photo .image{
+	padding:0;
+}
+.reply-photo .image li{
+	float:left;
+	width:120px;
+	margin-right:20px;
+}
+.reply-photo .label1,.reply-photo img{
+	width:120px;
+	height:120px;
+	border-radius: 10px;
+}
+.reply-photo .fa-circle-plus{
+	left:45px;
+	top:45px;
+	font-size: 25pt;
+}
+.reply-photo .image .label1:hover i{
+	left:42px;
+	top:42px;
+	font-size: 30pt;
+}
+.reply-photo .fa-circle-xmark{
+	top:-127px;
+	left:107px;;
+	font-size:15pt;
+	background-color: #FFF;
+	border-radius: 50%;
+}
+/*글자수 및 전송버튼*/
+.reply-photo .submit-btn{
+	float:right;
+	text-align: right;
+	margin-right:10px;
+}
+.letter-count{
+	color:gray;
+	font-size:12pt;
+	float:right;
+	margin-right:10px;
+	position: relative;
+	top:10px;
+}
+.fa-paper-plane{
+	font-size: 30pt;
+	color:#FF4E02;
+	transition:.3s;
+}
+.fa-paper-plane:hover{
+	transform:rotate(20deg) scale(1.1);
+	cursor: pointer;
+}
+
+/*후기 정렬*/
+.reply-search{
+	position:relative;
+	width:70%;
+	margin: 0 auto;
+}
+.reply-search .btn-select{
+	position: absolute;
+	bottom:0;
+	right:20px;
+}
+
+
+/*후기 목록*/
+#output .item{
+	width:70%;
+	margin:0 auto;
+	padding:10px 20px;
+	position: relative;
+}
+#output .wid{
+	width:70%;
+	margin:0 auto;
+}
+#output .r-list-star{
+	color:orange;
+	margin-left:20px;
+}
+#output .r-list-fav{
+	float: right;
+	width:90px;
+	height:35px;
+	margin-right:20px;
+	border:1px solid lightgray;
+	border-radius: 20px;
+	cursor: pointer;
+}
+#output .fa-thumbs-up{
+	padding-left:20px;
+	line-height:35px;
+}
+#output .fa-thumbs-up:hover{
+	transform:scale(1.1);
+}
+#output .re-help{
+	display: inline-block;
+	text-align: right;
+}
+#output .detail-info{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding:0;
+}
+#output .my-photo{
+	border-radius: 50%;
+	margin-right:20px;
+}
+#output .modify-date{
+	color:#B2B2B2;
+}
+#output .reply-btn{
+	position: absolute;
+	bottom:0;
+	right:20px;
+}
+.modify-btn,.delete-btn,#mreply_form.submit-btn,.reply-reset{
+	background-color: #FFF;
+	outline:1px solid gray;
+	border:none;
+	border-radius: 20px;
+	width:70px;
+	height:35px;
+	font-size: 10pt;
+}
+.modify-btn:hover,.delete-btn:hover,#mreply_form.submit-btn:hover,.reply-reset:hover{
+	background-color: #F2F2F2;
+}
+.modify-btn{
+	margin-right:5px;
+}
+#output p{
+	width:70%;
+	margin:0;
+}
+
+
+/*후기 페이징*/
+.paging-btn{
+	padding:0;
+	display: flex;
+	justify-content: center;
+}
+.paging-btn li{
+	padding:10px 20px;
+	margin-top:30px;
+	cursor: pointer;
+}
+.paging-btn li:hover{
+	background-color:#F2F2F2;
+	border-radius:5px;
+}
+.paging-btn i{
+	color:gray;
+}
+
+/*댓글 수정폼*/
+#mreply_form{
+	height:380px;
+	padding:0 50px;
+}
+.mletter-count{
+	top:-10px;
+}
+#mreply_form .del{
+	top:-127px;
+	left:8px;
+}
+#mreply_form .submit-btn,#mreply_form .reply-reset{
+	float:right;
+}
+#mreply_form .submit-btn{
+	margin-right:10px;
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

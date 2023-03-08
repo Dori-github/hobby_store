@@ -10,10 +10,15 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/course/courseList.jsp"/>        
     </definition>
-     <definition name="courseWrite" extends="main">
+    <definition name="courseWrite" extends="main">
     	<put-attribute name="title" value="클래스"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/course/courseWrite.jsp"/>        
+    </definition>
+     <definition name="courseView" extends="main">
+    	<put-attribute name="title" value="클래스"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/course/courseView.jsp"/>        
     </definition>
 </tiles-definitions>
 

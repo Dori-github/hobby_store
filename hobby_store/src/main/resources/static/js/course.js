@@ -4,34 +4,97 @@ $(function(){
 	let cate = $('#sidebar .cate');
 	let d_cate = $('#sidebar .d_cate a');
 	
+	//카테고리 대분류 클릭시 세부카테고리 드롭다운
 	cate.on('click',function(){ 
 		let item = $(this);//대분류
 		
-		cate.parent().find('.d_cate').stop().slideUp();
-		cate.not(item).removeClass('active');
-		cate.removeClass('active-color0');
-		cate.removeClass('active-black');
-		
-		if(item.hasClass('active')){
-			item.parent().find('.d_cate').stop().slideUp();
-			item.removeClass('active');
-			d_cate.removeClass('active-color');
-		}else{
-			item.parent().find('.d_cate').stop().slideDown();
-			item.addClass('active');
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
+	});
+	cate.each(function(){
+		if($(this).hasClass('active')){
+			$(this).parent().find('.d_cate').stop().slideDown();
 		}
-			item.addClass('active-color0');
 	});
 	
+	//세부카테고리 클릭시 드롭다운 고정
 	d_cate.on('click',function(){
 		let item = $(this);//대분류
-		
-		if(d_cate.hasClass('active-color')){
-			d_cate.removeClass('active-color');
-		}
-		cate.addClass('active-black');
-		item.addClass('active-color');
+		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
 	});
+	d_cate.each(function(){
+		if($(this).hasClass('active-color')){
+			$(this).parents('.d_cate').stop().slideDown();
+		}
+	});
+		
+		
+	//==============클래스 목록==================//
+	//원데이,정기 선택
+	$('#select #oneweek').on('change',function(){
+		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$(this).val();
+	});
+	
+	//지역 선택
+	$('#select #location').on('change',function(){
+		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
+									'&cate='+$('#sidebar').data('param')+'&location='+$(this).val();
+
+	});
+	
+	//최신순 선택
+	$('#select #order').on('change',function(){
+		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
+									'&cate='+$('#sidebar').data('param')+'&location'+$('#location').val()+'&order='+$(this).val();
+
+	});
+	
+	//좋아요 클릭 
+	$(document).on('click','.red-heart',function(){
+		let heart = $(this);
+		$.ajax({
+			url:'writeFav.do',
+			type:'post',
+			data:{course_num:$(this).attr('data-num')},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					Swal.fire({
+				        icon: 'warning',
+				        title:'로그인 후 좋아요를 눌러주세요',
+				        showCancelButton: false,
+				        confirmButtonText: "확인",
+				        confirmButtonColor: "#FF4E02"
+				        });
+				}else if(param.result == 'success'){
+					if(param.status == 'yesFav'){
+						heart.find('.fa-heart').css('font-weight', 'bold');
+						heart.parent().find('.countFav').text(param.count);
+					}else{
+						heart.find('.fa-heart').css('font-weight', 'normal');
+						heart.parent().find('.countFav').text(param.count);
+					}
+				}else{
+					Swal.fire({
+				        icon: 'error',
+				        title:'등록시 오류 발생',
+				        showCancelButton: false,
+				        confirmButtonText: "확인",
+				        confirmButtonColor: "#FF4E02"
+				        });
+				}
+			},
+			error:function(){
+				Swal.fire({
+			        icon: 'error',
+			        title:'네트워크 오류',
+			        showCancelButton: false,
+			        confirmButtonText: "확인",
+			        confirmButtonColor: "#FF4E02"
+			        });
+			}
+		});
+	});
+
 	
 	
 	
@@ -76,26 +139,24 @@ $(function(){
 	
 	
 	
-	
-	
 	//===============카테고리 분류===================//
-	let formCate = $('#course_form .btn-select');
-	let whole = $('#course_form .btn-select span');
-	let formList = $('#course_form .list-box');
-	let list = $('#course_form .list-cate li');
+	//카테고리 분류
+	let formCate = $('.btn-select');
+	let whole = $('.btn-select span');
+	let formList = $('.list-box');
+	let list = $('.list-cate li');
 	
 	formCate.on('click',function(){
-		
 		if($(this).hasClass('active')){
 			formList.hide();
 			$(this).removeClass('active');
-			$('#course_form .btn-select .fa-chevron-up').hide();
-			$('#course_form .btn-select .fa-chevron-down').show();//v
+			$('.btn-select .fa-chevron-up').hide();
+			$('.btn-select .fa-chevron-down').show();//v
 		}else{
 			formList.show();
 			$(this).addClass('active');
-			$('#course_form .btn-select .fa-chevron-down').hide();
-			$('#course_form .btn-select .fa-chevron-up').show();//^
+			$('.btn-select .fa-chevron-down').hide();
+			$('.btn-select .fa-chevron-up').show();//^
 		}
 	});
 	
@@ -103,8 +164,8 @@ $(function(){
 		if(!$(e.target).hasClass('btn-select') && !$(e.target).hasClass('whole') && !$(e.target).hasClass('icon') ){
 			formList.hide();
 			formCate.removeClass('active');
-			$('#course_form .btn-select .fa-chevron-up').hide();
-			$('#course_form .btn-select .fa-chevron-down').show();//v
+			$('.btn-select .fa-chevron-up').hide();
+			$('.btn-select .fa-chevron-down').show();//v
 		}
 		
 	});
@@ -113,12 +174,11 @@ $(function(){
 		let value = $(this).html();
 		whole.html(value);
 		
-		let num = $(this).val();
+		let num = $(this).attr('data-value');
 		$('#course_form #cate_parent').val(num);
 		
 		//상세카테고리 노출
 		$('#d_cate').show();
-		$('#course_form .btn-select2 .whole2').text('전체');
 		
 		//카테고리 상세 hover 스타일 활성화
 		$('#course_form .btn-select2').on('mouseover',function(){
@@ -139,7 +199,6 @@ $(function(){
 	let formCate2 = $('#course_form .btn-select2');
 	let whole2 = $('#course_form .btn-select2 span');
 	let formList2 = $('#course_form .list-box2');
-	let list2 = $('#course_form .list-cate2 li');
 	
 	//전체버튼 클릭
 	formCate2.on('click',function(){
@@ -174,10 +233,10 @@ $(function(){
 		let value = $(this).html();
 		whole2.html(value);
 		
-		let name = $(this).text();
-		$('#course_form #cate_name').val(name);
+		$('#course_form #cate_name').val(value);
 		
 	});
+		
 		
 		
 	
@@ -248,14 +307,7 @@ $(function(){
 			});
 			
 		});
-		
-		
-		
-	//===============기간/횟수===================//	
-	/*if($('.monthCount input[type=number]').val()==0){
-		$('.monthCount input[type=number]').val('');
-	}*/
-	
+
 	
 	//===============가격===================//
 	//콤마 표시
@@ -291,12 +343,12 @@ $(function(){
 	//이미지 미리 보기
 	let course_photo;//선택한 이미지 저장
 	//대표이미지
-	$('#course_form .image #upload1').change(function(){
+	$('.image #upload1').change(function(){
 		course_photo = this.files[0];
 		if(!course_photo){//취소한 경우
-			$('#course_form .course-photo1').hide();	
-			$('#course_form .l1').show();
-			$('#course_form .d1').hide();
+			$('.course-photo1').hide();	
+			$('.l1').show();
+			$('.d1').hide();
 		}
 		if(course_photo.size > 1024*1024){
 			alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
@@ -308,20 +360,20 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('#course_form .course-photo1').show().attr('src',reader.result);	
-			$('#course_form .l1').hide();
-			$('#course_form .d1').show();
+			$('.course-photo1').show().attr('src',reader.result);	
+			$('.l1').hide();
+			$('.d1').show();
 		};
 	});//end of change
 	
 	//추가이미지1
-	$('#course_form .image #upload2').change(function(){
+	$('.image #upload2').change(function(){
 		course_photo = this.files[0];
 		
 		if(!course_photo){//취소한 경우
-			$('#course_form .course-photo2').hide();	
-			$('#course_form .l2').show();
-			$('#course_form .d2').hide();
+			$('.course-photo2').hide();	
+			$('.l2').show();
+			$('.d2').hide();
 		}
 		
 		if(course_photo.size > 1024*1024){
@@ -334,20 +386,20 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('#course_form .course-photo2').show().attr('src',reader.result);	
-			$('#course_form .l2').hide();
-			$('#course_form .d2').show();
+			$('.course-photo2').show().attr('src',reader.result);	
+			$('.l2').hide();
+			$('.d2').show();
 		};
 	});//end of change
 	
 	//추가이미지2
-	$('#course_form .image #upload3').change(function(){
+	$('.image #upload3').change(function(){
 		course_photo = this.files[0];
 		
 		if(!course_photo){//취소한 경우
-			$('#course_form .course-photo3').hide();	
-			$('#course_form .l3').show();
-			$('#course_form .d3').hide();
+			$('.course-photo3').hide();	
+			$('.l3').show();
+			$('.d3').hide();
 		}
 		
 		if(course_photo.size > 1024*1024){
@@ -360,19 +412,31 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('#course_form .course-photo3').show().attr('src',reader.result);	
-			$('#course_form .l3').hide();
-			$('#course_form .d3').show();
+			$('.course-photo3').show().attr('src',reader.result);	
+			$('.l3').hide();
+			$('.d3').show();
 		};
 	});//end of change
 	
 	
 	//취소 버튼 처리
-	$('#course_form .image .d1').click(function(){
-		$('#course_form .course-photo1').hide();
-		$('#course_form .image #upload1').val('');	
-		$('#course_form .l1').show();
-		$('#course_form .d1').hide();
+	$(document).on('click','.image .d1',function(){
+		$('.course-photo1').hide();
+		$('.image #upload1').val('');	
+		$('.l1').show();
+		$('.d1').hide();
+	});
+	$(document).on('click','.image .d2',function(){
+		$('.course-photo2').hide();
+		$('.image #upload2').val('');	
+		$('.l2').show();
+		$('.d2').hide();
+	});
+	$(document).on('click','.image .d3',function(){
+		$('.course-photo3').hide();
+		$('.image #upload3').val('');	
+		$('.l3').show();
+		$('.d3').hide();
 	});
 	
 	
@@ -381,9 +445,10 @@ $(function(){
 	});
 	
 	
-	//유효성 체크
+	//등록폼 submit
 	$('#course_form').submit(function(){
-		if($('#course_onoff1').is(':checked')){
+		//개월,횟수 유효성 체크
+		if($('#course_onoff2').is(':checked')){
 			if($('#course_month').val().trim()==''){
 				let month = '<div class="error-color">개월수를 입력하세요</div>';
 				$('input[name=course_month]').parent().after(month);
@@ -396,30 +461,17 @@ $(function(){
 				$('#course_count').val().focus();
 				return false;
 			}
+			
+		}
+		if($('#course_month').val().trim()==''){
+			$('#course_month').val(0);
+		}
+		if($('#course_count').val().trim()==''){
+			$('#course_count').val(0);
 		}
 	});	
 	
-	
-	
-	
-	//==============클래스 목록==================//
-	if($('#content #off').is(':checked')){
-		//alert('클릭');
-		$(this).prev().addClass('click1');
-		$(this).next().removeClass('click2');
-	}
-	if($('#content #on:checked')){
-		//alert('클릭');
-		$(this).addClass('click2');
-		$(this).prev().removeClass('click1');
-	}
-	
-	
-	
-	//왼쪽 사이드바 클릭시
-	$('#course_main .cate').click(function(){
-		//location.href='courseList.do?onoff='+$(this).text();
-	});
+	//===============클래스 상세페이지================//
 	
 	
 

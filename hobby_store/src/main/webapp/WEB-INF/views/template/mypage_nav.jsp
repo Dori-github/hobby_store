@@ -3,34 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!-- MyPage 메뉴 시작 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="side-bar">
-	<ul>
-		<li>
-			<img src="${pageContext.request.contextPath}/member/photoView.do" width="200" 
-			           height="200" class="my-photo">
-		</li>
-		<li>
-			<div class="align-center">
-				<input type="button" value="수정" id="photo_btn">
-			</div>
-			<div id="photo_choice" style="display:none;">
-				<input type="file" id="upload" 
-				         accept="image/gif,image/png,image/jpeg">
-				<input type="button" value="전송" id="photo_submit">
-				<input type="button" value="취소" id="photo_reset">         
-			</div>
-		</li>
-		<li>
-			<input type="button" class="menu-btn" 
-			  value="비밀번호변경" 
-			  onclick="location.href='${pageContext.request.contextPath}/member/changePassword.do'">
-		</li>
-		<li>
-			<input type="button" class="menu-btn" 
-			  value="회원탈퇴" 
-			  onclick="location.href='${pageContext.request.contextPath}/member/delete.do'">
-		</li>
-	</ul>
+   <label for="expand-menu"><div>메뉴</div></label>
+    <input type="checkbox" id="expand-menu" name="expand-menu">
+    <ul>
+        <li><a href="${pageContext.request.contextPath}/member/myPage.do" class="item"><div>나의 프로필</div></a></li>
+        <li><a href="#" class="item"><div>나의 활동내역</div></a></li>
+        <li><a href="#" class="item"><div>배송목록</div></a></li>
+        <li><a href="#" class="item"><div>나의 구매내역</div></a></li>
+        <li><a href="#" class="item"><div>예약목록</div></a></li>
+        <li><a href="#" class="item"><div>회원탈퇴</div></a></li>
+        <li><a href="${pageContext.request.contextPath}/talk/talkList.do" class="item"><div>채팅</div></a></li>
+    </ul>
 </div>
 <!-- MyPage 메뉴 끝 -->
 

@@ -16,7 +16,7 @@ create table event(
  event_title varchar2(50) not null,
  event_attr number not null,
  event_end date not null,
- event_hit number not null,
+ event_hit number default 0 not null,
  event_content varchar2(300) not null,
  event_photo varchar2(150) not null,
  event_rdate date not null,

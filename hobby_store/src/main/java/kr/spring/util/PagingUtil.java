@@ -1,6 +1,6 @@
 package kr.spring.util;
 
-public class PagingUtil { 
+public class PagingUtil {
 	private int startRow;	 // 한 페이지에서 보여줄 게시글의 시작 번호
 	private int endRow;	 // 한 페이지에서 보여줄 게시글의 끝 번호
 	private StringBuffer page;// 페이지 표시 문자열

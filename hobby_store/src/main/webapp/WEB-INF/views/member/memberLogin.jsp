@@ -64,10 +64,10 @@
                                             </div>
                                             <div class="col-md-4 d-flex justify-content-center" style="border-right: 1px solid #ddd;border-left: 1px solid;padding: 0px;">
                                                 <!-- Simple link -->
-                                                <a  id="find" href="#!">비밀번호 찾기</a>
+                                                <a  id="find" href="${pageContext.request.contextPath}/member/pwSearch.do">비밀번호 찾기</a>
                                             </div>
 
-                                            <div class="col-md-4 d-flex justify-content-center" style="border-right: 1px solid #ddd;border-left: 1px solid;padding: 0px;">
+                                            <div class="col-md-4 d-flex justify-content-center" style="border-left: 1px solid;padding: 0px;">
                                                 <!-- Simple link -->
                                                 <a id="find" class="find" href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
                                             </div>

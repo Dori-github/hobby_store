@@ -1,0 +1,144 @@
+package kr.spring.items.vo;
+
+import java.io.IOException;
+import java.sql.Date;
+
+import org.springframework.web.multipart.MultipartFile;
+
+public class ItemsReplyVO {
+	private int reply_num;
+	private int items_num;
+	private int mem_num;
+	private String reply_content;
+	private Date reply_date;
+	private Date reply_mdate;
+	private byte[] reply_photo1;
+	private byte[] reply_photo2;
+	private byte[] reply_photo3;
+	private String reply_photo_name1;
+	private String reply_photo_name2;
+	private String reply_photo_name3;
+	
+	private int star_num;
+	//별점 구분
+	private int star_auth;
+	public int getReply_num() {
+		return reply_num;
+	}
+	public void setReply_num(int reply_num) {
+		this.reply_num = reply_num;
+	}
+	public int getItems_num() {
+		return items_num;
+	}
+	public void setItems_num(int items_num) {
+		this.items_num = items_num;
+	}
+	public int getMem_num() {
+		return mem_num;
+	}
+	public void setMem_num(int mem_num) {
+		this.mem_num = mem_num;
+	}
+	public String getReply_content() {
+		return reply_content;
+	}
+	public void setReply_content(String reply_content) {
+		this.reply_content = reply_content;
+	}
+	public Date getReply_date() {
+		return reply_date;
+	}
+	public void setReply_date(Date reply_date) {
+		this.reply_date = reply_date;
+	}
+	public Date getReply_mdate() {
+		return reply_mdate;
+	}
+	public void setReply_mdate(Date reply_mdate) {
+		this.reply_mdate = reply_mdate;
+	}
+	public byte[] getReply_photo1() {
+		return reply_photo1;
+	}
+	public void setReply_photo1(byte[] reply_photo1) {
+		this.reply_photo1 = reply_photo1;
+	}
+	public byte[] getReply_photo2() {
+		return reply_photo2;
+	}
+	public void setReply_photo2(byte[] reply_photo2) {
+		this.reply_photo2 = reply_photo2;
+	}
+	public byte[] getReply_photo3() {
+		return reply_photo3;
+	}
+	public void setReply_photo3(byte[] reply_photo3) {
+		this.reply_photo3 = reply_photo3;
+	}
+	public String getReply_photo_name1() {
+		return reply_photo_name1;
+	}
+	public void setReply_photo_name1(String reply_photo_name1) {
+		this.reply_photo_name1 = reply_photo_name1;
+	}
+	public String getReply_photo_name2() {
+		return reply_photo_name2;
+	}
+	public void setReply_photo_name2(String reply_photo_name2) {
+		this.reply_photo_name2 = reply_photo_name2;
+	}
+	public String getReply_photo_name3() {
+		return reply_photo_name3;
+	}
+	public void setReply_photo_name3(String reply_photo_name3) {
+		this.reply_photo_name3 = reply_photo_name3;
+	}
+	public int getStar_num() {
+		return star_num;
+	}
+	public void setStar_num(int star_num) {
+		this.star_num = star_num;
+	}
+	public int getStar_auth() {
+		return star_auth;
+	}
+	public void setStar_auth(int star_auth) {
+		this.star_auth = star_auth;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "ItemsReplyVO [reply_num=" + reply_num + ", items_num=" + items_num + ", mem_num=" + mem_num
+				+ ", reply_content=" + reply_content + ", reply_date=" + reply_date + ", reply_mdate=" + reply_mdate
+				+ ", reply_photo_name1=" + reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2
+				+ ", reply_photo_name3=" + reply_photo_name3 + ", star_num=" + star_num + ", star_auth=" + star_auth
+				+ "]";
+	}
+		// 업로드 파일 처리
+		public void setUpload1(MultipartFile upload1) throws IOException {
+			// MultipartFile -> byte[] 변환
+			setReply_photo1(upload1.getBytes());
+			//파일 이름 	
+			setReply_photo_name1(upload1.getOriginalFilename());
+		}
+
+		public void setUpload2(MultipartFile upload2) throws IOException {
+			// MultipartFile -> byte[] 변환
+			setReply_photo2(upload2.getBytes());
+			setReply_photo_name2(upload2.getOriginalFilename());
+		}
+
+		public void setUpload3(MultipartFile upload3) throws IOException {
+			// MultipartFile -> byte[] 변환
+			setReply_photo3(upload3.getBytes());
+			setReply_photo_name3(upload3.getOriginalFilename());
+		
+		}
+
+	
+	
+	
+	
+}
