@@ -26,8 +26,8 @@
     	  value="/WEB-INF/views/event/eventModifyForm.jsp"/>        
     </definition>
     
-     <!-- 마이페이지 -->
-      <definition name="myPage" 
+    <!-- 마이페이지 -->
+    <definition name="myPage" 
      template="/WEB-INF/views/template/layout_mypage2.jsp">
     	<put-attribute name="title" value="MyPage"/>
     	<put-attribute name="header"
@@ -45,14 +45,39 @@
     	  value="/WEB-INF/views/mypage/memberModify.jsp"/>
     </definition>
     <definition name="favList" extends="myPage">
-    	<put-attribute name="title" value="회원정보 수정"/>
+    	<put-attribute name="title" value="좋아요 목록"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/favList.jsp"/>
     </definition>
     <definition name="boardList" extends="myPage">
-    	<put-attribute name="title" value="회원정보 수정"/>
+    	<put-attribute name="title" value="작성 게시글 목록"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/boardList.jsp"/>
+    </definition>
+    <definition name="orderList" extends="myPage">
+    	<put-attribute name="title" value="나의 구매내역"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/orderList.jsp"/>
+    </definition>
+    
+    <!-- 관리자 마이페이지 -->
+    <definition name="admin" 
+     template="/WEB-INF/views/template/layout_admin.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="header"
+    	  value="/WEB-INF/views/template/header.jsp"/>
+    	  <put-attribute name="nav"
+    	  value="/WEB-INF/views/template/admin_nav.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/main/admin.jsp"/>
+    	<put-attribute name="footer"
+    	  value="/WEB-INF/views/template/footer.jsp"/>          
+    </definition>
+    
+    <definition name="admin_memberList" extends="admin">
+    	<put-attribute name="title" value="회원 목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/admin_memberList.jsp"/>        
     </definition>
 </tiles-definitions>
 

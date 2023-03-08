@@ -63,6 +63,79 @@
       WHERE rnum >= #{start} and rnum <= #{end}
       ]]>
 	</select>
+	
+	<select id="selectOrderList" parameterType="map" resultType="orderVO">
+		SELECT 
+			* 
+		FROM(SELECT
+				a.*,
+				rownum rnum
+			FROM(SELECT 
+					*
+				 FROM orders JOIN order_detail USING(order_num)
+				 WHERE 
+				 <if test="keyfield==1">course_num is not null and</if>
+				 <if test="keyfield==2">items_num is not null and</if>
+				 <if test="keyfield==3">space_num is not null and</if>
+				 mem_num=#{mem_num}
+				 ORDER BY order_date DESC)a)
+		  <![CDATA[
+  		  WHERE rnum >= #{start} and rnum <= #{end}
+  		  ]]>
+	</select>
+	
+	<select id="selectMemberRowCount" resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM member m LEFT OUTER JOIN member_detail d
+  		ON m.mem_num = d.mem_num 
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					m.mem_id LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					d.mem_name LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					m.mem_id LIKE '%' || #{keyword} || '%' OR
+  					d.mem_name LIKE '%' || #{keyword} || '%' 
+  				</if>
+  			</if>
+  		</where>                        
+  	</select>
+  	
+  	<select id="selectMemberList" parameterType="map"
+  	                           resultType="memberVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  		            FROM member m LEFT OUTER JOIN
+  		                 member_detail d 
+  		            ON m.mem_num = d.mem_num  
+  		             <where>
+			  			<if test="keyword != null and keyword != ''">
+			  				<if test="keyfield == 1">
+			  					m.mem_id LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  				<if test="keyfield == 2">
+			  					d.mem_name LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  				<if test="keyfield == 3">
+			  					m.mem_id LIKE '%' || #{keyword} || '%' OR
+			  					d.mem_name LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  			</if>
+			  		</where>
+  		            ORDER BY d.mem_date DESC NULLS LAST)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>                           
+  	</select>
 </mapper>
 
 

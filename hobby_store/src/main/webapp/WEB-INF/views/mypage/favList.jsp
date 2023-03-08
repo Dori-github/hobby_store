@@ -22,7 +22,7 @@
 	<c:if test="${count==0}">
 		<table class="table table-group-divider align-center">
 			<tr>
-				<td>표시할 게시물이 없습니다</td>
+				<td>표시할 상품이 없습니다</td>
 			</tr>
 		</table>
 		</c:if>

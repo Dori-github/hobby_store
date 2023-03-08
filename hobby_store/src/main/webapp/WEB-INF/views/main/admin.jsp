@@ -3,8 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!-- 중앙 컨텐츠 시작 -->
 <div class="page-main">
+	<div id="content">
 	<h2>회원목록</h2>
-	<table class="striped-table">
+	<c:if test="${count==0}">
+		<table class="table table-group-divider align-center">
+			<tr>
+				<td>
+				표시할 회원정보가 없습니다.
+				</td>
+			</tr>
+		</table>
+	</c:if>
+	
+	<c:if test="${count > 0}">
+	<table class="table table-group-divider align-center">
 		<tr>
 			<th>아이디</th>
 			<th>이름</th>
@@ -13,29 +25,25 @@
 			<th>가입일</th>
 			<th>권한</th>
 		</tr>
-		<c:forEach var="member" items="${memberList}">
+		<c:forEach var="member" items="${list}">
 		<tr>
+			<td>${member.mem_id}</td>
+			<td>${member.mem_name}</td>
+			<td>${member.mem_cell}</td>
+			<td>${member.mem_email}</td>
+			<td>${member.mem_date}</td>
 			<td>
-				<c:if test="${member.auth==0}">
-					${member.id}
-				</c:if>
-				<c:if test="${member.auth>0}">
-				<a href="${pageContext.request.contextPath}/member/admin_update.do?mem_num=${member.mem_num}">${member.id}</a>
-				</c:if>
-			</td>
-			<td>${member.name}</td>
-			<td>${member.phone}</td>
-			<td>${member.email}</td>
-			<td>${member.reg_date}</td>
-			<td>
-				<c:if test="${member.auth==0}">탈퇴</c:if>
-				<c:if test="${member.auth==1}">정지</c:if>
-				<c:if test="${member.auth==2}">일반</c:if>
-				<c:if test="${member.auth==9}">관리</c:if>
+				<c:if test="${member.mem_auth==0}">탈퇴</c:if>
+				<c:if test="${member.mem_auth==1}">정지</c:if>
+				<c:if test="${member.mem_auth==2}">일반</c:if>
+				<c:if test="${member.mem_auth==9}">관리</c:if>
 			</td>
 		</tr>
 		</c:forEach>
 	</table>
+	<div class="align-center">${page}</div>
+	</c:if>
+</div>
 </div>
 <!-- 중앙 컨텐츠 끝 -->
 

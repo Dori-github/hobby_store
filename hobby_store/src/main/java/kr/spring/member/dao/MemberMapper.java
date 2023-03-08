@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderVO;
 import kr.spring.space.vo.SpaceVO;
 
 @Mapper
@@ -91,6 +92,7 @@ public interface MemberMapper {
 	public void updateMember(MemberVO member);
 	@Update("UPDATE member_detail SET mem_name=#{mem_name},mem_cell=#{mem_cell},mem_email=#{mem_email},mem_zipcode=#{mem_zipcode},mem_address1=#{mem_address1},mem_address2=#{mem_address2},mem_mdate=SYSDATE WHERE mem_num=#{mem_num}")
 	public void updateMember_detail(MemberVO member);
+	
 	//강사 좋아요 리스트
 	@Select("SELECT COUNT(*) FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
 	public int selectCourseFavCount(int mem_num);
@@ -103,5 +105,15 @@ public interface MemberMapper {
 	@Select("SELECT COUNT(*) FROM space_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
 	public int selectSpaceFavCount(int mem_num);
 	public List<SpaceVO> selectSpaceFav(Map<String,Object> map);
-		
+	
+	//구매내역 리스트
+	@Select("SELECT COUNT(*) FROM orders WHERE mem_num=#{mem_num}")
+	public int selectOrderCount(int mem_num);
+	public List<OrderVO> selectOrderList(Map<String, Object> map);
+	
+	//회원관리 - 관리자
+	public List<MemberVO> selectMemberList(Map<String,Object> map);
+	public int selectMemberRowCount(Map<String,Object> map);
+	@Update("UPDATE member SET auth=#{auth} WHERE mem_num=#{mem_num}")
+	public void updateByAdmin(MemberVO memberVO);
 }

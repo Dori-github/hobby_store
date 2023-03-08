@@ -35,6 +35,7 @@ import kr.spring.member.service.EmailSender;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.Email;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderVO;
 import kr.spring.space.vo.SpaceVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.FileUtil;
@@ -674,6 +675,37 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 
 		mav.setViewName("boardList");
+		
+		return mav;
+	}*/
+	
+	//배송조회
+	/*@RequestMapping("/member/order.do")
+	public ModelAndView orderList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, HttpSession session) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		int count = memberService.selectOrderCount(user.getMem_num());
+		
+		PagingUtil page = new PagingUtil(currentPage,count,5,10,"order.do");
+		
+		List<OrderVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectOrderList(map);
+		}
+		
+		logger.debug("<<주문 목록>> : " + count);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("orderList");
+		mav.addObject("count",count);
+		mav.addObject("list",list);
+		mav.addObject("page",page.getPage());
 		
 		return mav;
 	}*/
