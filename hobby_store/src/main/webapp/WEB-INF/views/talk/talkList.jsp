@@ -20,7 +20,7 @@
 
 <!-- 채팅목록 시작 -->
 <div class="container">
-	<h4 class="modal-title">채팅 목록</h4>
+	<h4 class="modal-title" style="margin-top:20px;">채팅 목록</h4>
 	<form action="talkList.do" id="search_form" method="get">
 
 		<div class="text-center">
@@ -31,7 +31,7 @@
 		</div>
 	</form>
 
-	<div class="text-right" style="margin: 10px;">
+	<div class="text-right" style="margin: 10px; padding-right:110px; padding-bottom:20px;">
 		<button type="button" class="btn"
 			onclick="location.href='talkRoomWrite.do'"
 			style="background-color: #FF4E02; color: white;">채팅방 생성</button>

@@ -17,13 +17,13 @@
 	src="${pageContext.request.contextPath}/js/message.js"></script>
 <!-- 채팅방 생성 시작 -->
 <div class="container">
-	<h4 class="modal-title" style="margin-bottom: 20px;">채팅방 생성</h4>
+	<h4 class="modal-title" style="margin-bottom: 30px;margin-top:20px;">채팅방 생성</h4>
 	<form action="talkRoomWrite.do" method="post" id="talk_form">
 		<!-- 방을 생성하는 사람을 hidden값으로 표시 -->
 			<input type="hidden" name="members" id="user"
 				data-id="${user.mem_nickname}" value="${user.mem_num}">
 
-		<div class="chat-name" >	
+		<div class="chat-name">	
 			<div class="row" style="margin-left: 30px; margin-right: 30px;">
 			<div class="col-2">
 				<label>채팅방 이름</label>
