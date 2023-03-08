@@ -52,7 +52,7 @@
 					<li><a href="${pageContext.request.contextPath}/space/list.do">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>
 						<ul class="dropdown" id="dropdown">
-							<li><a href="#">공지사항</a></li>
+							<li><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a></li>
 							<li><a href="#">자유게시판</a></li>
 							<li><a href="#">Q & A</a></li>
 						</ul>
