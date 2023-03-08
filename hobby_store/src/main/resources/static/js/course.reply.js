@@ -233,6 +233,13 @@ $(function(){
 		//댓글 내용
 		let content = $(this).parents('.item').find('p').html().replace(/<br>/g,'\r\n');
 		
+		let photos_src={
+			photo1:$(this).parents('.item').find('.photo1').attr('src'),
+			photo2:$(this).parents('.item').find('.photo2').attr('src'),
+			photo3:$(this).parents('.item').find('.photo3').attr('src')
+		}
+		
+		
 		//댓글수정 폼 UI
 		let modifyUI = '<form id="mreply_form">';
 		modifyUI += '<input type="hidden" name="reply_num" id="mreply_num" value="'+reply_num+'">';
@@ -242,11 +249,19 @@ $(function(){
 		modifyUI += '<ul class="image">';
 		for(let i=1;i<=3;i++){
 			modifyUI += '<li>';
-			modifyUI += '<img src="replyImageView.do?reply_num='+reply_num+'&reply_type='+i+'" class="course-photo'+i+'">';
-			modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'">';
-			modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
-			modifyUI += '</label>';
-			modifyUI += '<i class="del fa-solid fa-circle-xmark d'+i+'"></i>';
+			if(photos_src["photo" + i]!=null){
+				modifyUI += '<img src="'+photos_src["photo" + i]+'" class="course-photo'+i+'" style="display:inline-block;">';
+				modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'" style="display:none;">';
+				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+				modifyUI += '</label>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d'+i+'" style="display:inline-block;"></i>';
+			}else{
+				modifyUI += '<img class="course-photo'+i+'">';
+				modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'">';
+				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+				modifyUI += '</label>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d'+i+'"></i>';
+			}
 			modifyUI += '<input type="file" name="upload'+i+'" id="upload'+i+'" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			modifyUI += '</li>';
 		}
@@ -272,13 +287,26 @@ $(function(){
 		remain += ' / 300';
 		
 		//후기 이미지 미리보기
+		/*
+		for(let i=1;i<=3;i++){
+			if(photos_src["photo"+i]!=null){
+				$('#mreply_form .course-photo+i').show();
+				$('#mreply_form .l+i').hide();
+				$('#mreply_form .d+i').show();
+			}
+		}*/
+		/*
 		$('#mreply_form img').each(function(){
 			if($(this).attr('src')!=null){
 				$('#mreply_form img').show();
 				$('#mreply_form .label1').hide();
 				$('#mreply_form .fa-circle-xmark').show();
+			}else{
+				$('#mreply_form img').hide();
+				$('#mreply_form .label1').show();
+				$('#mreply_form .fa-circle-xmark').hide();
 			}
-		});
+		});*/
 		
 
 		

@@ -205,7 +205,7 @@
 					<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
 				</li>
 			</ul>
-			<div class="submit-btn">
+			<div class="reply-submit-btn">
 				<label for="submit" style="width:40px;height:40px;"><i class="fa-solid fa-paper-plane"></i></label>
 				<input type="submit" id="submit" style="display:none;">
 			</div>

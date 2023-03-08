@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.talk.service.TalkService;
+import kr.spring.talk.vo.TalkRoomVO;
 
 @Controller
 public class TalkController {
@@ -30,6 +32,9 @@ public class TalkController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private TalkService talkService;
 
 	
 	//======채팅방 생성======//
@@ -47,6 +52,18 @@ public class TalkController {
 		
 		return "talkList";
 	}
+	
+	//폼에서 전송된 데이터 처리
+		@PostMapping("/talk/talkRoomWrite.do")
+		public String submitTalkRoom(TalkRoomVO vo) {
+			
+			logger.debug("<<채팅방 생성>> : " + vo);
+			
+			talkService.insertTalkRoom(vo);
+			
+			return "redirect:/talk/talkList.do";
+		}
+	
 	//=====채팅회원검색========//
 	@RequestMapping("/talk/memberSearchAjax.do")
 	@ResponseBody

@@ -861,7 +861,7 @@ input[type='number']::-webkit-inner-spin-button {
 	border-radius: 50%;
 }
 /*글자수 및 전송버튼*/
-.reply-photo .submit-btn{
+.reply-photo .reply-submit-btn{
 	float:right;
 	text-align: right;
 	margin-right:10px;
@@ -950,7 +950,7 @@ input[type='number']::-webkit-inner-spin-button {
 	bottom:0;
 	right:20px;
 }
-.modify-btn,.delete-btn,#mreply_form.submit-btn,.reply-reset{
+.modify-btn,.delete-btn,.submit-btn,.reply-reset{
 	background-color: #FFF;
 	outline:1px solid gray;
 	border:none;
@@ -959,7 +959,7 @@ input[type='number']::-webkit-inner-spin-button {
 	height:35px;
 	font-size: 10pt;
 }
-.modify-btn:hover,.delete-btn:hover,#mreply_form.submit-btn:hover,.reply-reset:hover{
+.modify-btn:hover,.delete-btn:hover,.submit-btn:hover,.reply-reset:hover{
 	background-color: #F2F2F2;
 }
 .modify-btn{
@@ -969,7 +969,11 @@ input[type='number']::-webkit-inner-spin-button {
 	width:70%;
 	margin:0;
 }
-
+.sub-item img{
+	border:1px solid lightgray;
+	border-radius:10px;
+	margin:20px 10px 0 0;
+}
 
 /*후기 페이징*/
 .paging-btn{
@@ -997,10 +1001,6 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .mletter-count{
 	top:-10px;
-}
-#mreply_form .del{
-	top:-127px;
-	left:8px;
 }
 #mreply_form .submit-btn,#mreply_form .reply-reset{
 	float:right;
