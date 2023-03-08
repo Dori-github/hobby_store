@@ -164,7 +164,7 @@
 	</div>
 	<hr size="2" noshade width="100%" style="color:gray;">
 	
-	<form id="reply_form">
+	<form id="reply_form"<c:if test="${empty user}">style="height:370px;"</c:if>>
 		<c:if test="${!empty user}">
 		<div class="star-choice">별점 
 		<c:forEach begin="1" end="5"><i class="fa-regular fa-star"></i></c:forEach>

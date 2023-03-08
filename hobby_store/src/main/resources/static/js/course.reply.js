@@ -54,12 +54,12 @@ $(function(){
 					output += '<div class="sub-item">';
 					output += '<p>' + item.reply_content.replace(/\r\n/g,'<br>') + '</p>';
 					if(param.user_num == item.mem_num){
-						output += '<div class="reply-btn">'
+						output += '<div class="reply-btn">';
 						output += ' <input type="button" data-num="'+item.reply_num+'" value="수정" class="modify-btn">';
 						output += ' <input type="button" data-num="'+item.reply_num+'" value="삭제" class="delete-btn">';
-						output += '</div>'
-						output += '</div>'
+						output += '</div>';
 					}
+					output += '</div>';
 					output += '</div>';
 					output += '<hr size="1" noshade style="width:70%;margin:16px auto;color:gray;">';
 					
@@ -94,7 +94,7 @@ $(function(){
                
                 var add='';
                 if(startPage>pageBlock){
-                   add += '<li data-page='+(startPage-1)+'>[이전]</li>';
+                   add += '<li data-page='+(startPage-1)+'><i class="fa-solid fa-chevron-left"></i></li>';
                 }
                 
                 for(var i=startPage;i<=endPage;i++){
@@ -105,7 +105,7 @@ $(function(){
 					}
                 }
                 if(endPage < totalPage){
-                   add += '<li data-page='+(startPage+pageBlock)+'>[다음]</li>';;
+                   add += '<li data-page='+(startPage+pageBlock)+'><i class="fa-solid fa-chevron-right"></i></li>';;
                 }
                 //ul 태그에 생성한 li를 추가
                 $('.paging-btn').append(add);
@@ -227,7 +227,6 @@ $(function(){
 		modifyUI += '<input type="hidden" name="reply_num" id="mreply_num" value="'+reply_num+'">';
 		modifyUI += '<span class="letter-count mletter-count">300 / 300</span>';
 		modifyUI += '<textarea rows="3" cols="50" name="reply_content" id="mreply_content" class="reply-content">'+content+'</textarea>';
-		modifyUI += '<div id="mre_second" class="align-right">';
 		modifyUI += '<div class="reply-photo">';
 		modifyUI += '<ul class="image">';
 		for(let i=1;i<=3;i++){
@@ -236,12 +235,13 @@ $(function(){
 			modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'">';
 			modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 			modifyUI += '</label>';
-			modifyUI += '<i class="fa-solid fa-circle-xmark d'+i+'"></i>';
+			modifyUI += '<i class="del fa-solid fa-circle-xmark d'+i+'"></i>';
 			modifyUI += '<input type="file" name="upload'+i+'" id="upload'+i+'" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			modifyUI += '</li>';
 		}
-		modifyUI += '<input type="submit" value="수정">';
+		modifyUI += '</ul>';
 		modifyUI += ' <input type="button" value="취소" class="reply-reset">';
+		modifyUI += '<input type="submit" value="수정" class="submit-btn">';
 		modifyUI += '</div>';
 		modifyUI += '</form>';
 		
@@ -258,7 +258,7 @@ $(function(){
 		//입력한 글자수 셋팅
 		let inputLength = $('#mreply_content').val().length;
 		let remain = 300 - inputLength;
-		remain += '/300';
+		remain += ' / 300';
 		
 		//문서 객체에 반영
 		$('#mreply_form .letter-count').text(remain);		
@@ -276,8 +276,8 @@ $(function(){
 	
 	//댓글 수정 폼 초기화
 	function initModifyForm(){
-		$('.sub-item').show();
 		$('#mreply_form').remove();
+		$('.sub-item').show();
 	}
 	
 	
@@ -285,50 +285,74 @@ $(function(){
 	
 	
 	//댓글 수정 처리
-	$(document).on('submit','#mre_form',function(event){
+	$(document).on('submit','#mreply_form',function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
-		if($('#mre_content').val().trim()==''){
+		if($('#mreply_content').val().trim()==''){
 			alert('내용을 입력하세요!');
-			$('#mre_content').val('').focus();
+			$('#mreply_content').val('').focus();
 			return false;
 		}
 		
 		//폼에 입력한 데이터 반환
-		let form_data = $(this).serialize();
+		/*let form_data = $(this).serialize();*/
 		
 		//서버와 통신
 		$.ajax({
 			url:'updateReply.do',
 			type:'post',
-			data:form_data,
+			data:new FormData($('#mreply_form')[0]),
 			dataType:'json',
+			processData: false,
+		    contentType: false,
 			success:function(param){
 				if(param.result=='logout'){
-					alert('로그인해야 수정할 수 있습니다.');
+					Swal.fire({
+	                    icon: 'warning',
+	                    title:'로그인 후 수정할 수 있습니다',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 				}else if(param.result == 'success'){
 					//수정 데이터 표시
-					$('#mre_form').parent().find('p')
-					   .html($('#mre_content').val()
+					$('#mreply_form').parent().find('p').html($('#mreply_content').val()
 		                   .replace(/</g,'&lt;')
                            .replace(/>/g,'&gt;')
                            .replace(/\r\n/g,'<br>')
                            .replace(/\r/g,'<br>')
                            .replace(/\n/g,'<br>'));
 					//최근 수정일 표시
-					$('#mre_form').parent().find('.modify-date')
-					                       .text('최근 수정일 : 5초미만');
+					$('#mreply_form').parent().find('.modify-date').text('최근 수정일 : 5초미만');
 					//수정 폼 초기화
 					initModifyForm();
 				}else if(param.result == 'wrongAccess'){
-					alert('타인의 글은 수정할 수 없습니다.');
+					Swal.fire({
+	                    icon: 'warning',
+	                    title:'타인의 후기을 수정할 수 없습니다',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 				}else{
-					alert('댓글 수정시 오류 발생');
+					Swal.fire({
+	                    icon: 'error',
+	                    title:'후기수정 시 오류 발생!',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 				}
 			},
 			error:function(){
-				alert('네트워크 오류 발생');
+				Swal.fire({
+                    icon: 'error',
+                    title:'네트워크 오류 발생!',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
 			}
 		});
 		
@@ -347,18 +371,48 @@ $(function(){
 			dataTpye:'json',
 			success:function(param){
 				if(param.result == 'logout'){
-					alert('로그인해야 삭제할 수 있습니다.');
+					Swal.fire({
+	                    icon: 'warning',
+	                    title:'로그인 후 삭제할 수 있습니다',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 				}else if(param.result == 'success'){
-					alert('삭제 완료!');
+					Swal.fire({
+	                    icon: 'success',
+	                    title:'후기 삭제 완료!',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 					selectList(1);
 				}else if(param.result == 'wrongAccess'){
-					alert('타인의 글을 삭제할 수 없습니다.');
+					Swal.fire({
+	                    icon: 'warning',
+	                    title:'타인의 후기을 삭제할 수 없습니다',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 				}else{
-					alert('댓글 삭제시 오류 발생');
+					Swal.fire({
+	                    icon: 'error',
+	                    title:'후기삭제 시 오류 발생!',
+	                    showCancelButton: false,
+	                    confirmButtonText: "확인",
+	                    confirmButtonColor: "#FF4E02"
+	                });
 				}
 			},
 			error:function(){
-				alert('네트워크 오류 발생');
+				Swal.fire({
+                    icon: 'error',
+                    title:'네트워크 오류 발생!',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
 			}
 		});
 	});

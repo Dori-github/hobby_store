@@ -420,19 +420,19 @@ $(function(){
 	
 	
 	//취소 버튼 처리
-	$('.image .d1').click(function(){
+	$(document).on('click','.image .d1',function(){
 		$('.course-photo1').hide();
 		$('.image #upload1').val('');	
 		$('.l1').show();
 		$('.d1').hide();
 	});
-	$('.image .d2').click(function(){
+	$(document).on('click','.image .d2',function(){
 		$('.course-photo2').hide();
 		$('.image #upload2').val('');	
 		$('.l2').show();
 		$('.d2').hide();
 	});
-	$('.image .d3').click(function(){
+	$(document).on('click','.image .d3',function(){
 		$('.course-photo3').hide();
 		$('.image #upload3').val('');	
 		$('.l3').show();

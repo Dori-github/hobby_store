@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.spring.util.DurationFromNow;
+
 public class CourseReplyVO { 
 	private int reply_num;
 	private String reply_content;
@@ -90,13 +92,13 @@ public class CourseReplyVO {
 		return reply_date;
 	}
 	public void setReply_date(String reply_date) {
-		this.reply_date = reply_date;
+		this.reply_date = DurationFromNow.getTimeDiffLabel(reply_date);
 	}
 	public String getReply_mdate() {
 		return reply_mdate;
 	}
 	public void setReply_mdate(String reply_mdate) {
-		this.reply_mdate = reply_mdate;
+		this.reply_mdate = DurationFromNow.getTimeDiffLabel(reply_mdate);
 	}
 	public int getCourse_num() {
 		return course_num;
