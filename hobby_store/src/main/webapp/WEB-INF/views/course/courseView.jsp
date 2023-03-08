@@ -119,7 +119,7 @@
 		
 		<%-- 온라인 장바구니정보 전송 폼(클래스번호,회원번호) --%>
 		<c:if test="${course.course_onoff.equals('on')}">
-		<form id="course_cart" method="post">	
+		<form id="courseOn_cart" action="/order/orderForm.do" method="post">	
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<div class="reservation">
