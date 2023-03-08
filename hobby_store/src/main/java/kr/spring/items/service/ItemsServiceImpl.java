@@ -113,14 +113,14 @@ public class ItemsServiceImpl implements ItemsService  {
 
 	@Override
 	public List<ItemsReplyVO> selectListReply(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return itemsMapper.selectListReply(map);
 	}
 
 	@Override
 	public int selectRowCountReply(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return 0;
+		return itemsMapper.selectRowCountReply(map);
 	}
 
 	@Override
@@ -131,13 +131,13 @@ public class ItemsServiceImpl implements ItemsService  {
 
 	@Override
 	public ItemsReplyVO selectReply(Integer reply_num) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return itemsMapper.selectReply(reply_num);
 	}
 
 	@Override
 	public void updateReply(ItemsReplyVO itemsReply) {
-		// TODO Auto-generated method stub
+		itemsMapper.updateReply(itemsReply);
 		
 	}
 
@@ -153,10 +153,17 @@ public class ItemsServiceImpl implements ItemsService  {
 		
 	}
 
+
 	@Override
-	public void insertStar(ItemsReplyVO itemsStar) {
-		itemsMapper.insertStar(itemsStar);
+	public ItemsVO selectStar(Integer items_num) {
+
+		return itemsMapper.selectStar(items_num);
+	}
+
+	@Override
+	public ItemsVO selectReplyCount(Integer items_num) {
 		
+		return itemsMapper.selectReplyCount(items_num);
 	}
 
 	

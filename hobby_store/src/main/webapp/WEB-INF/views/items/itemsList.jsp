@@ -102,7 +102,7 @@
 						  		<i class="fa-solid fa-heart"></i> <span class ="countFav">${items.favcount}</span></span>
 						  	</div>
 						  	<h5 class="card-title"><b>${items.items_name}</b></h5>
-						  	<span><i class="fa-regular fa-star"></i> ${items.star_num} (후기 ${items.reply_num})</span>
+						  	<span><i class="fa-regular fa-star"></i> ${items.starcount} (후기 ${items.replycount})</span>
 						  	<p class="card-text">
 						  		<span> </span>
 						  		<br><b><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</b><span style="color:gray;"></span>

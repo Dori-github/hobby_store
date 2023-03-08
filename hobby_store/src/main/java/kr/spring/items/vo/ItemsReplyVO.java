@@ -19,9 +19,16 @@ public class ItemsReplyVO {
 	private String reply_photo_name2;
 	private String reply_photo_name3;
 	
-	private int star_num;
 	//별점 구분
 	private int star_auth;
+	//////////////////////////////////////////////////////
+	private String mem_id;
+	private String mem_nickname;
+	private int mem_photo;
+	
+	
+	
+	
 	public int getReply_num() {
 		return reply_num;
 	}
@@ -94,12 +101,7 @@ public class ItemsReplyVO {
 	public void setReply_photo_name3(String reply_photo_name3) {
 		this.reply_photo_name3 = reply_photo_name3;
 	}
-	public int getStar_num() {
-		return star_num;
-	}
-	public void setStar_num(int star_num) {
-		this.star_num = star_num;
-	}
+	
 	public int getStar_auth() {
 		return star_auth;
 	}
@@ -108,15 +110,28 @@ public class ItemsReplyVO {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "ItemsReplyVO [reply_num=" + reply_num + ", items_num=" + items_num + ", mem_num=" + mem_num
-				+ ", reply_content=" + reply_content + ", reply_date=" + reply_date + ", reply_mdate=" + reply_mdate
-				+ ", reply_photo_name1=" + reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2
-				+ ", reply_photo_name3=" + reply_photo_name3 + ", star_num=" + star_num + ", star_auth=" + star_auth
-				+ "]";
+	
+	public String getMem_id() {
+		return mem_id;
 	}
-		// 업로드 파일 처리
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+	
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+	public int getMem_photo() {
+		return mem_photo;
+	}
+	public void setMem_photo(int mem_photo) {
+		this.mem_photo = mem_photo;
+	}
+	
+	// 업로드 파일 처리
 		public void setUpload1(MultipartFile upload1) throws IOException {
 			// MultipartFile -> byte[] 변환
 			setReply_photo1(upload1.getBytes());
@@ -136,6 +151,16 @@ public class ItemsReplyVO {
 			setReply_photo_name3(upload3.getOriginalFilename());
 		
 		}
+		@Override
+		public String toString() {
+			return "ItemsReplyVO [reply_num=" + reply_num + ", items_num=" + items_num + ", mem_num=" + mem_num
+					+ ", reply_content=" + reply_content + ", reply_date=" + reply_date + ", reply_mdate=" + reply_mdate
+					+ ", reply_photo_name1=" + reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2
+					+ ", reply_photo_name3=" + reply_photo_name3 + ", star_auth=" + star_auth + ", mem_id=" + mem_id
+					+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + mem_photo + "]";
+		}
+
+		
 
 	
 	

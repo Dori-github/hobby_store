@@ -46,7 +46,8 @@ public class ItemsVO {
 	//////////////////////////////////////////////
 	private int reply_num;
 	/////////////////////////////////////////////
-	private float star_num;
+	private float starcount;
+	private int replycount;
 	/////////////////////////////////////////////
 	public int getStatus() {
 		return status;
@@ -228,15 +229,17 @@ public class ItemsVO {
 		this.reply_num = reply_num;
 	}
 
-	public float getStar_num() {
-		return star_num;
+
+	
+	
+
+	public float getStarcount() {
+		return starcount;
 	}
 
-	public void setStar_num(float star_num) {
-		this.star_num = star_num;
+	public void setStarcount(float starcount) {
+		this.starcount = starcount;
 	}
-	
-	
 
 	public String getPackaging() {
 		return packaging;
@@ -291,6 +294,16 @@ public class ItemsVO {
 	public void setFavcount(int favcount) {
 		this.favcount = favcount;
 	}
+	
+	
+
+	public int getReplycount() {
+		return replycount;
+	}
+
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 
 	// 업로드 파일 처리
 	public void setUpload1(MultipartFile upload1) throws IOException {
@@ -323,9 +336,12 @@ public class ItemsVO {
 				+ ", items_hit=" + items_hit + ", packaging=" + packaging + ", items_zipcode=" + items_zipcode
 				+ ", items_address1=" + items_address1 + ", items_address2=" + items_address2 + ", mem_num=" + mem_num
 				+ ", mem_nickname=" + mem_nickname + ", fav_num=" + fav_num + ", fmem_num=" + fmem_num + ", favcount="
-				+ favcount + ", reply_num=" + reply_num + ", star_num=" + star_num + "]";
+				+ favcount + ", reply_num=" + reply_num + ", starcount=" + starcount + ", replycount=" + replycount
+				+ "]";
 	}
 
+	
+	
 
 
 

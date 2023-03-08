@@ -76,7 +76,7 @@
 			</p>
 			</c:if>
 			<p>
-				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
+				<i class="fa-regular fa-star" style="color:orange;"></i> ${itemsStar.starcount} <span class="gray"></span>	
 			</p>
 		</div>
 		
@@ -84,11 +84,15 @@
 			<c:if test="${items.items_quantity lt 5}">
 			<p class = "soldout">품절 임박</p>
 			</c:if>
-			<p>날짜선택 </p>
-			<p>수업인원</p>
-			<span>구매수량</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
+			<p>재고</p>
+			<p>구매 수량</p> 
+			<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
 			<hr size="2" noshade width="100%" style="color:gray;">
-			<div class="buy" style="width:100%;">상품 구매</div>
+			<div style="display:flex;" >
+			<div class="buy" style="width:50%;">장바구니</div>
+			<div style="width:5%;"></div>
+			<div class="buy" style="width:50%;">상품 구매</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -96,7 +100,7 @@
 <div class="course-d-info">
 	<ul class="title">
 		<li class="active">소개</li>
-		<li>후기 <span class="badge">4</span></li>
+		<li>후기 <span class="badge">${itemsReply.replycount}</span></li>
 		<li>문의 <span class="badge">4</span></li>
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
@@ -108,11 +112,11 @@
 		</div>
 	</div>
 	<div class="reply">
-		<h5>후기 <b>N</b> 개</h5>
+		<h5>후기 <b>${itemsReply.replycount}</b> 개</h5>
 		<hr size="2" noshade width="100%" style="color:gray;">
 		<ul class="reply-avg">
-			<li><i class="fa-regular fa-star" style="color:orange;"></i> 4.5 </li>
-			<li>N 건의 후기 중<br>N % 의 고객이 5점을 주었어요!</li>
+			<li><i class="fa-regular fa-star" style="color:orange;"></i> ${itemsStar.starcount} </li>
+			<li> ${itemsReply.replycount} 건의 후기 중<br>N % 의 고객이 5점을 주었어요!</li>
 		</ul>
 	
 		<%-- 정렬 --%>
@@ -133,12 +137,13 @@
 	</div>
 	
 	
-	<div class = "reply_star">별점
+	
  	<form class="mb-3" name="reply-form" id="reply-form" method="post">
+ 	<div class = "reply_star">별점
 	<fieldset>
 		<span class="text-bold"> </span>
-		<input type="radio" name="star_auth" value="5" id="rate1"><label
-			for="rate1">★</label>
+		<input type="radio" name="star_auth" value="5" id="rate1">
+		<label for="rate1">★</label>
 		<input type="radio" name="star_auth" value="4" id="rate2"><label
 			for="rate2">★</label>
 		<input type="radio" name="star_auth" value="3" id="rate3"><label
@@ -148,13 +153,14 @@
 		<input type="radio" name="star_auth" value="1" id="rate5"><label
 			for="rate5">★</label>
 	</fieldset>
+	</div>
 	<div>
 	<input type="hidden" name="items_num"
 			    value="${items.items_num}" id="items_num">
-			      <div id="reply_limit">
+			     
 					<span class="letter-count">300/300</span>
-				</div>	
-		<textarea class="col-auto form-control" type="text" id="reply_content" name = "reply_content"
+				
+		<textarea class="col-auto form-control"  id="reply_content" name = "reply_content"
 				  placeholder="좋은 상품평을 남겨 "></textarea>
 				
 	</div>
@@ -171,8 +177,16 @@
 	</div>
 	<input type = "submit" value = "등록">
 </form>								
+	<!-- 후기 목록 출력 -->
+	<div id="output"></div>
+	
+	<div class="paging-button" style="display:none;">
+		
 	</div>
-	<div class = "reply_list"></div>
+	<div id="loading" style="display:none;"> <img src="${pageContext.request.contextPath}/images/loading.gif" width="50" height="50">
+	
+	</div>
+
 	
 	
 	<div class="qna">

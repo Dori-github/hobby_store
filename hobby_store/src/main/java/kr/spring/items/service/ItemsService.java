@@ -55,6 +55,10 @@ public interface ItemsService {
 	public void updateReply(ItemsReplyVO itemsReply);
 	public void deleteReply(Integer reply_num);
 	public void deleteReplyByItemsNum(Integer items_num);
+	
 
-	public void insertStar(ItemsReplyVO itemsStar);
+
+	public ItemsVO selectStar(Integer items_num);
+	public ItemsVO selectReplyCount(Integer items_num);
+	
 }
