@@ -56,11 +56,12 @@
 				<c:if test="${member.mem_auth==1}">정지</c:if>
 				<c:if test="${member.mem_auth==2}">일반</c:if>
 				<c:if test="${member.mem_auth==9}">관리</c:if>
-				<input type="radio" value="${member.mem_num}">
+				<input type="checkbox" value="${member.mem_num}">
 			</td>
 		</tr>
 		</c:forEach>
 	</table>
+	<div class="align-right"><input type="button" value="정지회원 설정"></div>
 	<div class="align-center">${page}</div>
 	</c:if>
 </div>
