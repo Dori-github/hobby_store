@@ -233,18 +233,21 @@ public class ItemsController {
 	public String detail (@RequestParam int items_num, Model model) {
 		
 		ItemsVO items = itemsService.selectItems(items_num);
+		/*
 		//별점 평균
 		ItemsVO itemsStar = itemsService.selectStar(items_num);
 		//후기 개수
 		ItemsVO itemsReply = itemsService.selectReplyCount(items_num);
-		
+		*/
 		
 		
 		itemsService.updateHit(items_num);
 		logger.debug("<<상세 보기할 상품의 정보  >> : "+ items);
 		model.addAttribute("items", items);
+		/*
 		model.addAttribute("itemsReply",itemsReply);
 		model.addAttribute("itemsStar",itemsStar);
+		*/
 		
 		return "itemsView";
 	}
@@ -363,6 +366,17 @@ public class ItemsController {
 		logger.debug("후기 갯수 "+count);
 		logger.debug("pageNum"+currentPage);
 		logger.debug("items_num"+items_num);
+	
+		//별점 평균
+		float itemsStar = itemsService.selectStar(items_num);
+		//후기 개수
+		int itemsReply = itemsService.selectReplyCount(items_num);
+		//전체 후기 중 5점의 퍼센트
+		int star5 = itemsService.select5star();
+		int starall = itemsService.selectallstar(items_num);
+		float star5_per = (float)star5 / starall * 100; 
+		
+		
 		
 	
 			PagingUtil page = 
@@ -384,6 +398,9 @@ public class ItemsController {
 		Map<String, Object> mapJson = new HashMap<String, Object>();
 		mapJson.put("count", count);
 		mapJson.put("list", list);
+		mapJson.put("itemsStar", itemsStar);
+		mapJson.put("itemsReply", itemsReply);
+		mapJson.put("star5_per",star5_per );
 		
 		MemberVO user =(MemberVO)session.getAttribute("user");
 		if(user != null) {

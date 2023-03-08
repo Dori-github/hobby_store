@@ -25,6 +25,15 @@ $(function() {
 				if (pageNum > 0) {
 					$('#output').empty();
 				}
+				//별점 평균
+				
+				$('#starAvg').text(param.itemsStar);
+				//후기 개수
+				$('#reply').text(param.itemsReply);
+				$('#reply_1').text('후기 '+param.itemsReply+' 개');
+				
+				//전체 후기 중 5점의 퍼센트 
+			//	param.star5_per;
 
 				//후기 목록 작업
 				$(param.list).each(function(index, item) {

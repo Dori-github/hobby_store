@@ -72,12 +72,17 @@ public interface ItemsMapper {
 	public void deleteReplyByItemsNum(Integer items_num);
 	
 	//상세페이지 별점
-	@Select("SELECT items_num, ROUND(AVG(star_auth),2) AS starcount  FROM items JOIN items_reply USING(items_num) WHERE items_num = #{items_num} GROUP BY items_num")
-	public ItemsVO selectStar(Integer items_num);
+	@Select("SELECT ROUND(AVG(star_auth),2) AS starcount  FROM items_reply  WHERE items_num = #{items_num}")
+	public float selectStar(Integer items_num);
 	
-	@Select("select items_num, count(reply_num) AS replycount FROM items join items_reply USING(items_num) WHERE items_num = #{items_num} GROUP BY items_num")
-	public ItemsVO selectReplyCount(Integer items_num);
-	
+	@Select("SELECT COUNT(reply_num) AS replycount FROM items_reply  WHERE items_num = #{items_num}")
+	public int selectReplyCount(Integer items_num);
+	////
+	@Select("SELECT COUNT(reply_num) AS star5 FROM items_reply WHERE star_auth = 5")
+	public int select5star();
+	@Select("SELECT COUNT(reply_num) AS starall FROM items_reply WHERE items_num = #{items_num}")
+	public int selectallstar(Integer items_num);
+
 
 	
 }

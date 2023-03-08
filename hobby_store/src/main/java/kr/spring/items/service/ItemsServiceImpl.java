@@ -155,15 +155,27 @@ public class ItemsServiceImpl implements ItemsService  {
 
 
 	@Override
-	public ItemsVO selectStar(Integer items_num) {
+	public float selectStar(Integer items_num) {
 
 		return itemsMapper.selectStar(items_num);
 	}
 
 	@Override
-	public ItemsVO selectReplyCount(Integer items_num) {
+	public int selectReplyCount(Integer items_num) {
 		
 		return itemsMapper.selectReplyCount(items_num);
+	}
+
+	@Override
+	public int select5star() {
+		
+		return itemsMapper.select5star();
+	}
+
+	@Override
+	public int selectallstar(Integer items_num) {
+		
+		return itemsMapper.selectallstar(items_num);
 	}
 
 	

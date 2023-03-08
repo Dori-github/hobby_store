@@ -57,8 +57,11 @@ public interface ItemsService {
 	public void deleteReplyByItemsNum(Integer items_num);
 	
 
-
-	public ItemsVO selectStar(Integer items_num);
-	public ItemsVO selectReplyCount(Integer items_num);
+	
+	public float selectStar(Integer items_num);
+	public int selectReplyCount(Integer items_num);
+	
+	public int select5star();
+	public int selectallstar(Integer items_num);
 	
 }

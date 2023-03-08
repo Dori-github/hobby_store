@@ -96,7 +96,7 @@
 
 		ORDER BY
 		<if test="check == 1"> reply_num DESC</if>
-		<if test="check == 2"></if>
+		<if test="check == 2"> star_auth DESC</if>
 		<if test="check == 3"></if>
 
 	</sql>

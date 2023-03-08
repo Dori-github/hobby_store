@@ -25,10 +25,25 @@ public class ItemsReplyVO {
 	private String mem_id;
 	private String mem_nickname;
 	private int mem_photo;
+	private float starcount;
+	private float star5_per;
+	private int star5;
+	private int starall;
 	
 	
 	
-	
+	public int getStar5() {
+		return star5;
+	}
+	public void setStar5(int star5) {
+		this.star5 = star5;
+	}
+	public int getStarall() {
+		return starall;
+	}
+	public void setStarall(int starall) {
+		this.starall = starall;
+	}
 	public int getReply_num() {
 		return reply_num;
 	}
@@ -130,8 +145,20 @@ public class ItemsReplyVO {
 	public void setMem_photo(int mem_photo) {
 		this.mem_photo = mem_photo;
 	}
-	
-	// 업로드 파일 처리
+
+	public float getStar5_per() {
+		return star5_per;
+	}
+	public void setStar5_per(float star5_per) {
+		this.star5_per = star5_per;
+	}
+	public float getStarcount() {
+		return starcount;
+	}
+	public void setStarcount(float starcount) {
+		this.starcount = starcount;
+	}
+		// 업로드 파일 처리
 		public void setUpload1(MultipartFile upload1) throws IOException {
 			// MultipartFile -> byte[] 변환
 			setReply_photo1(upload1.getBytes());
@@ -157,8 +184,11 @@ public class ItemsReplyVO {
 					+ ", reply_content=" + reply_content + ", reply_date=" + reply_date + ", reply_mdate=" + reply_mdate
 					+ ", reply_photo_name1=" + reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2
 					+ ", reply_photo_name3=" + reply_photo_name3 + ", star_auth=" + star_auth + ", mem_id=" + mem_id
-					+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + mem_photo + "]";
+					+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + mem_photo + ", starcount=" + starcount
+					+ ", star5_per=" + star5_per + ", star5=" + star5 + ", starall=" + starall + "]";
 		}
+		
+		
 
 		
 
