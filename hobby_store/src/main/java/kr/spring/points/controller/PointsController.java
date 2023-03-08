@@ -32,6 +32,7 @@ public class PointsController {
 				 (MemberVO)session.getAttribute("user");
 		
 		int pointsCount = pointsService.getPointsCount(user.getMem_num());
+		int points = pointsService.getPoints(user.getMem_num());
 		
 		logger.debug("<<pointsCount>> : " + pointsCount);
 			
@@ -45,6 +46,7 @@ public class PointsController {
 		mav.setViewName("pointsList");
 		//데이터 저장
 		mav.addObject("pointsCount", pointsCount);
+		mav.addObject("points", points);
 		mav.addObject("pointsList", pointsList);
 		
 		return mav;

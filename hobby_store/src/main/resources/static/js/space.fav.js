@@ -17,11 +17,11 @@ $(function(){
 		});
 	}
 		//좋아요 등록
-	$('#red-heart-detail').click(function(){
+	$('#red_heart_detail').click(function(){
 		$.ajax({
 			url:'writeFav.do',
 			type:'post',
-			data:{space_num:$('#red-heart-detail').attr('data-num')},
+			data:{space_num:$('#red_heart_detail').attr('data-num')},
 			dataType:'json',
 			success:function(param){
 				if(param.result == 'logout'){
@@ -118,13 +118,10 @@ $(function(){
 		});
 	});
 	
-	
-	
-	
-	//초기 데이터 표시
-	selectFav($('#red-heart-detail').attr('data-num'));
-
-	
+	if($('#space_detail').length>0){
+		//초기 데이터 표시
+		selectFav($('#red_heart_detail').attr('data-num'));
+	}
 });
 	
 	

@@ -1,5 +1,6 @@
 package kr.spring.order.service;
 
+import java.awt.Point;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import kr.spring.order.controller.OrderController;
 import kr.spring.order.dao.OrderMapper;
 import kr.spring.order.vo.OrderDetailVO;
 import kr.spring.order.vo.OrderVO;
+import kr.spring.points.dao.PointsMapper;
+import kr.spring.points.vo.PointsVO;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -19,9 +22,11 @@ public class OrderServiceImpl implements OrderService{
 
 	@Autowired
 	private OrderMapper orderMapper;
+	@Autowired
+	private PointsMapper pointsMapper;
 	
 	@Override
-	public void insertOrder(OrderVO order,
+	public void insertOrder(OrderVO order, PointsVO points,
 							List<OrderDetailVO> list) {
 		//주문 정보 추가
 		order.setOrder_num(orderMapper.selectOrderNum());
@@ -48,7 +53,12 @@ public class OrderServiceImpl implements OrderService{
 			logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num()); 
 			logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num()); 
 			
+			//포인트 차감
+			logger.debug("<<포인트 차감>> : " + points.getUsed_points());
+			pointsMapper.usePoints(points);
 		}
+		
+			
 	}
 
 

@@ -4,12 +4,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery.timepicker.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="${pageContext.request.contextPath}/css/course.css" rel="stylesheet"> 
 <style>
 .ck-editor__editable_inline{
 	min-height:250px;
 }
 </style>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.timepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.js"></script>
@@ -36,6 +39,24 @@
 			}
 			$('#course_form .list-cate2').append(output);
 		});
+		
+		
+		//정기클래스 시작요일
+		$.datepicker.setDefaults({
+	        dateFormat: 'yy-mm-dd',
+	        prevText: '이전 달',
+	        nextText: '다음 달',
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년'
+	    });
+
+	    $("#course_startDate").datepicker();
+		
 	});		
 </script>
 <!-- 중앙 컨텐츠 시작 -->
@@ -184,6 +205,14 @@
 			</td>
 			<form:errors element="div" path="course_reg_date" cssClass="error-color"/>
 			<form:errors element="div" path="course_reg_time" cssClass="error-color"/>
+		</tr>
+		
+		<tr class="startDate" style="display:none;">
+			<td>시작날짜</td>
+			<td>
+				<form:input path="course_startDate"/>
+				<form:errors element="div" path="course_startDate" cssClass="error-color"/>
+			</td>
 		</tr>
 		
 		<tr class="monthCount" style="display:none;">

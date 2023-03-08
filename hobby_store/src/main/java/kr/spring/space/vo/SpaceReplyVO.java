@@ -26,6 +26,7 @@ public class SpaceReplyVO {
 	private int star;
 	private float star_avg;
 	private float star5_per;
+	
 	public int getReply_num() {
 		return reply_num;
 	}

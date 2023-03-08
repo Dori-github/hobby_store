@@ -28,6 +28,7 @@ import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -376,28 +377,88 @@ public class CourseController {
 	
 	
 	//후기 이미지 출력
-		@RequestMapping("/course/replyImageView.do")
-		public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
-			
-			CourseReplyVO vo = courseService.selectReply(reply_num);
-			
-			logger.debug("<<courseReplyVO>> :" + vo);
-			
-			ModelAndView mav = new ModelAndView();
-			mav.setViewName("imageView");
-			
-			if(reply_type==1) {
+	@RequestMapping("/course/replyImageView.do")
+	public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
+		
+		CourseReplyVO vo = courseService.selectReply(reply_num);
+		
+		logger.debug("<<courseReplyVO>> :" + vo);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("imageView");
+		
+		if(reply_type==1 && vo.getReply_photo_name1()!=null) {
 				mav.addObject("imageFile", vo.getReply_photo1());
 				mav.addObject("filename", vo.getReply_photo_name1());
-			}else if(reply_type==2) {
+		}
+		if(reply_type==2) {
+			if(vo.getReply_photo_name2()!=null) {
 				mav.addObject("imageFile", vo.getReply_photo2());
 				mav.addObject("filename", vo.getReply_photo_name2());
-			}else if(reply_type==3) {
+			}
+		}
+		if(reply_type==3) {
+			if(vo.getReply_photo_name3()!=null) {
 				mav.addObject("imageFile", vo.getReply_photo3());
 				mav.addObject("filename", vo.getReply_photo_name3());
 			}
-			return mav;
 		}
+		return mav;
+	}
+	
+	
+	
+	//==========댓글수정==========//
+	@RequestMapping("/course/updateReply.do")
+	@ResponseBody
+	public Map<String,String> modifyReply(CourseReplyVO courseReplyVO,HttpSession session,HttpServletRequest request){
+		
+		logger.debug("<<댓글수정>> : " + courseReplyVO);
+		
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		CourseReplyVO db_reply = courseService.selectReply(courseReplyVO.getReply_num());
+		if(user==null) {
+			//로그인이 안 되어있는 경우
+			mapJson.put("result", "logout");
+		}else if(user!=null && user.getMem_num()==db_reply.getMem_num()) {
+			//로그인 회원번호와 작성자 회원번호 일치
+			
+			//댓글 수정
+			courseService.updateReply(courseReplyVO);
+			mapJson.put("result", "success");			
+		}else {
+			//로그인 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
+	
+	//======댓글 삭제========//
+	@RequestMapping("/course/deleteReply.do")
+	@ResponseBody
+	public Map<String,String> deleteReply(@RequestParam int reply_num,HttpSession session){
+		logger.debug("<<댓글 삭제>> : " + reply_num);
+		
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		CourseReplyVO db_reply = courseService.selectReply(reply_num);
+		if(user==null) {
+			//로그인이 되어있지 않음
+			mapJson.put("result", "logout");
+		}else if(user!=null && user.getMem_num()==db_reply.getMem_num()) {
+			//로그인한 회원번호와 작성자 회원번호 일치
+			courseService.deleteReply(reply_num);
+			mapJson.put("result", "success");
+		}else {
+			//로그인한 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		return mapJson;
+	}
 	
 	
 	

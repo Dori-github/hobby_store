@@ -71,7 +71,7 @@ create table space_reply(
     reply_date date default sysdate not null,
     order_num number not null,
     reply_photo varchar2(150) null,
-    reply_mdate date not null,
+    reply_mdate date,
    
     constraint space_reply_pk primary key (reply_num),
     constraint space_reply_fk1 foreign key (space_num)

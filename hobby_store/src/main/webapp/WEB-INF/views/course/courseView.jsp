@@ -91,14 +91,14 @@
 				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
 			</p>
 		</div>
-		<%-- 오프라인 결제정보 전송 폼(클래스번호,가격,요일,시간) --%>
+		<%-- 오프라인 결제정보 전송 폼(클래스이름,가격,인원,클래스번호) --%>
 		<c:if test="${course.course_onoff.equals('off')}">
-		<form id="course_cart" action="/order/list.do" method="post">
+		<form id="course_cart" action="/order/orderForm.do" method="post">
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<div class="reservation">
 				<%-- 원데이 클래스 --%>
-				<c:if test="${course.course_oneweek.equals('on')}">
+				<c:if test="${course.course_oneweek.equals('one')}">
 				<p>날짜선택<input type="date" name></p>
 				<p>시간선택 &nbsp;<input type="radio"></p>
 				</c:if>
@@ -117,11 +117,13 @@
 		</form>
 		</c:if>
 		
-		<%-- 온라인 장바구니정보 전송 폼(클래스번호,가격) --%>
+		<%-- 온라인 장바구니정보 전송 폼(클래스번호,회원번호) --%>
 		<c:if test="${course.course_onoff.equals('on')}">
-		<form id="course_cart" method="post">	
+		<form id="courseOn_cart" action="/order/orderForm.do" method="post">	
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
+			<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
+      		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
 			<div class="reservation">
 				<span class="price" style="line-height:70px;"><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color:gray;">
@@ -164,7 +166,7 @@
 	</div>
 	<hr size="2" noshade width="100%" style="color:gray;">
 	
-	<form id="reply_form">
+	<form id="reply_form"<c:if test="${empty user}">style="height:370px;"</c:if>>
 		<c:if test="${!empty user}">
 		<div class="star-choice">별점 
 		<c:forEach begin="1" end="5"><i class="fa-regular fa-star"></i></c:forEach>

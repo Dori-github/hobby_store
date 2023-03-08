@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.points.dao.PointsMapper">  
+  	
+  	<select id="getPoints" parameterType="pointsVO" resultType="integer">
+	  	SELECT 
+	  	<![CDATA[
+	  	SUM(saved_points) - SUM(used_points) 
+	  	]]>
+	  	FROM points WHERE mem_num=#{mem_num}
+  	</select>
+</mapper>

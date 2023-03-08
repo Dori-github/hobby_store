@@ -52,7 +52,7 @@
 					<li><a href="${pageContext.request.contextPath}/space/list.do">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>
 						<ul class="dropdown" id="dropdown">
-							<li><a href="#">공지사항</a></li>
+							<li><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a></li>
 							<li><a href="#">자유게시판</a></li>
 							<li><a href="#">Q & A</a></li>
 						</ul>
@@ -61,15 +61,12 @@
 				</ul>
 				<!-- 마이페이지 시작 -->
 				<div id="mypage">
-					<c:if test="${!empty user}">
-					<img src="">
-					</c:if>
-					
-					<%--<c:if test="${!empty user && 2 <= user.mem_auth <= 3}">일반회원,강사 --%>
-					<%--</c:if>--%>
+					<c:if test="${!empty user && 2 <= user.mem_auth && user.mem_auth <=3}"> <!-- 일반회원,강사 -->
+					<img src="/member/viewProfile.do?mem_num=${user.mem_num}">
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> MY PAGE</a>
 					<span class="lightgray">|</span>
 					<a href="${pageContext.request.contextPath}/cart/cartList.do"><i class="fa-solid fa-cart-shopping"></i></a>
+					</c:if>
 					
 					<c:if test="${!empty user && user.mem_auth == 9}"><!-- 관리자 -->
 					<a href="${pageContext.request.contextPath}/member/myPage.do"> 관리자 PAGE</a>

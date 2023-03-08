@@ -3,11 +3,14 @@ package kr.spring.space.vo;
 import java.io.IOException;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
+
+import kr.spring.course.vo.CourseTimeVO;
 
 public class SpaceVO {
 	private int space_num;
@@ -31,6 +34,8 @@ public class SpaceVO {
 	@Range(min=0,max=999999)
 	private int space_np;//예약인원
 	@Range(min=0,max=99999999)
+	private int space_month;
+	private int space_count;
 	private int space_price;
 	private Date date;
 	private Date mdate;
@@ -43,6 +48,7 @@ public class SpaceVO {
 	private String space_photo_name1;
 	private String space_photo_name2;
 	private String space_photo_name3;
+    
 
 	private String space_reg_date;
 	private String space_reg_time;
@@ -52,7 +58,26 @@ public class SpaceVO {
     private int cate_num;
     private int fav_cnt;
     
-    public int getCate_num() {
+    private List<SpaceTimeVO> spaceTimeVO;
+    
+    
+    
+    
+    
+    
+    public int getSpace_month() {
+		return space_month;
+	}
+	public void setSpace_month(int space_month) {
+		this.space_month = space_month;
+	}
+	public int getSpace_count() {
+		return space_count;
+	}
+	public void setSpace_count(int space_count) {
+		this.space_count = space_count;
+	}
+	public int getCate_num() {
 		return cate_num;
 	}
 	public void setCate_num(int cate_num) {
@@ -272,6 +297,14 @@ public class SpaceVO {
 	public void setFav_cnt(int fav_cnt) {
 		this.fav_cnt = fav_cnt;
 	}
+	
+	
+	public List<SpaceTimeVO> getSpaceTimeVO() {
+		return spaceTimeVO;
+	}
+	public void setSpaceTimeVO(List<SpaceTimeVO> spaceTimeVO) {
+		this.spaceTimeVO = spaceTimeVO;
+	}
 	@Override
 	public String toString() {
 		return "SpaceVO [space_num=" + space_num + ", space_name=" + space_name + ", space_content=" + space_content
@@ -283,6 +316,7 @@ public class SpaceVO {
 				+ ", space_photo_name2=" + space_photo_name2 + ", space_photo_name3=" + space_photo_name3
 				+ ", space_reg_date=" + space_reg_date + ", space_reg_time=" + space_reg_time + ", fav_num=" + fav_num
 				+ ", reply_num=" + reply_num + ", star=" + star + ", cate_num=" + cate_num + ", fav_cnt=" + fav_cnt
-				+ "]";
+				+ ", spaceTimeVO=" + spaceTimeVO + "]";
 	}
+	
 }
