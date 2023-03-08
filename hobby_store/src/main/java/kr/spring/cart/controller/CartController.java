@@ -2,12 +2,15 @@ package kr.spring.cart.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +20,10 @@ import kr.spring.cart.controller.CartController;
 import kr.spring.cart.service.CartService;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
+import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderVO;
+import kr.spring.points.vo.PointsVO;
 
 @Controller
 public class CartController {//메서드 생성, 데이터 처리
@@ -96,6 +102,12 @@ public class CartController {//메서드 생성, 데이터 처리
 		//데이터 저장
 		mav.addObject("getItemQuan", getItemQuan);
 		
+	}
+	
+	//장바구니에 클래스 추가
+	public void insertCourseCart(CourseVO courseVO) {
+		cartService.insertCourseCart(courseVO);
+		logger.debug("장바구니에 클래스 추가" + courseVO);
 	}
 	
 

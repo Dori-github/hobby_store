@@ -23,4 +23,9 @@ public class PointsServiceImpl implements PointsService{
 	public int getPointsCount(int num) {
 		return pointsmapper.getPointsCount(num);
 	}
+
+	@Override
+	public int getPoints(int num) {
+		return pointsmapper.getPoints(num);
+	}
 }

@@ -27,6 +27,7 @@ import kr.spring.member.vo.MemberVO;
 import kr.spring.order.service.OrderService;
 import kr.spring.order.vo.OrderDetailVO;
 import kr.spring.order.vo.OrderVO;
+import kr.spring.points.vo.PointsVO;
 
 @Controller
 public class OrderController {
@@ -87,7 +88,7 @@ public class OrderController {
 	
 	//폼에서 전송된 데이터 처리
 	@PostMapping("/order/order.do")
-	public String submit(OrderVO orderVO,
+	public String submit(OrderVO orderVO, PointsVO pointsVO,
 			HttpSession session,Model model,
 			HttpServletRequest request,
 			HttpServletResponse response) {
@@ -322,10 +323,12 @@ public class OrderController {
 		orderVO.setOrder_name(detail_name);//대표 상품명
 		orderVO.setOrder_price(allTotal);//총주문금액
 		orderVO.setMem_num(user.getMem_num());//주문자
+		pointsVO.setUsed_points(allTotal);//주문자
+		pointsVO.setMem_num(user.getMem_num());
 		logger.debug("<<insertOrder 전 detail_name>> : " + detail_name);
 		
 		orderService.insertOrder(
-				         orderVO,orderDetailList);
+				         orderVO, pointsVO, orderDetailList);
 		
 		//refresh 정보를 응답 헤더에 추가
 		response.addHeader("Refresh", 

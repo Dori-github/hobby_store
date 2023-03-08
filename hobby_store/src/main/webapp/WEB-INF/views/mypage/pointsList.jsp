@@ -7,7 +7,7 @@
 		<h5>포인트 내역</h5>	
 		<c:if test="${pointsCount > 0}">
 		<p>보유 포인트</p>
-		<p>~보유포인트 값~</p>
+		<p>${points}</p>
 		<hr size="1" noshade="noshade" width="100%">
         <p>전체 적립 사용 (탭 구현)</p>
 		<table class="table table-borderless" style="text-align:center;">
@@ -25,10 +25,9 @@
 		</tr>
 		<c:forEach var="pt" items="${pointsList}">
 		<tr style="border-bottom: 1px solid #ccc">
-		${pointsCount}
-			<c:if test="${pt.points_type==0}">
+		<c:if test="${pt.points_type==0}">
 			<td>적립</td>
-			<td>${pt.saved_points}</td>		
+			<td>+ ${pt.saved_points}</td>		
 			<td>${pt.saved_date}
 				<c:if test="${pt.expired_date!=null}">
 				<br>(${pt.expired_date})
@@ -37,10 +36,16 @@
 			</c:if>
 			<c:if test="${pt.points_type==1}">
 			<td>사용</td>
+			<td>- ${pt.used_points}</td>
 			<td></td>
-			<td>${pt.used_points}</td>
+			<td>${pt.used_date}</td>
 			</c:if>
-			<c:if test="${pt.points_type==2}">소멸</c:if>
+			<c:if test="${pt.points_type==2}">
+			<td>소멸</td>
+			<td>- </td>
+			<td>- ${pt.used_points}</td>
+			
+			</c:if>
 
 		</tr>
 		</c:forEach>
