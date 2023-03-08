@@ -72,6 +72,7 @@ public interface MemberMapper {
 	@Select("SELECT mem_num,mem_id,mem_nickname FROM member "
 			+ "WHERE mem_auth >= 2 AND mem_nickname LIKE '%' || #{mem_nickname} || '%'")
 	public List<MemberVO> selectSearchMember(String mem_nickname);
+	
 
 	@Select("SELECT mem_name FROM member WHERE mem_num=#{mem_num}")
 	public String getMem_name(int mem_num);
