@@ -50,8 +50,8 @@ public interface TalkMapper {
 	public List<TalkVO> selectTalkDetail(
 			                   Integer talkroom_num);
 	//채팅 멤버 읽기
-	@Select("SELECT mem_num, id FROM sptalk_member "
-		  + "JOIN spmember USING(mem_num) WHERE "
+	@Select("SELECT mem_num, mem_nickname FROM sptalk_member "
+		  + "JOIN member USING(mem_num) WHERE "
 		  + "talkroom_num=#{talkroom_num}")
 	public List<TalkVO> selectTalkMember(
 			                   Integer talkroom_num);

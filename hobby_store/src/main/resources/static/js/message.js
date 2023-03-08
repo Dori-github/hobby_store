@@ -21,7 +21,7 @@ $(function(){
 		$.ajax({
 			url:'memberSearchAjax.do',
 			type:'post',
-			data:{mem_id:$('#member_search').val()},
+			data:{mem_nickname:$('#member_search').val()},
 			dataType:'json',
 			success:function(param){
 				if(param.result == 'logout'){ //로그아웃 인 경우 
@@ -30,12 +30,12 @@ $(function(){
 				}else if(param.result == 'success'){
 					$('#search_area').empty(); //기존의 데이터는 지우고
 					$(param.member).each(function(index,item){ //새로운 데이터를 가져온다(list형태로 온걸 표시)
-						if(!member_list.includes(item.mem_id)){ //data-id에 들어가있는 데이터는 검색하지 못하도록함
+						if(!member_list.includes(item.mem_nickname)){ //data-id에 들어가있는 데이터는 검색하지 못하도록함
 							//채팅회원배열에 포함되어있지 않는 id만 표시
 							//<li> 태그에 input 태그 넣어서 표시
 							let output = '';
 							output += '<li data-num="'+item.mem_num+'">';
-							output += item.mem_id;
+							output += item.mem_nickname;
 							output += '</li>';
 							$('#search_area').append(output);
 						}
@@ -54,15 +54,15 @@ $(function(){
 	
 	//검색된 회원 선택하기
 	$(document).on('click','#search_area li',function(){
-		let mem_id = $(this).text();//선택한 id
+		let mem_nickname = $(this).text();//선택한 id
 		let mem_num = $(this).attr('data-num');//선택한 회원번호
 		//선택한 id를 배열에 저장
-		member_list.push(mem_id);
+		member_list.push(mem_nickname);
 		//선택한 id를 화면에 표시
-		let choice_id = '<div class="member-span" data-id="'+mem_id+'">';
+		let choice_id = '<div class="member-span" data-id="'+mem_nickname+'">';
 		//실제로 전송할 목록 
 		choice_id += '<input type="hidden" name="members" value="'+mem_num+'">';
-		choice_id += mem_id + '<button type="button" class="close">&times;</button></div>';
+		choice_id += mem_nickname + '<button type="button" class="close">&times;</button></div>';
 		$('#talk_member').append(choice_id);
 		//초기화
 		$('#member_search').val('');
@@ -93,9 +93,9 @@ $(function(){
 	
 	//선택한 ID 삭제
 	$(document).on('click','.member-span',function(){
-		let mem_id = $(this).attr('data-id');
+		let mem_nickname = $(this).attr('data-id');
 		//배열에서 ID 삭제
-		member_list.splice(member_list.indexOf(mem_id),1);
+		member_list.splice(member_list.indexOf(mem_nickname),1);
 		//화면상에서 span 태그 제거
 		$(this).remove();
 		

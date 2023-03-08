@@ -44,9 +44,12 @@
 		<c:forEach var="talk" items="${list}">
 		<tbody>
 			<tr>
-				<td><a href="talkDetail.do?talkroom_num=${talk.talkroom_num}"><br>
-					<small>${talk.talkroom_name}(${talk.room_cnt})</small></a></td>
-				<td>${fn:substring(talk.talkVO.message,0,45)}</td>
+				<td><a href="talkDetail.do?talkroom_num=${talk.talkroom_num}">${talk.talkroom_name}(${talk.room_cnt})<br>
+					<small>${fn:substring(talk.talkVO.message,0,45)}</small></a></td>
+				<td>
+				<c:if test="${!empty talk.talkVO.chat_date}">${talk.talkVO.chat_date}</c:if>
+				<c:if test="${empty talk.talkVO.chat_date}">${talk.talkroom_date}</c:if>
+				</td>
 			</tr>
 		</tbody>
 		</c:forEach>

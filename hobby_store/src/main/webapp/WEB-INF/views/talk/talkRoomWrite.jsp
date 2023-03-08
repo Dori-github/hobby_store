@@ -21,7 +21,7 @@
 	<form action="talkRoomWrite.do" method="post" id="talk_form">
 		<!-- 방을 생성하는 사람을 hidden값으로 표시 -->
 			<input type="hidden" name="members" id="user"
-				data-id="${user.mem_id}" value="${user.mem_num}">
+				data-id="${user.mem_nickname}" value="${user.mem_num}">
 
 		<div class="chat-name" >	
 			<div class="row" style="margin-left: 30px; margin-right: 30px;">
@@ -47,7 +47,7 @@
 			</div>
 			<div class="col-9">
 				<input type="text" id="member_search" class="form-input"
-					list="member_name" autocomplete="off" placeholder="아이디를 입력해주세요">
+					list="member_name" autocomplete="off" placeholder="닉네임을 입력해주세요">
 				<ul id="search_area"></ul>
 				<div id="talk_member"></div>
 			</div>

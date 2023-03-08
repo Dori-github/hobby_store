@@ -22,7 +22,7 @@ public interface MemberService {
 	public void deleteAu_id(int mem_num);
 
 	//채팅 회원이름 검색
-	public List<MemberVO> selectSearchMember(String mem_id);
+	public List<MemberVO> selectSearchMember(String mem_nickname);
 
 	public String getMem_name(int mem_num);
 	
