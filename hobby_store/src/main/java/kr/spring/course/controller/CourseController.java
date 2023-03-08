@@ -378,7 +378,7 @@ public class CourseController {
 	
 	//후기 이미지 출력
 	@RequestMapping("/course/replyImageView.do")
-	public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type,HttpServletRequest request) {
+	public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
 		
 		CourseReplyVO vo = courseService.selectReply(reply_num);
 		
@@ -387,39 +387,24 @@ public class CourseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("imageView");
 		
-		if(reply_type==1) {
-			if(vo.getReply_photo_name1()!=null) {
+		if(reply_type==1 && vo.getReply_photo_name1()!=null) {
 				mav.addObject("imageFile", vo.getReply_photo1());
 				mav.addObject("filename", vo.getReply_photo_name1());
-			}else {
-				byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
-				mav.addObject("imageFile",readbyte);
-				mav.addObject("filename","face.png");
-			}
 		}
 		if(reply_type==2) {
 			if(vo.getReply_photo_name2()!=null) {
 				mav.addObject("imageFile", vo.getReply_photo2());
 				mav.addObject("filename", vo.getReply_photo_name2());
-			}else {
-				byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
-				mav.addObject("imageFile",readbyte);
-				mav.addObject("filename","face.png");
 			}
 		}
 		if(reply_type==3) {
 			if(vo.getReply_photo_name3()!=null) {
 				mav.addObject("imageFile", vo.getReply_photo3());
 				mav.addObject("filename", vo.getReply_photo_name3());
-			}else {
-				byte[] readbyte = FileUtil.getBytes(request.getServletContext().getRealPath("/image_bundle/face.png"));
-				mav.addObject("imageFile",readbyte);
-				mav.addObject("filename","face.png");
 			}
 		}
 		return mav;
 	}
-	
 	
 	
 	

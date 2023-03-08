@@ -950,7 +950,7 @@ input[type='number']::-webkit-inner-spin-button {
 	bottom:0;
 	right:20px;
 }
-.modify-btn,.delete-btn,.submit-btn,.reply-reset{
+.modify-btn,.delete-btn,#mreply_form.submit-btn,.reply-reset{
 	background-color: #FFF;
 	outline:1px solid gray;
 	border:none;
@@ -959,7 +959,7 @@ input[type='number']::-webkit-inner-spin-button {
 	height:35px;
 	font-size: 10pt;
 }
-.modify-btn:hover,.delete-btn:hover,.submit-btn:hover,.reply-reset:hover{
+.modify-btn:hover,.delete-btn:hover,#mreply_form.submit-btn:hover,.reply-reset:hover{
 	background-color: #F2F2F2;
 }
 .modify-btn{

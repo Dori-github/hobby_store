@@ -53,6 +53,17 @@ $(function(){
 					output += '</li></ul>';
 					output += '<div class="sub-item">';
 					output += '<p>' + item.reply_content.replace(/\r\n/g,'<br>') + '</p>';
+					output += '<div>'
+					if(item.reply_photo_name1!=null){
+						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=1" width="100" height="100" class="photo1">';
+					}
+					if(item.reply_photo_name2!=null){
+						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=2" width="100" height="100" class="photo2">';
+					}
+					if(item.reply_photo_name3!=null){
+						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=3" width="100" height="100" class="photo3">';
+					}
+					output += '</div>'
 					if(param.user_num == item.mem_num){
 						output += '<div class="reply-btn">';
 						output += ' <input type="button" data-num="'+item.reply_num+'" value="수정" class="modify-btn">';
@@ -260,6 +271,18 @@ $(function(){
 		let remain = 300 - inputLength;
 		remain += ' / 300';
 		
+		//후기 이미지 미리보기
+		$('#mreply_form img').each(function(){
+			if($(this).attr('src')!=null){
+				$('#mreply_form img').show();
+				$('#mreply_form .label1').hide();
+				$('#mreply_form .fa-circle-xmark').show();
+			}
+		});
+		
+
+		
+
 		//문서 객체에 반영
 		$('#mreply_form .letter-count').text(remain);		
 	});

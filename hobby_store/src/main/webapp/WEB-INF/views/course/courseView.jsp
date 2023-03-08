@@ -122,6 +122,8 @@
 		<form id="courseOn_cart" action="/order/orderForm.do" method="post">	
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
+			<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
+      		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
 			<div class="reservation">
 				<span class="price" style="line-height:70px;"><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color:gray;">
