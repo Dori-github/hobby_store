@@ -111,6 +111,39 @@ $(function(){
 		
 	});
 	
+	//채팅방 이름 생성 제어
+	$('#name_checked').click(function(){
+		if($('#name_checked').is(':checked')){ //체크가 되어있으면 true가 됨
+			//채팅방 이름 자동 생성
+			$('#talkroom_name').attr('type','hidden');
+			if(member_list.length>1){ //만든 사람(1)일때 채팅방이 들어가지 않음 
+				makeTalkroom_name(); //만듬
+			}
+		}else{
+			//채팅방 이름 수동 생성
+			$('#talkroom_name').attr('type','text');
+			$('#name_span').text('');//채팅방 이름 표시 텍스트 초기화
+		}
+	});
+	//채팅방 생성 전송
+	$('#talk_form').submit(function(){
+		if(member_list.length<=1){
+			//이미 배열에 현재 로그인한 유저가 기본 등록되어 
+			//있어서 로그인한 유저 포함 최소 2명이 되어야
+			//채팅 가능
+			Swal.fire({
+                    icon: 'warning',
+                    title:'채팅에 참여할 회원을 <br> 검색하세요!',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+			$('#member_search').focus();
+			return false;
+		}
+	});
+	
+	
 	
 });
 
