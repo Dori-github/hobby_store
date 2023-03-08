@@ -44,6 +44,16 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/memberModify.jsp"/>
     </definition>
+    <definition name="favList" extends="myPage">
+    	<put-attribute name="title" value="회원정보 수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/favList.jsp"/>
+    </definition>
+    <definition name="boardList" extends="myPage">
+    	<put-attribute name="title" value="회원정보 수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/boardList.jsp"/>
+    </definition>
 </tiles-definitions>
 
 

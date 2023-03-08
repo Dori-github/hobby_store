@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.member.dao.MemberMapper">  
+	
+	<select id="selectCourseFav" parameterType="map" resultType="courseVO">
+		SELECT 
+         * 
+      FROM (SELECT 
+            a.*, 
+            rownum rnum
+            FROM (SELECT 
+                  * 
+                 FROM 
+                 course_fav f JOIN member m 
+                          ON f.fmem_num=m.mem_num 
+                          JOIN course c 
+                          ON f.course_num=c.course_num 
+                 WHERE f.fmem_num=#{mem_num}
+                 ORDER BY c.course_num DESC) a) 
+      <![CDATA[
+      WHERE rnum >= #{start} and rnum <= #{end}
+      ]]>
+	</select>
+	
+	<select id="selectItemsFav" parameterType="map" resultType="itemsVO">
+		SELECT 
+         * 
+      FROM (SELECT 
+            a.*, 
+            rownum rnum
+            FROM (SELECT 
+                  * 
+                 FROM 
+                 items_fav f JOIN member m 
+                          ON f.fmem_num=m.mem_num 
+                          JOIN items i 
+                          ON f.items_num=i.items_num 
+                 WHERE f.fmem_num=#{mem_num}
+                 ORDER BY i.items_num DESC) a) 
+      <![CDATA[
+      WHERE rnum >= #{start} and rnum <= #{end}
+      ]]>
+	</select>
+	
+	<select id="selectSpaceFav" parameterType="map" resultType="spaceVO">
+		SELECT 
+         * 
+      FROM (SELECT 
+            a.*, 
+            rownum rnum
+            FROM (SELECT 
+                  * 
+                 FROM 
+                 space_fav f JOIN member m 
+                          ON f.fmem_num=m.mem_num 
+                          JOIN space s 
+                          ON f.space_num=s.space_num 
+                 WHERE f.fmem_num=#{mem_num}
+                 ORDER BY s.space_num DESC) a) 
+      <![CDATA[
+      WHERE rnum >= #{start} and rnum <= #{end}
+      ]]>
+	</select>
+</mapper>
+
+
+
+
+
+
+

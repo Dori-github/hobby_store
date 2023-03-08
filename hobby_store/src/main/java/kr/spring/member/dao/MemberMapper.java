@@ -1,6 +1,7 @@
 package kr.spring.member.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,7 +9,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.course.vo.CourseVO;
+import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.space.vo.SpaceVO;
 
 @Mapper
 public interface MemberMapper {
@@ -86,4 +90,17 @@ public interface MemberMapper {
 	public void updateMember(MemberVO member);
 	@Update("UPDATE member_detail SET mem_name=#{mem_name},mem_cell=#{mem_cell},mem_email=#{mem_email},mem_zipcode=#{mem_zipcode},mem_address1=#{mem_address1},mem_address2=#{mem_address2},mem_mdate=SYSDATE WHERE mem_num=#{mem_num}")
 	public void updateMember_detail(MemberVO member);
+	//강사 좋아요 리스트
+	@Select("SELECT COUNT(*) FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
+	public int selectCourseFavCount(int mem_num);
+	public List<CourseVO> selectCourseFav(Map<String,Object> map);
+	//상품 좋아요 리스트
+	@Select("SELECT COUNT(*) FROM items_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
+	public int selectItemsFavCount(int mem_num);
+	public List<ItemsVO> selectItemsFav(Map<String,Object> map);
+	//공간대여 좋아요 리스트
+	@Select("SELECT COUNT(*) FROM space_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
+	public int selectSpaceFavCount(int mem_num);
+	public List<SpaceVO> selectSpaceFav(Map<String,Object> map);
+		
 }
