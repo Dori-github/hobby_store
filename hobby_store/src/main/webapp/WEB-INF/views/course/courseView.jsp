@@ -91,9 +91,9 @@
 				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
 			</p>
 		</div>
-		<%-- 오프라인 결제정보 전송 폼(클래스번호,가격,요일,시간) --%>
+		<%-- 오프라인 결제정보 전송 폼(클래스이름,가격,인원,클래스번호) --%>
 		<c:if test="${course.course_onoff.equals('off')}">
-		<form id="course_cart" action="/order/list.do" method="post">
+		<form id="course_cart" action="/order/orderForm.do" method="post">
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<div class="reservation">
@@ -117,7 +117,7 @@
 		</form>
 		</c:if>
 		
-		<%-- 온라인 장바구니정보 전송 폼(클래스번호,가격) --%>
+		<%-- 온라인 장바구니정보 전송 폼(클래스번호,회원번호) --%>
 		<c:if test="${course.course_onoff.equals('on')}">
 		<form id="course_cart" method="post">	
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
