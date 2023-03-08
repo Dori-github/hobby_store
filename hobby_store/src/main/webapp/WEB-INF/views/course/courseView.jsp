@@ -98,7 +98,7 @@
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<div class="reservation">
 				<%-- 원데이 클래스 --%>
-				<c:if test="${course.course_oneweek.equals('on')}">
+				<c:if test="${course.course_oneweek.equals('one')}">
 				<p>날짜선택<input type="date" name></p>
 				<p>시간선택 &nbsp;<input type="radio"></p>
 				</c:if>
