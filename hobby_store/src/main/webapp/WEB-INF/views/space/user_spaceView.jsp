@@ -145,7 +145,7 @@
 			<span class="letter-count">300 / 300</span>
 			</fieldset>
 		    </div>
-		    </c:if>
+		    </c:if> 
 	
 			<input type="hidden" name="space_num" value="${space.space_num}"id="space_num"> 
 			<textarea rows="3" cols="50" name="reply_content" id="reply_content" class="reply-content" 
