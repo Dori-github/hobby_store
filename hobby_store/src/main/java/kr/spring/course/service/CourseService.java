@@ -14,7 +14,7 @@ import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 
-public interface CourseService { 
+public interface CourseService {
 	//부모글
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
 	public int selectCourseCount(Map<String,Object> map);

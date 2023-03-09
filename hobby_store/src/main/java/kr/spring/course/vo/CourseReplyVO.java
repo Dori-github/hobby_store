@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.spring.util.DurationFromNow;
 
-public class CourseReplyVO { 
+public class CourseReplyVO {  
 	private int reply_num;
 	private String reply_content;
 	private byte[] reply_photo1;
