@@ -159,7 +159,7 @@ list-style:none;
 	display:block;
 	text-align:right;
 	position:absolute;
-	top:10px;
+	top:10px; 
 	right:10px;
 	z-index:990;
 }
@@ -625,28 +625,8 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 
+
 /*강의-상세
-=============================*/
-.margin-top{
-   margin-top: 30px;
-}
-
-
-
-
-
-
-
-/*반응형
-=============================*/
-@media (max-width: 992px){/*992px 이하*/
-   #space_form h5,#space_form table,#space_form .title{
-      width:100%;
-   }
-}
-
-
-/*공간-상세
 =============================*/
 .margin-top{
 	margin-top: 30px;
@@ -711,7 +691,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .right-class .reservation{
 	position: absolute;
-	bottom:100px;
+	bottom:70px;
 	width:100%;
 	padding-right:140px;
 }
@@ -772,7 +752,7 @@ input[type='number']::-webkit-inner-spin-button {
 	margin-top:150px;
 }
 
-/*공간 후기*/
+/*클래스 후기*/
 .reply .reply-avg{
 	justify-content: center;
 	margin:40px 0;
@@ -786,16 +766,22 @@ input[type='number']::-webkit-inner-spin-button {
 	background-color: #F2F2F2;
 	border-radius: 10px;
 	text-align: center;
+	padding:50px 50px;
 }
+.reply-avg li:first-child span{
+	color:rgba(250, 208, 0, 0.99);
+	font-size: 2em;
+	line-height: 80px;
+}
+
+
+
 /*후기 정렬*/
 .space-d-info .btn-select{
 	float: right;
 	margin-bottom:10px;
 	width:100px;
 }
-
-
-
 .space-d-info .list-box{
 	position:absolute;
 	top:30px;
@@ -814,18 +800,15 @@ input[type='number']::-webkit-inner-spin-button {
 /*후기 등록 폼*/
 #reply_form{
 	width:70%;
-	height:540px;
+	height:570px;
 	margin:0 auto;
 	padding:70px;
 }
-#reply_form .star-choice{
-	margin-bottom:20px;
+#reply_form .reply_star{
+	position:relative;
+	margin-bottom:10px;
 	font-size:15pt;
-	padding-left:10px;
-}
-#reply_form .star-choice i{
-	color:lightgray;
-	cursor:pointer;
+	padding:0 10px;
 }
 .reply-content{
 	width:100%;
@@ -873,21 +856,19 @@ input[type='number']::-webkit-inner-spin-button {
 	background-color: #FFF;
 	border-radius: 50%;
 }
-
-
 /*글자수 및 전송버튼*/
-.reply-photo .submit-btn{
+.reply-photo .reply-submit-btn{
 	float:right;
 	text-align: right;
 	margin-right:10px;
 }
 .letter-count{
+	position:absolute;
+	top:32px;
+	right:0;
 	color:gray;
 	font-size:12pt;
-	float:right;
-	margin-right:10px;
-	position: relative;
-	top:10px;
+	margin-right:20px;
 }
 .fa-paper-plane{
 	font-size: 30pt;
@@ -924,7 +905,8 @@ input[type='number']::-webkit-inner-spin-button {
 	margin:0 auto;
 }
 #output .r-list-star{
-	color:orange;
+	color:rgba(250, 208, 0, 0.99);
+    font-size: 1.5em;
 	margin-left:20px;
 }
 #output .r-list-fav{
@@ -965,7 +947,7 @@ input[type='number']::-webkit-inner-spin-button {
 	bottom:0;
 	right:20px;
 }
-#output .modify-btn,#output .delete-btn{
+.modify-btn,.delete-btn,.submit-btn,.reply-reset{
 	background-color: #FFF;
 	outline:1px solid gray;
 	border:none;
@@ -974,16 +956,73 @@ input[type='number']::-webkit-inner-spin-button {
 	height:35px;
 	font-size: 10pt;
 }
-#output .modify-btn:hover,#output .delete-btn:hover{
+.modify-btn:hover,.delete-btn:hover,.submit-btn:hover,.reply-reset:hover{
 	background-color: #F2F2F2;
 }
-#output .modify-btn{
+.modify-btn{
 	margin-right:5px;
 }
 #output p{
 	width:70%;
 	margin:0;
 }
+
+/*후기 별점*/
+#reply_form fieldset{
+    display: inline-block;
+    direction: rtl;
+    border:0;
+}
+#reply_form input[type=radio]{
+    display: none;
+    cursor: pointer;
+}
+#reply_form label{
+    font-size: 2em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+}
+#reply_form label:hover{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#reply_form label:hover ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+#reply_form input[type=radio]:checked ~ label{
+    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+}
+
+
+/*후기목록 이미지*/
+.list-photos{
+	display: none;
+}
+.sub-item img{
+	border:1px solid lightgray;
+	border-radius:10px;
+	margin:20px 10px 0 0;
+	cursor: pointer;
+}
+.sub-item .look-photo{
+	display:inline-block;
+	outline:1px solid lightgray;
+	color:gray;
+	border-radius:20px;
+	margin-top:20px;
+	padding:5px 10px;
+	font-size: 10pt;
+	cursor: pointer;
+}
+.sub-item .look-photo:hover{
+	outline:none;
+	background-color: #404040;
+	color:#FFF;
+}
+#exampleModal img{
+	width:470px;
+	height:470px;
+}
+
 
 
 /*후기 페이징*/
@@ -1001,15 +1040,26 @@ input[type='number']::-webkit-inner-spin-button {
 	background-color:#F2F2F2;
 	border-radius:5px;
 }
+.paging-btn i{
+	color:gray;
+}
 
-
+/*댓글 수정폼*/
 #mreply_form{
-	height:500px;
-	padding:0 70px;
+	height:380px;
+	padding:0 50px;
 }
 .mletter-count{
 	top:-10px;
 }
+#mreply_form .submit-btn,#mreply_form .reply-reset{
+	float:right;
+}
+#mreply_form .submit-btn{
+	margin-right:10px;
+	text-align: center;
+}
+
 
 
 
