@@ -25,10 +25,8 @@
 <!-- 채팅하기 시작 -->
 <div id="talkDetail" class="container">
 
-	<button id="talkDetail" type="button" class="btn" data-toggle="modal"
-		data-target="#myModal">모달창</button>
-
-
+	<button id="talk_btn" type="button" class="btn" data-toggle="modal"
+		data-target="#myModal"></button>
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
 			<div class="modal-content" style="padding: 20px;">
@@ -90,6 +88,10 @@
 			</form>
 			</div>
 		</div>
-
 	</div>
+	 <script>
+    $(function(){
+    	$('#talk_btn').trigger('click');
+    });
+    </script>
 </div>
