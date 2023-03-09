@@ -22,18 +22,32 @@ $(function(){
 				//로딩 이미지 감추기
 				$('#loading').hide();
 				
+				//후기 개수 표시
+				let count = param.count;
+				$('.reply b').text(count);
+				$('.reply-avg .count').text(count);
+				
+				//별점 5점 %
+				let star5_per = param.star5_per;
+				$('.reply-avg .star5_per').text(star5_per);
+				
+				//별점 평균
+				let star_auth = param.star_auth;
+				$('.reply-avg li:first-child').append(star_auth);
+				
 				//호출시 해당 ID의 div의 내부 내용물 제거
 				$('#output').empty();
 				$('.paging-btn').empty();
 				
 				//후기 목록 작업
 				$(param.list).each(function(index,item){
+					alert(item.favcount);
 					let output = '<div class="wid"><span class="r-list-star">';
 					for(let i=1;i<=5;i++){
-						output += '<i class="fa-regular fa-star"></i>';
+						output += '★';
 					}
 					output += '</span>';
-					output += '<span class="r-list-fav"><i class="fa-regular fa-thumbs-up"></i> 100</span></div>';
+					output += '<span class="r-list-fav" data-num="'+item.reply_num+'"><i class="fa-regular fa-thumbs-up"></i> '+item.favcount+'</span></div>';
 					output += '<div class="item">';
 					output += '<ul class="detail-info">';
 					output += '<li>';
@@ -46,33 +60,52 @@ $(function(){
 						output += item.mem_id + '<br>';
 					}
 					if(item.reply_mdate){
-						output += '<span class="modify-date">' + item.reply_mdate + '(수정일)</span>';
+						output += '<span class="modify-date">' + item.reply_mdate + '</span>';
 					}else{
 						output += '<span class="modify-date">' + item.reply_date + '</span>';
 					}
 					output += '</li></ul>';
 					output += '<div class="sub-item">';
 					output += '<p>' + item.reply_content.replace(/\r\n/g,'<br>') + '</p>';
-					output += '<div>'
+					if(item.reply_photo_name1!=null || item.reply_photo_name2!=null || item.reply_photo_name3!=null){
+						output += '<div class="look-photo">사진 보기</div>';
+					}
+					output += '<p class="list-photos">';
 					if(item.reply_photo_name1!=null){
-						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=1" width="100" height="100" class="photo1">';
+						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=1" width="100" height="100" class="photo1 modal-p">';
 					}
 					if(item.reply_photo_name2!=null){
-						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=2" width="100" height="100" class="photo2">';
+						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=2" width="100" height="100" class="photo2 modal-p">';
 					}
 					if(item.reply_photo_name3!=null){
-						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=3" width="100" height="100" class="photo3">';
+						output += '<img src="replyImageView.do?reply_num='+item.reply_num+'&reply_type=3" width="100" height="100" class="photo3 modal-p">';
 					}
-					output += '</div>'
+					output += '</p>';
 					if(param.user_num == item.mem_num){
 						output += '<div class="reply-btn">';
 						output += ' <input type="button" data-num="'+item.reply_num+'" value="수정" class="modify-btn">';
 						output += ' <input type="button" data-num="'+item.reply_num+'" value="삭제" class="delete-btn">';
 						output += '</div>';
 					}
-					output += '</div>';
-					output += '</div>';
+					output += '</div>';//sub-item
+					output += '</div>';//item
 					output += '<hr size="1" noshade style="width:70%;margin:16px auto;color:gray;">';
+					
+					//모달창
+						output += '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+						output += '<div class="modal-dialog modal-dialog-centered">';
+						output += '<div class="modal-content">';
+						output += '<div class="modal-header">';
+						output += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+						output += '</div>';
+						output += '<div class="modal-body">';
+						output += '<img src="" class="modal-img">';
+						output += '</div>';
+						output += '</div>';
+						output += '</div>';
+						output += '</div>';
+					
+					
 					
 					//문서 객체에 추가
 					$('#output').append(output);
@@ -137,7 +170,27 @@ $(function(){
 		});
 		
 	}
-
+	
+	//후기 목록 사진 모달
+	document.addEventListener('click',function(e){
+		if(e.target.classList.contains('modal-p')){
+			let src = e.target.getAttribute('src');
+			document.querySelector('.modal-img').src = src;
+			const myModalAlternative = new bootstrap.Modal('#exampleModal');
+			myModalAlternative.show();
+		}
+	});
+	
+	
+	
+	
+	//후기 목록 사진보기 클릭
+	$(document).on('click','.look-photo',function(){
+		$(this).parent().find('.list-photos').show();
+		$(this).hide();
+	});
+	
+	
 	
 	//후기 등록
 	$('#reply_form').submit(function(event){
@@ -193,6 +246,7 @@ $(function(){
 	function initForm(){
 		$('textarea').val('');
 		$('#reply_form .letter-count').text('300/300');
+		$('.reply_star label').css('text-shadow','0 0 0 #f0f0f0');
 		$('#upload1').val('');
 		$('#upload2').val('');
 		$('#upload3').val('');
@@ -286,29 +340,6 @@ $(function(){
 		let remain = 300 - inputLength;
 		remain += ' / 300';
 		
-		//후기 이미지 미리보기
-		/*
-		for(let i=1;i<=3;i++){
-			if(photos_src["photo"+i]!=null){
-				$('#mreply_form .course-photo+i').show();
-				$('#mreply_form .l+i').hide();
-				$('#mreply_form .d+i').show();
-			}
-		}*/
-		/*
-		$('#mreply_form img').each(function(){
-			if($(this).attr('src')!=null){
-				$('#mreply_form img').show();
-				$('#mreply_form .label1').hide();
-				$('#mreply_form .fa-circle-xmark').show();
-			}else{
-				$('#mreply_form img').hide();
-				$('#mreply_form .label1').show();
-				$('#mreply_form .fa-circle-xmark').hide();
-			}
-		});*/
-		
-
 		
 
 		//문서 객체에 반영
@@ -341,7 +372,13 @@ $(function(){
 		event.preventDefault();
 		
 		if($('#mreply_content').val().trim()==''){
-			alert('내용을 입력하세요!');
+			Swal.fire({
+                icon: 'warning',
+                title:'내용을 입력하세요!',
+                showCancelButton: false,
+                confirmButtonText: "확인",
+                confirmButtonColor: "#FF4E02"
+            });
 			$('#mreply_content').val('').focus();
 			return false;
 		}
@@ -470,12 +507,6 @@ $(function(){
 	
 	
 	
-	//후기 좋아요 클릭시
-	$(document).on('click','.r-list-fav',function(){
-		alert('aa');
-		$(this).find('.fa-thumbs-up').css('color','#FF4E02');
-		$(this).find('.fa-thumbs-up').css('transform','scale(1.1)');
-	});
 	
 	
 	

@@ -47,9 +47,13 @@ public class CourseVO {
 	private int cate_num;
 	private String mem_nickname;
 	private byte[] mem_photo;
-	private float star;
-	private int reply;
+	//별점평균
+	private float staravg;
+	//후기 개수
+	private int replycount;
+	//좋아요 개수
 	private int fav;
+	//좋아요를 누른 사람의 회원번호
 	private int fmem_num;
 	private int fav_num;
 	
@@ -241,17 +245,18 @@ public class CourseVO {
 	public void setMem_photo(byte[] mem_photo) {
 		this.mem_photo = mem_photo;
 	}
-	public double getStar() {
-		return star;
+	
+	public float getStaravg() {
+		return staravg;
 	}
-	public void setStar(float star) {
-		this.star = star;
+	public void setStaravg(float staravg) {
+		this.staravg = staravg;
 	}
-	public int getReply() {
-		return reply;
+	public int getReplycount() {
+		return replycount;
 	}
-	public void setReply(int reply) {
-		this.reply = reply;
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
 	}
 	public int getFav() {
 		return fav;
@@ -301,8 +306,6 @@ public class CourseVO {
 	public void setFav_num(int fav_num) {
 		this.fav_num = fav_num;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums
@@ -313,8 +316,9 @@ public class CourseVO {
 				+ course_zipcode + ", course_address1=" + course_address1 + ", course_address2=" + course_address2
 				+ ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek + ", course_hit=" + course_hit
 				+ ", course_date=" + course_date + ", course_mdate=" + course_mdate + ", cate_parent=" + cate_parent
-				+ ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_nickname=" + mem_nickname + ", star="
-				+ star + ", reply=" + reply + ", fav=" + fav + ", courseTimeVO=" + courseTimeVO + ", course_reg_date="
-				+ course_reg_date + ", course_reg_time=" + course_reg_time + "]";
+				+ ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_nickname=" + mem_nickname
+				+ ", staravg=" + staravg + ", replycount=" + replycount + ", fav=" + fav + ", fmem_num=" + fmem_num
+				+ ", fav_num=" + fav_num + ", courseTimeVO=" + courseTimeVO + ", course_reg_date=" + course_reg_date
+				+ ", course_reg_time=" + course_reg_time + "]";
 	}
 }

@@ -7,6 +7,8 @@
 <script src="${pageContext.request.contextPath}/js/course.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.fav.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/course.reply.fav.js"></script>
+
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -157,20 +159,31 @@
 	
 	<!-- 후기 시작 -->
 	<div class="reply">
-		<h5>후기 <b>N</b> 개</h5>
+		<h5>후기 <b></b>개</h5>
 		<hr size="2" noshade width="100%" style="color:gray;">
 		<ul class="reply-avg">
-			<li><i class="fa-regular fa-star" style="color:orange;"></i> 4.5 </li>
-			<li>N 건의 후기 중<br>N % 의 고객이 5점을 주었어요!</li>
+			<li><span>★</span> <li>
+			<li><span class="count"></span> 건의 후기 중<br><span class="star5_per"></span> % 의 고객이 5점을 주었어요!</li>
 		</ul>
 	</div>
 	<hr size="2" noshade width="100%" style="color:gray;">
 	
 	<form id="reply_form"<c:if test="${empty user}">style="height:370px;"</c:if>>
 		<c:if test="${!empty user}">
-		<div class="star-choice">별점 
-		<c:forEach begin="1" end="5"><i class="fa-regular fa-star"></i></c:forEach>
-		<span class="letter-count">300 / 300</span>
+		<div class="reply_star">별점
+		<fieldset>
+			<input type="radio" name="star_auth" value="5" id="rate1">
+			<label for="rate1">★</label>
+			<input type="radio" name="star_auth" value="4" id="rate2">
+			<label for="rate2">★</label>
+			<input type="radio" name="star_auth" value="3" id="rate3">
+			<label for="rate3">★</label>
+			<input type="radio" name="star_auth" value="2" id="rate4">
+			<label for="rate4">★</label>
+			<input type="radio" name="star_auth" value="1" id="rate5">
+			<label for="rate5">★</label>
+			<span class="letter-count">300 / 300</span>
+		</fieldset>
 		</div>
 		</c:if>
 		<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
@@ -212,7 +225,7 @@
 		</div>
 		</c:if>
 	</form>
-	
+
 	<%-- 정렬 --%>
 	<div class="reply-search">
 		<div class="btn-select"><span class="whole">최신순</span>

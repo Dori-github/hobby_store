@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.course.dao.CourseMapper;
 import kr.spring.course.vo.CourseFavVO;
+import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO; 
@@ -125,11 +126,6 @@ public class CourseServiceImpl implements CourseService{
 	
 	//후기
 	@Override
-	public float selectStarAvg(Integer course_num) {
-		return 0;
-	}
-	
-	@Override
 	public List<CourseReplyVO> selectListReply(Map<String, Object> map) {
 		return courseMapper.selectListReply(map);
 	}
@@ -146,15 +142,59 @@ public class CourseServiceImpl implements CourseService{
 		courseMapper.insertReply(courseReply);
 	}
 	@Override
-	public void updateReply(CourseReplyVO boardReply) {
-		courseMapper.updateReply(boardReply);
+	public void updateReply(CourseReplyVO courseReply) {
+		courseMapper.updateReply(courseReply);
 	}
 	@Override
 	public void deleteReply(Integer re_num) {
 		courseMapper.deleteReply(re_num);
 	}
 	@Override
-	public void deleteReplyByBoardNum(Integer board_num) {
-		courseMapper.deleteReplyByBoardNum(board_num);
+	public void deleteReplyByBoardNum(Integer course_num) {
+		courseMapper.deleteReplyByCourseNum(course_num);
 	}
+	@Override
+	public float selectStar(Integer course_num) {
+		return courseMapper.selectStar(course_num);
+	}
+	@Override
+	public int select5star(Integer course_num) {
+		return courseMapper.select5star(course_num);
+	}
+
+	@Override
+	public int selectallstar(Integer course_num) {
+		return courseMapper.selectallstar(course_num);
+	}
+
+	
+	
+	
+	
+	//후기 좋아요
+	@Override
+	public CourseReplyFavVO selectReplyFav(CourseReplyFavVO fav) {
+		return courseMapper.selectReplyFav(fav);
+	}
+
+	@Override
+	public int selectReplyFavCount(Integer reply_num) {
+		return courseMapper.selectReplyFavCount(reply_num);
+	}
+
+	@Override
+	public void insertReplyFav(CourseReplyFavVO fav) {
+		courseMapper.insertReplyFav(fav);
+	}
+
+	@Override
+	public void deleteReplyFav(Integer fav_num) {
+		courseMapper.deleteReplyFav(fav_num);
+	}
+
+	@Override
+	public void deleteReplyFavByReplyNum(Integer reply_num) {
+		courseMapper.deleteReplyFavByReplyNum(reply_num);
+	}
+	
 }

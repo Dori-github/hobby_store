@@ -66,8 +66,16 @@
 	</select>
 	 
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
-		SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * 
-			FROM course c JOIN member USING(mem_num) LEFT JOIN (SELECT course_num,COUNT(fav_num) AS fav FROM course_fav GROUP BY course_num) USING(course_num)
+		SELECT * FROM 
+		(SELECT a.*,rownum rnum FROM 
+		(SELECT * 
+		FROM course c JOIN member m USING(mem_num) 
+		LEFT JOIN (SELECT course_num , COUNT(reply_num) AS replycount 
+		FROM course_reply GROUP BY course_num) USING(course_num)
+		LEFT JOIN (SELECT course_num,COUNT(fav_num) AS fav 
+		FROM course_fav GROUP BY course_num) USING(course_num)
+		LEFT JOIN (SELECT course_num , ROUND(AVG(star_auth),1) AS staravg 
+		FROM course_reply GROUP BY course_num) USING(course_num)
 			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}
@@ -95,13 +103,9 @@
 	</select>
 	
   	<select id="selectListReply" parameterType="map" resultType="courseReplyVO">
-  		SELECT
-  		   *
-  		FROM(SELECT
-  		       a.*,
-  		       rownum rnum
-  		     FROM(SELECT
-  		            reply_num,
+  			SELECT * FROM
+  			(SELECT a.*, rownum rnum FROM
+  		    (SELECT reply_num,
   		            <![CDATA[
   		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
   		            ]]>
@@ -112,8 +116,10 @@
   		            mem_num,
   		            mem_id,
   		            mem_nickname,
-  		            mem_photo
-  		          FROM course_reply JOIN member USING (mem_num) JOIN member_detail USING(mem_num) 
+  		            mem_photo FROM course_reply 
+  		            JOIN member USING (mem_num) 
+  		            JOIN member_detail USING(mem_num)
+  		 			FULL OUTER JOIN (SELECT reply_num,COUNT(fav_num) AS favcount FROM course_reply_fav GROUP BY reply_num) USING(reply_num) 
   		          WHERE course_num = #{course_num}
   		          ORDER BY <include refid="replyOrder"></include>)a)
   		    <![CDATA[
