@@ -10,4 +10,7 @@ public interface OrderService {
 	public void insertOrder(OrderVO order, PointsVO points,
             List<OrderDetailVO> list);
 
+	public void insertOrderNow(OrderVO order, PointsVO points, 
+			List<OrderDetailVO> list);
+
 }

@@ -83,16 +83,18 @@
 			</p>
 		</div>
 		<%-- 결제정보 전송 폼(공간 번호,가격,요일,시간) --%>
-		<form id="space_cart" action="/order/list.do" method="post">
+		<form id="space_cart" action="/order/orderNowForm.do" method="post">
 			<input type="hidden" name="space_num" value="${space.space_num}" id="space_num">
 			<input type="hidden" name="space_price" value="${space.space_price}" id="space_price">
-			<div class="reservation">
+			<input type="hidden" name="space_name" value="${space.space_name}" id="space_name">
+			<%-- <input type="hidden" name="space_np" value="${space.space_np}" id="space_np"> --%>
+			              <div class="reservation">
 				<%-- 공간대여 예약 --%>
 				<p>날짜선택<input type="date" name></p>
 				<p>시간선택 &nbsp;<input type="radio"></p>
 			
 				<p>공간수 &nbsp; / ${space.space_np} &nbsp &nbsp 최대인원수 &nbsp; / ${space.space_limit}</p>
-				<span>구매수량 <input></span> 
+				<span>구매수량 <input type="number" name="space_quan"></span> <!-- 구매 수량 input hidden 으로 넘겨서 space_np대신 계산. --> 
 				<span class="price">가격 : <fmt:formatNumber>${space.space_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color:gray;">
 				<button type="submit" class="buy" style="width:100%;">공간 예약하기</button>
