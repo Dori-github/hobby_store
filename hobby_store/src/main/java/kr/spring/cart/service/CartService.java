@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.items.vo.ItemsVO;
 
 public interface CartService {
 	//클래스 장바구니 목록
@@ -29,7 +30,7 @@ public interface CartService {
 	//총 레코드 수
 	public int getItemCount();
 	//상품 장바구니 등록
-	public void insertItemCart(ItemCartVO ItemCart);
+	public void insertItemCart(ItemsVO itemVO);
 	//회원번호(mem_num)별 총 구입액
 	public Integer itemTotal(int num);
 	//상품 장바구니 수정(개별 상품 수량 변경)

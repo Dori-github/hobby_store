@@ -23,19 +23,49 @@
 	  	  #{order_num},
 	  	  #{order_name},
 	  	  #{order_status},
-	  	  #{receive_name},
-	  	  #{receive_post},
-	  	  #{receive_address1},
-	  	  #{receive_address2},
-	  	  #{receive_phone},
-	  	  #{notice},
+	  	  #{receive_name, jdbcType=VARCHAR},
+	  	  #{receive_post, jdbcType=VARCHAR},
+	  	  #{receive_address1, jdbcType=VARCHAR},
+	  	  #{receive_address2, jdbcType=VARCHAR},
+	  	  #{receive_phone, jdbcType=VARCHAR},
+	  	  #{notice, jdbcType=VARCHAR},
 	  	  SYSDATE,
 	  	  #{refund_status},
 	  	  #{mem_num},
 	  	  #{order_price})  
   	</insert>
-  	<!-- 오프라인 클래스/공간대여 관련 추가 필요 -->
   	
+	<insert id="insertOrderNow" parameterType="orderVO">
+	  	INSERT INTO orders (
+	  	  order_num,
+	  	  order_name,
+	  	  order_status,
+	  	  receive_name,
+	  	  receive_post,
+	  	  receive_address1,
+	  	  receive_address2,
+	  	  receive_phone,
+	  	  notice,
+	  	  order_date,
+	  	  refund_status,
+	  	  mem_num,
+	  	  order_price)
+	  	VALUES (
+	  	  #{order_num},
+	  	  #{order_name},
+	  	  #{order_status},
+	  	  #{receive_name, jdbcType=VARCHAR},
+	  	  #{receive_post, jdbcType=VARCHAR},
+	  	  #{receive_address1, jdbcType=VARCHAR},
+	  	  #{receive_address2, jdbcType=VARCHAR},
+	  	  #{receive_phone, jdbcType=VARCHAR},
+	  	  #{notice, jdbcType=VARCHAR},
+	  	  SYSDATE,
+	  	  #{refund_status},
+	  	  #{mem_num},
+	  	  #{order_price})  
+  	</insert>
+
   	<insert id="insertOrderDetail" 
   	                  parameterType="orderDetailVO">
   		INSERT INTO orders_detail(

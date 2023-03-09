@@ -61,6 +61,39 @@ public class OrderServiceImpl implements OrderService{
 			
 	}
 
+	@Override
+	public void insertOrderNow(OrderVO order, PointsVO points, List<OrderDetailVO> list) {
+		//주문 정보 추가
+				order.setOrder_num(orderMapper.selectOrderNum());
+				orderMapper.insertOrderNow(order);
+				
+				for(OrderDetailVO vo : list) {
+					//주문 상세 정보 추가
+					vo.setOrder_num(order.getOrder_num());
+					orderMapper.insertOrderDetail(vo);
+					//재고 업데이트
+					logger.debug("<<now업뎃전>> : " + vo); 
+					logger.debug("<<now업뎃전>> : " + vo.getItems_num()); 
+					
+					orderMapper.updateQuantity(vo);
+					
+
+					logger.debug("<<now업뎃후>> : " + vo); 
+					logger.debug("<<now업뎃후>> : " + vo.getItems_num());
+					//장바구니에서 주문 상품 삭제
+					orderMapper.deleteCartCourse(
+							vo.getCourse_num(), order.getMem_num());
+					orderMapper.deleteCartItem(
+							vo.getItems_num(), order.getMem_num());
+					logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num()); 
+					logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num()); 
+					
+					//포인트 차감
+					logger.debug("<<포인트 차감>> : " + points.getUsed_points());
+					pointsMapper.usePoints(points);
+				}
+	}
+
 
 	
 	

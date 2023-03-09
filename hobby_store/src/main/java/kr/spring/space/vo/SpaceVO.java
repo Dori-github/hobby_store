@@ -27,7 +27,6 @@ public class SpaceVO {
 	private byte[] space_photo;
 	private byte[] space_photo1;
 	private byte[] space_photo2;
-	private byte[] space_photo3;
 	private String space_zipcode;
 	private String space_address1;
 	private String space_address2;
@@ -47,17 +46,16 @@ public class SpaceVO {
 	private String space_photo_name;
 	private String space_photo_name1;
 	private String space_photo_name2;
-	private String space_photo_name3;
-    
 
 	private String space_reg_date;
 	private String space_reg_time;
     private int fav_num;//좋아요 갯수 
-    private int reply_num;//후기 갯수
-    private double star;//별점평균
+    private int reply_num;
+    private double star_avg;//별점평균
+    private int star_auth;
     private int cate_num;
     private int fav_cnt;
-    
+    private int replycount;//후기 갯수
     private List<SpaceTimeVO> spaceTimeVO;
     
     
@@ -65,7 +63,19 @@ public class SpaceVO {
     
     
     
-    public int getSpace_month() {
+    public int getStar_auth() {
+		return star_auth;
+	}
+	public void setStar_auth(int star_auth) {
+		this.star_auth = star_auth;
+	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+	public int getSpace_month() {
 		return space_month;
 	}
 	public void setSpace_month(int space_month) {
@@ -106,14 +116,7 @@ public class SpaceVO {
   		//파일명 구하기
   		setSpace_photo_name2(upload2.getOriginalFilename());
   	}
-  	public void setUpload3(MultipartFile upload3) 
-              throws IOException {
-        //MultipartFile -> byte[] 변환
-        setSpace_photo3(upload3.getBytes());
-        //파일명 구하기
-        setSpace_photo_name3(upload3.getOriginalFilename());
-        
-     }
+  	
 	public int getSpace_num() {
 		return space_num;
 	}
@@ -168,12 +171,8 @@ public class SpaceVO {
 	public void setSpace_photo2(byte[] space_photo2) {
 		this.space_photo2 = space_photo2;
 	}
-	public byte[] getSpace_photo3() {
-		return space_photo3;
-	}
-	public void setSpace_photo3(byte[] space_photo3) {
-		this.space_photo3 = space_photo3;
-	}
+
+
 	public String getSpace_zipcode() {
 		return space_zipcode;
 	}
@@ -252,12 +251,7 @@ public class SpaceVO {
 	public void setSpace_photo_name2(String space_photo_name2) {
 		this.space_photo_name2 = space_photo_name2;
 	}
-	public String getSpace_photo_name3() {
-		return space_photo_name3;
-	}
-	public void setSpace_photo_name3(String space_photo_name3) {
-		this.space_photo_name3 = space_photo_name3;
-	}
+
 	public String getSpace_reg_date() {
 		return space_reg_date;
 	}
@@ -284,13 +278,12 @@ public class SpaceVO {
 		this.reply_num = reply_num;
 	}
 
-	public double getStar() {
-		return star;
+	public double getStar_avg() {
+		return star_avg;
 	}
-	public void setStar(double star) {
-		this.star = star;
+	public void setStar_avg(double star_avg) {
+		this.star_avg = star_avg;
 	}
-	
 	public int getFav_cnt() {
 		return fav_cnt;
 	}
@@ -310,13 +303,19 @@ public class SpaceVO {
 		return "SpaceVO [space_num=" + space_num + ", space_name=" + space_name + ", space_content=" + space_content
 				+ ", space_hit=" + space_hit + ", space_limit=" + space_limit + ", space_date=" + space_date
 				+ ", space_zipcode=" + space_zipcode + ", space_address1=" + space_address1 + ", space_address2="
-				+ space_address2 + ", space_np=" + space_np + ", space_price=" + space_price + ", date=" + date
-				+ ", mdate=" + mdate + ", mem_num=" + mem_num + ", id=" + id + ", mem_nickname=" + mem_nickname
-				+ ", space_photo_name=" + space_photo_name + ", space_photo_name1=" + space_photo_name1
-				+ ", space_photo_name2=" + space_photo_name2 + ", space_photo_name3=" + space_photo_name3
+				+ space_address2 + ", space_np=" + space_np + ", space_month=" + space_month + ", space_count="
+				+ space_count + ", space_price=" + space_price + ", date=" + date + ", mdate=" + mdate + ", mem_num="
+				+ mem_num + ", id=" + id + ", mem_nickname=" + mem_nickname + ", space_photo_name=" + space_photo_name
+				+ ", space_photo_name1=" + space_photo_name1 + ", space_photo_name2=" + space_photo_name2
 				+ ", space_reg_date=" + space_reg_date + ", space_reg_time=" + space_reg_time + ", fav_num=" + fav_num
-				+ ", reply_num=" + reply_num + ", star=" + star + ", cate_num=" + cate_num + ", fav_cnt=" + fav_cnt
-				+ ", spaceTimeVO=" + spaceTimeVO + "]";
+				+ ", reply_num=" + reply_num + ", star_avg=" + star_avg + ", star_auth=" + star_auth + ", cate_num="
+				+ cate_num + ", fav_cnt=" + fav_cnt + ", replycount=" + replycount + ", spaceTimeVO=" + spaceTimeVO
+				+ "]";
 	}
+	
+
+	
+
+	
 	
 }

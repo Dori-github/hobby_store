@@ -15,6 +15,11 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/order/orderForm.jsp"/>        
     </definition>
+   <definition name="orderNowForm" extends="main">
+    	<put-attribute name="title" value="바로주문폼"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/order/orderNowForm.jsp"/>        
+    </definition>
    <definition name="pointsList" extends="main">
     	<put-attribute name="title" value="포인트"/>
     	<put-attribute name="body"

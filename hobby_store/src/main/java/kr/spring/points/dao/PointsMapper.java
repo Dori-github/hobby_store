@@ -11,7 +11,7 @@ import kr.spring.points.vo.PointsVO;
 
 @Mapper
 public interface PointsMapper {
-	@Select("SELECT * FROM points WHERE mem_num=#{mem_num}")
+	@Select("SELECT * FROM points WHERE mem_num=#{mem_num} ORDER BY points_num DESC")
 	public List<PointsVO> getPointsList(int num);
 	@Select("SELECT COUNT(points_num) FROM points WHERE mem_num=#{mem_num}")
 	public int getPointsCount(int num); /* 장바구니에는 안 넣나..? */

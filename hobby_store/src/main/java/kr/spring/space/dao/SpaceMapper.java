@@ -65,9 +65,9 @@ public interface SpaceMapper {
 	public int selectReplyCount(Map<String,Object> map);
 	@Select("SELECT * FROM space_reply WHERE reply_num=#{reply_num}")
 	public SpaceReplyVO selectReply(Integer reply_num);
-	@Insert("INSERT INTO space_reply (reply_num,reply_content,reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,space_num,mem_num) "
+	@Insert("INSERT INTO space_reply (reply_num,reply_content,reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,space_num,mem_num,star_auth) "
 			+ "VALUES (space_reply_seq.nextval,#{reply_content, jdbcType=VARCHAR},#{reply_photo1,jdbcType=BLOB},#{reply_photo2,jdbcType=BLOB},#{reply_photo3,jdbcType=BLOB},"
-			+ "#{reply_photo_name1,jdbcType=VARCHAR},#{reply_photo_name2,jdbcType=VARCHAR},#{reply_photo_name3,jdbcType=VARCHAR},#{space_num},#{mem_num})")
+			+ "#{reply_photo_name1,jdbcType=VARCHAR},#{reply_photo_name2,jdbcType=VARCHAR},#{reply_photo_name3,jdbcType=VARCHAR},#{space_num},#{mem_num},#{star_auth})")
 	public void insertReply(SpaceReplyVO spaceReply);
 	@Update("UPDATE space_reply SET reply_content=#{reply_content},reply_photo1=#{reply_photo1},reply_photo2=#{reply_photo2},"
 			+ "reply_photo3=#{reply_photo3},reply_mdate=SYSDATE WHERE reply_num=#{reply_num}")
@@ -76,8 +76,16 @@ public interface SpaceMapper {
 	public void deleteReply(Integer reply_num);
 	@Delete("DELETE FROM space_reply WHERE space_num=#{space_num}")
 	public void deleteReplyBySpaceNum(Integer space_num);
-
+    
 	
+	//별점
+	@Select("SELECT ROUND(AVG(star_auth),2) AS star_avg  FROM space_reply  WHERE space_num = #{space_num}")
+	public float selectStar(Integer space_num);
+
+	@Select("SELECT COUNT(reply_num) AS star5 FROM space_reply WHERE star_auth = 5")
+	public int select5star();
+	@Select("SELECT COUNT(reply_num) AS starall FROM space_reply WHERE space_num = #{space_num}")
+	public int selectallstar(Integer space_num);
 
 }
 

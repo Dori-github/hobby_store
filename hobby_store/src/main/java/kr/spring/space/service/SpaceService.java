@@ -16,7 +16,7 @@ import kr.spring.space.vo.SpaceVO;
 
 public interface SpaceService {
 
-	
+
 	public void insertspace(SpaceVO spaceVO);
 	public int selectSpaceCount(Map<String,Object> map);
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
@@ -25,8 +25,8 @@ public interface SpaceService {
 	public void updateSpace(SpaceVO spaceVO);
 	public void deleteSpace(Integer space_num);
 	public void deletePhoto(Integer space_num);
-	
-	
+
+
 	//좋아요
 	public List<SpaceVO> selectFavCheck();
 	public SpaceFavVO selectFav(SpaceFavVO fav);
@@ -34,23 +34,21 @@ public interface SpaceService {
 	public void insertFav(SpaceFavVO fav);
 	public void deleteFav(Integer fav_num);
 	public void deleteFavBySpaceNum(Integer space_num);
-	
+
 	//후기
-		public float selectStarAvg(Integer space_num);
-		public List<SpaceReplyVO> selectListReply(Map<String,Object> map);
-		public int selectReplyCount(Map<String,Object> map);
-		public SpaceReplyVO selectReply(Integer reply_num);
-		public void insertReply(SpaceReplyVO spaceReply);
-		public void updateReply(SpaceReplyVO spaceReply);
-		public void deleteReply(Integer reply_num);
-		public void deleteReplyBySpaceNum(Integer space_num);
-		void insertSpace(SpaceVO space);
+	public float selectStarAvg(Integer space_num);
+	public List<SpaceReplyVO> selectListReply(Map<String,Object> map);
+	public int selectReplyCount(Map<String,Object> map);
+	public SpaceReplyVO selectReply(Integer reply_num);
+	public void insertReply(SpaceReplyVO spaceReply);
+	public void updateReply(SpaceReplyVO spaceReply);
+	public void deleteReply(Integer reply_num);
+	public void deleteReplyBySpaceNum(Integer space_num);
+	void insertSpace(SpaceVO space);
 
-	
-
-
-
-
+	public float selectStar(Integer space_num);
+	public int select5star();
+	public int selectallstar(Integer space_num);
 }
 
 

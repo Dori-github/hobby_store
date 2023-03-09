@@ -14,6 +14,7 @@ public interface OrderMapper {
 	@Select("SELECT orders_seq.nextval FROM dual")
 	public int selectOrderNum();
 	public void insertOrder(OrderVO order);
+	public void insertOrderNow(OrderVO order);
 	public void insertOrderDetail(OrderDetailVO vo);
 	@Update("UPDATE items SET "
 			+ "items_quantity = "
