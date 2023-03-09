@@ -28,7 +28,7 @@
 	</c:if>
 	
 	<c:if test="${count>0}">
-	<table class="table align-center">
+	<table class="table table-group-divider align-center">
 		<tr>
 			<td>강의번호</td>
 			<td>강의명</td>
@@ -52,7 +52,7 @@
 		<tr>
 			<td>${items.items_num}</td>
 			<td>
-			<img src="${pageContext.request.contextPath}/items/imageView.do?items_num=${items.items_num}&item_type=1" width="50" height="50">
+			  <img src="${pageContext.request.contextPath}/items/imageView.do?items_num=${items.items_num}&items_type=1" width="40" height="40">
 			${items.items_name}
 			<input type="button" value="수정" onclick="location.href='#'">
 			</td>
@@ -65,7 +65,7 @@
 		<tr>
 			<td>${space.space_num}</td>
 			<td>
-			<img src="${pageContext.request.contextPath}/space/imageView.do?space_num=${space.space_num}&item_type=1" width="50" height="50">
+			<img src="/space/imageView.do?space_num=${space.space_num}&space_type=1" width="40" height="40">
 			${space.space_name}
 			<input type="button" value="수정" onclick="location.href='#'">
 			</td>
