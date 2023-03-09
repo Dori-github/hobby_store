@@ -46,7 +46,7 @@ div#page_body{
 	border-color:#B7B5B5;
 	border-radius:5px;
 }
-.side-bar ul{
+.main-menu{
 	margin:0px;
 	padding:0;
 	margin-top:50px;
@@ -88,7 +88,7 @@ div#page_body{
 }
 .side-bar ul li:hover, .sidebar > label:hover {
     background-color: #FF4E02;
-    color: white;
+    color:white;
     border-radius: 10px;
 }
 .side-bar div {
@@ -96,4 +96,82 @@ div#page_body{
     font-size: 1em;
     font-family: 'Noto Sans KR';
     padding: 0 0 0 50px; /* 아이콘과 텍스트 사이 여백 */
+}
+
+/*사이드바 소메뉴*/
+.big-menu{
+	display:none;
+}
+
+.big-menu:hover, .item:hover + .big-menu{
+	display:block;
+	color:white;
+}
+
+/*좋아요 목록
+=============================*/
+/*기본 설정*/
+#fav_size{
+	margin-bottom:50px;
+}
+/*카테고리 버튼*/
+.top-btn{
+	margin-bottom:10px;
+}
+.cate-btn:click{
+	background-color:#FF4E02;
+}
+/*카드 목록*/
+#content .card{
+	cursor:pointer;
+}
+#content .card-body{
+	color:#404040;
+}
+#content span{
+	font-size:10pt;
+}
+/*hover 이미지 확대*/
+.card-img-top{
+	height:200px;
+	overflow: hidden;
+}
+.card-img-top:hover img{
+	transform: scale(1.15);
+}
+.card-img-top img{
+	transition: all 0.2s linear;
+}
+#content .red-heart{
+	display:block;
+	text-align:right;
+	position:absolute;
+	top:10px;
+	right:10px;
+	z-index:990;
+}
+#content .red-heart .fa-heart{
+	color:red;
+	font-size:15pt;
+}
+#content .color-gray{
+	color:gray;
+	line-height: 20px;
+}
+#content .card-title{
+	margin:5px 0;
+}
+#content .fa-star{
+	color:orange;
+}
+#content .card-text{
+	margin-top:10px;
+}
+
+#content .list-page{
+	margin-top:50px;
+}
+
+#align-center{
+	text-align:center;
 }

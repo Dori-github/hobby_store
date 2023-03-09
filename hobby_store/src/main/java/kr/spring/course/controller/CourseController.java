@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseFavVO;
+import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
@@ -345,8 +346,14 @@ public class CourseController {
 		map.put("course_num", course_num);
 		map.put("order", order);
 		
-		//총 글의 개수
+		//후기 개수
 		int count = courseService.selectReplyCount(map);
+		//별점 평균
+		Float star_auth = courseService.selectStar(course_num);
+		//별점 5점 %
+		int star5 = courseService.select5star(course_num);
+		int starall = courseService.selectallstar(course_num);
+		float star5_per = Math.round((float)star5/starall*100);
 		
 		//페이지 처리
 		PagingUtil page = new PagingUtil(currentPage,count,5,3,null);
@@ -361,9 +368,12 @@ public class CourseController {
 			list = Collections.emptyList();
 		}
 		
+		
 		Map<String,Object> mapJson = new HashMap<String,Object>();
 		mapJson.put("list", list);
 		mapJson.put("count", count);
+		mapJson.put("star_auth", star_auth);
+		mapJson.put("star5_per", star5_per);
 		
 		//===== 로그인 한 회원정보 셋팅 =====//
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -408,7 +418,7 @@ public class CourseController {
 	
 	
 	
-	//==========댓글수정==========//
+	//==========후기수정==========//
 	@RequestMapping("/course/updateReply.do")
 	@ResponseBody
 	public Map<String,String> modifyReply(CourseReplyVO courseReplyVO,HttpSession session,HttpServletRequest request){
@@ -436,7 +446,12 @@ public class CourseController {
 		return mapJson;
 	}
 	
-	//======댓글 삭제========//
+	//후기 사진 삭제
+	
+	
+	
+	
+	//======후기 삭제========//
 	@RequestMapping("/course/deleteReply.do")
 	@ResponseBody
 	public Map<String,String> deleteReply(@RequestParam int reply_num,HttpSession session){
@@ -459,7 +474,67 @@ public class CourseController {
 		}
 		return mapJson;
 	}
+	//===============좋아요================//
+	//후기 목록 좋아요 읽기
+	@RequestMapping("/course/getReplyFav.do")
+	@ResponseBody
+	public Map<String,Object> getReplyFav(CourseReplyFavVO fav, HttpSession session){
+		logger.debug("<<클래스 좋아요>> : " + fav);
+		
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("status", "noFav");
+		}else {
+			//로그인된 아이디 셋팅
+			fav.setFmem_num(user.getMem_num());
+			
+			CourseReplyFavVO courseReplyFav = courseService.selectReplyFav(fav);
+			if(courseReplyFav!=null) {
+				mapJson.put("status", "yesFav");
+			}else {
+				mapJson.put("status", "noFav");
+			}
+		}
+		mapJson.put("count", courseService.selectReplyFavCount(fav.getReply_num()));
+		
+		return mapJson;
+	}
+
 	
-	
+	//후기 좋아요 등록
+	@RequestMapping("/course/writeReplyFav.do")
+	@ResponseBody
+	public Map<String,Object> writeReplyFav(CourseReplyFavVO fav,HttpSession session){
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			//로그인된 회원번호 셋팅
+			fav.setFmem_num(user.getMem_num());
+			
+			logger.debug("<<부모글 좋아요 등록>> : " + fav);
+			
+			CourseReplyFavVO courseReplyFav = courseService.selectReplyFav(fav);
+			if(courseReplyFav!=null) {
+				//좋아요가 이미 등록되어있으면 삭제
+				courseService.deleteReplyFav(courseReplyFav.getFav_num());
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "noFav");
+			}else {
+				//좋아요 미등록이면 등록
+				courseService.insertReplyFav(fav);
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "yesFav");
+			}
+			mapJson.put("count", courseService.selectReplyFavCount(fav.getReply_num()));
+		}
+		return mapJson;
+	}
 	
 }

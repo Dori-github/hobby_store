@@ -7,12 +7,22 @@
 <div class="side-bar">
    <label for="expand-menu"><div>메뉴</div></label>
     <input type="checkbox" id="expand-menu" name="expand-menu">
-    <ul>
+    <ul class="main-menu">
         <li><a href="${pageContext.request.contextPath}/member/myPage.do" class="item"><div>나의 프로필</div></a></li>
-        <li><a href="#" class="item"><div>나의 활동내역</div></a></li>
-        <li><a href="#" class="item"><div>배송목록</div></a></li>
+        <li>
+        <a href="#" class="item"><div>나의 활동내역</div></a>
+	        <ul class="big-menu">
+		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/fav.do?cate_num=1">좋아요 조회</a></li>
+		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/board.do">작성 게시글 조회</a></li>
+	        </ul>
+        </li>
+        <li>
+        <a href="${pageContext.request.contextPath}/member/order.do" class="item"><div>배송목록</div></a>
+        </li>
         <li><a href="#" class="item"><div>나의 구매내역</div></a></li>
+        <c:if test="${user.mem_auth > 2}">
         <li><a href="#" class="item"><div>예약목록</div></a></li>
+        </c:if>
         <li><a href="#" class="item"><div>회원탈퇴</div></a></li>
         <li><a href="${pageContext.request.contextPath}/talk/talkList.do" class="item"><div>채팅</div></a></li>
     </ul>

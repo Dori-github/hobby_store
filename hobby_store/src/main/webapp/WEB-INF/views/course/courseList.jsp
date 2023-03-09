@@ -137,7 +137,7 @@
 						  		<span class="card-hit"><i class="fa-solid fa-eye"></i> ${course.course_hit} <i class="fa-solid fa-heart"></i> <span class="countFav">${course.fav}</span></span>
 						  	</div>
 						  	<h5 class="card-title"><b>${course.course_name}</b></h5>
-						  	<span><i class="fa-regular fa-star"></i> ${course.star} (후기 ${course.reply})</span>
+						  	<span><i class="fa-regular fa-star"></i> ${course.staravg} (후기 ${course.replycount})</span>
 						  	<p class="card-text">
 						  		<span>${course.course_address1}</span>
 						  		<br><b><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</b><span style="color:gray;"> / 1인</span>

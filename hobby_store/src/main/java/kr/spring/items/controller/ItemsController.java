@@ -28,12 +28,12 @@ import kr.spring.items.vo.ItemsFavVO;
 import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
   
 @Controller
 public class ItemsController {
 	
-	private int rowCount = 20;
 	@Autowired
 	private ItemsService itemsService;
 	
@@ -233,12 +233,21 @@ public class ItemsController {
 	public String detail (@RequestParam int items_num, Model model) {
 		
 		ItemsVO items = itemsService.selectItems(items_num);
-		
+		/*
+		//별점 평균
+		ItemsVO itemsStar = itemsService.selectStar(items_num);
+		//후기 개수
+		ItemsVO itemsReply = itemsService.selectReplyCount(items_num);
+		*/
 		
 		
 		itemsService.updateHit(items_num);
 		logger.debug("<<상세 보기할 상품의 정보  >> : "+ items);
 		model.addAttribute("items", items);
+		/*
+		model.addAttribute("itemsReply",itemsReply);
+		model.addAttribute("itemsStar",itemsStar);
+		*/
 		
 		return "itemsView";
 	}
@@ -334,10 +343,10 @@ public class ItemsController {
 			//mem_num 저장 	
 			vo.setMem_num(user.getMem_num());
 			
-			//리뷰 등록 
+			//리뷰, 별점 등록 
 			itemsService.insertReply(vo);
 			
-			itemsService.insertStar(vo);
+
 			mapJson.put("result", "success");
 		}
 		return mapJson;
@@ -352,20 +361,35 @@ public class ItemsController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("items_num", items_num);
 		map.put("check", check);
-		//해당 글의 전체 리뷰 갯수
+		//해당 글의 전체 후기 갯수
 		int count = itemsService.selectRowCountReply(map);
-		//pageSize, pageBlock, totalItems
-		//페이지 처리
-		/*		PagingUtil page = 
-						new PagingUtil(currentPage,count,rowCount,1,null);
+		logger.debug("후기 갯수 "+count);
+		logger.debug("pageNum"+currentPage);
+		logger.debug("items_num"+items_num);
+	
+		//별점 평균
+		float itemsStar = itemsService.selectStar(items_num);
+		//후기 개수
+		int itemsReply = itemsService.selectReplyCount(items_num);
+		//전체 후기 중 5점의 퍼센트
+		int star5 = itemsService.select5star();
+		int starall = itemsService.selectallstar(items_num);
+		float star5_per = (float)star5 / starall * 100; 
+		
+		
+		
+	
+			PagingUtil page = 
+						new PagingUtil(currentPage,count,4,3,null);
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
-		*/
+		
 		
 		//목록 데이터 읽기
 		List<ItemsReplyVO> list = null;
 		if(count > 0) {
 			list = itemsService.selectListReply(map);
+			logger.debug("후기 리스트" + list);
 		}
 		else {
 			//list<ItemsReplyVO> 타입으로 텅텅 빈 객체를 반환 
@@ -373,8 +397,10 @@ public class ItemsController {
 		}
 		Map<String, Object> mapJson = new HashMap<String, Object>();
 		mapJson.put("count", count);
-		mapJson.put("rowCount", rowCount);
 		mapJson.put("list", list);
+		mapJson.put("itemsStar", itemsStar);
+		mapJson.put("itemsReply", itemsReply);
+		mapJson.put("star5_per",star5_per );
 		
 		MemberVO user =(MemberVO)session.getAttribute("user");
 		if(user != null) {
@@ -383,6 +409,60 @@ public class ItemsController {
 		return mapJson;
 	}
 	
+	//6-3 후기 수정
+	@RequestMapping("items/itemsUpdateReply.do")
+	@ResponseBody
+	public Map<String, String> modifyReply(ItemsReplyVO reply, HttpSession session, HttpServletRequest request) {
+		logger.debug("후기 수정 :" + reply);
+		
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		ItemsReplyVO selectReply = itemsService.selectReply(reply.getReply_num());
+		
+		if(user==null) {
+			//로그인이 안 되어있는 경우
+			mapJson.put("result", "logout");
+		}
+		else if(user != null && user.getMem_num() == selectReply.getMem_num()) {
+			//후기 수정
+			itemsService.updateReply(reply);
+		}
+		else {
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
+	//후기 이미지 출력
+	   //후기 이미지 출력
+	  //후기 이미지 출력
+	   @RequestMapping("/items/replyImageView.do")
+	   public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
+	      
+	     ItemsReplyVO vo = itemsService.selectReply(reply_num);
+	      
+	      logger.debug("<<리뷰에 관한 모든 것 >> :" + vo);
+	      
+	      ModelAndView mav = new ModelAndView();
+	      mav.setViewName("imageView");
+	      
+	     
+	      if(reply_type==1) {
+				mav.addObject("imageFile", vo.getReply_photo1());
+				mav.addObject("filename", vo.getReply_photo_name1());
+			}else if(reply_type==2) {
+				mav.addObject("imageFile", vo.getReply_photo2());
+				mav.addObject("filename", vo.getReply_photo_name2());
+			}else if(reply_type==3) {
+				mav.addObject("imageFile", vo.getReply_photo3());
+				mav.addObject("filename", vo.getReply_photo_name3());
+			}
+	      
+	      
+	      
+	      return mav;
+	   }
 	
 	
 }

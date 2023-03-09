@@ -38,6 +38,11 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/talk/talkRoomWrite.jsp" />
 	</definition>
+	<definition name="talkList" extends="myPage">
+		<put-attribute name="title" value="채팅목록" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/talk/talkList.jsp" />
+	</definition>
 </tiles-definitions>
 
 

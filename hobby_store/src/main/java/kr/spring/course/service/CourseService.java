@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
@@ -37,7 +38,6 @@ public interface CourseService {
 
 
 	//후기
-	public float selectStarAvg(Integer course_num);
 	public List<CourseReplyVO> selectListReply(Map<String,Object> map);
 	public int selectReplyCount(Map<String,Object> map);
 	public CourseReplyVO selectReply(Integer reply_num);
@@ -45,4 +45,17 @@ public interface CourseService {
 	public void updateReply(CourseReplyVO boardReply);
 	public void deleteReply(Integer reply_num);
 	public void deleteReplyByBoardNum(Integer board_num);
+	public float selectStar(Integer course_num);
+	public int select5star(Integer course_num);
+	public int selectallstar(Integer course_num);
+	
+	
+	//후기 좋아요
+	public CourseReplyFavVO selectReplyFav(CourseReplyFavVO fav);
+	public int selectReplyFavCount(Integer reply_num);
+	public void insertReplyFav(CourseReplyFavVO fav);
+	public void deleteReplyFav(Integer fav_num);
+	public void deleteReplyFavByReplyNum(Integer reply_num);
+
+
 }

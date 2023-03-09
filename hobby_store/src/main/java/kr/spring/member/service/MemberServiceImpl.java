@@ -1,14 +1,18 @@
 package kr.spring.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.spring.course.vo.CourseVO;
+import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
-
+import kr.spring.order.vo.OrderVO;
+import kr.spring.space.vo.SpaceVO;
 @Service
 @Transactional //트랜잭션 처리 저장 
 public class MemberServiceImpl implements MemberService {
@@ -85,14 +89,69 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVO> selectSearchMember(String mem_id) {
-		return memberMapper.selectSearchMember(mem_id);
+	public List<MemberVO> selectSearchMember(String mem_nickname) {
+		return memberMapper.selectSearchMember(mem_nickname);
 	}
 
 	@Override
 	public void updateMember(MemberVO member) {
 		memberMapper.updateMember(member);
 		memberMapper.updateMember_detail(member);
+	}
+
+	@Override
+	public int selectCourseFavCount(int mem_num) {
+		return memberMapper.selectCourseFavCount(mem_num);
+	}
+
+	@Override
+	public List<CourseVO> selectCourseFav(Map<String, Object> map) {
+		return memberMapper.selectCourseFav(map);
+	}
+
+	@Override
+	public int selectItemsFavCount(int mem_num) {
+		return memberMapper.selectItemsFavCount(mem_num);
+	}
+
+	@Override
+	public List<ItemsVO> selectItemsFav(Map<String, Object> map) {
+		return memberMapper.selectItemsFav(map);
+	}
+
+	@Override
+	public int selectSpaceFavCount(int mem_num) {
+		return memberMapper.selectSpaceFavCount(mem_num);
+	}
+
+	@Override
+	public List<SpaceVO> selectSpaceFav(Map<String, Object> map) {
+		return memberMapper.selectSpaceFav(map);
+	}
+
+	@Override
+	public int selectOrderCount(int mem_num) {
+		return memberMapper.selectOrderCount(mem_num);
+	}
+
+	@Override
+	public List<OrderVO> selectOrderList(Map<String, Object> map) {
+		return memberMapper.selectOrderList(map);
+	}
+
+	@Override
+	public List<MemberVO> selectMemberList(Map<String, Object> map) {
+		return memberMapper.selectMemberList(map);
+	}
+
+	@Override
+	public int selectMemberRowCount(Map<String,Object> map) {
+		return memberMapper.selectMemberRowCount(map);
+	}
+
+	@Override
+	public void updateByAdmin(MemberVO memberVO) {
+		memberMapper.updateByAdmin(memberVO);
 	}
 
 

@@ -26,13 +26,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventVO;
+import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.service.EmailSender;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.Email;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderVO;
+import kr.spring.space.vo.SpaceVO;
 import kr.spring.util.AuthCheckException;
 import kr.spring.util.FileUtil;
+import kr.spring.util.PagingUtil;
 
 
 @Controller
@@ -469,6 +476,18 @@ public class MemberController {
 		this.certCharLength = certCharLength;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//===========마이페이지===========//
 	//======회원 상세======//
 	@RequestMapping("/member/myPage.do")
 	public String process(HttpSession session, Model model) {
@@ -563,6 +582,133 @@ public class MemberController {
 			model.addAttribute("filename",memberVO.getMem_pname());
 		}
 	}
+	
+	//좋아요 게시물 조회
+	@RequestMapping("/member/fav.do")
+	public ModelAndView favList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, @RequestParam int cate_num, HttpSession session) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(cate_num==1) {
+			int count = memberService.selectCourseFavCount(user.getMem_num());
+			
+			PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+			
+			List<CourseVO> list = null;
+			if(count > 0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				map.put("mem_num", user.getMem_num());
+				list = memberService.selectCourseFav(map);
+			}
+			
+			logger.debug("<<좋아요 목록>> : " + count);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("favList");
+			mav.addObject("count",count);
+			mav.addObject("list",list);
+			mav.addObject("cate_num",cate_num);
+			mav.addObject("page",page.getPage());
+			
+			return mav;
+			
+		}else if(cate_num==2) {
+			int count = memberService.selectItemsFavCount(user.getMem_num());
+			
+			PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+			
+			List<ItemsVO> list = null;
+			if(count > 0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				map.put("mem_num", user.getMem_num());
+				list = memberService.selectItemsFav(map);
+			}
+			
+			logger.debug("<<좋아요 목록>> : " + count);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("favList");
+			mav.addObject("count",count);
+			mav.addObject("list",list);
+			mav.addObject("cate_num",cate_num);
+			mav.addObject("page",page.getPage());
+			
+			return mav;
+			
+		}else if(cate_num==3) {
+			int count = memberService.selectSpaceFavCount(user.getMem_num());
+			
+			PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+			
+			List<SpaceVO> list = null;
+			if(count > 0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				map.put("mem_num", user.getMem_num());
+				list = memberService.selectSpaceFav(map);
+			}
+			
+			logger.debug("<<좋아요 목록>> : " + count);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("favList");
+			mav.addObject("count",count);
+			mav.addObject("list",list);
+			mav.addObject("cate_num",cate_num);
+			mav.addObject("page",page.getPage());
+			
+			return mav;
+			
+		}else {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("notice");
+			return mav;
+		}
+	}
+	
+	//작성 게시글 조회
+	/*@RequestMapping("/member/board.do")
+	public ModelAndView boardList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("boardList");
+		
+		return mav;
+	}*/
+	
+	//배송조회
+	/*@RequestMapping("/member/order.do")
+	public ModelAndView orderList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, HttpSession session) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		int count = memberService.selectOrderCount(user.getMem_num());
+		
+		PagingUtil page = new PagingUtil(currentPage,count,5,10,"order.do");
+		
+		List<OrderVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectOrderList(map);
+		}
+		
+		logger.debug("<<주문 목록>> : " + count);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("orderList");
+		mav.addObject("count",count);
+		mav.addObject("list",list);
+		mav.addObject("page",page.getPage());
+		
+		return mav;
+	}*/
 }
 
 

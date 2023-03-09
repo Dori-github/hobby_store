@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.talk.dao.TalkMapper">  
+  	<resultMap type="talkRoomVO" id="talkMap">
+  		<result property="talkVO.message" column="message"/>
+  		<result property="talkVO.chat_date" column="chat_date"/>
+  	</resultMap>
+  	
+  	<select id="selectTalkRoomList" 
+  	                          parameterType="map" 
+  	             
+  	             
+  	                            resultMap="talkMap">
+  		SELECT
+  		  *
+  		FROM sptalkroom r JOIN sptalk_member m
+  		USING (talkroom_num) <!-- 일치하는 정보를 count -->
+        LEFT OUTER JOIN (SELECT 
+  		                   talkroom_num,
+  		                   mem_num,
+  		                   COUNT(*) room_cnt
+  		                 FROM sptalk_read
+  		                 WHERE mem_num=#{mem_num}
+  		                 GROUP BY talkroom_num,mem_num) e USING(talkroom_num)            
+  		LEFT OUTER JOIN (SELECT                                             <!-- 마지막 메세지 읽어오기 -->
+  		                   talk_num,
+  		                   <![CDATA[                
+  		                   REPLACE(REPLACE(REPLACE(message,'<','&lt;'),'>','&gt;'),'@{exit}@','') message,
+  		                   ]]>
+  		                   chat_date,
+  		                   talkroom_num
+  		                 FROM sptalk WHERE talk_num IN (SELECT MAX(talk_num) talk_num FROM sptalk
+  		                 GROUP BY talkroom_num)) USING(talkroom_num)
+  		WHERE m.mem_num=#{mem_num}
+  		<if test="keyword != null and keyword != ''">
+  		AND talkroom_name LIKE '%' || #{keyword} || '%'
+  		</if>                                  
+  		ORDER BY (CASE
+  		          WHEN chat_date IS NULL THEN talkroom_date
+  		          ELSE chat_date
+  		          END) DESC               
+  	</select>
+  	
+  	<select id="selectTalkDetail" 
+  	                          parameterType="integer"
+  	                              resultType="talkVO">
+  		SELECT
+  		  <![CDATA[
+  		  REPLACE(REPLACE(message,'<','&lt;'),'>','&gt;') message,
+  		  ]]>
+  		  chat_date,
+  		  read_count,
+  		  mem_num,
+  		  mem_nickname
+  		FROM sptalk t LEFT OUTER JOIN (SELECT
+  		                                 talk_num,
+  		                                 COUNT(*) read_count 
+  		                               FROM sptalk_read
+  		                               GROUP BY talk_num) r USING(talk_num)
+  		              JOIN member m USING(mem_num)
+  		WHERE talkroom_num=#{talkroom_num}
+  		ORDER BY chat_date ASC                               
+  	</select>
+  	
+</mapper>
+
+
+
+
+
+
+
