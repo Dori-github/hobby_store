@@ -21,6 +21,7 @@ import kr.spring.cart.service.CartService;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.order.vo.OrderVO;
 import kr.spring.points.vo.PointsVO;
@@ -41,7 +42,10 @@ public class CartController {//메서드 생성, 데이터 처리
 			//글의 총 개수
 			int courseCount = cartService.getCartCount();
 			int itemCount = cartService.getItemCount();
-
+			logger.debug("클래스수" + courseCount);
+			logger.debug("상품수" + itemCount);
+			
+			
 			MemberVO user = 
 					 (MemberVO)session.getAttribute("user");
 				
@@ -108,6 +112,12 @@ public class CartController {//메서드 생성, 데이터 처리
 	public void insertCourseCart(CourseVO courseVO) {
 		cartService.insertCourseCart(courseVO);
 		logger.debug("장바구니에 클래스 추가" + courseVO);
+	}
+	
+	//장바구니에 상품 추가
+	public void insertItemCart(ItemsVO itemVO) {
+		cartService.insertItemCart(itemVO);
+		logger.debug("장바구니에 상품 추가" + itemVO);
 	}
 	
 

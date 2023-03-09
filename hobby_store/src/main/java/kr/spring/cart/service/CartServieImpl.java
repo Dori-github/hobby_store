@@ -11,6 +11,7 @@ import kr.spring.cart.dao.CartMapper;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.items.vo.ItemsVO;
 
 @Service
 @Transactional
@@ -50,9 +51,8 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public void insertItemCart(ItemCartVO ItemCart) {
-		// TODO Auto-generated method stub
-		
+	public void insertItemCart(ItemsVO itemVO) {
+		return;
 	}
 
 	@Override

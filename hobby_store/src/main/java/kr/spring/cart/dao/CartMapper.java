@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.items.vo.ItemsVO;
 
 @Mapper
 public interface CartMapper {
@@ -51,8 +52,9 @@ public interface CartMapper {
 	@Select("SELECT COUNT(*) FROM item_cart")
 	public int getItemCount();
 	//상품 장바구니 등록
-	@Insert("")
-	public void insertItemCart(ItemCartVO ItemCart);
+	@Insert("INSERT INTO item_cart (cart_num, quantity, mem_num, items_num) "
+			+ "VALUES (item_cart_seq.nextval, #{quantity}, #{mem_num}, #{items_num})")
+	public void insertItemCart(ItemsVO Item);
 	//회원번호(mem_num)별 총 구입액
 	public Integer itemTotal(int num);
 	//상품 장바구니 수정(개별 상품 수량 변경)
