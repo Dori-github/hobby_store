@@ -51,7 +51,6 @@
 				<ul id="search_area"></ul>
 				<div id="talk_member"></div>
 			</div>
-
 		</div>
 
 <div class="align-center" style="padding-top: 190px;">

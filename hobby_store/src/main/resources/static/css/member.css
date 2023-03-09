@@ -1,5 +1,8 @@
 @charset "UTF-8";
  
+#main_body{
+	margin-bottom:0;
+}
 
 .hr-sect {
     display: flex;

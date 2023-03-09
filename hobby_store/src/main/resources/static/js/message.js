@@ -141,6 +141,78 @@ $(function(){
 			$('#member_search').focus();
 			return false;
 		}
+	//======채팅 데이터 읽기========//
+	function selectMsg(){
+		$.ajax({
+			url:'../talk/talkDetailAjax.do',
+			type:'post',
+			data:{talkroom_num:$('#talkroom_num').val()},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					alert('로그인 후 사용하세요!');
+					message_socket.close();
+				}else if(param.result == 'success'){
+					$('#chatting_message').empty();
+					
+					//채팅 날짜 표시
+					let chat_date='';
+					$(param.list).each(function(index,item){
+						let output = '';
+						//날짜 추출
+						if(chat_date != item.chat_date.split(' ')[0]){
+							chat_date = item.chat_date.split(' ')[0];
+							output += '<p class="text-center" style="background-color: #F2F2F2;">'+chat_date+'</p>';
+						}
+						
+						if(item.message.indexOf('@{exit}@')>=0){
+							//탈퇴 메시지 처리
+							output += '<div class="exit-message">';
+							output += item.message.substring(0,
+							       item.message.indexOf('@{exit}@'));
+							output += '</div>';
+						}else{
+							//일반 메시지 처리
+							if(item.mem_num == $('#mem_num').val()){
+								//본인 메시지
+								output += '<div class="from-position">'+item.mem_nickname;
+								output += '<div>';
+							}else{
+								//타인 메시지
+								output += '<div class="to-position">';
+								output += '<div class="space-photo">';
+								output += '<img src="../member/viewProfile.do?mem_num='+item.mem_num+'" width="40" height="40" class="my-photo">';
+								output += '</div><div class="space-message">';
+								output += item.mem_nickname;
+							}
+							output += '<div class="item">';
+							output += item.read_count + '<span>' + item.message.replace(/\r\n/g,'<br>').replace(/\r/,'<br>').replace(/\n/,'<br>') + '</span>';
+							//시간 표시
+							output += '<div class="align-right">' + item.chat_date.split(' ')[1] + '</div>'; 
+							output += '</div>';
+							output += '</div><div class="space-clear"></div>';
+							output += '</div>';
+						}
+						
+						//문서 객체에 추가
+						$('#chatting_message').append(output);
+						//스크롤을 하단에 위치시킴
+						$('#chatting_message').scrollTop(
+							   $('#chatting_message')[0].scrollHeight);
+					});
+					
+				}else{
+					alert('채팅 메시지 읽기 오류 발생');
+					message_socket.close();
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+				message_socket.close();
+			}
+		});
+	}
+		
 	});
 	
 	

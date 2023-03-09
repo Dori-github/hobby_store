@@ -1,11 +1,25 @@
 
+.modal-content{
+	width:800px;
+}
+
 .container {
-	padding-top:130px;
+	height:700px;
+	margin-top:140px;
 }
 .result-display{
 	padding-top:30px;
 	text-align:center;
 }
+
+.modal-title{
+	font-weight: bold;
+	font-size:20px;
+	color: #FF4E02;
+	
+}
+
+
 
 
 ul#search_area{

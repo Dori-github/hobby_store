@@ -9,7 +9,7 @@ public class TalkVO {
 	
 	
 	private int read_count;
-	private String id;
+	private String mem_nickname;
 	public int getTalk_num() {
 		return talk_num;
 	}
@@ -47,15 +47,15 @@ public class TalkVO {
 	public void setRead_count(int read_count) {
 		this.read_count = read_count;
 	}
-	public String getId() {
-		return id;
+	public String getMem_nickname() {
+		return mem_nickname;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
 	}
 	@Override
 	public String toString() {
 		return "TalkVO [talk_num=" + talk_num + ", talkroom_num=" + talkroom_num + ", mem_num=" + mem_num + ", message="
-				+ message + ", chat_date=" + chat_date + ", read_count=" + read_count + ", id=" + id + "]";
+				+ message + ", chat_date=" + chat_date + ", read_count=" + read_count + ", mem_nickname=" + mem_nickname + "]";
 	}
 }

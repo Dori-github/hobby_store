@@ -16,10 +16,12 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/talk.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/message.js"></script>
 
 
 <!-- 채팅목록 시작 -->
-<div class="container">
+<div  class="container">
 	<h4 class="modal-title" style="margin-top:20px;">채팅 목록</h4>
 	<form action="talkList.do" id="search_form" method="get">
 
@@ -56,4 +58,6 @@
 	</table>
 	</c:if>
 </div>
+<!-- 채팅 목록 끝 -->
+
 
