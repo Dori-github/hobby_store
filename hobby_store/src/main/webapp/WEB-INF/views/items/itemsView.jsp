@@ -7,6 +7,8 @@
 <!-- 중앙 컨텐츠 시작 -->
 <script src="${pageContext.request.contextPath}/js/itemsFav.js"></script>
 <script src="${pageContext.request.contextPath}/js/itemsReply.js"></script>
+
+
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -76,8 +78,7 @@
 		<p>
 			${items.mem_nickname} <span class="heart"
 				data-num="${items.items_num}"><i class="fa-regular fa-heart"
-				style="color: red;"></i> 찜하기 <span class="heart-count"
-				id="heart-count"></</span></span>
+				style="color: red;"></i> 찜하기 <span class="heart-count" id="heart-count"></span></span>
 
 		</p>
 		<p></p>
@@ -134,9 +135,8 @@
 		</h5>
 		<hr size="2" noshade width="100%" style="color: gray;">
 		<ul class="reply-avg">
-			<li><i class="fa-regular fa-star" style="color: orange;"></i>4.5</li>
-			<li>건의 후기 중<br> % 의 고객이 5점을 주었어요!
-			</li>
+			<li id ="starAvg2"> <span><label for="" style="font-size :1em; color:rgba(250, 208, 0, 0.99);">★</label></span></li>
+			<li><span id = "reply_2"></span><br><span id = "star_per"> 의 고객이 5점을 주었어요!</span> </li>
 		</ul>
 
 		<%-- 정렬 --%>
