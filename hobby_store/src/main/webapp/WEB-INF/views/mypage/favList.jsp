@@ -19,16 +19,16 @@
 			onclick="location.href='fav.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
 			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
 		</div>
-	<c:if test="${count==0}">
+	<c:if test="${empty list}">
 		<table class="table table-group-divider align-center">
 			<tr>
 				<td>표시할 상품이 없습니다</td>
 			</tr>
 		</table>
-		</c:if>
-		<c:if test="${count>0}">
+	</c:if>
+	<c:if test="${!empty list}">
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-		<c:if test="${cate_num==1 && !empty list}">
+		<c:if test="${cate_num==1}">
 			<c:forEach var="course" items="${list}">
 			<div class="col">
 				<div class="card h-100" style="position:relative;">
@@ -43,9 +43,6 @@
 						  <img src="/course/imageView.do?course_num=${course.course_num}&item_type=1" width="100%" height="100%">
 						</div>
 						<div class="card-body">
-						  	<div class="color-gray">
-						  		<span>${course.mem_nickname}</span>
-						  	</div>
 						  	<h5 class="card-title"><b>${course.course_name}</b></h5>
 						  	<p class="card-text">
 						  		<span>${course.course_address1}</span>
@@ -69,12 +66,9 @@
 				 	
 					<a href="${pageContext.request.contextPath}/items/itemsDetail.do?items_num=${items.items_num}" style="display:block;">
 						<div class="card-img-top">
-						  <img src="/items/imageView.do?items_num=${items.items_num}&items_type=1" width="100%" height="100%">
+						  <img src="${pageContext.request.contextPath}/items/imageView.do?items_num=${items.items_num}&items_type=1" width="100%" height="100%">
 						</div>
 						<div class="card-body">
-						  	<div class="color-gray">
-						  		<span>${items.mem_nickname}</span>
-						  	</div>
 						  	<h5 class="card-title"><b>${items.items_name}</b></h5>
 						  	<p class="card-text">
 						  		<span>${items.items_address1}</span>
@@ -101,9 +95,6 @@
 						  <img src="/space/imageView.do?space_num=${space.space_num}&space_type=1" width="100%" height="100%">
 						</div>
 						<div class="card-body">
-						  	<div class="color-gray">
-						  		<span>${space.mem_nickname}</span>
-						  	</div>
 						  	<h5 class="card-title"><b>${space.space_name}</b></h5>
 						  	<p class="card-text">
 						  		<span>${space.space_address1}</span>
