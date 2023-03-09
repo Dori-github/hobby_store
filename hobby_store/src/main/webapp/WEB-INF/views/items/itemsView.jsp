@@ -178,7 +178,10 @@
 		<div>
 			<input type="hidden" name="items_num" value="${items.items_num}"
 				id="items_num"> <span class="letter-count">300/300</span>
-
+			<input type="hidden" name="items_price" value="${items.items_price}">
+			<input type="hidden" name="items_name" value="${items.items_name}">
+			<input type="hidden" name="items_quantity" value="${items.items_quantity}">
+			
 			<textarea class="col-auto form-control" id="reply_content"
 				name="reply_content" placeholder="좋은 상품평을 남겨 "></textarea>
 
