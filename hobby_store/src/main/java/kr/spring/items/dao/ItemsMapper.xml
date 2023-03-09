@@ -70,26 +70,25 @@
 	<!-- ========================================================================== -->
 	<select id="selectItemsList" parameterType="map"
 		resultType="itemsVO">
-		select * FROM
-		(SELECT a.*, rownum rnum FROM
-		(SELECT *
-		FROM
-		items a JOIN member b
-		ON a.mem_num = b.mem_num
-		JOIN items_cate c
-		ON a.cate_num = c.cate_num
-		LEFT JOIN (select items_num , COUNT(reply_num) AS replycount FROM
-		items_reply GROUP BY items_num) USING(items_num)
-		LEFT JOIN (select items_num , COUNT(fav_num) AS favcount FROM items_fav
-		GROUP BY items_num) USING(items_num)
-		LEFT JOIN (select items_num , ROUND(AVG(star_auth),2) AS starcount FROM
-		items_reply GROUP BY items_num) USING(items_num)
-		<include refid="itemsSearch"></include>
-		<include refid="itemsFilter"></include>
-		)a)
-  	   <![CDATA[
-  	   WHERE rnum >= #{start} AND rnum <= #{end}
-  	   ]]>
+	         SELECT
+  	       *
+  	    FROM (SELECT
+  	            a.*,
+  	            rownum rnum
+  	          FROM (SELECT 
+  	                   * 
+  	                 FROM items JOIN member USING(mem_num) JOIN items_cate USING(cate_num)
+                                LEFT OUTER JOIN (SELECT * FROM items_fav WHERE fmem_num=#{mem_num}) USING(items_num)
+  	                            LEFT OUTER JOIN (SELECT items_num, COUNT(*) favcount FROM items_fav GROUP BY items_num) USING(items_num)
+                                LEFT OUTER JOIN (SELECT items_num , COUNT(reply_num) AS replycount FROM items_reply GROUP BY items_num) USING(items_num)
+                                LEFT OUTER JOIN (SELECT items_num , COUNT(fav_num) AS favcount FROM items_fav GROUP BY items_num) USING(items_num)
+                                LEFT OUTER JOIN (SELECT items_num , ROUND(AVG(star_auth),2) AS starcount FROM items_reply GROUP BY items_num) USING(items_num)
+                               <include refid="itemsSearch"></include>
+                               <include refid="itemsFilter"></include>
+                               )a)
+                                  <![CDATA[
+                                  WHERE rnum >= #{start} AND rnum <= #{end}
+                                      ]]>
 	</select>
 	<!-- ========================================================================== -->
 	<sql id="ReplyFilter">
@@ -110,30 +109,30 @@
 		FROM(SELECT
 		a.*,
 		rownum rnum
+        FROM (SELECT *
 		FROM(SELECT
 		reply_num,
-                    <![CDATA[
-  		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
-                    ]]>
+        <![CDATA[      
+        REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,   
+        ]]>  
 		reply_date,
 		reply_mdate,
 		items_num,
-		b.mem_num,
-		mem_id,
-		mem_nickname,
-		mem_photo,
-		reply_photo1, reply_photo2, reply_photo3, reply_photo_name1, reply_photo_name2,
-		reply_photo_name3,
+        b.mem_num,
+        mem_nickname,
+        mem_id,
+        mem_photo,
+		reply_photo1, reply_photo2, reply_photo3, reply_photo_name1, reply_photo_name2, reply_photo_name3,
 		star_auth
-
 		FROM items_reply b JOIN member c
 		ON b.mem_num = c.mem_num JOIN member_detail d
-		ON b.mem_num = d.mem_num
+		ON b.mem_num = d.mem_num) FULL OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount FROM items_reply_fav group by reply_num) USING (reply_num)
 		WHERE items_num = #{items_num}
-		<include refid="ReplyFilter"></include>)a)
-                   <![CDATA[
-             WHERE rnum >= #{start} AND rnum <= #{end}
-  		    ]]>
+        <include refid="ReplyFilter"></include>)a)
+                 <![CDATA[
+            WHERE rnum >= #{start} AND rnum <= #{end}
+  		    ]]>     
+      
 	</select>
 	<select id="select"></select>
 </mapper>

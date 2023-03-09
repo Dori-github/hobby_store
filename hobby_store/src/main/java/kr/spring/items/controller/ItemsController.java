@@ -25,10 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.items.service.ItemsService;
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyFavVO;
 import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
-import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
   
 @Controller
@@ -145,6 +145,9 @@ public class ItemsController {
 			map.put("check",check);
 			//정렬(포장 가능 여부)
 			map.put("packaging", packaging);
+			// 현재 접속중인 회원의 mem_num 전달
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			map.put("mem_num", user.getMem_num());
 			
 			//사이드바 카테고리 
 			map.put("cate", cate);
@@ -177,8 +180,6 @@ public class ItemsController {
 			List<ItemsVO> items_cate = null;
 			items_cate = itemsService.selectCate();
 			
-			// 현재 접속중인 회원의 mem_num 전달
-			MemberVO user = (MemberVO)session.getAttribute("user");
 			
 			// 좋아요를 누른 사람을 리스트로 
 			List<ItemsVO> Favlist = null;
@@ -366,28 +367,28 @@ public class ItemsController {
 		logger.debug("후기 갯수 "+count);
 		logger.debug("pageNum"+currentPage);
 		logger.debug("items_num"+items_num);
+
+		MemberVO user =(MemberVO)session.getAttribute("user");
+		
 	
 		//별점 평균
-		float itemsStar = itemsService.selectStar(items_num);
+		Float itemsStar = itemsService.selectStar(items_num);
 		//후기 개수
 		int itemsReply = itemsService.selectReplyCount(items_num);
 		//전체 후기 중 5점의 퍼센트
-		int star5 = itemsService.select5star();
+		int star5 = itemsService.select5star(items_num);
 		int starall = itemsService.selectallstar(items_num);
-		float star5_per = (float)star5 / starall * 100; 
+		float star5_per = Math.round((float)star5 / starall * 100); 
 		
-		
-		
-	
 			PagingUtil page = 
-						new PagingUtil(currentPage,count,4,3,null);
+						new PagingUtil(currentPage,itemsReply,4,3,null);
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
 		
 		
 		//목록 데이터 읽기
 		List<ItemsReplyVO> list = null;
-		if(count > 0) {
+		if(itemsReply > 0) {
 			list = itemsService.selectListReply(map);
 			logger.debug("후기 리스트" + list);
 		}
@@ -395,17 +396,24 @@ public class ItemsController {
 			//list<ItemsReplyVO> 타입으로 텅텅 빈 객체를 반환 
 			list = Collections.emptyList();
 		}
+		logger.debug("댓글 목록 뿌리"+list);
 		Map<String, Object> mapJson = new HashMap<String, Object>();
-		mapJson.put("count", count);
+		// mapJson.put("count", count);
 		mapJson.put("list", list);
 		mapJson.put("itemsStar", itemsStar);
 		mapJson.put("itemsReply", itemsReply);
 		mapJson.put("star5_per",star5_per );
 		
-		MemberVO user =(MemberVO)session.getAttribute("user");
+		//fmem_num == user/  reply_num 
+		
 		if(user != null) {
 			mapJson.put("user_num", user.getMem_num());
 		}		
+		//좋아요를 누른 사람 
+		//List<ItemsReplyFavVO> FavCheck = null;
+		//FavCheck = itemsService.selectReplyFavCheck(null)
+		
+		
 		return mapJson;
 	}
 	
@@ -434,9 +442,8 @@ public class ItemsController {
 		
 		return mapJson;
 	}
-	//후기 이미지 출력
-	   //후기 이미지 출력
-	  //후기 이미지 출력
+	
+	  //6-4 후기 이미지 출력
 	   @RequestMapping("/items/replyImageView.do")
 	   public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
 	      
@@ -463,6 +470,79 @@ public class ItemsController {
 	      
 	      return mav;
 	   }
-	
-	
+	   //6-5 후기 삭제
+
+	 //7-1 후기 좋아요 등록
+		@RequestMapping("/items/replyWriteFav.do")
+		@ResponseBody
+		public Map<String, Object> replyWriteFav(ItemsReplyFavVO rfav, HttpSession session){
+			logger.debug("<<후기 좋아요 등록 >>: "+rfav);
+			Map<String, Object> mapJson = new HashMap<String, Object>();
+			
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			
+			if(user == null) {
+				mapJson.put("result", "logout");
+			}
+			
+			else {
+				//mem_num
+				rfav.setFmem_num(user.getMem_num());
+				
+				logger.debug("<<후기 등록2 >>: "+rfav);
+				
+				ItemsReplyFavVO itemsFav = itemsService.selectReplyFav(rfav);
+				logger.debug("<<좋아요가 있나 ? >>"+itemsFav);
+				
+				//좋아요 삭제
+				if(itemsFav != null) {
+					itemsService.deleteReplyFav(itemsFav.getFav_num());
+					mapJson.put("result", "success");
+					mapJson.put("status", "noFav");
+				}
+				//좋아요 등록
+				else {
+					itemsService.insertReplyFav(rfav);
+					
+					mapJson.put("result", "success");
+					mapJson.put("status", "yesFav");
+				}
+				
+				
+				mapJson.put("count", itemsService.selectReplyFavCount(rfav.getReply_num()));
+			}
+			return mapJson;
+		}
+		
+		//7-2 후기 좋아요 읽기
+		@RequestMapping("/items/replyGetFav.do")
+		@ResponseBody
+		public Map<String,Object> replyGetFav(ItemsReplyFavVO rfav,
+				                    HttpSession session){
+			logger.debug("<<아이템 좋아요 읽기 1>> : " + rfav);
+			
+			Map<String,Object> mapJson = 
+					new HashMap<String,Object>();
+			
+			MemberVO user = (MemberVO)session.getAttribute("user");
+			
+			
+			
+			if(user==null) {
+				mapJson.put("status", "noFav");
+			}else {
+				//로그인된 아이디 셋팅
+				rfav.setFmem_num(user.getMem_num());
+				
+				ItemsReplyFavVO replyFav = itemsService.selectReplyFav(rfav);
+				if(replyFav!=null) {
+					mapJson.put("status", "yesFav");
+				}else {
+					mapJson.put("status", "noFav");
+				}
+			}
+			mapJson.put("count", itemsService.selectReplyFavCount(rfav.getReply_num()));
+			
+			return mapJson;
+		}
 }

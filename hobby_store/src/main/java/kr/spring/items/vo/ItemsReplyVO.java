@@ -29,6 +29,7 @@ public class ItemsReplyVO {
 	private float star5_per;
 	private int star5;
 	private int starall;
+	private int favcount;
 	
 	
 	
@@ -158,6 +159,14 @@ public class ItemsReplyVO {
 	public void setStarcount(float starcount) {
 		this.starcount = starcount;
 	}
+	
+	
+		public int getFavcount() {
+		return favcount;
+	}
+	public void setFavcount(int favcount) {
+		this.favcount = favcount;
+	}
 		// 업로드 파일 처리
 		public void setUpload1(MultipartFile upload1) throws IOException {
 			// MultipartFile -> byte[] 변환
@@ -185,8 +194,11 @@ public class ItemsReplyVO {
 					+ ", reply_photo_name1=" + reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2
 					+ ", reply_photo_name3=" + reply_photo_name3 + ", star_auth=" + star_auth + ", mem_id=" + mem_id
 					+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + mem_photo + ", starcount=" + starcount
-					+ ", star5_per=" + star5_per + ", star5=" + star5 + ", starall=" + starall + "]";
+					+ ", star5_per=" + star5_per + ", star5=" + star5 + ", starall=" + starall + ", favcount="
+					+ favcount + "]";
 		}
+		
+		
 		
 		
 

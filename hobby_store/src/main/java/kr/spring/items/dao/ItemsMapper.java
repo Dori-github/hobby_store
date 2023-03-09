@@ -3,12 +3,14 @@ package kr.spring.items.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyFavVO;
 import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 
@@ -72,17 +74,39 @@ public interface ItemsMapper {
 	public void deleteReplyByItemsNum(Integer items_num);
 	
 	//상세페이지 별점
-	@Select("SELECT ROUND(AVG(star_auth),2) AS starcount  FROM items_reply  WHERE items_num = #{items_num}")
-	public float selectStar(Integer items_num);
+	@Select("SELECT ROUND(AVG(star_auth),1) AS starcount  FROM items_reply  WHERE items_num = #{items_num}")
+	public Float selectStar(Integer items_num);
 	
 	@Select("SELECT COUNT(reply_num) AS replycount FROM items_reply  WHERE items_num = #{items_num}")
 	public int selectReplyCount(Integer items_num);
-	////
-	@Select("SELECT COUNT(reply_num) AS star5 FROM items_reply WHERE star_auth = 5")
-	public int select5star();
+	////별점 평균, 후기 개수, 5점 비율 구하기 
+	@Select("SELECT COUNT(reply_num) AS star5 FROM items_reply WHERE star_auth = 5 AND items_num =#{items_num}")
+	public int select5star(Integer items_num);
 	@Select("SELECT COUNT(reply_num) AS starall FROM items_reply WHERE items_num = #{items_num}")
 	public int selectallstar(Integer items_num);
-
+	
+	
+	//후기 좋아요
+	@Select("SELECT * FROM items_reply_fav WHERE reply_num = #{reply_num} AND fmem_num = #{fmem_num} ")
+	public ItemsReplyFavVO selectReplyFav(ItemsReplyFavVO rfav);
+	//후기 좋아요 삭제 
+	@Select("DELETE FROM items_reply_fav WHERE fav_num = #{fav_num}")
+	public void deleteReplyFav(Integer fav_num);
+	//후기 좋아요 등록
+	@Insert("INSERT INTO items_reply_fav (fav_num, fmem_num, reply_num ) VALUES (items_reply_fav_seq.nextval, #{fmem_num}, #{reply_num})")
+	public void insertReplyFav(ItemsReplyFavVO fav);
+	//후기 좋아요 췍
+	@Select("SELECT COUNT(*) FROM items_reply_fav WHERE reply_num = #{reply_num}")
+	public int selectReplyFavCount(Integer reply_num);
+	@Delete("DELETE FROM items_reply_fav WHERE reply_num = #{reply_num}")
+	public void deleteFavByCourseNum(Integer reply_num);
+	//후기 좋아요를 누른 사람 찾기 
+	@Select("select * from items_reply a join items_reply_fav b ON a.reply_num = b.reply_num ")
+	public List<ItemsReplyFavVO> selectReplyFavMem();
+	//일단 써보는 쿼리
+	@Select("SELECT * FROM items_reply_fav WHERE reply_num = #{reply_num}")
+	public int selectReplyFavCheck(Integer reply_num);
+	
 
 	
 }

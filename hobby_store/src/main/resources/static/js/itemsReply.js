@@ -11,29 +11,31 @@ $(function() {
 		currentPage = pageNum;
 		//로딩 이미지 노출
 		$('#loading').show();
-
+	
 		$.ajax({
 			url: 'itemsReplyList.do',
 			type: 'post',
 			data: { pageNum: pageNum, items_num: $('#items_num').val() },
 			dataType: 'json',
 			success: function(param) {
-
+	
+				var count = param.itemsReply;
 				//로딩 이미지 감추기
 				$('#loading').hide();
 
-				if (pageNum > 0) {
-					$('#output').empty();
-				}
+			
 				//별점 평균
-				
 				$('#starAvg').text(param.itemsStar);
 				//후기 개수
 				$('#reply').text(param.itemsReply);
-				$('#reply_1').text('후기 '+param.itemsReply+' 개');
-				
-				//전체 후기 중 5점의 퍼센트 
-			//	param.star5_per;
+				$('#reply_1').text('후기 ' + param.itemsReply + ' 개');
+				$('#reply_2').text(param.itemsReply + ' 건의 후기 중');
+
+				$('#star_per').text(param.star5_per + '% 의 고객이 5점을 주었어요 !');
+
+				$('#starAvg2').append(param.itemsStar);
+
+
 
 				//후기 목록 작업
 				$(param.list).each(function(index, item) {
@@ -56,8 +58,10 @@ $(function() {
 					output += '</li>';
 					output += '</ul>';
 					output += '<div class="sub-item">';
-					output += '<p>' +
-						item.reply_content.replace(/\r\n/g, '<br>') + '</p>';
+					output += '<p>' +item.reply_content.replace(/\r\n/g, '<br>') + '</p>';
+					output += '<span id = "red-heart" class = "red-heart" data-num="' + item.reply_num + '">';
+					output += '<i class = "fa-regular fa-heart">';
+					output += '<span class = "heart-count" id = "heart-count">' + item.favcount + '</span></span>';
 					if (item.reply_photo_name1 != null) {
 						output += '<img src="replyImageView.do?reply_num=' + item.reply_num + '&reply_type=1" width="100" height="100" class="phto1">';
 					}
@@ -75,12 +79,16 @@ $(function() {
 					output += '<hr size="1" noshade>'
 					output += '</div>';
 					output += '</div>';
-
+					
+				
 					//문서 객체에 추가
 					$('#output').append(output);
+
+
+
 				});
 				//페이지 처리 
-				totalItem = param.count;
+				totalItem = param.itemsReply;
 				if (totalItem == 0) {
 					return;
 				}
@@ -128,13 +136,7 @@ $(function() {
 			}
 		});
 	}
-	//페이지 버튼 이벤트 연결
-	$(document).on('click', '.paging-btn li', function() {
-		//페이지 번호를 읽어들임
-		currentPage = $(this).attr('data-page');
-		//목록 호출
-		selectList(currentPage);
-	});
+
 	//후기 작성
 	$('#reply-form').submit(function(event) {
 		event.preventDefault();
@@ -202,18 +204,18 @@ $(function() {
 		//댓글 글번호 
 		let re_num = $(this).attr('data-num');
 		//댓글 내용
-		let content = $(this).parent().find('p').html().replace(/<br>/g, '\r\n');
-	
-		
+		let content = $(this).parents('.item').find('p').html().replace(/<br>/g, '\r\n');
+
+
 
 		//댓글수정 폼 UI
 		let modifyUI = '<form id="mre_form">';
 		modifyUI += '<input type="hidden" name="re_num" id="mre_num" value="' + re_num + '">';
 		modifyUI += '<textarea rows="3" cols="50" name="re_content" id="mre_content" class="col-auto form-control">' + content + '</textarea>';
 		modifyUI += '<div id="mre_first"><span class="letter-count">300/300</span></div>';
-		for(let i = 1; i < 3; i++) {
-		modifyUI += '<li>';
-		modifyUI += '<img src="replyImageView.do?reply_num='+re_num+'&reply_type='+i+'" class="phto'+i+' width="100" height="100"">';
+		for (let i = 1; i < 3; i++) {
+			modifyUI += '<li>';
+			modifyUI += '<img src="replyImageView.do?reply_num=' + re_num + '&reply_type=' + i + '" class="phto' + i + ' width="100" height="100"">';
 		}
 		modifyUI += '<div id="mre_second" class="align-right">';
 		modifyUI += '<input type="submit" value="수정">';
@@ -271,7 +273,7 @@ $(function() {
 			data: new FormData($('#reply_form')[0]),
 			dataType: 'json',
 			processData: false,
-		    contentType: false,
+			contentType: false,
 			success: function(param) {
 				if (param.result == 'logout') {
 					alert('로그인해야 수정할 수 있습니다.');
@@ -302,5 +304,69 @@ $(function() {
 
 	});
 
+
+	//좋아요 읽기
+	//좋아요 선택 여부와 선택한 총개수 표시
+	function selectFav(reply_num) {
+		$.ajax({
+			url: 'replyGetFav.do',
+			type: 'post',
+			data: { reply_num: reply_num },
+			dataType: 'json',
+			success: function(param) {
+				displayFav(param);
+				console.log(param);
+			},
+			error: function() {
+				alert('네트워크 오류');
+			}
+		});
+	}
+
+
+
+
+
+	//좋아요 등록 		
+	$(document).on('click', '.red-heart', function() {
+		let heart = $(this);
+		$.ajax({
+			url: 'replyWriteFav.do',
+			type: 'post',
+			data: { reply_num: $(this).attr('data-num') },
+			dataType: 'json',
+			success: function(param) {
+				console.log(param)
+				if (param.result == 'logout') {
+					alert('로그인 후 좋아요를 누를 수 있습니다.');
+				}
+				else if (param.result == 'success') {
+					if (param.status == 'yesFav') {
+						heart.find('.fa-heart').css('font-weight', 'bold');
+						heart.parent().find('.heart-count').text(param.count);
+
+					} else {
+						heart.find('.fa-heart').css('font-weight', 'normal');
+						heart.parent().find('.heart-count').text(param.count);
+
+					}
+				}
+			},
+			error: function() {
+				alert('왜 안되냐고');
+			}
+		});
+	});
+	//좋아요 표시, 좋아요 개수 표시 공통 함수
+	function displayFav(param) {
+		if (param.status == 'yesFav') {
+			$('.fa-heart').css('font-weight', 'bold');
+		} else {
+			$('.fa-heart').css('font-weight', 'normal');
+		}
+		$('#heart-count').text(param.count);
+	}
+
+	selectFav($('.red-heart').attr('data-num'));
 
 });
