@@ -335,7 +335,7 @@ public class CourseController {
 	
 	//후기목록
 	@RequestMapping("/course/listReply.do")   
-	@ResponseBody
+	@ResponseBody  
 	public Map<String,Object> getList(@RequestParam(value="pageNum",defaultValue="1") int currentPage,@RequestParam(value="order",defaultValue="1") int order,
 										@RequestParam int course_num,HttpSession session){
 		

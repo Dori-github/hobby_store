@@ -4,7 +4,7 @@ public class CourseReplyFavVO {
 	private int fav_num;
 	private int reply_num;
 	private int fmem_num;
-	
+	 
 	public int getFav_num() {
 		return fav_num;
 	}

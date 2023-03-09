@@ -12,7 +12,7 @@
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
-		<!-- 이미지 캐러셀 -->
+		<!-- 이미지 캐러셀 --> 
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-indicators" style="display: none;">
 		    <button type="button" id="img1" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>

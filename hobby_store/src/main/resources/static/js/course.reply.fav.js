@@ -5,7 +5,7 @@ $(function(){
 	function selectReplyFav(reply_num){
 		$.ajax({
 			url:'getReplyFav.do',
-			type:'post',
+			type:'post', 
 			data:{reply_num:reply_num},
 			dataType:'json',
 			success:function(param){

@@ -3,7 +3,7 @@ $(function(){
     let pageSize = 5;//화면에 보여줄 레코드 수
     let pageBlock = 3;//페이지 표시 단위
     let currentPage;//현재 보고 있는 화면
-    let totalItem;//총 레코드 수
+    let totalItem;//총 레코드 수 
 
 	
 	//후기 목록

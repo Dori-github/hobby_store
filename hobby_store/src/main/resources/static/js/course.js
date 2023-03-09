@@ -5,7 +5,7 @@ $(function(){
 	let d_cate = $('#sidebar .d_cate a');
 	
 	//카테고리 대분류 클릭시 세부카테고리 드롭다운
-	cate.on('click',function(){ 
+	cate.on('click',function(){  
 		let item = $(this);//대분류
 		
 		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
