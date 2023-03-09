@@ -201,20 +201,29 @@ list-style:none;
 
 /*강의-등록폼,수정폼
 =============================*/
-#space_form .title{
+.container{
+  position:relative;
+  
+  /*원래 있어야 할 위치에서 위에서부터 100px 떨어진다*/
+  top:100px; 
+}
+
+.page-1{
+	
 	width:80%;
 	margin:0 auto;
 	color:#404040;
 	font-size:35px;
 	text-align: center;
 }
-#space_form .reg-form{
+#space_form{
 	position:relative;
 	width:80%;
 	margin:0 auto;
 	margin-top:20px;
 	font-size:10pt;
 }
+
 #space_form tr{
 	border-top:1px solid lightgray;
 	border-bottom:1px solid lightgray;

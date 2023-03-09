@@ -72,6 +72,7 @@ create table space_reply(
     order_num number not null,
     reply_photo varchar2(150) null,
     reply_mdate date,
+    star_auth number(1,1) not null,
    
     constraint space_reply_pk primary key (reply_num),
     constraint space_reply_fk1 foreign key (space_num)

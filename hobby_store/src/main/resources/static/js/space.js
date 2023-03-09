@@ -21,13 +21,6 @@ $(function(){
 
 	});
 	
-	//최신순 선택
-	$('#select #order').on('change',function(){
-		location.href='spaceList.do?cate='+$('#sidebar').data('param')+'&location'+$('#location').val()+'&order='+$(this).val();
-
-	});
-
-
 
 //===============요일,시간==================//
 	//요일 클릭시

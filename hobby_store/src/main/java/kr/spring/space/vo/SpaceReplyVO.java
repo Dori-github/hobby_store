@@ -1,6 +1,7 @@
 package kr.spring.space.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class SpaceReplyVO {
 	private int reply_num;
@@ -23,10 +24,27 @@ public class SpaceReplyVO {
 	private byte[] mem_photo;
 	
 	private int fav_cnt;
-	private int star;
-	private float star_avg;
+	private float star_avg;//==starcount 평균
+
 	private float star5_per;
+	private int star5;//5점준 사람의 %
+	private int starall;
+	private int star_auth;
 	
+	
+	
+	public int getStar5() {
+		return star5;
+	}
+	public void setStar5(int star5) {
+		this.star5 = star5;
+	}
+	public int getStarall() {
+		return starall;
+	}
+	public void setStarall(int starall) {
+		this.starall = starall;
+	}
 	public int getReply_num() {
 		return reply_num;
 	}
@@ -123,12 +141,7 @@ public class SpaceReplyVO {
 	public void setFav_cnt(int fav_cnt) {
 		this.fav_cnt = fav_cnt;
 	}
-	public int getStar() {
-		return star;
-	}
-	public void setStar(int star) {
-		this.star = star;
-	}
+
 	public float getStar_avg() {
 		return star_avg;
 	}
@@ -141,7 +154,10 @@ public class SpaceReplyVO {
 	public void setStar5_per(float star5_per) {
 		this.star5_per = star5_per;
 	}
-	
-	
-
+	public int getStar_auth() {
+		return star_auth;
+	}
+	public void setStar_auth(int star_auth) {
+		this.star_auth = star_auth;
+	}
 }

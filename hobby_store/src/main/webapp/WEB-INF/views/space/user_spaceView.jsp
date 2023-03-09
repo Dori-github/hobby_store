@@ -178,7 +178,13 @@
 	</form>
 	
 	<%-- 정렬 --%>
-	<div class="reply-search">
+	<div class="reply-search" align="right">
+		<select class="form-select select" id="order" name="order" style="width:100px;">
+			<option value="1">최신순</option>
+			<option value="2">별점순</option>
+			<option value="3">추천순</option>
+		</select>
+		<!--
 		<div class="btn-select"><span class="whole">최신순</span>
 			<i class="fa-solid fa-chevron-down icon" style="float: right;padding-bottom:5px;font-size:15px;"></i>
 			<i class="fa-solid fa-chevron-up icon" style="float: right;font-size:15px;display:none;"></i>
@@ -191,6 +197,7 @@
 		        </ul>
 	        </div>
 	    </div>
+	    --!>
 		<hr size="2" noshade style="color:gray;">
 	</div>
 	

@@ -2,21 +2,12 @@ package kr.spring.space.service;
 
 import java.util.Arrays;
 import java.util.List;
-
-
-
-
-
-
-
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import kr.spring.space.vo.SpaceVO;
 import kr.spring.space.dao.SpaceMapper;
 import kr.spring.space.vo.SpaceFavVO;
 import kr.spring.space.vo.SpaceReplyVO;
@@ -173,6 +164,21 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public void deleteReplyBySpaceNum(Integer space_num) {
 		spaceMapper.deleteReplyBySpaceNum(space_num);
+	}
+
+	@Override
+	public float selectStar(Integer space_num) {
+		return spaceMapper.selectStar(space_num);
+	}
+
+	@Override
+	public int select5star() {
+		return spaceMapper.select5star();
+	}
+
+	@Override
+	public int selectallstar(Integer space_num) {
+		return spaceMapper.selectallstar(space_num);
 	}
 
 
