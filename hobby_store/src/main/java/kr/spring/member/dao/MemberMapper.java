@@ -97,10 +97,10 @@ public interface MemberMapper {
 	@Select("SELECT * FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN course c ON f.course_num=c.course_num WHERE f.fmem_num=#{mem_num}")
 	public List<CourseVO> selectCourseFav(Map<String,Object> map);
 	//상품 좋아요 리스트
-	@Select("SELECT * FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN course c ON f.course_num=c.course_num WHERE f.fmem_num=#{mem_num}")
+	@Select("SELECT * FROM items_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN items i ON f.items_num=i.items_num WHERE f.fmem_num=#{mem_num}")
 	public List<ItemsVO> selectItemsFav(Map<String,Object> map);
 	//공간대여 좋아요 리스트
-	@Select("SELECT * FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN course c ON f.course_num=c.course_num WHERE f.fmem_num=#{mem_num}")
+	@Select("SELECT * FROM space_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN space s ON f.space_num=s.space_num WHERE f.fmem_num=#{mem_num}")
 	public List<SpaceVO> selectSpaceFav(Map<String,Object> map);
 	
 	//구매내역 리스트
