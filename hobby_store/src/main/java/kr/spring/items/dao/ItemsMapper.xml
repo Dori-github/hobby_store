@@ -43,10 +43,8 @@
 		<!-- check default = 1 ! -->
 		ORDER BY
 		<if test="check == 1"> items_num DESC</if>
-		<if test="check == 2">
-		</if>
-		<if test="check == 3">
-		</if>
+		<if test="check == 2"> replycount DESC NULL LAST</if>
+		<if test="check == 3"> favcount DESC NULL LAST</if>
 		<if test="check == 4"> items_price DESC</if>
 		<if test="check == 5"> items_price ASC</if>
 	</sql>
@@ -87,7 +85,7 @@
                                <include refid="itemsFilter"></include>
                                )a)
                                   <![CDATA[
-                                  WHERE rnum >= #{start} AND rnum <= #{end}
+                                  WHERE rnum >= #{start} AND rnum <= #{end} AND items_quantity > 0
                                       ]]>
 	</select>
 	<!-- ========================================================================== -->
@@ -104,34 +102,34 @@
 	<!-- ======================================================================= -->
 	<select id="selectListReply" parameterType="map"
 		resultType="itemsReplyVO">
-		SELECT
-		*
-		FROM(SELECT
-		a.*,
-		rownum rnum
-        FROM (SELECT *
-		FROM(SELECT
-		reply_num,
-        <![CDATA[      
-        REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,   
-        ]]>  
-		reply_date,
-		reply_mdate,
-		items_num,
-        b.mem_num,
-        mem_nickname,
-        mem_id,
-        mem_photo,
-		reply_photo1, reply_photo2, reply_photo3, reply_photo_name1, reply_photo_name2, reply_photo_name3,
-		star_auth
-		FROM items_reply b JOIN member c
-		ON b.mem_num = c.mem_num JOIN member_detail d
-		ON b.mem_num = d.mem_num) FULL OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount FROM items_reply_fav group by reply_num) USING (reply_num)
-		WHERE items_num = #{items_num}
-        <include refid="ReplyFilter"></include>)a)
-                 <![CDATA[
+		    SELECT * FROM
+           (SELECT a.*, rownum rnum FROM
+           (SELECT * FROM
+            (SELECT reply_num,
+                    <![CDATA[
+                    REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
+                    ]]>
+                    reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
+                    reply_date,
+                    reply_mdate,
+                    items_num,
+                    mem_num,
+                    mem_id,
+                    mem_nickname,
+                    mem_photo,
+                    star_auth
+                    FROM items_reply 
+                    JOIN member USING (mem_num) 
+                    JOIN member_detail USING(mem_num))
+                    LEFT OUTER JOIN (SELECT * FROM items_reply_fav WHERE fmem_num=#{mem_num}) USING(reply_num)
+                    LEFT OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount 
+                    FROM items_reply_fav group by reply_num) USING (reply_num)
+                  WHERE items_num = #{items_num}
+                 <include refid="ReplyFilter"></include>)a) 
+            <![CDATA[
             WHERE rnum >= #{start} AND rnum <= #{end}
-  		    ]]>     
+            ]]>          
+
       
 	</select>
 	<select id="select"></select>

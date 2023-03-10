@@ -147,7 +147,7 @@ public class ItemsController {
 			map.put("packaging", packaging);
 			// 현재 접속중인 회원의 mem_num 전달
 			MemberVO user = (MemberVO)session.getAttribute("user");
-			map.put("mem_num", user.getMem_num());
+			
 			
 			//사이드바 카테고리 
 			map.put("cate", cate);
@@ -169,6 +169,12 @@ public class ItemsController {
 	
 			
 			if(count > 0) {
+				if(user != null) {
+					map.put("mem_num", user.getMem_num());
+				}
+				else {
+					map.put("mem_num", 0);
+				}
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
 				
@@ -369,6 +375,7 @@ public class ItemsController {
 		logger.debug("items_num"+items_num);
 
 		MemberVO user =(MemberVO)session.getAttribute("user");
+		map.put("mem_num", user.getMem_num());
 		
 	
 		//별점 평균

@@ -2,6 +2,7 @@ package kr.spring.items.vo;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,8 @@ public class ItemsReplyVO {
 	private int starall;
 	private int favcount;
 	
+	/////////////////
+	private int fav_Num;
 	
 	
 	public int getStar5() {
@@ -167,6 +170,14 @@ public class ItemsReplyVO {
 	public void setFavcount(int favcount) {
 		this.favcount = favcount;
 	}
+	
+	
+		public int getFav_Num() {
+		return fav_Num;
+	}
+	public void setFav_Num(int fav_Num) {
+		this.fav_Num = fav_Num;
+	}
 		// 업로드 파일 처리
 		public void setUpload1(MultipartFile upload1) throws IOException {
 			// MultipartFile -> byte[] 변환
@@ -191,12 +202,28 @@ public class ItemsReplyVO {
 		public String toString() {
 			return "ItemsReplyVO [reply_num=" + reply_num + ", items_num=" + items_num + ", mem_num=" + mem_num
 					+ ", reply_content=" + reply_content + ", reply_date=" + reply_date + ", reply_mdate=" + reply_mdate
+					+ ", reply_photo1=" + Arrays.toString(reply_photo1) + ", reply_photo2="
+					+ Arrays.toString(reply_photo2) + ", reply_photo3=" + Arrays.toString(reply_photo3)
 					+ ", reply_photo_name1=" + reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2
 					+ ", reply_photo_name3=" + reply_photo_name3 + ", star_auth=" + star_auth + ", mem_id=" + mem_id
 					+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + mem_photo + ", starcount=" + starcount
 					+ ", star5_per=" + star5_per + ", star5=" + star5 + ", starall=" + starall + ", favcount="
-					+ favcount + "]";
+					+ favcount + ", fav_Num=" + fav_Num + ", getStar5()=" + getStar5() + ", getStarall()="
+					+ getStarall() + ", getReply_num()=" + getReply_num() + ", getItems_num()=" + getItems_num()
+					+ ", getMem_num()=" + getMem_num() + ", getReply_content()=" + getReply_content()
+					+ ", getReply_date()=" + getReply_date() + ", getReply_mdate()=" + getReply_mdate()
+					+ ", getReply_photo1()=" + Arrays.toString(getReply_photo1()) + ", getReply_photo2()="
+					+ Arrays.toString(getReply_photo2()) + ", getReply_photo3()=" + Arrays.toString(getReply_photo3())
+					+ ", getReply_photo_name1()=" + getReply_photo_name1() + ", getReply_photo_name2()="
+					+ getReply_photo_name2() + ", getReply_photo_name3()=" + getReply_photo_name3()
+					+ ", getStar_auth()=" + getStar_auth() + ", getMem_id()=" + getMem_id() + ", getMem_nickname()="
+					+ getMem_nickname() + ", getMem_photo()=" + getMem_photo() + ", getStar5_per()=" + getStar5_per()
+					+ ", getStarcount()=" + getStarcount() + ", getFavcount()=" + getFavcount() + ", getFav_Num()="
+					+ getFav_Num() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+					+ super.toString() + "]";
 		}
+		
+		
 		
 		
 		

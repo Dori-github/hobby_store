@@ -60,7 +60,7 @@ public interface ItemsMapper {
 	@Select("select * from items a join items_fav b ON a.items_num = b.items_num  ")
 	public List<ItemsVO> selectFavMem();
 	
-	//리뷰
+	//후기
 	public List<ItemsReplyVO> selectListReply(Map<String, Object> map);
 	@Select("SELECT COUNT(*) FROM items_reply JOIN member USING(mem_num) WHERE items_num = #{items_num}")
 	public int selectRowCountReply(Map<String, Object> map);
@@ -70,7 +70,10 @@ public interface ItemsMapper {
 	public ItemsReplyVO selectReply(Integer reply_num);
 	@Update("UPDATE items_reply SET reply_content = {reply_content}, reply_mdate = SYSDATE, reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}, reply_photo2 = #{reply_photo2,jdbcType=BLOB}, reply_photo_name2 = #{reply_photo_name2,jdbcType=VARCHAR}, reply_photo3 = #{reply_photo3,jdbcType=BLOB}, reply_photo_name3 = #{reply_photo_name3,jdbcType=VARCHAR}")
 	public void updateReply(ItemsReplyVO itemsReply);
+	@Delete("DELETE FROM items_reply WHERE reply_num = #{reply_num}")
 	public void deleteReply(Integer reply_num);
+	
+	
 	public void deleteReplyByItemsNum(Integer items_num);
 	
 	//상세페이지 별점

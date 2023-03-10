@@ -309,42 +309,271 @@
    font-size: 10pt;
 }
 
-/*후기 작성 */
-#reply-form fieldset{
+/*후기 등록 폼*/
+#reply_form{
+	width:70%;
+	height:570px;
+	margin:0 auto;
+	padding:70px;
+}
+#reply_form .reply_star{
+	position:relative;
+	margin-bottom:10px;
+	font-size:15pt;
+	padding:0 10px;
+}
+.reply-content{
+	width:100%;
+	height:200px;
+	padding:10px 20px;
+	border:2px solid lightgray;
+	border-radius: 10px;
+}
+.reply-content:hover,
+.reply-content:focus{
+	outline:3px solid gray;
+	border:none;
+}
+#reply_form fieldset{
     display: inline-block;
     direction: rtl;
     border:0;
 }
-#reply-form fieldset legend{
+#reply_form fieldset legend{
     text-align: right;
 }
-#reply-form input[type=radio]{
+#reply_form input[type=radio]{
     display: none;
 }
-#reply-form label{
+#reply_form label{
     font-size: 2em;
     color: transparent;
     text-shadow: 0 0 0 #f0f0f0;
 }
-#reply-form label:hover{
+#reply_form label:hover{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#reply-form label:hover ~ label{
+#reply_form label:hover ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#reply-form input[type=radio]:checked ~ label{
+#reply_form input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
 }
-#reply_content {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
+
+/*후기 사진등록 및 버튼*/
+.reply-photo{
+	margin-top:10px;
 }
+.reply-photo .image{
+	padding:0;
+}
+.reply-photo .image li{
+	float:left;
+	width:120px;
+	margin-right:20px;
+}
+.reply-photo .label1,.reply-photo img{
+	width:120px;
+	height:120px;
+	border-radius: 10px;
+}
+.reply-photo .fa-circle-plus{
+	left:45px;
+	top:45px;
+	font-size: 25pt;
+}
+.reply-photo .image .label1:hover i{
+	left:42px;
+	top:42px;
+	font-size: 30pt;
+}
+.reply-photo .fa-circle-xmark{
+	top:-127px;
+	left:107px;;
+	font-size:15pt;
+	background-color: #FFF;
+	border-radius: 50%;
+}
+/*글자수 및 전송버튼*/
+.reply-photo .reply-submit-btn{
+	float:right;
+	text-align: right;
+	margin-right:10px;
+}
+.letter-count{
+	position:absolute;
+	top:32px;
+	right:0;
+	color:gray;
+	font-size:12pt;
+	margin-right:20px;
+}
+.fa-paper-plane{
+	font-size: 30pt;
+	color:#FF4E02;
+	transition:.3s;
+}
+.fa-paper-plane:hover{
+	transform:rotate(20deg) scale(1.1);
+	cursor: pointer;
+}
+
+/*후기 정렬*/
+.reply-search{
+	position:relative;
+	width:70%;
+	margin: 0 auto;
+}
+.reply-search .btn-select{
+	position: absolute;
+	bottom:0;
+	right:20px;
+}
+
+
+/*후기 목록*/
+#output .item{
+	width:70%;
+	margin:0 auto;
+	padding:10px 20px;
+	position: relative;
+}
+#output .wid{
+	width:70%;
+	margin:0 auto;
+}
+#output .r-list-star{
+	color:rgba(250, 208, 0, 0.99);
+    font-size: 1.5em;
+	margin-left:20px;
+}
+#output .r-list-fav{
+	float: right;
+	width:90px;
+	height:35px;
+	margin-right:20px;
+	border:1px solid lightgray;
+	border-radius: 20px;
+	cursor: pointer;
+}
+#output .fa-thumbs-up{
+	padding-left:20px;
+	line-height:35px;
+}
+#output .fa-thumbs-up:hover{
+	transform:scale(1.1);
+}
+#output .re-help{
+	display: inline-block;
+	text-align: right;
+}
+#output .detail-info{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding:0;
+}
+#output .my-photo{
+	border-radius: 50%;
+	margin-right:20px;
+}
+#output .modify-date{
+	color:#B2B2B2;
+}
+#output .reply-btn{
+	position: absolute;
+	bottom:0;
+	right:20px;
+}
+.modify-btn,.delete-btn,.submit-btn,.reply-reset{
+	background-color: #FFF;
+	outline:1px solid gray;
+	border:none;
+	border-radius: 20px;
+	width:70px;
+	height:35px;
+	font-size: 10pt;
+}
+.modify-btn:hover,.delete-btn:hover,.submit-btn:hover,.reply-reset:hover{
+	background-color: #F2F2F2;
+}
+.modify-btn{
+	margin-right:5px;
+}
+#output p{
+	width:70%;
+	margin:0;
+}
+*후기목록 이미지*/
+.list-photos{
+	display: none;
+}
+.sub-item img{
+	border:1px solid lightgray;
+	border-radius:10px;
+	margin:20px 10px 0 0;
+	cursor: pointer;
+}
+.sub-item .look-photo{
+	display:inline-block;
+	outline:1px solid lightgray;
+	color:gray;
+	border-radius:20px;
+	margin-top:20px;
+	padding:5px 10px;
+	font-size: 10pt;
+	cursor: pointer;
+}
+.sub-item .look-photo:hover{
+	outline:none;
+	background-color: #404040;
+	color:#FFF;
+}
+#exampleModal img{
+	width:470px;
+	height:470px;
+}
+
+
+
+/*후기 페이징*/
+.paging-btn{
+	padding:0;
+	display: flex;
+	justify-content: center;
+}
+.paging-btn li{
+	padding:10px 20px;
+	margin-top:30px;
+	cursor: pointer;
+}
+.paging-btn li:hover{
+	background-color:#F2F2F2;
+	border-radius:5px;
+}
+.paging-btn i{
+	color:gray;
+}
+
+/*댓글 수정폼*/
+#mreply_form{
+	height:380px;
+	padding:0 50px;
+}
+.mletter-count{
+	top:-10px;
+}
+#mreply_form .submit-btn,#mreply_form .reply-reset{
+	float:right;
+}
+#mreply_form .submit-btn{
+	margin-right:10px;
+	text-align: center;
+}
+
+
+
+
 
 
 

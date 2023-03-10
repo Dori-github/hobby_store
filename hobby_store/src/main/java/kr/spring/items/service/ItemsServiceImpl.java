@@ -144,7 +144,7 @@ public class ItemsServiceImpl implements ItemsService  {
 
 	@Override
 	public void deleteReply(Integer reply_num) {
-		// TODO Auto-generated method stub
+		itemsMapper.deleteReply(reply_num);
 		
 	}
 
