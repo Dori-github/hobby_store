@@ -359,8 +359,9 @@ $(function(){
                     showCancelButton: false,
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
-                });
-					location.href='../talk/talkList.do';
+                }).then(function(){
+						location.href='../talk/talkList.do';
+				});	
 				}else{
 					Swal.fire({
                     icon: 'error',
