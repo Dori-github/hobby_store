@@ -109,18 +109,29 @@
 			<p>구매 수량</p>
 			<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
 			<hr size="2" noshade width="100%" style="color: gray;">
-			<div style="display: flex;">
-				<div class="buy" style="width: 50%;">장바구니</div>
-				<div style="width: 5%;"></div>
-				<div class="buy" style="width: 50%;">상품 구매</div>
+			
+			<form id="itemsOn_cart" action="/order/orderForm.do" method="post">	
+			<input type="hidden" name="items_num" value="${items.items_num}" id="items_num">
+			<input type="hidden" name="items_price" value="${items.items_price}" id="items_price">
+			<input type="hidden" name="items_name" value="${items.items_name}" id="items_name">
+      		<input type="hidden" name="items_quantity" value="${items.items_quantity}" id="items_quantity">
+			<div class="reservation">
+			
+			</div>
+			</form>
+			<div style="display:flex;justify-content:space-between;">
+				<button type = "submit" class = "buy"><i class = "fa-solid fa-cart-plus"></i></button>
+				<button type = "submit" class = "buy">상품 구매 </button>
+	
 			</div>
 		</div>
 	</div>
 </div>
-			<input type="hidden" name="items_num" value="${items.items_num}" id="items_num"> 
-			<input type="hidden" name="items_price" value="${items.items_price}">
-			<input type="hidden" name="items_name" value="${items.items_name}">
-			<input type="hidden" name="items_quantity" value="${items.items_quantity}">
+
+		
+
+		
+
 			
 
 <div class="course-d-info">
