@@ -221,6 +221,18 @@ public class ItemsServiceImpl implements ItemsService  {
 		return itemsMapper.selectReplyFavCheck(reply_num);
 	}
 
+	@Override
+	public ItemsReplyVO deleteFav(ItemsReplyVO reply) {
+		// TODO Auto-generated method stub
+		return itemsMapper.deleteFav(reply);
+	}
+
+	@Override
+	public void deleteAllFav(ItemsReplyVO fav) {
+		// TODO Auto-generated method stub
+		itemsMapper.deleteAllFav(fav);
+	}
+
 	
 
 

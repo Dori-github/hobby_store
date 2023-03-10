@@ -80,6 +80,12 @@ public interface ItemsService {
 	public List<ItemsReplyFavVO> selectReplyFavMem();
 	
 	public int selectReplyFavCheck(Integer reply_num);
+	
+	public ItemsReplyVO deleteFav(ItemsReplyVO reply);
+	
+	public void deleteAllFav(ItemsReplyVO fav);
+	
+	
 
 	
 }

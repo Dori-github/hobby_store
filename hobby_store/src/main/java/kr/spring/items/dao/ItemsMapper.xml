@@ -43,8 +43,8 @@
 		<!-- check default = 1 ! -->
 		ORDER BY
 		<if test="check == 1"> items_num DESC</if>
-		<if test="check == 2"> replycount DESC NULL LAST</if>
-		<if test="check == 3"> favcount DESC NULL LAST</if>
+		<if test="check == 2"> replycount DESC NULLS LAST</if>
+		<if test="check == 3"> favcount DESC NULLS LAST</if>
 		<if test="check == 4"> items_price DESC</if>
 		<if test="check == 5"> items_price ASC</if>
 	</sql>
@@ -81,12 +81,13 @@
                                 LEFT OUTER JOIN (SELECT items_num , COUNT(reply_num) AS replycount FROM items_reply GROUP BY items_num) USING(items_num)
                                 LEFT OUTER JOIN (SELECT items_num , COUNT(fav_num) AS favcount FROM items_fav GROUP BY items_num) USING(items_num)
                                 LEFT OUTER JOIN (SELECT items_num , ROUND(AVG(star_auth),2) AS starcount FROM items_reply GROUP BY items_num) USING(items_num)
-                               <include refid="itemsSearch"></include>
-                               <include refid="itemsFilter"></include>
+                                        <include refid="itemsSearch"></include>
+                             			
                                )a)
                                   <![CDATA[
                                   WHERE rnum >= #{start} AND rnum <= #{end} AND items_quantity > 0
                                       ]]>
+                     
 	</select>
 	<!-- ========================================================================== -->
 	<sql id="ReplyFilter">

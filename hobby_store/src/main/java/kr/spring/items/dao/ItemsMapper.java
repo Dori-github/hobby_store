@@ -110,6 +110,11 @@ public interface ItemsMapper {
 	@Select("SELECT * FROM items_reply_fav WHERE reply_num = #{reply_num}")
 	public int selectReplyFavCheck(Integer reply_num);
 	
+	@Select("SELECT fav_num FROM items_reply_fav WHERE reply_num = #{reply_num}")
+	public ItemsReplyVO deleteFav(ItemsReplyVO reply);
+	@Delete("DELETE FROM items_reply_fav WHERE fav_num = #{fav_num}")
+	public void deleteAllFav(ItemsReplyVO fav);
+
 
 	
 }
