@@ -14,19 +14,12 @@
 <script type="text/javascript"
    src="${pageContext.request.contextPath}/js/message.js"></script>
 <link rel="stylesheet" type="text/css"
-   href="${pageContext.request.contextPath}/css/talk.css" />  
-    <script>
-    $(function(){
-       $('#talk_btn').trigger('click');
-    });
-    </script>
+   href="${pageContext.request.contextPath}/css/talk.css" />
 <!-- 채팅하기 시작 -->
 <div id="talkDetail" class="container">
-   <button id="talk_btn" type="button" class="talk-btn" data-toggle="modal"
-      data-target="#myModal"></button>
-   <div class="modal fade" id="myModal">
+   <div>
       <div class="modal-dialog">
-         <div class="modal-content" style="padding: 20px;">
+         <div class="modal-content" style="padding: 20px;margin-left:-200px;height:700px;">
             <div class="row" 
                style="margin-top: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0, 0, 0, .1);">
                <div class="col-9" >
