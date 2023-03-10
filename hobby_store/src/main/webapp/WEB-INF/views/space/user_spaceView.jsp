@@ -4,9 +4,24 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/space.css" rel="stylesheet">
 <!-- 중앙 컨텐츠 시작 -->
+<!-- 상품 상세 시작 -->
+
 <script src="${pageContext.request.contextPath}/js/space.js"></script>
 <script src="${pageContext.request.contextPath}/js/space.fav.js"></script>
 <script src="${pageContext.request.contextPath}/js/space.reply.js"></script>
+<!-- 상품 상세 시작 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/space.js"></script>
+<div class="page-main">
+	<c:if test="${space.space_limit == 0}">
+	<div class="result-display">
+		<div class="align-center">
+			본 상품은 판매 중지 되었습니다.<p>
+			<input type="button" value="판매 상품 보기"
+			     onclick="location.href='list.do'">
+		</div>
+	</div>
+	</c:if>
+	<c:if test="${space.space_limit > 0}">
 <div id="space_detail" class="space-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -83,18 +98,45 @@
 				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
 			</p>
 		</div>
-		<%-- 결제정보 전송 폼(공간 번호,가격,요일,시간) --%>
+		<%-- 결제정보 전송 폼(공간 번호,가격,요일) --%>
 		<form id="space_cart" action="/order/orderForm.do" method="post">
 			<input type="hidden" name="space_num" value="${space.space_num}" id="space_num">
 			<input type="hidden" name="space_price" value="${space.space_price}" id="space_price">
+			<input type="hidden" name="space_limit" value="${space.space_limit}" id="space_limit">
 			<div class="reservation">
 				<%-- 공간대여 예약 --%>
-				<p>날짜선택<input type="date"></p>
+				<p class="gray">날짜선택<input type="date"></p>
 				
 			
-				<p>공간수 &nbsp; / ${space.space_np} &nbsp &nbsp 최대인원수 &nbsp; / ${space.space_limit}</p>
-				<span>구매수량 <input></span> 
-			
+				<%-- <p>
+				공간수 &nbsp; / ${space.space_limit} &nbsp &nbsp 최대인원수 &nbsp; / ${space.space_np}</p>
+				<span>구매수량 <input></span>  --%>
+			    <!-- 강사님 폼 -->
+			    <div class="gray" id="spacepay">
+				<span>가격 : <b><fmt:formatNumber value="${space.space_price}"/></b></span>
+				<span>재고 : <span><fmt:formatNumber value="${space.space_limit}"/></span></span>
+				<c:if test="${space.space_limit > 0}">
+				<li>
+					<span><label for="order_quantity">구매수량</label></span>
+					<input type="number" name="order_quantity"
+					   min="1" max="${space.space_limit}" autocomplete="off"
+					   id="order_quantity" class="quantity-width">
+				</li>
+				<li>
+					<span id="space_total_txt">총주문 금액 : 0원</span>
+				</li>
+				
+				<li>
+					<input type="submit" value="공간예약하기">
+				</li>
+				</c:if>
+				<c:if test="${space.space_limit <= 0}">
+				<li class="align-center">
+					<span class="sold-out">품절</span>
+				</li>
+				</c:if>
+				</div>
+			 <!-- 여기까지 --> 
 	        </div>
 	        </form>
       </div>
@@ -102,7 +144,7 @@
 <div class="space-d-info">
 	<ul class="title">
 		<li class="active">소개</li>
-		<li>후기 <span class="badge" >4</span></li>
+		<li>후기 <span class="badge" >${space.replycount}</span></li>
 		<li>문의 <span class="badge" >4</span></li>
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
@@ -156,7 +198,7 @@
 		<div class="reply-photo">
 			<ul class="image">
 				<li>
-					<img class="course-photo1">
+					<img class="space-photo1">
 					<label for="upload1" class="label1 l1">
 						<i class="fa-solid fa-circle-plus"></i><br>
 					</label>
@@ -164,7 +206,7 @@
 					<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
 				</li>
 				<li>
-					<img class="course-photo2">
+					<img class="space-photo2">
 					<label for="upload2" class="label1 l2">
 						<i class="fa-solid fa-circle-plus"></i><br>
 					</label>
@@ -172,7 +214,7 @@
 					<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
 				</li>
 				<li>
-					<img class="course-photo3">
+					<img class="space-photo3">
 					<label for="upload3" class="label1 l3">
 						<i class="fa-solid fa-circle-plus"></i><br>
 					</label>
@@ -220,5 +262,6 @@
 	</div>
 	<!-- 문의 끝 -->
 </div>
-
+</c:if><!-- 재고 있을때 끝 -->
+</div>
 <!-- 중앙 컨텐츠 끝 -->

@@ -7,10 +7,12 @@ import java.util.List;
 
 import java.util.Map;
 
+import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
 
 import kr.spring.space.vo.SpaceFavVO;
+import kr.spring.space.vo.SpaceReplyFavVO;
 import kr.spring.space.vo.SpaceReplyVO;
 import kr.spring.space.vo.SpaceVO;
 
@@ -44,11 +46,20 @@ public interface SpaceService {
 	public void updateReply(SpaceReplyVO spaceReply);
 	public void deleteReply(Integer reply_num);
 	public void deleteReplyBySpaceNum(Integer space_num);
-	void insertSpace(SpaceVO space);
 
+    //별점
 	public float selectStar(Integer space_num);
-	public int select5star();
+	public int select5star(Integer space_num);
 	public int selectallstar(Integer space_num);
+	
+	//후기 좋아요
+		public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
+		public int selectReplyFavCount(Integer reply_num);
+		public void insertReplyFav(SpaceReplyFavVO fav);
+		public void deleteReplyFav(Integer fav_num);
+		public void deleteReplyFavByReplyNum(Integer reply_num);
+	
+
 }
 
 

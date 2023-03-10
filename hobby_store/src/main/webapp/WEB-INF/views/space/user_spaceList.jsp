@@ -122,7 +122,7 @@
                        </div>
                        <a href="detail.do?space_num=${space.space_num}" style="display:block;">
                        <h5 class="card-title"><b>${space.space_name}</b></h5>
-                       <span><i class="fa-regular fa-star"></i> ${space.star_auth} (후기 ${space.reply_num})</span>
+                       <span><i class="fa-regular fa-star"></i> ${space.star_avg} (후기 ${space.replycount})</span>
                        <p class="card-text">
                           <span>${space.space_address1}</span>
                           <br><b><fmt:formatNumber>${space.space_price}</fmt:formatNumber>원</b><span style="color:gray;"><b><fmt:formatNumber>${space.space_np} </fmt:formatNumber>인</b></span>

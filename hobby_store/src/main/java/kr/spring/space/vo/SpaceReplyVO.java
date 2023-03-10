@@ -1,7 +1,10 @@
 package kr.spring.space.vo;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Arrays;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class SpaceReplyVO {
 	private int reply_num;
@@ -31,6 +34,30 @@ public class SpaceReplyVO {
 	private int starall;
 	private int star_auth;
 	
+
+	//파일 업로드 처리
+	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
+	public void setUpload1(MultipartFile upload1)
+			throws IOException{
+		//MultipartFile -> byte[] 변환
+		setReply_photo1(upload1.getBytes());
+		//파일명 구하기
+		setReply_photo_name1(upload1.getOriginalFilename());
+	}
+	public void setUpload2(MultipartFile upload2)
+			throws IOException{
+		//MultipartFile -> byte[] 변환
+		setReply_photo2(upload2.getBytes());
+		//파일명 구하기
+		setReply_photo_name2(upload2.getOriginalFilename());
+	}
+	public void setUpload3(MultipartFile upload3)
+			throws IOException{
+		//MultipartFile -> byte[] 변환
+		setReply_photo3(upload3.getBytes());
+		//파일명 구하기
+		setReply_photo_name3(upload3.getOriginalFilename());
+	}
 	
 	
 	public int getStar5() {

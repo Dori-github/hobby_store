@@ -201,6 +201,11 @@ list-style:none;
 
 /*강의-등록폼,수정폼
 =============================*/
+#spacepay{
+	list-style:none;
+}
+
+
 .container{
   position:relative;
   
@@ -1043,7 +1048,6 @@ input[type='number']::-webkit-inner-spin-button {
 .paging-btn i{
 	color:gray;
 }
-
 /*댓글 수정폼*/
 #mreply_form{
 	height:380px;

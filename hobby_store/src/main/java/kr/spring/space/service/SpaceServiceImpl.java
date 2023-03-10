@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.space.dao.SpaceMapper;
 import kr.spring.space.vo.SpaceFavVO;
+import kr.spring.space.vo.SpaceReplyFavVO;
 import kr.spring.space.vo.SpaceReplyVO;
 import kr.spring.space.vo.SpaceTimeVO;
 import kr.spring.space.vo.SpaceVO;
@@ -40,28 +41,7 @@ public class SpaceServiceImpl implements SpaceService{
 		return spaceMapper.selectSpaceList(map);
 	}
 
-	@Override
-	public void insertSpace(SpaceVO space) {
-		space.setSpace_num(spaceMapper.selectSpace_num());
-		spaceMapper.insertspace(space);
-		for(SpaceTimeVO vo : space.getSpaceTimeVO()) {
-			if(vo.getspace_reg_date()!=null) {
-				vo.setspace_num(space.getSpace_num());
-				vo.setMem_num(space.getMem_num());
-				String output = "";
-				List<String> time = vo.getspace_reg_times();
-				//공백 또는 null 제거
-				time.removeAll(Arrays.asList("",null));
-				for(int i=0;i<vo.getspace_reg_times().size();i++) {
-					output += vo.getspace_reg_times().get(i);
-					if(i<vo.getspace_reg_times().size()-1) output += ",";
-				}
-				System.out.println("~~~~~~~~~~~~~~~"+output);
-				vo.setspace_reg_time(output);
-				spaceMapper.insertSpace_time(vo);
-			}
-		}
-	}
+
 
 	@Override
 	public SpaceVO selectSpace(Integer space_num) {
@@ -172,13 +152,43 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int select5star() {
+	public int select5star(Integer space_num) {
 		return spaceMapper.select5star();
 	}
 
 	@Override
 	public int selectallstar(Integer space_num) {
 		return spaceMapper.selectallstar(space_num);
+	}
+    
+	
+	//후기 좋아요
+	@Override
+	public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav) {
+		return spaceMapper.selectReplyFav(fav);
+	}
+
+	@Override
+	public int selectReplyFavCount(Integer reply_num) {
+		return spaceMapper.selectReplyFavCount(reply_num);
+	}
+
+	@Override
+	public void insertReplyFav(SpaceReplyFavVO fav) {
+		spaceMapper.insertReplyFav(fav);
+		
+	}
+
+	@Override
+	public void deleteReplyFav(Integer fav_num) {
+		spaceMapper.deleteReplyFav(fav_num);
+		
+	}
+
+	@Override
+	public void deleteReplyFavByReplyNum(Integer reply_num) {
+		spaceMapper.deleteReplyFavByReplyNum(reply_num);
+		
 	}
 
 

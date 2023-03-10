@@ -8,7 +8,7 @@
   	<sql id="spaceSearch">
   		<where>
   		  <if test="cate!=null and cate!=''">
-  		  cate_num = #{cate}
+  		  cate_num = #{cate_num}
   		  </if>
   		<if test="keyword!=null and keyword!=''">
   		    <if test="cate!=null and cate!=''">
@@ -137,7 +137,8 @@
   		            reply_date,
   		            reply_mdate,
   		            space_num,
-  		            mem_num,
+  		            star_auth,
+  		            mem_num, 
   		            mem_id,
   		            mem_nickname,
   		            mem_photo

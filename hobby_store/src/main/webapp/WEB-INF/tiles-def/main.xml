@@ -28,6 +28,7 @@
     	<put-attribute name="footer"
     	  value="/WEB-INF/views/template/footer.jsp"/>         
     </definition>
+  
 </tiles-definitions>
 
 

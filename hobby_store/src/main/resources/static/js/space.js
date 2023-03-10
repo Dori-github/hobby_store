@@ -108,25 +108,25 @@ $(function(){
 	
 	//===============공간수===================//
 	$('#minus').on('click',function(){
-		let space_num = parseInt($('#space_np').val());
+		let space_num = parseInt($('#space_limit').val());
 		result = space_num - 1;
 		$('#space_np').val(result);
 	});
 	$('#plus').on('click',function(){
-		let space_num = parseInt($('#space_np').val());
+		let space_num = parseInt($('#space_limit').val());
 		result = space_num + 1;
 		$('#space_np').val(result);
 	});
 		//===============인원수제한===================//
 	$('#minus').on('click',function(){
-		let space_num = parseInt($('#space_limit').val());
+		let space_num = parseInt($('#space_np').val());
 		result = space_num - 1;
 		$('#space_limit').val(result);
 	});
 	$('#plus').on('click',function(){
-		let space_num = parseInt($('#space_limit').val());
+		let space_num = parseInt($('#space_np').val());
 		result = space_num + 1;
-		$('#space_limit').val(result);
+		$('#space_np').val(result);
 	});
 	
 	

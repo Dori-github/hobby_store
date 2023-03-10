@@ -2,6 +2,7 @@ package kr.spring.space.dao;
 
 import java.util.List;
 
+
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
@@ -12,8 +13,9 @@ import org.apache.ibatis.annotations.Update;
 
 import kr.spring.space.vo.SpaceReplyVO;
 import kr.spring.space.vo.SpaceTimeVO;
+
 import kr.spring.space.vo.SpaceFavVO;
-import kr.spring.space.vo.SpaceReplyVO;
+import kr.spring.space.vo.SpaceReplyFavVO;
 import kr.spring.space.vo.SpaceVO;
 
 
@@ -59,7 +61,7 @@ public interface SpaceMapper {
 	public void deleteFavBySpaceNum(Integer fav_num);
 	
 	//후기
-	@Select("SELECT AVG(star_auth) FROM space_star WHERE space_num=#{space_num}")
+	@Select("SELECT AVG(star_auth,1) FROM space_star WHERE space_num=#{space_num}")
 	public float selectStarAvg(Integer space_num);
 	public List<SpaceReplyVO> selectListReply(Map<String, Object> map);
 	public int selectReplyCount(Map<String,Object> map);
@@ -86,7 +88,19 @@ public interface SpaceMapper {
 	public int select5star();
 	@Select("SELECT COUNT(reply_num) AS starall FROM space_reply WHERE space_num = #{space_num}")
 	public int selectallstar(Integer space_num);
-
+	
+	//후기 좋아요
+	@Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
+	public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
+	@Select("SELECT COUNT(*) FROM space_reply_fav WHERE reply_num=#{reply_num}")
+	public int selectReplyFavCount(Integer reply_num);
+	@Insert("INSERT INTO space_reply_fav (fav_num,reply_num,fmem_num) VALUES (space_reply_fav_seq.nextval,#{reply_num},#{fmem_num})")
+	public void insertReplyFav(SpaceReplyFavVO fav);
+	@Delete("DELETE FROM space_reply_fav WHERE fav_num=#{fav_num}")
+	public void deleteReplyFav(Integer fav_num);
+	@Delete("DELETE FROM space_reply_fav WHERE reply_num=#{reply_num}")
+	public void deleteReplyFavByReplyNum(Integer reply_num);
+	
 }
 
 

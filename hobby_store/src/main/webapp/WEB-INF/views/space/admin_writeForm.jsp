@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/space/jquery.timepicker.css">
 <link href="${pageContext.request.contextPath}/css/space.css" rel="stylesheet"> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"><!-- 새로넣은거 -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <style>
 .ck-editor__editable_inline {
@@ -52,10 +53,11 @@
                         </select>
                         </td>
                      </tr>
+                    	
                      
                      <tr>
-                              <td width="20%">우편번호</td>
-                           <td width="80%">
+                              <td>우편번호</td>
+                           <td>
                               <form:input path="space_zipcode"/>
                         
                               <form:button class="btn btn-secondary" type="button" 

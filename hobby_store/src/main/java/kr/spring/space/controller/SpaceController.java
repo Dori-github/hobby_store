@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import kr.spring.course.vo.CourseReplyFavVO;
+import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
@@ -242,7 +244,7 @@ public class SpaceController {
 			mapJson.put("result","logout");
 		}else {
 			//회원번호 등록
-			vo.setStar_auth(5);//이거 없애야됨
+			//vo.setStar_auth(5);//이거 없애야됨
 			vo.setMem_num(user.getMem_num());
 			//댓글 등록
 			spaceService.insertReply(vo);
@@ -269,16 +271,15 @@ public class SpaceController {
 
 		//총 글의 개수
 		int count = spaceService.selectReplyCount(map);
-		logger.debug("후기 갯수 "+ count);
+		//logger.debug("후기 갯수 "+ count);
 
 		//별점 평균
-		float spaceStar = spaceService.selectStar(space_num);
+		float star_auth = spaceService.selectStar(space_num);
 
 		//전체 후기 중 5점의 퍼센트
-		int star5 = spaceService.select5star();
+		int star5 = spaceService.select5star(space_num);
 		int starall = spaceService.selectallstar(space_num);
-		float star5_per = (float)star5 / starall * 100; 
-
+		float star5_per =  Math.round((float)star5/starall*100);
 
 
 		//페이지 처리
@@ -297,6 +298,8 @@ public class SpaceController {
 		Map<String,Object> mapJson = new HashMap<String,Object>();
 		mapJson.put("list", list);
 		mapJson.put("count", count);
+		mapJson.put("star_auth", star_auth);
+		mapJson.put("star5_per", star5_per);
 
 		//===== 로그인 한 회원정보 셋팅 =====//
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -306,6 +309,35 @@ public class SpaceController {
 
 		return mapJson;
 	}
+	//후기 이미지 출력
+		@RequestMapping("/space/replyImageView.do")
+		public ModelAndView viewReplyImage(@RequestParam int reply_num,@RequestParam int reply_type) {
+			
+			SpaceReplyVO vo = spaceService.selectReply(reply_num);
+			
+			logger.debug("<<spaceReplyVO>> :" + vo);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("imageView");
+			
+			if(reply_type==1 && vo.getReply_photo_name1()!=null) {
+					mav.addObject("imageFile", vo.getReply_photo1());
+					mav.addObject("filename", vo.getReply_photo_name1());
+			}
+			if(reply_type==2) {
+				if(vo.getReply_photo_name2()!=null) {
+					mav.addObject("imageFile", vo.getReply_photo2());
+					mav.addObject("filename", vo.getReply_photo_name2());
+				}
+			}
+			if(reply_type==3) {
+				if(vo.getReply_photo_name3()!=null) {
+					mav.addObject("imageFile", vo.getReply_photo3());
+					mav.addObject("filename", vo.getReply_photo_name3());
+				}
+			}
+			return mav;
+		}
 	//==========댓글수정==========//
 	@RequestMapping("/space/updateReply.do")
 	@ResponseBody
@@ -376,7 +408,6 @@ public class SpaceController {
 
 		return mapJson;
 	}
-
-
+	//후기좋아요
 
 }
