@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderDetailVO;
 import kr.spring.order.vo.OrderVO;
 import kr.spring.space.vo.SpaceVO;
 public interface MemberService {
@@ -67,6 +68,14 @@ public interface MemberService {
 	//회원 - 배송확인
 	public int selectOrderCountByMem_num(Map<String,Object> map);
 	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
+	public OrderVO selectOrder(Integer order_num);
+	public List<OrderDetailVO> selectListOrderDetail(Integer order_num);
+	
+	//회원 - 주문취소
+	public void updateOrderCancel(Integer order_num);
+
+	//회원 - 배송정보 변경
+	public void updateOrder(OrderVO order);
 	
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);

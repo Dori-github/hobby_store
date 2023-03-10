@@ -222,6 +222,21 @@
   		FROM orders
   		<include refid="orderSearchByMem_num"></include>
   	</select>
+  	
+  	<update id="updateOrder" parameterType="orderVO">
+  		UPDATE orders
+  		SET
+  		 <if test="order_status == 0 || order_status == 1">
+  		 receive_name=#{receive_name},
+  		 receive_post=#{receive_post},
+  		 receive_address1=#{receive_address1},
+  		 receive_address2=#{receive_address2},
+  		 receive_phone=#{receive_phone},
+  		 notice=#{notice},
+  		 </if>
+  		 order_status=#{order_status}
+  	   WHERE order_num=#{order_num}
+  	</update>
 </mapper>
 
 

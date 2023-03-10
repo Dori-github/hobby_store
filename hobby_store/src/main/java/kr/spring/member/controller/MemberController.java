@@ -35,6 +35,7 @@ import kr.spring.member.service.EmailSender;
 import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.Email;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderDetailVO;
 import kr.spring.order.vo.OrderVO;
 import kr.spring.space.vo.SpaceVO;
 import kr.spring.util.AuthCheckException;
@@ -775,6 +776,56 @@ public class MemberController {
 
 			return mav;
 		}
+	
+	//사용자 주문정보수정 폼 호출
+	@GetMapping("/member/orderModify.do")
+	public String formUserModify(@RequestParam int order_num,Model model) {
+			
+		//주문정보
+		OrderVO order = memberService.selectOrder(order_num);
+		//개별 상품의 주문정보
+		List<OrderDetailVO> detailList = memberService.selectListOrderDetail(order_num);
+		logger.debug("<<사용자 주문정보수정 - 주문상세>> : " + detailList);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("detailList", detailList);		
+			
+		return "orderModify";
+	}
+		
+	//사용자 주문취소
+	@RequestMapping("/member/orderCancel.do")
+	public String submitCancel(@RequestParam int order_num,Model model,HttpServletRequest request) {
+		OrderVO db_order = memberService.selectOrder(order_num);
+		if(db_order.getOrder_status()>2) {
+			return "common/notice";
+		}
+			
+		//주문취소
+		memberService.updateOrderCancel(order_num);
+		
+		model.addAttribute("message","주문취소가 완료되었습니다.");
+		model.addAttribute("url", request.getContextPath() +"/member/orderModify.do?order_num="+order_num);
+			
+		return "common/resultView";
+		
+		}
+	
+	//폼에서 전송된 데이터 처리
+	@PostMapping("/member/orderModify.do")
+	public String submitUserModify(OrderVO orderVO,Model model,HttpServletRequest request) {
+		OrderVO db_order = memberService.selectOrder(orderVO.getOrder_num());
+		if(db_order.getOrder_status()>2) {
+			return "common/notice";
+		}
+		
+		memberService.updateOrder(orderVO);
+		
+		model.addAttribute("message","주문정보가 변경되었습니다.");
+		model.addAttribute("url", request.getContextPath()+"/member/orderModify.do?order_num="+orderVO.getOrder_num());
+		
+		return "common/resultView";
+	}
 	
 	//배송조회
 	/*@RequestMapping("/member/order.do")

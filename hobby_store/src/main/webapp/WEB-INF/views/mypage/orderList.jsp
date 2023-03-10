@@ -4,9 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 주문조회 시작 -->
 <div id="content">
-	<div id="delivery_box">
-		<div class="delivery-status"></div>
-	</div>
 <form action="order.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
@@ -46,7 +43,11 @@
 		<c:forEach var="order" items="${list}">
 		<tr>
 			<td>${order.order_num}</td>
-			<td>${order.order_name}</td>
+			<td>
+			<a href="orderModify.do?order_num=${order.order_num}">
+				${order.order_name}
+			</a>
+			</td>
 			<td class="align-center">
 				<fmt:formatNumber value="${order.order_price}"/>
 			</td>
@@ -63,9 +64,6 @@
 				<c:if test="${order.refund_status==0}">환불요청중</c:if>
 				<c:if test="${order.refund_status==1}">환불완료</c:if>
 			</c:if>
-				<c:if test="${order.order_status < 2 && order.refund_status==null}">
-				<input type="button" value="주문취소" onclick="location.href='user_orderCancel.do'">
-				</c:if>
 				<!-- <c:if test="${order.order_status > 2}">
 				<input type="button" value="환불요청" onclick="location.href='user_order.do'">
 				</c:if> -->

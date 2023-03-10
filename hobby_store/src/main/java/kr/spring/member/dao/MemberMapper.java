@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.vo.OrderDetailVO;
 import kr.spring.order.vo.OrderVO;
 import kr.spring.space.vo.SpaceVO;
 
@@ -133,6 +134,17 @@ public interface MemberMapper {
 	//회원 - 배송확인
 	public int selectOrderCountByMem_num(Map<String,Object> map);
 	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
+	@Select("SELECT * FROM orders WHERE order_num=#{order_num}")
+	public OrderVO selectOrder(Integer order_num);
+	@Select("SELECT * FROM orders_detail WHERE order_num=#{order_num} ORDER BY detail_num DESC")
+	public List<OrderDetailVO> selectListOrderDetail(Integer order_num);
+	
+	//회원 - 배송정보 변경
+	public void updateOrder(OrderVO order);
+	
+	//회원 - 주문취소
+	@Update("UPDATE orders SET refund_status=0 WHERE order_num=#{order_num}")
+	public void updateOrderCancel(Integer order_num);
 	
 	//작성한 게시글 조회 - 자유게시판
 	@Select("SELECT COUNT(*) FROM free_board WHERE mem_num=#{mem_num}")
