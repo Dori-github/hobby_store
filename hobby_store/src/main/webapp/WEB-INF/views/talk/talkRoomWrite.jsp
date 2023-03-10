@@ -22,19 +22,17 @@
 		<!-- 방을 생성하는 사람을 hidden값으로 표시 -->
 			<input type="hidden" name="members" id="user"
 				data-id="${user.mem_nickname}" value="${user.mem_num}">
-
 		<div class="chat-name">	
 			<div class="row" style="margin-left: 30px; margin-right: 30px;">
-			<div class="col-2">
+			<div class="col-3">
 				<label>채팅방 이름</label>
 			</div>
 			<div class="col-9">
 				<input type="hidden" class="form-input" placeholder="이름을 입력해주세요" name="talkroom_name" id="talkroom_name">
 				<span id="name_span"></span>
 				
-				<label class="form-check-label" style="padding-left: 30px;">
-					<input class="form-check-input" type="checkbox" checked
-					id="name_checked"> 자동생성
+				<label class="form-check-label" style="padding-left:20px;">
+					<input class="form-check-input" type="checkbox" checked id="name_checked"> 자동생성
 				</label>
 			</div>
 			</div>
@@ -42,7 +40,7 @@
 	
 		<div class="row"
 			style="margin-left: 30px; margin-right: 30px; padding-top: 10px;">
-			<div class="col-2">
+			<div class="col-3">
 				<label for="name">회원 검색</label>
 			</div>
 			<div class="col-9">
