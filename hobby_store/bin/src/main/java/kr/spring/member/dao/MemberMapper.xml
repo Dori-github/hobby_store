@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.member.dao.MemberMapper">  
+	
+	<!-- <select id="selectCourseFav" parameterType="map" resultType="courseVO">
+		SELECT 
+         * 
+      FROM (SELECT 
+            a.*, 
+            rownum rnum
+            FROM (SELECT 
+                  * 
+                 FROM 
+                 course_fav f JOIN member m 
+                          ON f.fmem_num=m.mem_num 
+                          JOIN course c 
+                          ON f.course_num=c.course_num 
+                 WHERE f.fmem_num=#{mem_num}
+                 ORDER BY c.course_num DESC) a) 
+      <![CDATA[
+      WHERE rnum >= #{start} and rnum <= #{end}
+      ]]>
+	</select>
+	
+	<select id="selectItemsFav" parameterType="map" resultType="itemsVO">
+		SELECT 
+         * 
+      FROM (SELECT 
+            a.*, 
+            rownum rnum
+            FROM (SELECT 
+                  * 
+                 FROM 
+                 items_fav f JOIN member m 
+                          ON f.fmem_num=m.mem_num 
+                          JOIN items i 
+                          ON f.items_num=i.items_num 
+                 WHERE f.fmem_num=#{mem_num}
+                 ORDER BY i.items_num DESC) a) 
+      <![CDATA[
+      WHERE rnum >= #{start} and rnum <= #{end}
+      ]]>
+	</select>
+	
+	<select id="selectSpaceFav" parameterType="map" resultType="spaceVO">
+		SELECT 
+         * 
+      FROM (SELECT 
+            a.*, 
+            rownum rnum
+            FROM (SELECT 
+                  * 
+                 FROM 
+                 space_fav f JOIN member m 
+                          ON f.fmem_num=m.mem_num 
+                          JOIN space s 
+                          ON f.space_num=s.space_num 
+                 WHERE f.fmem_num=#{mem_num}
+                 ORDER BY s.space_num DESC) a) 
+      <![CDATA[
+      WHERE rnum >= #{start} and rnum <= #{end}
+      ]]>
+	</select>
+	 -->
+	<select id="selectOrderList" parameterType="map" resultType="orderVO">
+		SELECT 
+			* 
+		FROM(SELECT
+				a.*,
+				rownum rnum
+			FROM(SELECT 
+					*
+				 FROM orders JOIN order_detail USING(order_num)
+				 WHERE 
+				 <if test="keyfield==1">course_num is not null and</if>
+				 <if test="keyfield==2">items_num is not null and</if>
+				 <if test="keyfield==3">space_num is not null and</if>
+				 mem_num=#{mem_num}
+				 ORDER BY order_date DESC)a)
+		  <![CDATA[
+  		  WHERE rnum >= #{start} and rnum <= #{end}
+  		  ]]>
+	</select>
+	
+	<select id="selectMemberRowCount" resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM member m LEFT OUTER JOIN member_detail d
+  		ON m.mem_num = d.mem_num 
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					m.mem_id LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					d.mem_name LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					m.mem_id LIKE '%' || #{keyword} || '%' OR
+  					d.mem_name LIKE '%' || #{keyword} || '%' 
+  				</if>
+  			</if>
+  		</where>                        
+  	</select>
+  	
+  	<select id="selectMemberList" parameterType="map"
+  	                           resultType="memberVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  		            FROM member m LEFT OUTER JOIN
+  		                 member_detail d 
+  		            ON m.mem_num = d.mem_num  
+  		             <where>
+			  			<if test="keyword != null and keyword != ''">
+			  				<if test="keyfield == 1">
+			  					m.mem_id LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  				<if test="keyfield == 2">
+			  					d.mem_name LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  				<if test="keyfield == 3">
+			  					m.mem_id LIKE '%' || #{keyword} || '%' OR
+			  					d.mem_name LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  			</if>
+			  		</where>
+  		            ORDER BY d.mem_date DESC NULLS LAST)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>                           
+  	</select>
+  	
+  	<select id="selectCourseList" parameterType="map" resultType="courseVO">
+  		SELECT
+  			*
+  		FROM(SELECT
+  				a.*,
+  				rownum rnum
+  			 FROM (SELECT
+  			 		  *
+  			 	   FROM course
+  			 WHERE mem_num=#{mem_num}
+  			 ORDER BY course_date DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
+  	
+  	<select id="selectItemsList" parameterType="map" resultType="itemsVO">
+  		SELECT
+  			*
+  		FROM(SELECT
+  				a.*,
+  				rownum rnum
+  			 FROM (SELECT
+  			 		  *
+  			 	   FROM items
+  			 WHERE mem_num=#{mem_num}
+  			 ORDER BY items_date DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
+  	
+  	<select id="selectSpaceList" parameterType="map" resultType="spaceVO">
+  		SELECT
+  			*
+  		FROM(SELECT
+  				a.*,
+  				rownum rnum
+  			 FROM (SELECT
+  			 		  *
+  			 	   FROM space
+  			 WHERE mem_num=#{mem_num}
+  			 ORDER BY space_date DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
+</mapper>
+
+
+
+
+
+
+

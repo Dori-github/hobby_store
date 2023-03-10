@@ -1,0 +1,301 @@
+@charset "UTF-8";
+
+/*이벤트
+====================*/
+.event-main{
+	width:1024px;
+}
+
+/*이벤트 리스트
+====================*/
+/*검색바*/
+#event_search{
+	width:50%;
+	min-width:400px;
+	margin:0 auto;
+	margin-bottom:20px;
+}
+#event_search #search_bar{
+	height:30px;
+	background-color:#FFF;
+	border:1px solid #E0E0E0;
+	border-radius:5px;
+	outline:none;
+}
+#event_search #search_bar:focus{
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+	background-color:#FFF;
+}
+#event_search #search_icon{
+	background:none;
+	border:none;
+}
+#event_search .select-form{
+	width:100px;
+	height:30px;
+	border-radius:5px;
+	transition:none;
+}
+#event_search .select-form:focus{
+	outline:5px solid #E0E0E0;
+	border:none;
+}
+#event_search .select-form{
+	margin-right:10px;
+}
+
+/*select바*/
+.select-list{
+	width:90%;
+	text-align:right;
+}
+.select-list select{
+	width:150px;
+	height:25px;
+	background-color:#FFF;
+	border:1px solid #E0E0E0;
+	border-radius:5px;
+	outline:none;
+}
+.select-list select:focus{
+	outline:5px solid #E0E0E0;
+	border:none;
+}
+
+/*이벤트 리스트*/
+.event-image{
+	overflow:hidden;
+	margin:0 auto;
+}
+#search_form{
+	text-align:center;
+}
+
+#search_form ul{
+	float:center;
+	align-items:center;
+}
+
+#search_form ul li{
+	display:inline-block;
+}
+
+.event-list{
+	width:100%;
+	float:left;
+	margin:0 auto;
+	text-align:left;
+}
+
+.event-list li{
+	cursor:pointer;
+	display:inline-block;
+	width:300px;
+	height:300px;
+	text-align:left;
+	margin:10px;
+	padding:10px;
+	font-size:8pt;
+	border-radius:5px;
+}
+.event-list li:hover{
+	transition:.2s;
+	background-color:#E0E0E0;
+}
+
+.event-space .float-clear{
+	clear:both;
+}
+
+.limit{
+	display:inline-block;
+	margin-left:70%;
+}
+.disabled{
+	pointer-events:none;
+	cursor:default;
+}
+/*이벤트 등록/목록 이동 버튼*/
+.move-btn{
+	text-align:right;
+	margin-top:20px;
+}
+.move-btn .form-btn{
+	width:90px;
+	height:35px;
+	color:white;
+	background-color:#FF4E02;
+	border:none;
+	border-radius:5px;
+	text-align:center;
+	font-size:10pt;
+}
+.move-btn .form-btn:hover{
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+	background-color: #E84601;
+}
+#ongoing{
+	background-color:#4e59f2;
+	color:white;
+	font-size:7pt;
+	border-radius:5px;
+}
+#end{
+	background-color:#f74545;
+	color:white;
+	font-size:5pt;
+	border-radius:3px;
+}
+.page-num{
+	text-align:center;
+}
+
+/*이벤트 등록/수정
+====================*/
+.event_regis_main{
+	width:100%;
+	text-align:center;
+	margin:0 auto;
+}
+#event_form .title{
+	width:80%;
+	margin:0 auto;
+	font-size:40px;
+	text-align:center;
+	margin-bottom:30px;
+}
+#event_form .regis-form{
+	position:relative;
+	margin:0 auto;
+	font-size:10pt;
+}
+#event_form tr{
+	border:1px solid lightgray;
+}
+#event_form td:first-child{
+	border-right:1px solid lightgray;
+	width:300px;
+	text-align:center;
+}
+#event_form td{
+	padding:10px 20px;
+}
+
+#event_form input[type=text]{
+	width:100%;
+	border:1px solid lightgray;
+	border-radius:5px;
+	padding:5px 5px 5px 10px;
+}
+#event_form .radio label{
+	cursor:pointer;
+}
+
+#event_form .radio input[type=radio] {
+	vertical-align: middle;
+ 	appearance: none;
+	border: max(2px, 0.1em) solid gray;
+ 	border-radius: 50%;
+ 	width: 1.25em;
+ 	height: 1.25em;
+ 	transition: border 0.5s ease-in-out;
+}
+#event_form .radio input[type=radio]:checked{
+	border: 0.4em solid tomato;
+}
+#event_form .radio input[type=radio]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) dotted tomato;
+}
+#event_form .radio input[type=radio]:hover {
+	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+ 	cursor:pointer;
+}
+
+/*이벤트 등록/수정 폼 버튼*/
+.end-btn{
+	text-align:center;
+	margin-top:20px;
+}
+.end-btn .form-btn{
+	width:50px;
+	height:35px;
+	border:1px solid lightgrey;
+	border-radius:5px;
+	text-align:center;
+	font-size:10pt;
+}
+
+/*이벤트 상세
+====================*/
+.event-detail{
+	width:600px;
+	text-align:center;
+	margin:0 auto;
+}
+.event-top{
+	width:100%;
+	font-size:11pt;
+	margin-bottom:15px;
+}
+.event-title{
+	font-size:15pt;
+}
+.event-subtitle{
+	text-align:right;
+}
+.event-img{
+	width:600px;
+	margin:0 0 10px 0;
+	float:center;
+}
+#event_detail{
+	margin-top:30px;
+	margin-bottom:150px;
+}
+/*이벤트 수정/삭제 이동 버튼*/
+.end-btn{
+	text-align:right;
+	margin-top:20px;
+}
+.end-btn #modify_btn{
+	width:90px;
+	height:35px;
+	color:white;
+	background-color:#FF4E02;
+	border:none;
+	border-radius:5px;
+	text-align:center;
+	font-size:10pt;
+}
+.end-btn #modify_btn:hover{
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+	background-color: #E84601;
+}
+.end-btn #delete_btn{
+	width:90px;
+	height:35px;
+	color:grey;
+	background-color:#FFF;
+	border:1px solid grey;
+	border-radius:5px;
+	text-align:center;
+	font-size:10pt;
+}
+.end-btn #delete_btn:hover{
+	background-color: #F2F2F2;
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+}
+
+/*기본
+====================*/
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
+}

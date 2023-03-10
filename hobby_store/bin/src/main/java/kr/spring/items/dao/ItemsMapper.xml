@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.spring.items.dao.ItemsMapper">
+	<!-- sql id = 재사용 가능한 쿼리 정의 -->
+	<!-- 상품 표시가 되있는 제품 중 상품명, 상품설명, 상품명+상품설명으로 검색하는 기능 -->
+	<sql id="itemsSearch">
+		WHERE status > #{status}
+		<!-- 검색 -->
+		<if test="keyword!=null and keyword!='' ">
+			<if test="keyfield == 1"> and (items_name LIKE '%' || #{keyword} || '%' or
+				items_content LIKE '%' || #{keyword} || '%' or mem_nickname LIKE '%'
+				|| #{keyword} || '%') </if>
+			<if test="keyfield == 2"> and items_name LIKE '%' || #{keyword} || '%'</if>
+			<if test="keyfield == 3"> and items_content LIKE '%' || #{keyword} || '%'</if>
+			<if test="keyfield == 4"> and mem_nickname LIKE '%' || #{keyword} || '%'</if>
+
+		</if>
+		<!-- 사이드바 카테고리 -->
+		<if test="cate != null">
+
+			<if test="'지갑'.equals(cate)"> and cate_name = '남성' or cate_name = '여성'</if>
+			<if test="'향수'.equals(cate)"> and cate_name = '퍼퓸' or cate_name = '오 드 뚜왈렛' or
+				cate_name = '오 드 퍼퓸' or cate_name = '오 드 코롱'</if>
+			<if test="'휴대폰 케이스'.equals(cate)"> and cate_name = '실리콘' or cate_name = '메탈' or cate_name
+				='가죽' or cate_name = '탄소 섬유'  </if>
+			<if
+				test=" !'지갑'.equals(cate) and !'향수'.equals(cate) and !'휴대폰케이스'.equals(cate)"> and cate_name LIKE '%' || #{cate} || '%'</if>
+		</if>
+		<!-- 포장 여부 -->
+		<if test="packaging != null">
+			<if test="packaging == 1"> and packaging = 2 or packaging = 3</if>
+			<if test="packaging == 2"> and packaging = 2</if>
+			<if test="packaging == 3"> and packaging = 3</if>
+
+		</if>
+
+	</sql>
+	<!-- ========================================================================== -->
+	<sql id="itemsFilter">
+		<!-- check default = 1 ! -->
+		ORDER BY
+		<if test="check == 1"> items_num DESC</if>
+		<if test="check == 2">
+		</if>
+		<if test="check == 3">
+		</if>
+		<if test="check == 4"> items_price DESC</if>
+		<if test="check == 5"> items_price ASC</if>
+	</sql>
+
+	<!-- ========================================================================== -->
+	<select id="selectItemsCount" parameterType="map"
+		resultType="Integer">
+		SELECT
+		COUNT(*)
+		FROM items a JOIN member b ON a.mem_num = b.mem_num
+		JOIN items_cate c
+		ON a.cate_num = c.cate_num
+		LEFT JOIN (select items_num , COUNT(fav_num)
+		AS favcount FROM items_fav GROUP BY
+		items_num)USING(items_num)
+
+		<!--refid = 재사용할 쿼리 선언 -->
+		<include refid="itemsSearch"></include>
+		<include refid="itemsFilter"></include>
+	</select>
+	<!-- ========================================================================== -->
+	<select id="selectItemsList" parameterType="map"
+		resultType="itemsVO">
+	         SELECT
+  	       *
+  	    FROM (SELECT
+  	            a.*,
+  	            rownum rnum
+  	          FROM (SELECT 
+  	                   * 
+  	                 FROM items JOIN member USING(mem_num) JOIN items_cate USING(cate_num)
+                                LEFT OUTER JOIN (SELECT * FROM items_fav WHERE fmem_num=#{mem_num}) USING(items_num)
+  	                            LEFT OUTER JOIN (SELECT items_num, COUNT(*) favcount FROM items_fav GROUP BY items_num) USING(items_num)
+                                LEFT OUTER JOIN (SELECT items_num , COUNT(reply_num) AS replycount FROM items_reply GROUP BY items_num) USING(items_num)
+                                LEFT OUTER JOIN (SELECT items_num , COUNT(fav_num) AS favcount FROM items_fav GROUP BY items_num) USING(items_num)
+                                LEFT OUTER JOIN (SELECT items_num , ROUND(AVG(star_auth),2) AS starcount FROM items_reply GROUP BY items_num) USING(items_num)
+                               <include refid="itemsSearch"></include>
+                               <include refid="itemsFilter"></include>
+                               )a)
+                                  <![CDATA[
+                                  WHERE rnum >= #{start} AND rnum <= #{end}
+                                      ]]>
+	</select>
+	<!-- ========================================================================== -->
+	<sql id="ReplyFilter">
+
+		ORDER BY
+		<if test="check == 1"> reply_num DESC</if>
+		<if test="check == 2"> star_auth DESC</if>
+		<if test="check == 3"></if>
+
+	</sql>
+
+	<!-- ========================================================================== -->
+	<!-- ======================================================================= -->
+	<select id="selectListReply" parameterType="map"
+		resultType="itemsReplyVO">
+		SELECT
+		*
+		FROM(SELECT
+		a.*,
+		rownum rnum
+        FROM (SELECT *
+		FROM(SELECT
+		reply_num,
+        <![CDATA[      
+        REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,   
+        ]]>  
+		reply_date,
+		reply_mdate,
+		items_num,
+        b.mem_num,
+        mem_nickname,
+        mem_id,
+        mem_photo,
+		reply_photo1, reply_photo2, reply_photo3, reply_photo_name1, reply_photo_name2, reply_photo_name3,
+		star_auth
+		FROM items_reply b JOIN member c
+		ON b.mem_num = c.mem_num JOIN member_detail d
+		ON b.mem_num = d.mem_num) FULL OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount FROM items_reply_fav group by reply_num) USING (reply_num)
+		WHERE items_num = #{items_num}
+        <include refid="ReplyFilter"></include>)a)
+                 <![CDATA[
+            WHERE rnum >= #{start} AND rnum <= #{end}
+  		    ]]>     
+      
+	</select>
+	<select id="select"></select>
+</mapper>
+
+
+
+
+
+
+

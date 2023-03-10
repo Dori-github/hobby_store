@@ -1,0 +1,177 @@
+@charset "UTF-8";
+#mypage_main{
+	width:1024px;
+	display:flex;
+}
+/* 좌측 메뉴 레이아웃(Admin,MyPage)
+=============================*/
+div#page_nav{
+	float:left;
+	width:25%;
+	min-height:530px;
+}
+div#page_body{
+	width:75%;
+	float:left;
+}
+.page_clear{
+	clear:both;
+}
+
+/*사이드바 크기 조정
+=============================*/
+.side-bar{
+	margin:100px 10px 10px 0;
+	padding:10px;
+	/*사이드바의 높이가 컨텐트의 높이와 동일하게 자동 조절*/
+	margin-bottom: -9999px;
+	padding-bottom: 9999px;
+	background-color: #FFF;
+    color:#FF4E02;;
+    border-radius: 20px;
+    box-shadow:2px 3px 5px 0px black;
+    overflow: hidden; /* 반응형 애니메이션용 */
+    transition: all 0.5s ease; /* 반응형 애니메이션 */
+}
+
+.side-height{
+	overflow:hidden;
+	margin-bottom:10px;
+}
+.menu-btn{
+	width:100%;
+	height:50px;
+	font-size:12pt;
+	background-color:#FCFCFC;
+	border-color:#B7B5B5;
+	border-radius:5px;
+}
+.main-menu{
+	margin:0px;
+	padding:0;
+	margin-top:50px;
+	text-align:center;
+}
+.side-bar ul li{
+	padding:10px 10px 5px 10px;
+}
+#content{
+	width:80%;
+	margin-top:200px;
+	margin-left:50px;
+}
+.side-bar ::before{
+    font-family: 'Material Icons';
+    font-size: 1.5em;
+    float: left;
+    clear: left;
+}
+.side-bar label::before{ content: '\e5d2'; }
+.side-bar li:nth-child(1) a::before{ content: '\f02e'; }
+.side-bar li:nth-child(2) a::before{ content: '\e8d6'; }
+.side-bar li:nth-child(3) a::before{ content: '\e88a'; }
+.side-bar li:nth-child(4) a::before{ content: '\e8cc'; }
+.side-bar li:nth-child(5) a::before{ content: '\e87d'; }
+.side-bar li:nth-child(6) a::before{ content: '\e8b8'; }
+
+ /* 체크박스 폼 요소 감춤 */
+#expand-menu {
+    display: none;
+}
+/* 체크박스 체크되었으면 메뉴 목록 표시 - 반응형 표시용 */
+#expand-menu:checked ~ ul { 
+    display: block;
+    height: auto;
+}
+.side-bar a:hover {
+    color: white;
+}
+.side-bar ul li:hover, .sidebar > label:hover {
+    background-color: #FF4E02;
+    color:white;
+    border-radius: 10px;
+}
+.side-bar div {
+    line-height: 1.5;
+    font-size: 1em;
+    font-family: 'Noto Sans KR';
+    padding: 0 0 0 50px; /* 아이콘과 텍스트 사이 여백 */
+}
+
+/*사이드바 소메뉴*/
+.big-menu{
+	display:none;
+}
+
+.big-menu:hover, .item:hover + .big-menu{
+	display:block;
+	color:white;
+}
+
+/*좋아요 목록
+=============================*/
+/*기본 설정*/
+#fav_size{
+	margin-bottom:50px;
+}
+/*카테고리 버튼*/
+.top-btn{
+	margin-bottom:10px;
+}
+.cate-btn:click{
+	background-color:#FF4E02;
+}
+/*카드 목록*/
+#content .card{
+	cursor:pointer;
+}
+#content .card-body{
+	color:#404040;
+}
+#content span{
+	font-size:10pt;
+}
+/*hover 이미지 확대*/
+.card-img-top{
+	height:200px;
+	overflow: hidden;
+}
+.card-img-top:hover img{
+	transform: scale(1.15);
+}
+.card-img-top img{
+	transition: all 0.2s linear;
+}
+#content .red-heart{
+	display:block;
+	text-align:right;
+	position:absolute;
+	top:10px;
+	right:10px;
+	z-index:990;
+}
+#content .red-heart .fa-heart{
+	color:red;
+	font-size:15pt;
+}
+#content .color-gray{
+	color:gray;
+	line-height: 20px;
+}
+#content .card-title{
+	margin:5px 0;
+}
+#content .fa-star{
+	color:orange;
+}
+#content .card-text{
+	margin-top:10px;
+}
+
+#content .list-page{
+	margin-top:50px;
+}
+
+#align-center{
+	text-align:center;
+}

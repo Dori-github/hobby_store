@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="eventList" extends="main">
+    	<put-attribute name="title" value="이벤트 목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/event/eventList.jsp"/>  
+    </definition>
+    <definition name="eventWriteForm" extends="main">
+    	<put-attribute name="title" value="이벤트 등록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/event/eventWriteForm.jsp"/>        
+    </definition>
+    <definition name="eventView" extends="main">
+    	<put-attribute name="title" value="이벤트 상세"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/event/eventView.jsp"/>        
+    </definition>
+    <definition name="eventModify" extends="main">
+    	<put-attribute name="title" value="이벤트 수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/event/eventModifyForm.jsp"/>        
+    </definition>
+    
+    <!-- 마이페이지 -->
+    <definition name="myPage" 
+     template="/WEB-INF/views/template/layout_mypage2.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="header"
+    	  value="/WEB-INF/views/template/header.jsp"/>
+    	  <put-attribute name="nav"
+    	  value="/WEB-INF/views/template/mypage_nav.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/memberView.jsp"/>
+    	<put-attribute name="footer"
+    	  value="/WEB-INF/views/template/footer.jsp"/>          
+    </definition>
+    <definition name="memberModify" extends="myPage">
+    	<put-attribute name="title" value="회원정보 수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/memberModify.jsp"/>
+    </definition>
+    <definition name="favList" extends="myPage">
+    	<put-attribute name="title" value="좋아요 목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/favList.jsp"/>
+    </definition>
+    <definition name="boardList" extends="myPage">
+    	<put-attribute name="title" value="작성 게시글 목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/boardList.jsp"/>
+    </definition>
+    <definition name="regisList" extends="myPage">
+    	<put-attribute name="title" value="등록 상품 조회"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/regisList.jsp"/>
+    </definition>
+    <definition name="orderList" extends="myPage">
+    	<put-attribute name="title" value="나의 구매내역"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/orderList.jsp"/>
+    </definition>
+    <definition name="memberDelete" extends="myPage">
+    	<put-attribute name="title" value="회원탈퇴"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/memberDeleteForm.jsp"/>
+    </definition>
+    
+    <!-- 관리자 마이페이지 -->
+    <definition name="admin" 
+     template="/WEB-INF/views/template/layout_admin.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="header"
+    	  value="/WEB-INF/views/template/header.jsp"/>
+    	  <put-attribute name="nav"
+    	  value="/WEB-INF/views/template/admin_nav.jsp"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/main/admin.jsp"/>
+    	<put-attribute name="footer"
+    	  value="/WEB-INF/views/template/footer.jsp"/>          
+    </definition>
+    <definition name="admin_memberList" extends="admin">
+    	<put-attribute name="title" value="회원 목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/admin_memberList.jsp"/>        
+    </definition>
+
+</tiles-definitions>
+
+
+
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- 회원 가입 및 로그인 -->
+	<definition name="memberRegister" extends="main">
+		<put-attribute name="title" value="회원가입" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/memberRegister.jsp" />
+	</definition>
+	<definition name="memberLogin" extends="main">
+		<put-attribute name="title" value="회원로그인" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/memberLogin.jsp" />
+	</definition>
+	<definition name="memberIdSearch" extends="main">
+		<put-attribute name="title" value="아이디 찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/idSearch.jsp" />
+	</definition>
+	<definition name="memberIdSearchResult" extends="main">
+		<put-attribute name="title" value="아이디 찾기 결과" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/idSearchResult.jsp" />
+	</definition>
+	<definition name="memberPasswdSearch" extends="main">
+		<put-attribute name="title" value="비밀번호 찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/pwSearch.jsp" />
+	</definition>
+	<definition name="memberPasswdSearchResult" extends="main">
+		<put-attribute name="title" value="비밀번호 찾기결과" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/pwSearchResult.jsp" />
+	</definition>
+	<!-- 채팅 -->
+	<definition name="talkRoomWrite" extends="myPage">
+		<put-attribute name="title" value="채팅방 생성" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/talk/talkRoomWrite.jsp" />
+	</definition>
+	<definition name="talkList" extends="myPage">
+		<put-attribute name="title" value="채팅목록" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/talk/talkList.jsp" />
+	</definition>
+	<definition name="talkDetail" extends="myPage">
+		<put-attribute name="title" value="채팅하기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/talk/talkDetail.jsp" />
+	</definition>
+</tiles-definitions>

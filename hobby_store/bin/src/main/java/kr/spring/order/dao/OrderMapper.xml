@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.order.dao.OrderMapper">  
+  	
+  	<insert id="insertOrder" parameterType="orderVO">
+	  	INSERT INTO orders (
+	  	  order_num,
+	  	  order_name,
+	  	  order_status,
+	  	  receive_name,
+	  	  receive_post,
+	  	  receive_address1,
+	  	  receive_address2,
+	  	  receive_phone,
+	  	  notice,
+	  	  order_date,
+	  	  refund_status,
+	  	  mem_num,
+	  	  order_price)
+	  	VALUES (
+	  	  #{order_num},
+	  	  #{order_name},
+	  	  #{order_status},
+	  	  #{receive_name, jdbcType=VARCHAR},
+	  	  #{receive_post, jdbcType=VARCHAR},
+	  	  #{receive_address1, jdbcType=VARCHAR},
+	  	  #{receive_address2, jdbcType=VARCHAR},
+	  	  #{receive_phone, jdbcType=VARCHAR},
+	  	  #{notice, jdbcType=VARCHAR},
+	  	  SYSDATE,
+	  	  #{refund_status},
+	  	  #{mem_num},
+	  	  #{order_price})  
+  	</insert>
+  	
+	<insert id="insertOrderNow" parameterType="orderVO">
+	  	INSERT INTO orders (
+	  	  order_num,
+	  	  order_name,
+	  	  order_status,
+	  	  receive_name,
+	  	  receive_post,
+	  	  receive_address1,
+	  	  receive_address2,
+	  	  receive_phone,
+	  	  notice,
+	  	  order_date,
+	  	  refund_status,
+	  	  mem_num,
+	  	  order_price)
+	  	VALUES (
+	  	  #{order_num},
+	  	  #{order_name},
+	  	  #{order_status},
+	  	  #{receive_name, jdbcType=VARCHAR},
+	  	  #{receive_post, jdbcType=VARCHAR},
+	  	  #{receive_address1, jdbcType=VARCHAR},
+	  	  #{receive_address2, jdbcType=VARCHAR},
+	  	  #{receive_phone, jdbcType=VARCHAR},
+	  	  #{notice, jdbcType=VARCHAR},
+	  	  SYSDATE,
+	  	  #{refund_status},
+	  	  #{mem_num},
+	  	  #{order_price})  
+  	</insert>
+
+  	<insert id="insertOrderDetail" 
+  	                  parameterType="orderDetailVO">
+  		INSERT INTO orders_detail(
+  		  detail_num,
+  		  detail_name,
+  		  price,
+  		  quantity,
+  		  order_num,
+  		  course_num,
+  		  items_num,
+  		  space_num)
+  		VALUES (
+  		  orders_detail_seq.nextval,
+  		  #{detail_name},
+  		  #{price},
+  		  #{quantity},
+  		  #{order_num},
+  		  #{course_num},
+  		  #{items_num},
+  		  #{space_num})  
+  	</insert>
+  	
+<!-- 
+  	<delete id="deleteCartItem"
+  					parameterType="cartVO">
+  					
+  	</delete>
+ -->
+</mapper>
