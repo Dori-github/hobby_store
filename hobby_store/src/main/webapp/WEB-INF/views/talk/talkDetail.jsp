@@ -50,11 +50,12 @@
                <input type="hidden" name="mem_num" id="mem_num" value="${user.mem_num}"> 
                <!-- 내용 -->
             <div class="chat">
-               <input type="text" class="msg-input" name="message" placeholder="메세지를 입력해 주세요" id="message" >
-            </div>
-             <!-- 전송 -->
+               <textarea class="msg-input" name="message" placeholder="메세지를 입력해 주세요" id="message"></textarea>
+                <!-- 전송 -->
             <button type="submit" class="btn"
-                  style=" margin-top:10px; background-color: #FF4E02; color: white; width: 10%; line-height: 1.5; float:right;">전송</button>
+                  style="background-color: #FF4E02; color: white; width: 10%; line-height: 1.5; float:right;">전송</button> 
+            </div>
+ 
          </form>
          </div>
       </div>
