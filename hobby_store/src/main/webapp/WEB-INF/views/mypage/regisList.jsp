@@ -41,8 +41,8 @@
 			<td>
 			<img src="${pageContext.request.contextPath}/course/imageView.do?course_num=${course.course_num}&item_type=1" width="50" height="50">
 			${course.course_name}
-			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/modifyCourse.do?course_num=${course.course_num}'">
-			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/course/deleteCourse.do?course_num=${course.course_num}'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/modify.do?course_num=${course.course_num}'">
+			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/course/delete.do?course_num=${course.course_num}'">
 			</td>
 			<td>${course.course_date}</td>
 		</tr>
@@ -55,8 +55,8 @@
 			<td>
 			  <img src="${pageContext.request.contextPath}/items/imageView.do?items_num=${items.items_num}&items_type=1" width="40" height="40">
 			${items.items_name}
-			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/items/modifyItems.do?items_num=${items.items_num}'">
-			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/items/modifyItems.do?items_num=${items.items_num}'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/items/modify.do?items_num=${items.items_num}'">
+			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/items/delete.do?items_num=${items.items_num}'">
 			</td>
 			<td>${items.reg_date}</td>
 		</tr>
@@ -69,8 +69,8 @@
 			<td>
 			<img src="/space/imageView.do?space_num=${space.space_num}&space_type=1" width="40" height="40">
 			${space.space_name}
-			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/space/admin_modify.do?space_num=${space.space_num}'">
-			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/space/admin_delete.do?space_num=${space.space_num}'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/space/modify.do?space_num=${space.space_num}'">
+			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/space/delete.do?space_num=${space.space_num}'">
 			</td>
 			<td>${space.space_date}</td>
 		</tr>
