@@ -439,7 +439,7 @@ public class SpaceController {
 				mapJson.put("result", "success");
 				mapJson.put("status", "yesFav");
 			}
-			mapJson.put("count", spaceService.selectReplyFavCount(spaceReplyFav.getReply_num()));
+			mapJson.put("count", spaceService.selectReplyFavCount(fav.getReply_num()));
 		}
 		return mapJson;
 	}

@@ -5,7 +5,7 @@ public class SpaceReplyFavVO {
 	private int reply_num;
 	private int fmem_num;
 	private int space_num;
-	
+	private int mem_num;
 	public int getFav_num() {
 		return fav_num;
 	}
@@ -31,13 +31,20 @@ public class SpaceReplyFavVO {
 	public void setSpace_num(int space_num) {
 		this.space_num = space_num;
 	}
+	public int getMem_num() {
+		return mem_num;
+	}
+	public void setMem_num(int mem_num) {
+		this.mem_num = mem_num;
+	}
 	@Override
 	public String toString() {
 		return "SpaceReplyFavVO [fav_num=" + fav_num + ", reply_num=" + reply_num + ", fmem_num=" + fmem_num
-				+ ", space_num=" + space_num + "]";
+				+ ", space_num=" + space_num + ", mem_num=" + mem_num + "]";
+	}
+	
 	}
 	
 	
 	
 
-}

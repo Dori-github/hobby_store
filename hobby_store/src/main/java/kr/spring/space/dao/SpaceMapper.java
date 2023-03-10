@@ -90,13 +90,16 @@ public interface SpaceMapper {
 	public int selectallstar(Integer space_num);
 	
 	//후기 좋아요
+	
+	 @Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
+		public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
+	
 	 @Select("SELECT * FROM space_reply_fav WHERE fmem_num=#{mem_num} AND reply_num=#{mem_num}")
 		public SpaceReplyFavVO selectReplyFavCheck();
-		@Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
-		public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
+	
 		@Select("SELECT COUNT(*) FROM space_reply_fav WHERE reply_num=#{reply_num}")
 		public int selectReplyFavCount(Integer reply_num);
-		@Insert("INSERT INTO space_reply_fav (fav_num,reply_num,fmem_num) VALUES (space_reply_fav_seq.nextval,#{reply_num},#{fmem_num})")
+		@Insert("INSERT INTO space_reply_fav(fav_num,reply_num,fmem_num) VALUES (space_reply_fav_seq.nextval,#{reply_num},#{fmem_num})")
 		public void insertReplyFav(SpaceReplyFavVO fav);
 		@Delete("DELETE FROM space_reply_fav WHERE fav_num=#{fav_num}")
 		public void deleteReplyFav(Integer fav_num);
