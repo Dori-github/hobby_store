@@ -114,18 +114,14 @@ a:hover {
     min-width: 30%;
 }
 
-
-.myChat {
-    margin-right: 20px;
-    text-align: right;
+.myChat{
+	text-align: right;
 }
 
-.notMyChat {
-    margin-right: 20px;
-    text-align: left;
+.notMyChat{
+	text-align: left;
 }
-
-.chatBox {
+.myChat .chatBox {
     display: inline-block;
     position: relative;
     background-color: #FF4E02;
@@ -133,8 +129,29 @@ a:hover {
     color: #fff;
     padding: 7px 18px;
     min-width: 30%;
-    text-align: left;
 }
+
+.notMyChat .chatBox{
+    display: inline-block;
+    position: relative;
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    color: black;
+    padding: 7px 18px;
+    min-width: 30%;
+}
+
+.exit-message{
+	width:230px;
+	height:30px;
+	border-radius:10px;
+	background-color:#eee;
+	margin:10px auto;
+	text-align:center;
+	padding-top:8px;
+	clear:both;
+}
+
 
 .dateBox {
     display: inline-block;
@@ -155,16 +172,6 @@ a:hover {
     font-size: 0.75rem;
 }
 
-.notMyChatBox {
-    display: inline-block;
-    position: relative;
-    background-color: #F2F2F2;
-    border-radius: 10px;
-    color: black;
-    padding: 7px 18px;
-    min-width: 30%;
-    text-align: left;
-}
 
 .msg-input {
     width: 80%;
