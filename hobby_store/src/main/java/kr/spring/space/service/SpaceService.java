@@ -58,6 +58,7 @@ public interface SpaceService {
 		public void insertReplyFav(SpaceReplyFavVO fav);
 		public void deleteReplyFav(Integer fav_num);
 		public void deleteReplyFavByReplyNum(Integer reply_num);
+		
 	
 
 }

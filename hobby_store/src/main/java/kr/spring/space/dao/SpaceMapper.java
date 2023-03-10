@@ -101,6 +101,10 @@ public interface SpaceMapper {
 	@Delete("DELETE FROM space_reply_fav WHERE reply_num=#{reply_num}")
 	public void deleteReplyFavByReplyNum(Integer reply_num);
 	
+	@Delete("DELETE FROM space WHERE space_num=#{space_num}")
+	public void deleteSpace(Integer space_num);
+	@Update("UPDATE space SET uploadfile='',filename='' WHERE space_num=#{space_num}")
+	public void deletePhoto(Integer space_num);
 }
 
 

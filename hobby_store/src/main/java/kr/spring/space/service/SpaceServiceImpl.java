@@ -101,20 +101,20 @@ public class SpaceServiceImpl implements SpaceService{
 
 	@Override
 	public void deleteSpace(Integer space_num) {
-		// TODO Auto-generated method stub
+		spaceMapper.deleteSpace(space_num);
 		
 	}
 
 	@Override
 	public void deletePhoto(Integer space_num) {
-		// TODO Auto-generated method stub
+		spaceMapper.deletePhoto(space_num);
 		
 	}
 
 	//후기
 	@Override
 	public float selectStarAvg(Integer space_num) {
-		return 0;
+		return spaceMapper.selectStarAvg(space_num);
 	}
 	
 	@Override
@@ -190,20 +190,6 @@ public class SpaceServiceImpl implements SpaceService{
 		spaceMapper.deleteReplyFavByReplyNum(reply_num);
 		
 	}
-
-
-
-
-
-
-
-
-	
-
-
-
-	
-
 
 }
 

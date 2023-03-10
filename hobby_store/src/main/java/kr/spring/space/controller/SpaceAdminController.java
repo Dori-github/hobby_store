@@ -3,6 +3,7 @@ package kr.spring.space.controller;
 import java.util.HashMap;
 
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.spring.member.vo.MemberVO;
@@ -144,6 +146,43 @@ public class SpaceAdminController {
 			
 			return "common/resultView";
 			}
+		//=====게시판 글삭제=======//
+		@RequestMapping("/space/delete.do")
+		public String submitDelete(
+				@RequestParam int space_num,
+				Model model,
+				HttpServletRequest request) {
+			
+			logger.debug("<<게시판 글삭제>> : " + space_num);
+			
+			//글삭제
+			spaceService.deleteSpace(space_num);
+			
+			return "redirect:/space/list.do";
+		}
+		
+		
+		//=====파일 삭제=======//
+		@RequestMapping("/space/deleteFile.do")
+		@ResponseBody
+		public Map<String,String> processFile(
+				                   int space_num,
+				                   HttpSession session){
+			Map<String,String> mapJson = 
+					new HashMap<String,String>();
+			
+			MemberVO user = 
+				 (MemberVO)session.getAttribute("user");
+			if(user==null) {
+				mapJson.put("result", "logout");
+			}else {
+				spaceService.deletePhoto(space_num);
+				
+				mapJson.put("result", "success");
+			}
+			
+			return mapJson;
+		}
 		
 	
 }
