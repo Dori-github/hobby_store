@@ -46,6 +46,7 @@ public interface SpaceService {
 	public void updateReply(SpaceReplyVO spaceReply);
 	public void deleteReply(Integer reply_num);
 	public void deleteReplyBySpaceNum(Integer space_num);
+	public void deleteReplyPhoto(Integer reply_num);
 
     //별점
 	public float selectStar(Integer space_num);

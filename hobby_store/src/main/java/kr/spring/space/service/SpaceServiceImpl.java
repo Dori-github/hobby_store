@@ -94,17 +94,17 @@ public class SpaceServiceImpl implements SpaceService{
 		return spaceMapper.selectFavCheck();
 	}
 
-	@Override
-	public void deleteFavBySpaceNum(Integer space_num) {
-		spaceMapper.deleteFavBySpaceNum(space_num);
-		
-	}
+
 
 	@Override
-	public void deleteSpace(Integer space_num) {
+	public void deleteSpace(Integer space_num) {//마이페이지 관리자 삭제
+		
+		//부모글 삭제
 		spaceMapper.deleteSpace(space_num);
 		
+		
 	}
+	
 
 	@Override
 	public void deletePhoto(Integer space_num) {
@@ -141,10 +141,6 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public void deleteReply(Integer reply_num) {
 		spaceMapper.deleteReply(reply_num);
-	}
-	@Override
-	public void deleteReplyBySpaceNum(Integer space_num) {
-		spaceMapper.deleteReplyBySpaceNum(space_num);
 	}
 
 	@Override
@@ -197,6 +193,26 @@ public class SpaceServiceImpl implements SpaceService{
 		return spaceMapper.selectReplyFavCheck();
 	}
 
+	@Override
+	public void deleteReplyPhoto(Integer reply_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteFavBySpaceNum(Integer space_num) {//좋아요삭제
+		spaceMapper.deleteFavBySpaceNum(space_num); 
+		
+	}
+
+	@Override
+	public void deleteReplyBySpaceNum(Integer space_num) {//댓글삭제
+		spaceMapper.deleteReplyBySpaceNum(space_num);
+		
+	}
+
+
+	
 }
 
 
