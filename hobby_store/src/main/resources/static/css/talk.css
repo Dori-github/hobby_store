@@ -1,6 +1,7 @@
 
 .modal-content{
 	width:800px;
+	position:fixed;
 }
 
 .container {

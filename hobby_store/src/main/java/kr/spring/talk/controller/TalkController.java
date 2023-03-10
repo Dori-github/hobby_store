@@ -169,6 +169,30 @@ public class TalkController {
 			
 			return mapAjax;
 		}
+		
+		//=======채팅방 나가기=======//
+		@RequestMapping("/talk/deleteTalkRoomMember.do")
+		@ResponseBody
+		public Map<String,String> deleteTalkRoomMember(
+				   TalkVO talkVO, HttpSession session){
+			
+			Map<String,String> mapAjax = 
+					new HashMap<String,String>();
+			
+			MemberVO user = 
+				 (MemberVO)session.getAttribute("user");
+			
+			if(user==null) {
+				mapAjax.put("result", "logout");
+			}else {
+				talkVO.setMessage(
+					user.getMem_nickname()+"님이 나갔습니다.@{exit}@");
+				talkService.deleteTalkRoomMember(talkVO);
+				
+				mapAjax.put("result", "success");
+			}
+			return mapAjax;
+		}
 
 }
 
