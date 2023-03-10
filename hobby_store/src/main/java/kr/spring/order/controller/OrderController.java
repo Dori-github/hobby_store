@@ -1,6 +1,7 @@
 package kr.spring.order.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -312,106 +313,155 @@ public class OrderController {
 	// 주문등록 폼 호출
 	@PostMapping("/order/orderNowForm.do")
 	public String nowForm(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request) {
-
-		logger.debug("<<바로주문 mem_num>> : " + orderVO.getMem_num());
-
-		MemberVO user = (MemberVO) session.getAttribute("user");
-
-		List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
-		List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
-
-		/* 
-		 * 구매하기 : 클래스,스토어,장소대여 상세페이지 form action 수정
-		 * 장바구니 : 개별선택삭제, 재고수
-		 * 인터셉트, mem_num 등
-		 *  */
 		
-		String[] space_name = request.getParameterValues("space_name");
+		String[] course_price = request.getParameterValues("course_price");
+		String[] course_quan = request.getParameterValues("course_quan");
+		String[] items_price = request.getParameterValues("items_price");
+		String[] items_quan = request.getParameterValues("items_quan");
 		String[] space_price = request.getParameterValues("space_price");
-		String[] space_quan = request.getParameterValues("space_quan");
-//		String[] space_np = request.getParameterValues("space_np");
+		String[] order_quantity = request.getParameterValues("order_quantity");
 
-		int spacePrice = Integer.parseInt(space_price[0]);
-//		int spaceQuantity = Integer.parseInt(space_np[0]);
-		int spaceQuantity = Integer.parseInt(space_quan[0]);
-		int spaceTotal = spacePrice * spaceQuantity;
+		if(course_price != null) {
+			int coursePrice = Integer.parseInt(course_price[0]);
+			int courseQuantity = Integer.parseInt(course_quan[0]);
+			int courseTotal = coursePrice * courseQuantity;
+			model.addAttribute("courseTotal", courseTotal);
+		}
 
-		logger.debug("<<.....?space_name>> : " + request.getParameterValues("space_name"));
-		logger.debug("<<.....?space_name>> : " + space_name[0]);
-		
-		
-		// 상세페이지에서 받는 값 저장
-		model.addAttribute("spaceTotal", spaceTotal);
-		
-		
-		/*
-		 * model.addAttribute("courseCount", courseCount);
-		 * model.addAttribute("courseCart", courseCart); model.addAttribute("itemCount",
-		 * itemCount); model.addAttribute("itemCart", itemCart);
-		 * model.addAttribute("itemQuan", itemQuan); model.addAttribute("allTotal",
-		 * allTotal); 
-		 */
+		if(items_price != null) {
+			int itemsPrice = Integer.parseInt(items_price[0]);
+			logger.debug("<<i quan>>:"+Integer.parseInt(items_quan[0]));
+			int itemsQuantity = Integer.parseInt(items_quan[0]);
+			int itemsTotal = itemsPrice * itemsQuantity;
+			model.addAttribute("itemsTotal", itemsTotal);
+		}
+
+		if(space_price != null) {	
+			logger.debug("<<s quan>>:" + space_price[0]);
+//			logger.debug("<<s quan>>:"+Integer.parseInt(order_quantity[0]));
+			int spacePrice = Integer.parseInt(space_price[0]);
+			int orderQuantity = Integer.parseInt(order_quantity[0]);
+			int spaceTotal = spacePrice * orderQuantity;
+			model.addAttribute("spaceTotal", spaceTotal);
+		}
 
 		return "orderNowForm";
-
-		// 상세페이지에서 input으로 전달받는거라 필요X
 	}
 
 
 	// 폼에서 전송된 데이터 처리
-
 	@PostMapping("/order/nowOrder.do") public String nowSubmit(OrderVO orderVO,
 			PointsVO pointsVO, HttpSession session, Model model, HttpServletRequest
 			request, HttpServletResponse response) {
 
 		MemberVO user = (MemberVO) session.getAttribute("user");
 
-		String[] space_num = request.getParameterValues("space_num");
-		String[] space_name = request.getParameterValues("space_name");
-		String[] space_price = request.getParameterValues("space_price");
-//		String[] space_np = request.getParameterValues("space_np");
-		String[] space_quan = request.getParameterValues("space_quan");
-		
-		int spaceNum = Integer.parseInt(space_num[0]);
-		int spacePrice = Integer.parseInt(space_price[0]);
-//		int spaceNp = Integer.parseInt(space_np[0]);
-		int spaceQuan = Integer.parseInt(space_quan[0]);
-		
-		logger.debug("<<???space_name>> : " + request.getParameterValues("space_name"));
-		logger.debug("<<1??space_name>> : " + space_name[0]);
-		logger.debug("<<2??space_price>> : " + Integer.parseInt(space_price[0]));
-		logger.debug("<<1??space_price>> : " + space_price[0]);
-//		logger.debug("<<1??space_np>> : " + space_np[0]);
-		logger.debug("<<1??space_quan>> : " + space_quan[0]);
-		
-//		int spacePrice = Integer.parseInt(space_price[0]);
-//		int spaceQuantity = Integer.parseInt(space_np[0]);
-//		int spaceTotal = spacePrice * spaceQuantity;
-		
 		OrderDetailVO orderDetail = new OrderDetailVO();
-		orderDetail.setSpace_num(spaceNum);
-		orderDetail.setDetail_name(space_name[0]);
-		orderDetail.setPrice(spacePrice * spaceQuan);
-//		orderDetail.setQuantity(spaceNp);
-		orderDetail.setQuantity(spaceQuan);
-
-		logger.debug("<<space_name>> : " + space_name[0]);
-		logger.debug("<<orderDetail>> : " + orderDetail);
-
-		
-
 		List<OrderDetailVO> orderDetailList = new ArrayList<OrderDetailVO>();
-		orderDetailList.add(orderDetail);
-
 		
+		//클래스 바로구매
+		String[] course_onoff = request.getParameterValues("course_onoff");
+		String[] course_num = request.getParameterValues("course_num");
+		String[] course_name = request.getParameterValues("course_name");
+		String[] course_price = request.getParameterValues("course_price");
 		
-		orderVO.setOrder_name(space_name[0]);// 대표 상품명
-		orderVO.setOrder_price(spacePrice * spaceQuan);// 총주문금액
-		orderVO.setMem_num(user.getMem_num());// 주문자
-		pointsVO.setUsed_points(spacePrice * spaceQuan);
-		pointsVO.setMem_num(user.getMem_num());
-		logger.debug("<<insertOrder 전 order_name>> : " + space_name[0]);
+		if(course_onoff != null && course_onoff[0] == "on") {//온라인 클래스
+			int courseNum = Integer.parseInt(course_num[0]);
+			int coursePrice = Integer.parseInt(course_price[0]);
+			
+			orderDetail.setCourse_num(courseNum);
+			orderDetail.setDetail_name(course_name[0]);
+			orderDetail.setPrice(coursePrice);
+			orderDetail.setQuantity(1);
+			
+			orderDetailList.add(orderDetail);
+			
+			orderVO.setOrder_name(course_name[0]);// 대표 상품명
+			orderVO.setOrder_price(coursePrice);// 총주문금액
+			orderVO.setMem_num(user.getMem_num());// 주문자
+			pointsVO.setUsed_points(coursePrice);
+			pointsVO.setMem_num(user.getMem_num());
+		}
+		
+		if(course_onoff != null && course_onoff[0] == "off") {//오프라인 클래스
+			String[] course_quan = request.getParameterValues("course_quan");
+			String[] course_total = request.getParameterValues("course_total");
+			
+			int courseNum = Integer.parseInt(course_num[0]);
+			int courseQuan = Integer.parseInt(course_quan[0]);
+			int coursePrice = Integer.parseInt(course_price[0]);
+			int courseTotal = Integer.parseInt(course_total[0]);
+			
+			orderDetail.setCourse_num(courseNum);
+			orderDetail.setDetail_name(course_name[0]);
+			orderDetail.setPrice(courseTotal);
+			orderDetail.setQuantity(courseQuan);
 
+			logger.debug("<<1d>> : " + courseNum);
+			logger.debug("<<2d>> : " + coursePrice);
+			logger.debug("<<3d>> : " + courseQuan);
+			logger.debug("<<4d>> : " + courseTotal);
+			
+			orderDetailList.add(orderDetail);
+
+			orderVO.setOrder_name(course_name[0]);// 대표 상품명
+			orderVO.setOrder_price(courseTotal);// 총주문금액
+			orderVO.setMem_num(user.getMem_num());// 주문자
+			pointsVO.setUsed_points(courseTotal);
+			pointsVO.setMem_num(user.getMem_num());
+		}
+		
+		//스토어 바로구매
+		String[] items_num = request.getParameterValues("items_num");
+		
+		if((items_num[0]) != "" && Integer.parseInt(items_num[0]) > 0 ) {
+			String[] items_name = request.getParameterValues("items_name");
+			String[] items_quan = request.getParameterValues("items_quan");
+			String[] items_total = request.getParameterValues("items_total");
+			
+			int itemsNum = Integer.parseInt(items_num[0]);
+			int itemsQuan = Integer.parseInt(items_quan[0]);
+			int itemsTotal = Integer.parseInt(items_total[0]);
+			
+			orderDetail.setItems_num(itemsNum);
+			orderDetail.setDetail_name(items_name[0]);
+			orderDetail.setPrice(itemsTotal);
+			orderDetail.setQuantity(itemsQuan);
+
+			orderDetailList.add(orderDetail);
+
+			orderVO.setOrder_name(items_name[0]);// 대표 상품명
+			orderVO.setOrder_price(itemsTotal);// 총주문금액
+			orderVO.setMem_num(user.getMem_num());// 주문자
+			pointsVO.setUsed_points(itemsTotal);
+			pointsVO.setMem_num(user.getMem_num());
+		}
+		
+		//장소대여 바로구매
+		String[] space_num = request.getParameterValues("space_num");
+		if((space_num[0]) != "" && Integer.parseInt(space_num[0]) > 0 ) {
+			String[] space_name = request.getParameterValues("space_name");
+			String[] order_quantity = request.getParameterValues("order_quantity");
+			String[] space_total = request.getParameterValues("space_total");
+			
+			int spaceNum = Integer.parseInt(space_num[0]);
+			int spaceQuan = Integer.parseInt(order_quantity[0]);
+			int spaceTotal = Integer.parseInt(space_total[0]);
+			
+			orderDetail.setSpace_num(spaceNum);
+			orderDetail.setDetail_name(space_name[0]);
+			orderDetail.setPrice(spaceTotal);
+			orderDetail.setQuantity(spaceQuan);
+
+			orderDetailList.add(orderDetail);
+
+			orderVO.setOrder_name(space_name[0]);// 대표 상품명
+			orderVO.setOrder_price(spaceTotal);// 총주문금액
+			orderVO.setMem_num(user.getMem_num());// 주문자
+			pointsVO.setUsed_points(spaceTotal);
+			pointsVO.setMem_num(user.getMem_num());
+		}
+		
 		orderService.insertOrderNow(orderVO, pointsVO, orderDetailList);
 
 		// refresh 정보를 응답 헤더에 추가

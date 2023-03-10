@@ -10,7 +10,6 @@
 <script src="${pageContext.request.contextPath}/js/itemsReply.js"></script>
 
 
-
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -100,31 +99,31 @@
 				<i class="fa-regular fa-star" style="color: orange;"></i> <span id="starAvg"> </span>
 			</p>
 		</div>
-
-		<div class="reservation">
-			<c:if test="${items.items_quantity lt 5}">
-				<p class="soldout">품절 임박</p>
-			</c:if>
-			<p>재고</p>
-			<p>구매 수량</p>
-			<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
-			<hr size="2" noshade width="100%" style="color: gray;">
-			
-			<form id="itemsOn_cart" action="/order/orderForm.do" method="post">	
-			<input type="hidden" name="items_num" value="${items.items_num}" id="items_num">
-			<input type="hidden" name="items_price" value="${items.items_price}" id="items_price">
-			<input type="hidden" name="items_name" value="${items.items_name}" id="items_name">
-      		<input type="hidden" name="items_quantity" value="${items.items_quantity}" id="items_quantity">
+		<form id="itemsOn_cart" method="post">
 			<div class="reservation">
-			
+				<c:if test="${items.items_quantity lt 5}">
+					<p class="soldout">품절 임박</p>
+				</c:if>
+				<p>재고</p>
+				<span>구매수량<input type="number" value="1" name="items_quan"></span>
+				<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
+				<hr size="2" noshade width="100%" style="color: gray;">
+
+				<input type="hidden" name="items_num" value="${items.items_num}"
+					id="items_num"> <input type="hidden" name="items_price"
+					value="${items.items_price}" id="items_price"> <input
+					type="hidden" name="items_name" value="${items.items_name}"
+					id="items_name"> <input type="hidden" name="items_quantity"
+					value="${items.items_quantity}" id="items_quantity">
+				<div class="reservation"></div>
+				<div style="display: flex; justify-content: space-between;">
+					<input type="submit" class="buy" value="장바구니"
+						formaction="/cart/insert.do"><i
+						class="fa-solid fa-cart-plus"></i> <input type="submit"
+						class="buy" value="구매하기" formaction="/order/orderNowForm.do">
+				</div>
 			</div>
-			</form>
-			<div style="display:flex;justify-content:space-between;">
-				<button type = "submit" class = "buy"><i class = "fa-solid fa-cart-plus"></i></button>
-				<button type = "submit" class = "buy">상품 구매 </button>
-	
-			</div>
-		</div>
+		</form>
 	</div>
 </div>
 
@@ -142,7 +141,7 @@
 	</ul>
 	<hr size="2" noshade width="100%" style="color: gray; margin: 0;">
 	<div class="c-content">
-		${itmes.items_content}
+		${items.items_content}
 		<div class="map">
 			위치<br> 지도표시
 		</div>
