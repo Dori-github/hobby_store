@@ -54,7 +54,7 @@
 						<ul class="dropdown" id="dropdown">
 							<li><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a></li>
 							<li><a href="#">자유게시판</a></li>
-							<li><a href="#">Q & A</a></li>
+							<li><a href="${pageContext.request.contextPath}/qna/list.do">Q & A</a></li>
 						</ul>
 					</li>
 					<li><a href="${pageContext.request.contextPath}/event/list.do">이벤트</a></li>
@@ -69,7 +69,7 @@
 					</c:if>
 					
 					<c:if test="${!empty user && user.mem_auth == 9}"><!-- 관리자 -->
-					<a href="${pageContext.request.contextPath}/member/admin_list.do"> 관리자 PAGE</a>
+					<a href="${pageContext.request.contextPath}/member/myPage.do"> 관리자 PAGE</a>
 					</c:if>
 					<c:if test="${!empty user}">
 					<span class="btn-border font-10"><a href="${pageContext.request.contextPath}/">로그아웃</a></span>

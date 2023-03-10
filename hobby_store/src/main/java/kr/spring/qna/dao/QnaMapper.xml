@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.qna.dao.QnaMapper">
+	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
+  	<sql id="qnaSearch">
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					b.qna_title LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					b.qna_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					b.qna_title LIKE '%' || #{keyword} || '%' OR 
+  					b.qna_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+  	
+  	<select id="selectRowCount" parameterType="map"
+  	                            resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM qna b JOIN member m
+  		ON b.mem_num = m.mem_num
+  		<include refid="qnaSearch"></include>                            
+  	</select>
+  	
+  	<select id="selectList" parameterType="map"
+  	                         resultType="qnaVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		      		  b.couse_num,
+  		      		  b.items_num,
+  		      		  b.space_num,
+  		              b.qna_num,
+  		              <![CDATA[
+  		              REPLACE(REPLACE(b.qna_title,'<','&lt;'),'>','&gt;') qna_title,
+  		              ]]>
+  		              b.qna_content,
+  		              b.qna_hit,
+  		              b.qna_date,
+  		              b.mem_num,
+  		              m.mem_id,
+  		              m.mem_nickname
+  		            FROM qna b JOIN member m ON b.mem_num = m.mem_num
+  		            	 qna b JOIN course c ON b.course_num = c.course_num
+  		            	 qna b JOIN items i ON b.items_num = i.items_num
+  		            	 qna b JOIN space s ON b.space_num = s.space_num 
+  		            <include refid="qnaSearch"></include>
+  		            ORDER BY b.qna_num DESC)a) <!-- 강의,상품,공간대여 세가지로 나누는 방법  -->                        
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+</mapper>

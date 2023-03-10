@@ -41,6 +41,7 @@ public class AppConfig implements WebMvcConfigurer{
 		return adminCheck;
 	}
 	
+	
 	//인터셉터 등록
 		@Override
 		public void addInterceptors(
@@ -50,6 +51,10 @@ public class AppConfig implements WebMvcConfigurer{
 					.addPathPatterns("/**")
 					.excludePathPatterns("/member/login.do")
 					.excludePathPatterns("/member/logout.do");
+			//AdminCheckInterceptor 설정
+			registry.addInterceptor(adminCheck)
+				    .addPathPatterns("/notice/admin_list.do")
+			        .addPathPatterns("/notice/admin_write.do");
 		}
 
 	@Bean
