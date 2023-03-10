@@ -1,6 +1,8 @@
 package kr.spring.cart.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +22,9 @@ import kr.spring.cart.controller.CartController;
 import kr.spring.cart.service.CartService;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
+import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.items.service.ItemsService;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.order.vo.OrderVO;
@@ -30,6 +34,10 @@ import kr.spring.points.vo.PointsVO;
 public class CartController {//메서드 생성, 데이터 처리
 	@Autowired
 	private CartService cartService;
+	@Autowired
+	private CourseService courseService;
+	@Autowired
+	private ItemsService itemsService;
 	
 	private static final Logger logger =
 			LoggerFactory.getLogger(
@@ -87,6 +95,48 @@ public class CartController {//메서드 생성, 데이터 처리
 			return mav;
 	}
 	
+	@RequestMapping("/cart/getQuan.do")
+	@ResponseBody
+	public Map<String,Object> getQuan(ItemCartVO cart,
+			HttpSession session){
+		logger.debug("<<zzzzItemCartVO>> : " + cart);
+
+		Map<String,Object> mapJson = 
+				new HashMap<String,Object>();
+
+		MemberVO user = 
+				(MemberVO)session.getAttribute("user");
+		if(user==null) {
+//			mapJson.put("status", "noFav");
+		}else {
+			//로그인된 아이디 셋팅
+			cart.setMem_num(user.getMem_num());
+
+			ItemCartVO storedQuan = null;
+			storedQuan = cartService.getStoredQuan(user.getMem_num(), cart.getItems_num());
+			logger.debug("storedQuan.getQuantity()" + storedQuan);
+			logger.debug("storedQuan.getQuantity()" + storedQuan.getQuantity());
+			
+			/*
+			 * if(boardFav!=null) { mapJson.put("status", "yesFav"); }else {
+			 * mapJson.put("status", "noFav"); }
+			 */
+		}
+		/*
+		 * logger.debug("<<zxzxzx1>> : " + itemQuan); logger.debug("<<zxzxzx2>> : " +
+		 * itemQuan.getQuantity());
+		 */
+//		logger.debug("<<zzz>> : " + cartService.getItemQuan(user.getMem_num()).getQuantity());
+		/*
+		 * mapJson.put("itemQuan",
+		 * cartService.getItemQuan(user.getMem_num()).getQuantity());
+		 */
+		/*
+		 * mapJson.put("storedQuan", storedQuan);
+		 */
+		return mapJson;
+	}
+
 	//상품 수량, 구입액
 	@RequestMapping(value = "/getItemQuan", method = RequestMethod.POST)
 	@ResponseBody
@@ -108,18 +158,108 @@ public class CartController {//메서드 생성, 데이터 처리
 		
 	}
 	
-	//장바구니에 클래스 추가
-	public void insertCourseCart(CourseVO courseVO) {
-		cartService.insertCourseCart(courseVO);
-		logger.debug("장바구니에 클래스 추가" + courseVO);
-	}
+	//장바구니에 클래스, 상품 추가
+	@RequestMapping("/cart/insert.do")
+	public String insert(CourseCartVO courseCart, ItemCartVO itemCart, 
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session, Model model) {	
+		logger.debug("<<ㅇ>> : ");
+		
+		MemberVO user = 
+				(MemberVO)session.getAttribute("user");
+
+		String[] course_onoff = request.getParameterValues("course_onoff");
+		logger.debug("<<cㅇ>> : "+ course_onoff);
+		
+		if(course_onoff != null) {
+			courseCart.setMem_num(user.getMem_num());
+
+			CourseCartVO db_cart = 
+					cartService.selectCourseCart(courseCart);
+			if(db_cart==null) {//등록된 동일 클래스 없음
+				cartService.insertCourseCart(courseCart);
+			}else {//등록된 동일 클래스 있음
+				//수량 무조건 1.
+			}
+		}
+		
+		String[] items_num = request.getParameterValues("items_num");
+		String[] items_quan = request.getParameterValues("items_quan");
+		logger.debug("<<itemCart>> : "+ items_num[0]);
+
+		if((items_num[0]) != "") {
+			logger.debug("<<itemsaaa>> : "+ items_num[0]);
+
+			itemCart.setMem_num(user.getMem_num());
+			itemCart.setQuantity(Integer.parseInt(items_quan[0]));
+
+			ItemCartVO db_cart = 
+					cartService.selectItemCart(itemCart);
+			logger.debug("<<db_cart>> : "+ itemCart);
+			logger.debug("<<db_cart>> : "+ db_cart);
+
+			
+			if(db_cart==null) {//등록된 동일 상품 없음
+				logger.debug("dd");
+				cartService.insertItemCart(itemCart);
+				logger.debug("ff");
+			}else {//등록된 동일 상품 있음
+				//재고수를 구하기 위해서 클래스 정보 호출
+				ItemsVO item =
+				itemsService.selectItems(db_cart.getItems_num());
+
+				logger.debug("<<item>> : "+ item);
+
+				//구매수량 합산 (기존 구매 수량 + 새로운 구매 수량)
+				int order_quantity = 
+						db_cart.getQuantity() + itemCart.getQuantity();
+				
+				logger.debug("<<order_quantity>> : "
+						+ order_quantity);
+
+				
+				if(item.getItems_quantity()<order_quantity) {
+					//상품 재고 수량보다 장바구니에 담은
+					//구매 수량이 더 많음
+					//mapAjax 추가
+				}else {
+					itemCart.setQuantity(order_quantity);
+					cartService.updateCartByItems_num(itemCart);
+					logger.debug("<<itemCart>> : "+ itemCart);
+					logger.debug("<<item>> : "+ item);
+
+				}
+			}
+		} 
+		// refresh 정보를 응답 헤더에 추가
+		response.addHeader("Refresh",
+				"2;url=../cart/cartList.do");
+		//장바구니로 이동할 지 알림?
+		
+		  model.addAttribute("accessMsg", "장바구니에 성공적으로 담겼습니다.");
+		  return "common/notice"; }
 	
-	//장바구니에 상품 추가
-	public void insertItemCart(ItemsVO itemVO) {
-		cartService.insertItemCart(itemVO);
-		logger.debug("장바구니에 상품 추가" + itemVO);
-	}
 	
+	/*
+	 * public void insertItemCart(ItemCartVO itemCart, HttpServletRequest request,
+	 * HttpSession session) {
+	 * 
+	 * logger.debug("<<ㅅ>> : "); MemberVO user =
+	 * (MemberVO)session.getAttribute("user");
+	 * 
+	 * String[] items_num = request.getParameterValues("itmes_num"); String[]
+	 * items_quan = request.getParameterValues("items_quan");
+	 * 
+	 * logger.debug("<<items_num>> : " + request.getParameterValues("itmes_num"));
+	 * logger.debug("장바구니에 상품 추가" + itemCart);
+	 * 
+	 * int itemsNum = Integer.parseInt(items_num[0]); int itemsQuan =
+	 * Integer.parseInt(items_quan[0]);
+	 * 
+	 * itemCart.setItems_num(itemsNum); itemCart.setQuantity(itemsQuan);
+	 * itemCart.setMem_num(user.getMem_num()); cartService.insertItemCart(itemCart);
+	 * logger.debug("장바구니에 상품 추가" + itemCart); }
+	 */
 
 	//상품 장바구니 수정(개별 상품 수량 변경)
 	@ResponseBody

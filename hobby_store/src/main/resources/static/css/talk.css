@@ -144,9 +144,16 @@ a:hover {
     min-width: 30%;
 }
 
+.notMyChat .align-right{
+	text-align:left;
+}
+.myChat .align-right{
+	text-align:right;
+}
+
 .exit-message{
 	width:230px;
-	height:30px;
+	height:40px;
 	border-radius:10px;
 	background-color:#eee;
 	margin:10px auto;

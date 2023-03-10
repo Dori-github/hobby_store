@@ -99,8 +99,9 @@
 			</p>
 		</div>
 		<%-- 결제정보 전송 폼(공간 번호,가격,요일) --%>
-		<form id="space_cart" action="/order/orderForm.do" method="post">
+		<form id="space_cart" action="/order/orderNowForm.do" method="post">
 			<input type="hidden" name="space_num" value="${space.space_num}" id="space_num">
+			<input type="hidden" name="space_name" value="${space.space_name}" id="space_name">
 			<input type="hidden" name="space_price" value="${space.space_price}" id="space_price">
 			<input type="hidden" name="space_limit" value="${space.space_limit}" id="space_limit">
 			<div class="reservation">
@@ -118,7 +119,7 @@
 				<c:if test="${space.space_limit > 0}">
 				<li>
 					<span><label for="order_quantity">구매수량</label></span>
-					<input type="number" name="order_quantity"
+					<input type="number" name="order_quantity" value="1"
 					   min="1" max="${space.space_limit}" autocomplete="off"
 					   id="order_quantity" class="quantity-width">
 				</li>

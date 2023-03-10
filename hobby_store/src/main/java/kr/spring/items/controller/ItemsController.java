@@ -478,6 +478,43 @@ public class ItemsController {
 	      return mav;
 	   }
 	   //6-5 후기 삭제
+	   @RequestMapping("/items/replyDelete.do")
+	   @ResponseBody
+	   public Map<String, String> replyDelete(ItemsReplyVO reply, HttpSession session) {
+		   Map<String,String> mapJson = new HashMap<String,String>();
+		   MemberVO user = (MemberVO)session.getAttribute("user");
+		   logger.debug("reply"+reply);
+		   
+			ItemsReplyVO selectReply = itemsService.selectReply(reply.getReply_num());
+		   logger.debug("selectReply"+selectReply);
+		   if(user == null) {
+			  mapJson.put("result","logout");
+		   }
+		   
+		   
+		   //접속한 회원이 reply_num과 같은 행에 저장된 fmem_num과 같을 때 삭제 할 수 있다.
+		   else if(user != null && user.getMem_num() == selectReply.getMem_num()) {
+			 //1.reply_num을 사용하여 삭제해야 할 모든 좋아요를 검색 -> VO에 저장
+			 //2.검색된 VO를 가지고 검색된 fav_num을 모두 삭제
+			 //3.reply_num을 사용하여 후기 삭제
+			   
+			   //1
+			   ItemsReplyVO vo = itemsService.deleteFav(reply);
+			   logger.debug("삭제해야 할 모든 좋아요 "+vo);
+			   //2
+			  	itemsService.deleteAllFav(vo);
+			   
+			   //3
+			   itemsService.deleteReply(reply.getReply_num());
+			   
+			   mapJson.put("result", "success");
+		   }
+		   else {
+			   mapJson.put("result", "wrongAccess");
+		   }
+		   
+		   return mapJson;
+	   }
 
 	 //7-1 후기 좋아요 등록
 		@RequestMapping("/items/replyWriteFav.do")

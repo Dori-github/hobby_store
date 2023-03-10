@@ -214,13 +214,14 @@ $(function(){
 								output += item.mem_nickname;	
 								output += '</div><div class="space-message">';
 							}
-							output += '<div class="chatBox" style=>';
+							output += '<div class="chatBox">';
 							//메시지 내용
 							output += '<span>' + item.message.replace(/\r\n/g,'<br>').replace(/\r/,'<br>').replace(/\n/,'<br>') + '</span></div>' ;
 							//개별 메세지 시간 표시
 							output += '<div class="align-right" style="font-size:11px; color:gray;">' + item.chat_date.split(' ')[1] + '</div>'; 
 							output += '</div>';
-							output += '</div><div class="space-clear"></div>';
+							output += '</div>';
+							output += '<div class="space-clear"></div>';
 							
 						}
 						
@@ -358,8 +359,9 @@ $(function(){
                     showCancelButton: false,
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
-                });
-					location.href='../talk/talkList.do';
+                }).then(function(){
+						location.href='../talk/talkList.do';
+				});	
 				}else{
 					Swal.fire({
                     icon: 'error',

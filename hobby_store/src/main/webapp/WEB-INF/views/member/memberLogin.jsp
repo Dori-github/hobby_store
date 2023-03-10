@@ -72,12 +72,6 @@
                                                 <a id="find" class="find" href="${pageContext.request.contextPath}/member/registerUser.do">회원가입</a>
                                             </div>
                                         </div>
-
-                                        <div class="hr-sect">간편 로그인</div><br>
-                                        <div class="text-center mb-3">
-											<img src="${pageContext.request.contextPath}/images/kakao_talk.svg" style="height: 30px;"> 
-											<img src="${pageContext.request.contextPath}/images/naver.svg" style="height: 30px;">
-										</div>
                                     </form:form>
                                 </div>
                             </div>
