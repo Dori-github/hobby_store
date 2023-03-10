@@ -69,7 +69,7 @@
 					</c:if>
 					
 					<c:if test="${!empty user && user.mem_auth == 9}"><!-- 관리자 -->
-					<a href="${pageContext.request.contextPath}/member/myPage.do"> 관리자 PAGE</a>
+					<a href="${pageContext.request.contextPath}/member/admin_list.do"> 관리자 PAGE</a>
 					</c:if>
 					<c:if test="${!empty user}">
 					<span class="btn-border font-10"><a href="${pageContext.request.contextPath}/">로그아웃</a></span>
