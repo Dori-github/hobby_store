@@ -18,8 +18,7 @@
 <!-- 채팅하기 시작 -->
 <div id="talkDetail" class="container">
    <div class="content">
-            <div class="row" 
-               style="margin-top: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0, 0, 0, .1);">
+            <div class="row">
                <div class="col-9" >
                   <div class="modal-title">${talkRoomVO.talkroom_name}</div>
                </div>
@@ -42,9 +41,8 @@
             </p>
             </div>
 
-
-            
-            <div id="chatting_message" style="min-height: 500px;"></div>
+   
+            <div class="scrollBar" id="chatting_message" style="min-height: 500px;"></div>
     
             <form method="post" id="detail_form">
                <input type="hidden" name="talkroom_num" id="talkroom_num"
@@ -53,10 +51,10 @@
                <!-- 내용 -->
             <div class="chat">
                <input type="text" class="msg-input" name="message" placeholder="메세지를 입력해 주세요" id="message" >
-               <!-- 전송 -->
-               <button type="submit" class="btn"
-                  style="background-color: #FF4E02; color: white; width: 19%; line-height: 1.5;">전송</button>
             </div>
+             <!-- 전송 -->
+            <button type="submit" class="btn"
+                  style=" margin-top:10px; background-color: #FF4E02; color: white; width: 10%; line-height: 1.5; float:right;">전송</button>
          </form>
          </div>
       </div>
