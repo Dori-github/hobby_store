@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.spring.util.DurationFromNow;
 
-public class CourseReplyVO {  
+public class CourseReplyVO { 
 	private int reply_num;
 	private String reply_content;
 	private byte[] reply_photo1;
@@ -38,6 +38,9 @@ public class CourseReplyVO {
 	private int starall;
 	//후기 좋아요 개수
 	private int favcount;
+	//후기 좋아요 한사람 체크
+	private int fav_num;
+	
 	
 		//파일 업로드 처리
 		//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
@@ -191,6 +194,13 @@ public class CourseReplyVO {
 		}
 		public void setFavcount(int favcount) {
 			this.favcount = favcount;
+		}
+		
+		public int getFav_num() {
+			return fav_num;
+		}
+		public void setFav_Num(int fav_num) {
+			this.fav_num = fav_num;
 		}
 		@Override
 		public String toString() {

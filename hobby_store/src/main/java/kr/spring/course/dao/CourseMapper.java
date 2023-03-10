@@ -15,7 +15,7 @@ import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 
-@Mapper 
+@Mapper
 public interface CourseMapper {
 	//부모글
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
@@ -88,6 +88,8 @@ public interface CourseMapper {
 	
 	
 	//후기 좋아요
+	@Select("SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num} AND reply_num=#{mem_num}")
+	public CourseReplyFavVO selectReplyFavCheck();
 	@Select("SELECT * FROM course_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
 	public CourseReplyFavVO selectReplyFav(CourseReplyFavVO fav);
 	@Select("SELECT COUNT(*) FROM course_reply_fav WHERE reply_num=#{reply_num}")

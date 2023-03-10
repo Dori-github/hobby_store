@@ -210,8 +210,8 @@
 		<tr class="startDate" style="display:none;">
 			<td>시작날짜</td>
 			<td>
-				<form:input path="course_startDate"/>
-				<form:errors element="div" path="course_startDate" cssClass="error-color"/>
+				<form:input path="course_startdate"/>
+				<form:errors element="div" path="course_startdate" cssClass="error-color"/>
 			</td>
 		</tr>
 		

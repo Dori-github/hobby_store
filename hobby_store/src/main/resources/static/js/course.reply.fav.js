@@ -58,6 +58,7 @@ $(function(){
 						replyFav.find('.fa-thumbs-up').css('color','#000');
 						replyFav.find('.fa-thumbs-up').css('transform','none');
 					}
+					replyFav.find('.favcount').text(param.count);
 				}else{
 					Swal.fire({
 				        icon: 'error',

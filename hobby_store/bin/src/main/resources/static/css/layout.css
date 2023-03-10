@@ -1,0 +1,357 @@
+@charset "UTF-8";
+
+/* 전체 레이아웃
+---------------------------*/
+div#main{
+	width:1024px;
+	margin:0 auto;
+	font-size:10pt;
+	font-family:"맑은 고딕";
+}
+div#main_header{
+	margin-bottom:10px;
+	padding:0 10px 0 0;
+}
+div#main_body{
+	padding:5px 5px 30px 5px;
+	min-height:500px;
+}
+div#main_footer{
+	background-color:yellow;
+}
+a:link{
+	text-decoration:none;
+	color:#000000;
+}
+a:visited {
+	text-decoration:none;
+	color:#000000;
+}
+a:hover {
+	text-decoration:underline;
+	color:#999999;
+}
+
+/* 좌측 메뉴 레이아웃(Admin,MyPage)
+---------------------------*/
+div#page_nav{
+	float:left;
+	width:25%;
+	min-height:530px;
+}
+div#page_body{
+	width:75%;
+	float:left;
+}
+.page_clear{
+	clear:both;
+}
+
+/* 페이지 기본 레이아웃
+---------------------------*/
+.page-main{
+	width:98%;
+	margin:0 auto;
+}
+.page-one{
+	width:600px;
+	margin:0 auto;
+}
+
+/* 공통 메시지
+---------------------------*/
+.result-display{
+	width:400px;
+	height:200px;
+	margin:50px auto;
+	border:1px solid;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.error-color{
+	color:#ff0000;
+}
+
+/* 공통 정렬
+---------------------------*/
+.align-center{
+	text-align:center;
+}
+.align-right{
+	text-align:right;
+}
+
+/* 상단 메뉴
+---------------------------*/
+div#main_menu ul{
+	list-style:none;
+}
+div#main_menu ul li{
+	margin-bottom:5px;
+}
+
+/* 메인
+---------------------------*/
+
+/* 공통 등록, 수정 폼
+---------------------------*/
+form{
+	width:800px;
+	margin:0 auto;
+	border:1px solid #000;
+	padding:10px 10px 10px 30px;
+}
+form ul li{
+	clear:both;
+}
+form ul li label{
+	width:130px;
+	float:left;
+}
+ul{
+	list-style:none;
+}
+input{
+	margin-top:4px;
+}
+input[type="text"],.page-main input[type="password"],.page-main input[type="email"]{
+	width:350px;
+}
+#register_form input[id="id"]{
+	width:263px;
+}
+input[id="zipcode"]{
+	width:245px;
+}
+input[id="number"]{
+	width:100px;
+}
+.form-notice{
+	margin-left:130px;
+}
+ul.paging-button{
+	overflow:hidden;
+}
+li.paging-num{
+	float:left;
+	list-style:none;
+	padding:10px;
+	cursor:pointer;
+}
+li.paging-current{
+	float:left;
+	list-style:none;
+	padding:10px;
+}
+
+/* 회원정보 수정, 비밀번호 변경, 회원탈퇴
+---------------------------*/
+#modify_form, #change_form, #delete_form{
+	width:600px;
+}
+
+/* 로그인
+---------------------------*/
+#login_form{
+	width:600px;
+}
+#login_form #id,#login_form #passwd{
+	width:200px;
+}
+
+/* Admin, MY페이지 공통
+---------------------------*/
+.side-bar{
+	margin:10px 10px 10px 0;
+	padding:10px;
+	/*사이드바의 높이가 컨텐트의 높이와 동일하게 자동 조절*/
+	margin-bottom: -9999px;
+	padding-bottom: 9999px;
+	background-color:#CCCCCC;
+}
+.side-bar ul{
+	margin:0;
+	padding:0;
+}
+.side-bar ul li{
+	padding:5px 10px 5px 10px;
+}
+.side-bar ul li img{
+	margin-left:3px;
+}
+.side-height{
+	/*사이드바의 높이가 컨텐트의 높이와 동일하게 자동 조절하기
+	위해 흘러넘친 배경색은 숨김*/
+	overflow:hidden;
+	margin-bottom:10px;
+}
+.menu-btn{
+	width:100%;
+	height:50px;
+	font-size:12pt;
+	background-color:#FCFCFC;
+	border-color:#B7B5B5;
+	border-radius:5px;
+}
+
+/* MY페이지
+---------------------------*/
+.my-photo{
+	object-fit:cover;
+	object-position:top;
+	border-radius:50%;
+}
+
+/* 공통 목록
+---------------------------*/
+form#search_form{
+	width:600px;
+	border:none;
+}
+ul.search{
+	width:340px;
+	list-style:none;
+	padding:0;
+	margin:0 auto;
+}
+ul.search li{
+	margin:0 0 9px 0;
+	padding:0;
+	display:inline;
+}
+ul.search li input[type="search"]{
+	width:150px;
+}
+.list-space{
+	width:700px;
+	margin:10px auto;
+}
+table.basic-table{
+	width:100%;
+	margin:7px 0;
+	border:1px solid #000;
+	border-collapse:collapse;
+}
+table.basic-table td, table.basic-table th{
+	border:1px solid #000;
+	padding:5px;
+}
+
+table.striped-table{
+	border:1px solid #FFF;
+	font-size:15px;
+	width:100%;
+	border-collapse:collapse;
+	margin:7px0;
+}
+table.striped-table td, table.striped-table th{
+	padding: .7em .5em;
+	vertical-align:middle;
+}
+table.striped-table th{
+	font-weight:bold;
+	background:#E1E1E1;
+}
+table.striped-table td{
+	border-bottom:1px solid rgba(0,0,0,.1);
+	text-align:center;
+}
+table.striped-table td:nth-child(2){
+	text-align:left;
+}
+table.striped-table tr:nth-child(odd){
+	background-color:rgb(250,250,247);
+}
+
+/* 게시판 폼
+---------------------------*/
+/*CKEditor 사용시 등록, 수정폼*/
+form#register_form, form#update_form{
+	padding:0 0 10px 0;
+	width:800px;
+}
+form#register_form ul, form#update_form ul{
+	padding:20px;
+}
+
+/* 게시판 글상세
+---------------------------*/
+ul.detail-info{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+ul.detail-info li{
+	margin:0;
+	padding-top:5px;
+	display:inline-block;
+}
+ul.detail-info li:last-child{
+	vertical-align:top;
+}
+.detail-img{
+	max-width:500px;
+}
+#output_fav{
+	cursor:pointer;
+}
+#output_fcount{
+	width:50px;
+	display:inline-block;
+}
+div#reply_div{
+	padding:5px 10px 40px 10px;
+	margin-top:10px;
+	background-color:#eee;
+}
+form#re_form{
+	width:650px;
+	border:none;
+}
+span.re-title{
+	color:#000;
+	font-size:12pt;
+	line-height:200%;
+}
+span.letter-count{
+	font-size:10pt;
+	color:#999;
+}
+textarea.rep-content{
+	width:90%;
+	height:50px;
+	margin:10px 10px;
+}
+div#re_first, div#mre_first{
+	float:left;
+	width:70%;
+	padding-left:15px;
+	margin-bottom:10px;
+}
+div#re_second, div#mre_second{
+	float:left;
+	width:19%;
+	margin-bottom:10px;
+}
+div#loading{
+	text-align:center;
+}
+div.paging-button{
+	text-align:right;
+}
+form#mre_form{
+	border:none;
+	margin:5px;
+}
+
+/* 상품
+---------------------------*/
+
+/* 장바구니
+---------------------------*/
+
+/* 주문
+---------------------------*/
+
+

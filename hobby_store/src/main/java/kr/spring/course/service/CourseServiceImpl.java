@@ -15,7 +15,7 @@ import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO; 
 
-@Service 
+@Service
 @Transactional
 public class CourseServiceImpl implements CourseService{
 
@@ -195,6 +195,11 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public void deleteReplyFavByReplyNum(Integer reply_num) {
 		courseMapper.deleteReplyFavByReplyNum(reply_num);
+	}
+
+	@Override
+	public CourseReplyFavVO selectReplyFavCheck() {
+		return courseMapper.selectReplyFavCheck();
 	}
 	
 }

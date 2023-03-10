@@ -41,13 +41,24 @@ $(function(){
 				
 				//후기 목록 작업
 				$(param.list).each(function(index,item){
-					alert(item.favcount);
 					let output = '<div class="wid"><span class="r-list-star">';
-					for(let i=1;i<=5;i++){
+					for(let i=1;i<=item.star_auth;i++){
 						output += '★';
 					}
 					output += '</span>';
-					output += '<span class="r-list-fav" data-num="'+item.reply_num+'"><i class="fa-regular fa-thumbs-up"></i> '+item.favcount+'</span></div>';
+					
+					output += '<span class="r-list-fav" data-num="'+item.reply_num+'">';
+					
+					if(item.fav_num != 0) {
+					output += '<i class="fa-regular fa-thumbs-up" style ="color :#FF4E02;"></i>';
+					}
+					if (item.fav_num == 0) {
+					output += '<i class="fa-regular fa-thumbs-up style ="color :#000;"></i>';
+					}					
+					output += '<span class="favcount">'+item.favcount+'</span>';
+					output += '</span>';
+					output += '</div>';
+					
 					output += '<div class="item">';
 					output += '<ul class="detail-info">';
 					output += '<li>';
@@ -217,6 +228,7 @@ $(function(){
 			dataType:'json',
 			processData: false,
 		    contentType: false,
+            enctype:'multipart/form-data',
 			success:function(param){
 				if(param.result == 'logout'){
 					alert('로그인해야 작성할 수 있습니다.');
@@ -301,29 +313,67 @@ $(function(){
 		modifyUI += '<textarea rows="3" cols="50" name="reply_content" id="mreply_content" class="reply-content">'+content+'</textarea>';
 		modifyUI += '<div class="reply-photo">';
 		modifyUI += '<ul class="image">';
-		for(let i=1;i<=3;i++){
-			modifyUI += '<li>';
-			if(photos_src["photo" + i]!=null){
-				modifyUI += '<img src="'+photos_src["photo" + i]+'" class="course-photo'+i+'" style="display:inline-block;">';
-				modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'" style="display:none;">';
+		modifyUI += '<li>';
+			if(photos_src["photo1"]!=null){
+				modifyUI += '<img src="'+photos_src["photo1"]+'" class="course-photo1" style="display:inline-block;">';
+				modifyUI += '<label for="upload1" class="label1 l1" style="display:none;">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d'+i+'" style="display:inline-block;"></i>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d1" style="display:inline-block;"></i>';
+				modifyUI += '<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}else{
-				modifyUI += '<img class="course-photo'+i+'">';
-				modifyUI += '<label for="upload'+i+'" class="label1 l'+i+'">';
+				modifyUI += '<img class="course-photo1">';
+				modifyUI += '<label for="upload1" class="label1 l1">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d'+i+'"></i>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d1"></i>';
+				modifyUI += '<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}
-			modifyUI += '<input type="file" name="upload'+i+'" id="upload'+i+'" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+			if(photos_src["photo2"]!=null){
+				modifyUI += '<img src="'+photos_src["photo2"]+'" class="course-photo2" style="display:inline-block;">';
+				modifyUI += '<label for="upload2" class="label1 l2" style="display:none;">';
+				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+				modifyUI += '</label>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d2" style="display:inline-block;"></i>';
+				modifyUI += '<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+			}else{
+				modifyUI += '<img class="course-photo2">';
+				modifyUI += '<label for="upload2" class="label1 l2">';
+				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+				modifyUI += '</label>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d2"></i>';
+				modifyUI += '<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+			}
+			if(photos_src["photo3"]!=null){
+				modifyUI += '<img src="'+photos_src["photo3"]+'" class="course-photo3" style="display:inline-block;">';
+				modifyUI += '<label for="upload1" class="label1 l3" style="display:none;">';
+				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+				modifyUI += '</label>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d3" style="display:inline-block;"></i>';
+				modifyUI += '<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+			}else{
+				modifyUI += '<img class="course-photo3">';
+				modifyUI += '<label for="upload3" class="label1 l3">';
+				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+				modifyUI += '</label>';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d3"></i>';
+				modifyUI += '<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+			}
 			modifyUI += '</li>';
-		}
+
+		/*
+		modifyUI += '<li>';
+		modifyUI += '<input type="file" name="upload1"  accept="image/jpeg,image/png,image/gif">';
+		modifyUI += '<input type="file" name="upload2"  accept="image/jpeg,image/png,image/gif">';
+		modifyUI += '<input type="file" name="upload3"  accept="image/jpeg,image/png,image/gif">';
+		modifyUI += '</li>';
+		*/
 		modifyUI += '</ul>';
 		modifyUI += ' <input type="button" value="취소" class="reply-reset">';
 		modifyUI += '<input type="submit" value="수정" class="submit-btn">';
 		modifyUI += '</div>';
 		modifyUI += '</form>';
+		
 		
 		//이전에 이미 수정하는 댓글이 있을 경우 수정버튼을 클릭하면 숨김
 		//sub-item을 환원시키고 수정 폼을 초기화함
@@ -394,6 +444,7 @@ $(function(){
 			dataType:'json',
 			processData: false,
 		    contentType: false,
+            enctype:'multipart/form-data',
 			success:function(param){
 				if(param.result=='logout'){
 					Swal.fire({

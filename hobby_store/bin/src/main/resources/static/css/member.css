@@ -1,0 +1,109 @@
+@charset "UTF-8";
+ 
+#main_body{
+	margin-bottom:0;
+}
+
+.hr-sect {
+    display: flex;
+    flex-basis: 100%;
+    justify-content:center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 15px;
+    margin: 8px 0px;
+}
+
+.hr-sect::before,
+.hr-sect::after {
+    content: "";
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0px 16px;
+}
+
+
+#find {
+    color: gray;
+    text-decoration: underline;
+    font-size: 15px;
+    
+}
+
+#find:hover {
+    color:black;
+    text-decoration: none;
+   
+}
+
+
+.view-box{
+      height:100px; 
+      margin:0 auto;
+      max-width:300px;
+      min-width:300px;
+      overflow: hidden;
+    }
+    
+.view-box ul{   
+	  padding:0;
+      list-style: none;     
+      width: 300px;    
+     
+    }
+.view-box ul li{
+	  margin-left:65px;
+      height: 50px; 
+      line-height: 60px; 
+      float:left;
+    }
+    
+    
+.view-box ul::after{
+      display: block; 
+      content: ''; 
+      clear: both;
+    }
+    
+#message_id{
+	display:block;
+}
+
+#message_nickname{
+	display:block;
+}
+
+#message_email{
+	display:block;
+}
+
+#message_emailCheck{
+	display:block;
+}
+
+.findid{
+	text-align:center;
+	margin-bottom:30px;
+}
+
+.table td{
+	border:none;
+}
+  
+
+
+
+select {
+    height: 24px !important;
+    font-size: 11px !important;
+    border-radius: 0.25rem !important;
+    background-color: #eee !important;
+    border: none !important;
+}
+
+
+
+
