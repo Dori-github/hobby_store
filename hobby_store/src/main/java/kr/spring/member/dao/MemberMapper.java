@@ -111,7 +111,7 @@ public interface MemberMapper {
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);
-	@Update("UPDATE member SET auth=#{auth} WHERE mem_num=#{mem_num}")
+	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
 	public void updateByAdmin(MemberVO memberVO);
 	
 	//강사 - 등록 클래스 리스트
