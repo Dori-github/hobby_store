@@ -64,17 +64,7 @@
       ]]>
 	</select>
 	 -->
-	<sql id="orderSearchByMem_num">
-  		WHERE mem_num = #{mem_num}
-  		<if test="keyword !=null and keyword != ''">
-  			<if test="keyfield == 1">
-  				AND order_num = #{keyword}
-  			</if>
-  			<if test="keyfield == 2">
-  				AND order_name LIKE '%' || #{keyword} || '%'
-  			</if>
-  		</if>
-  	</sql>
+
 	 
 	<select id="selectOrderList" parameterType="map" resultType="orderVO">
 		SELECT 
@@ -96,6 +86,7 @@
   		  ]]>
 	</select>
 	
+	<!-- 좋아요 조회 -->
 	<select id="selectMemberRowCount" resultType="integer">
   		SELECT
   		  COUNT(*)
@@ -197,9 +188,49 @@
   		]]> 
   	</select>
   	
-  	<!-- 회원별 주문 정보 -->
-  	<select id="selectListOrderByMem_num"
-  	        parameterType="map" resultType="orderVO">
+  	<!-- 주문 정보 -->
+  	
+	<sql id="orderSearchByMem_num">
+  		WHERE mem_num = #{mem_num}
+  		<if test="keyword !=null and keyword != ''">
+  			<if test="keyfield == 1">
+  				AND order_num = #{keyword}
+  			</if>
+  			<if test="keyfield == 2">
+  				AND order_name LIKE '%' || #{keyword} || '%'
+  			</if>
+  		</if>
+  	</sql>
+  	
+  	<sql id="orderSearch">
+  		<where>
+  			<if test="keyword != null">
+  				<if test="keyfield == 0">
+  					order_status = 0
+  				</if>
+  				<if test="keyfield == 1">
+  					order_status = 1
+  				</if>
+  				<if test="keyfield == 2">
+  					order_status = 2
+  				</if>
+  				<if test="keyfield == 3">
+  					order_status = 3
+  				</if>
+  				<if test="keyfield == 4">
+  					order_status = 4
+  				</if>
+  				<if test="keyfield == 5">
+  					refund_status = 0
+  				</if>
+  				<if test="keyfield == 6">
+  					refund_status = 1
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+  	
+  	<select id="selectListOrderByMem_num" parameterType="map" resultType="orderVO">
   		SELECT
   		   *
   		FROM (SELECT
@@ -237,6 +268,31 @@
   		 order_status=#{order_status}
   	   WHERE order_num=#{order_num}
   	</update>
+
+  	
+  	<select id="selectListDelivery" parameterType="map" resultType="orderVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  		            FROM orders
+  		            <include refid="orderSearch"></include>
+  		            ORDER BY order_num DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>                                        
+  	</select>
+  	
+  	<select id="selectDeliveryCount" parameterType="map" resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM orders
+  		<include refid="orderSearch"></include>	
+  	</select>
+  	
 </mapper>
 
 

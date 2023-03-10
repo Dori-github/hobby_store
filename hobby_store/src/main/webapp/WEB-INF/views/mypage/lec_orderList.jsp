@@ -2,23 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!-- 주문조회 시작 -->
+<!-- 강사 주문조회 시작 -->
 <div id="content">
-<form action="order.do" id="search_form" method="get">
+<form action="lec_order.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
 				<select name="keyfield">
-					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>주문번호</option>
-					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>주문품목명</option>
+					<option value="0" <c:if test="${param.keyfield == 0}">selected</c:if>>구매완료</option>
+					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>예약완료</option>
+					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>배송준비중</option>
+					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>배송중</option>
+					<option value="4" <c:if test="${param.keyfield == 4}">selected</c:if>>배송완료</option>
+					<option value="5" <c:if test="${param.keyfield == 5}">selected</c:if>>환불요청중</option>
+					<option value="6" <c:if test="${param.keyfield == 6}">selected</c:if>>환불완료</option>
 				</select>
 			</li>
 			<li>
-				<input type="search" name="keyword"
-				       id="keyword" value="${param.keyword}">
+				<input type="hidden" name="keyword" id="keyword" value="${param.keyword}">
 			</li>
 			<li>
 				<input type="submit" value="찾기">
-				<input type="button" value="목록" onclick="location.href='order.do'">
+				<input type="button" value="목록" onclick="location.href='lec_order.do'">
 			</li>
 		</ul>                                   
 </form>
@@ -64,6 +68,9 @@
 				<c:if test="${order.refund_status==0}">환불요청중</c:if>
 				<c:if test="${order.refund_status==1}">환불완료</c:if>
 			</c:if>
+				<!-- <c:if test="${order.order_status > 2}">
+				<input type="button" value="환불요청" onclick="location.href='user_order.do'">
+				</c:if> -->
 			</td>
 		</tr>
 		</c:forEach>
@@ -71,4 +78,4 @@
 	<div class="align-center">${page}</div>
 	</c:if>
 </div>
-<!-- 주문조회 끝 -->
+<!-- 강사 주문조회 끝 -->

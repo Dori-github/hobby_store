@@ -131,7 +131,7 @@ public interface MemberMapper {
 	//강사 - 배송상태 관리
 	
 	
-	//회원 - 배송확인
+	//회원 - 주문확인
 	public int selectOrderCountByMem_num(Map<String,Object> map);
 	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
 	@Select("SELECT * FROM orders WHERE order_num=#{order_num}")
@@ -145,6 +145,10 @@ public interface MemberMapper {
 	//회원 - 주문취소
 	@Update("UPDATE orders SET refund_status=0 WHERE order_num=#{order_num}")
 	public void updateOrderCancel(Integer order_num);
+	
+	//강사 - 배송관리 조회
+	public int selectDeliveryCount(Map<String,Object> map);
+	public List<OrderVO> selectListDelivery(Map<String,Object> map);
 	
 	//작성한 게시글 조회 - 자유게시판
 	@Select("SELECT COUNT(*) FROM free_board WHERE mem_num=#{mem_num}")

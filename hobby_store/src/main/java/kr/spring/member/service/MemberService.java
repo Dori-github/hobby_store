@@ -77,6 +77,10 @@ public interface MemberService {
 	//회원 - 배송정보 변경
 	public void updateOrder(OrderVO order);
 	
+	//강사 - 배송관리 조회
+	public int selectDeliveryCount(Map<String,Object> map);
+	public List<OrderVO> selectListDelivery(Map<String,Object> map);
+	
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);

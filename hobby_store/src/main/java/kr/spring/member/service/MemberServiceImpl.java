@@ -215,4 +215,14 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.updateOrder(order);
 	}
 
+	@Override
+	public int selectDeliveryCount(Map<String, Object> map) {
+		return memberMapper.selectDeliveryCount(map);
+	}
+
+	@Override
+	public List<OrderVO> selectListDelivery(Map<String, Object> map) {
+		return memberMapper.selectListDelivery(map);
+	}
+
 }
