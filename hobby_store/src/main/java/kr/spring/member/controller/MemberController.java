@@ -861,6 +861,54 @@ public class MemberController {
 
 		return mav;
 	}
+
+	//주문정보수정 폼 호출
+	@GetMapping("/member/lec_modify.do")
+	public String formModify(@RequestParam int order_num, Model model) {
+		OrderVO order = memberService.selectOrder(order_num);
+		
+		List<OrderDetailVO> detailList = memberService.selectListOrderDetail(order_num);
+		logger.debug("<<강사 주문정보수정 - 주문상세>> : " + detailList);
+		
+		model.addAttribute("order", order);
+		model.addAttribute("detailList", detailList);
+		
+		return "lecOrderModify";
+	}
+	
+	@PostMapping("/member/lec_modify.do")
+	public String submitModify(OrderVO orderVO, Model model, HttpServletRequest request) {
+		
+		OrderVO db_order = memberService.selectOrder(orderVO.getOrder_num());
+		if(db_order.getRefund_status()==1) {
+			//주문자가 주문취소한 상품의 정보를 변경할 수 없음
+			return "common/notice";
+		}else {
+			if(orderVO.getOrder_status() < 2 && (Integer)orderVO.getRefund_status()!=null &&
+				db_order.getOrder_status()!=orderVO.getOrder_status()) {
+				orderVO.setReceive_name(
+						db_order.getReceive_name());
+				orderVO.setReceive_post(
+						db_order.getReceive_post());
+				orderVO.setReceive_address1(
+						db_order.getReceive_address1());
+				orderVO.setReceive_address2(
+						db_order.getReceive_address2());
+				orderVO.setReceive_phone(
+						db_order.getReceive_phone());
+				orderVO.setNotice(
+						db_order.getNotice());
+			}
+			
+			memberService.updateOrder(orderVO);
+			
+			model.addAttribute("message", "주문 정보가 변경되었습니다.");
+			model.addAttribute("url", request.getContextPath()+
+					"/member/lec_modify.do?order_num="+orderVO.getOrder_num());
+		}
+		return "common/resultView";
+	}
+
 	
 	//배송조회
 	/*@RequestMapping("/member/order.do")

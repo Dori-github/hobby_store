@@ -257,7 +257,7 @@
   	<update id="updateOrder" parameterType="orderVO">
   		UPDATE orders
   		SET
-  		 <if test="order_status == 0 || order_status == 1">
+  		 <if test="order_status=0 or order_status=1 and refund_status!=0 and refund_status!=1">
   		 receive_name=#{receive_name},
   		 receive_post=#{receive_post},
   		 receive_address1=#{receive_address1},
@@ -265,7 +265,8 @@
   		 receive_phone=#{receive_phone},
   		 notice=#{notice},
   		 </if>
-  		 order_status=#{order_status}
+  		 order_status=#{order_status},
+  		 refund_status=#{refund_status}
   	   WHERE order_num=#{order_num}
   	</update>
 

@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>   
-<!-- 주문정보수정 시작 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- 강사 주문수정 시작 --> 
 <script type="text/javascript">
 $(function(){
 	$('#order_modify').submit(function(){
@@ -33,6 +32,24 @@ $(function(){
 			return false;
 		}
 	});
+	
+	$("input:radio[name='order_status']").on('click',function(){
+		$("input:radio[name='refund_status']").prop('checked',false);
+	});
+	
+	$("input:radio[name='refund_status']").on('click',function(){
+		$("input:radio[name='order_status']").prop('checked',false);
+	});
+	
+	if($("input:radio[name='order_status']").is('checked')){
+		$("input:hidden[name='refund_status']").attr('disabled',false);
+		$("input:radio[name='refund_status']").prop('checked',false);
+	}
+	
+	if($("input:radio[name='refund_status']").is('checked')){
+		$("input:hidden[name='order_status']").attr('disabled',false);
+		$("input:radio[name='order_status']").prop('checked',false);
+	}
 });
 </script>
 <div id="content">
@@ -57,43 +74,51 @@ $(function(){
 			<td class="align-center"><fmt:formatNumber value="${order.order_price}"/>원</td>
 		</tr>
 	</table>
-	<form:form action="orderModify.do" method="post" id="order_modify" modelAttribute="orderVO">
-	    <input type="hidden" name="order_num" value="${order.order_num}">
-	    <input type="hidden" name="order_status" value="${order.order_status}">
-	    <input type="hidden" name="refund_status" value="${refund.order_status}">                                             
+	<form action="lec_modify.do" method="post" id="order_modify">
+	    <input type="hidden" name="order_num" value="${order.order_num}">    
+	    <input type="hidden" name="order_status" value="${order.order_status}" disabled="disabled">
+	    <input type="hidden" name="refund_status" value="${order.refund_status}" disabled="disabled">                     
 		<ul>
-		    <c:if test="${order.order_status < 2}">
+		    <c:if test="${order.order_status < 2 && order.refund_status == null}">
 			<li>
 				<label for="receive_name">받는 사람</label>
-				<input type="text" name="receive_name" value="${order.receive_name}"
+				<input type="text" name="receive_name"
+				       value="${order.receive_name}"
 				       id="receive_name" maxlength="10">       
 			</li>
 			<li>
 				<label for="zipcode">우편번호</label>
-				<input type="text" name="receive_post" value="${order.receive_post}"
+				<input type="text" name="receive_post"
+				       value="${order.receive_post}"
 				       id="zipcode" maxlength="5">
-				<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"> 
+				<input type="button" 
+				           onclick="execDaumPostcode()"
+				           value="우편번호 찾기"> 
 				                        
 			</li>
 			<li>
 				<label for="address1">주소</label>
-				<input type="text" name="receive_address1" value="${order.receive_address1}"
+				<input type="text" name="receive_address1"
+				       value="${order.receive_address1}"
 				       id="address1" maxlength="30">       
 			</li>
 			<li>
 				<label for="address2">상세주소</label>
-				<input type="text" name="receive_address2" value="${order.receive_address2}"
+				<input type="text" name="receive_address2"
+				       value="${order.receive_address2}"
 				       id="address2" maxlength="30">       
 			</li>
 			<li>
 				<label for="receive_phone">전화번호</label>
-				<input type="text" name="receive_phone" value="${order.receive_phone}"
+				<input type="text" name="receive_phone"
+					   value="${order.receive_phone}"
 				       id="receive_phone" maxlength="15">       
 			</li>
 			<li>
-				<label for="notice">배송메시지</label>
-				<input type="text" name="notice" value="${order.notice}" 
-					id="notice" maxlength="300">       
+				<label for="notice">남기실 말씀</label>
+				<input type="text" name="notice"
+				       value="${order.notice}"
+				       id="notice" maxlength="300">       
 			</li>
 			</c:if>
 			<c:if test="${order.order_status >= 2 || order.refund_status!=null}">
@@ -124,37 +149,32 @@ $(function(){
 			</c:if>
 			<li>
 				<label>배송상태</label>
-				<c:if test="${order.refund_status==null}">
-				<c:if test="${order.order_status == 0}">구매완료</c:if>
-				<c:if test="${order.order_status == 2}">배송준비중</c:if>
-				<c:if test="${order.order_status == 3}">배송중</c:if>
-				<c:if test="${order.order_status == 4}">배송완료</c:if>
+				<c:if test="${order.order_status != 4 && order.refund_status != 1}">
+				<input type="radio" name="order_status" id="status1" value="0" 
+				   <c:if test="${order.order_status == 0 && order.refund_status ==null}">checked</c:if>>구매완료
+				<input type="radio" name="order_status" id="status2" value="1" 
+				   <c:if test="${order.order_status == 1 && order.refund_status ==null}">checked</c:if>>예약완료
+				<input type="radio" name="order_status" id="status3" value="2" 
+				   <c:if test="${order.order_status == 2 && order.refund_status ==null}">checked</c:if>>배송준비중
+				<input type="radio" name="order_status" id="status4" value="3" 
+				   <c:if test="${order.order_status == 3 && order.refund_status ==null}">checked</c:if>>배송중   
+				<input type="radio" name="order_status" id="status5" value="4" 
+				   <c:if test="${order.order_status == 4 && order.refund_status ==null}">checked</c:if>>배송완료      
+				<input type="radio" name="refund_status" id="status5" value="0" 
+				   <c:if test="${order.refund_status == 0}">checked</c:if>>환불진행중
 				</c:if>
-				<c:if test="${order.refund_status!=null}">
-				<c:if test="${order.refund_status == 0}">환불진행중</c:if>
-				<c:if test="${order.refund_status == 1}">환불완료</c:if>
-				</c:if>
-				<c:if test="${order.order_status == 1}">예약완료</c:if>
+				<input type="radio" name="refund_status" id="status5" value="1" 
+				   <c:if test="${order.refund_status == 1}">checked</c:if>>환불완료
 			</li>
 		</ul>
 		<div class="align-center">
-		<c:if test="${order.order_status<2 && order.refund_status==null}">
+		    <c:if test="${order.refund_status!= 1}">
 			<input type="submit" value="수정" id="general_btn">
-			<input type="button" value="주문취소" id="order_cancel">
-			<script>
-				let order_cancel = document.getElementById('order_cancel');
-				order_cancel.onclick=function(){
-					let choice = confirm('주문을 취소하겠습니까?');
-					if(choice){
-						location.replace('orderCancel.do?order_num=${order.order_num}');
-					}
-				};
-			</script>
-		</c:if>
-			<input type="button" value="목록" onclick="location.href='order.do'">
-			<input type="button" value="MyPage" onclick="location.href='myPage.do'">       
+			</c:if>
+			<input type="button" value="목록"
+			       onclick="location.href='lec_order.do'">
 		</div>
-	</form:form>
+	</form>
 </div>
 <!-- 우편번호 검색 시작 -->
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
@@ -254,4 +274,4 @@ $(function(){
     }
 </script>
 <!-- 우편번호 검색 끝 -->
-<!-- 주문정보수정 끝 -->
+<!-- 강사 주문수정 끝 -->

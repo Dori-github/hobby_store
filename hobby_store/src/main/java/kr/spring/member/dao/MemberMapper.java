@@ -128,9 +128,6 @@ public interface MemberMapper {
 	public int selectSpaceListCount(int mem_num);
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
 	
-	//강사 - 배송상태 관리
-	
-	
 	//회원 - 주문확인
 	public int selectOrderCountByMem_num(Map<String,Object> map);
 	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);

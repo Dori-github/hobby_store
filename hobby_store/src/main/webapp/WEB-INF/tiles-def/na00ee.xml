@@ -74,6 +74,11 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/lec_orderList.jsp"/>
     </definition>
+    <definition name="lecOrderModify" extends="myPage">
+    	<put-attribute name="title" value="주문 상세"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/lec_orderModify.jsp"/>
+    </definition>
     <definition name="memberDelete" extends="myPage">
     	<put-attribute name="title" value="회원탈퇴"/>
     	<put-attribute name="body"

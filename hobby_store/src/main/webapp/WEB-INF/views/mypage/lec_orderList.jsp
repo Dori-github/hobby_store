@@ -48,7 +48,7 @@
 		<tr>
 			<td>${order.order_num}</td>
 			<td>
-			<a href="orderModify.do?order_num=${order.order_num}">
+			<a href="lec_modify.do?order_num=${order.order_num}">
 				${order.order_name}
 			</a>
 			</td>
@@ -64,6 +64,7 @@
 				<c:if test="${order.order_status==3}">배송중</c:if>
 				<c:if test="${order.order_status==4}">배송완료</c:if>
 			</c:if>
+			<!-- refund_status 값 변경은 가능하지만 포인트 내역 삭제는 안 된 상태 -->
 			<c:if test="${order.order_status!=null}">
 				<c:if test="${order.refund_status==0}">환불요청중</c:if>
 				<c:if test="${order.refund_status==1}">환불완료</c:if>
