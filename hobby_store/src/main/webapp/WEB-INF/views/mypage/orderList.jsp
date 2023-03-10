@@ -7,7 +7,7 @@
 	<div id="delivery_box">
 		<div class="delivery-status"></div>
 	</div>
-<form action="admin_list.do" id="search_form" method="get">
+<form action="order.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
 				<select name="keyfield">
@@ -21,7 +21,7 @@
 			</li>
 			<li>
 				<input type="submit" value="찾기">
-				<input type="button" value="목록" onclick="location.href='admin_list.do'">
+				<input type="button" value="목록" onclick="location.href='order.do'">
 			</li>
 		</ul>                                   
 </form>
@@ -52,20 +52,23 @@
 			</td>
 			<td class="align-center">${order.order_date}</td>
 			<td class="align-center">
+			<c:if test="${order.refund_status==null}">
 				<c:if test="${order.order_status==0}">구매완료</c:if>
 				<c:if test="${order.order_status==1}">예약완료</c:if>
 				<c:if test="${order.order_status==2}">배송준비중</c:if>
 				<c:if test="${order.order_status==3}">배송중</c:if>
 				<c:if test="${order.order_status==4}">배송완료</c:if>
-			<!-- <c:if test="${order.refund_status==0}">환불요청중</c:if>
+			</c:if>
+			<c:if test="${order.order_status!=null}">
+				<c:if test="${order.refund_status==0}">환불요청중</c:if>
 				<c:if test="${order.refund_status==1}">환불완료</c:if>
-				 -->
-				<c:if test="${order.order_status < 2}">
+			</c:if>
+				<c:if test="${order.order_status < 2 && order.refund_status==null}">
 				<input type="button" value="주문취소" onclick="location.href='user_orderCancel.do'">
 				</c:if>
-				<c:if test="${order.order_status > 2}">
+				<!-- <c:if test="${order.order_status > 2}">
 				<input type="button" value="환불요청" onclick="location.href='user_order.do'">
-				</c:if>
+				</c:if> -->
 			</td>
 		</tr>
 		</c:forEach>

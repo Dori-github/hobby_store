@@ -759,7 +759,7 @@ public class MemberController {
 			PagingUtil page = 
 					new PagingUtil(keyfield,keyword,
 							currentPage,count,10,10,
-							"orderList.do");
+							"order.do");
 			List<OrderVO> list = null;
 			if(count > 0) {
 				map.put("start", page.getStartRow());

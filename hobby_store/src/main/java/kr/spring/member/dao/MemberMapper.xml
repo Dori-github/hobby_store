@@ -71,7 +71,7 @@
   				AND order_num = #{keyword}
   			</if>
   			<if test="keyfield == 2">
-  				AND item_name LIKE '%' || #{keyword} || '%'
+  				AND order_name LIKE '%' || #{keyword} || '%'
   			</if>
   		</if>
   	</sql>
