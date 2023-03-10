@@ -94,16 +94,13 @@ public interface MemberMapper {
 	public void updateMember_detail(MemberVO member);
 	
 	//강사 좋아요 리스트
-	@Select("SELECT COUNT(*) FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
-	public int selectCourseFavCount(int mem_num);
+	@Select("SELECT * FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN course c ON f.course_num=c.course_num WHERE f.fmem_num=#{mem_num}")
 	public List<CourseVO> selectCourseFav(Map<String,Object> map);
 	//상품 좋아요 리스트
-	@Select("SELECT COUNT(*) FROM items_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
-	public int selectItemsFavCount(int mem_num);
+	@Select("SELECT * FROM items_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN items i ON f.items_num=i.items_num WHERE f.fmem_num=#{mem_num}")
 	public List<ItemsVO> selectItemsFav(Map<String,Object> map);
 	//공간대여 좋아요 리스트
-	@Select("SELECT COUNT(*) FROM space_fav f JOIN member m ON f.fmem_num=m.mem_num WHERE f.fmem_num=#{mem_num}")
-	public int selectSpaceFavCount(int mem_num);
+	@Select("SELECT * FROM space_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN space s ON f.space_num=s.space_num WHERE f.fmem_num=#{mem_num}")
 	public List<SpaceVO> selectSpaceFav(Map<String,Object> map);
 	
 	//구매내역 리스트
@@ -111,9 +108,33 @@ public interface MemberMapper {
 	public int selectOrderCount(int mem_num);
 	public List<OrderVO> selectOrderList(Map<String, Object> map);
 	
-	//회원관리 - 관리자
+	//관리자 - 회원관리
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);
-	@Update("UPDATE member SET auth=#{auth} WHERE mem_num=#{mem_num}")
+	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
 	public void updateByAdmin(MemberVO memberVO);
+	
+	//강사 - 등록 클래스 리스트
+	@Select("SELECT COUNT(*) FROM course WHERE mem_num=#{mem_num}")
+	public int selectCourseListCount(int mem_num);
+	public List<CourseVO> selectCourseList(Map<String,Object> map);
+	//강사 - 등록 상품 리스트
+	@Select("SELECT COUNT(*) FROM items WHERE mem_num=#{mem_num}")
+	public int selectItemsListCount(int mem_num);
+	public List<ItemsVO> selectItemsList(Map<String,Object> map);
+	//강사 - 등록 공간대여 리스트
+	@Select("SELECT COUNT(*) FROM space WHERE mem_num=#{mem_num}")
+	public int selectSpaceListCount(int mem_num);
+	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
+	
+	//강사 - 배송상태 관리
+	
+	
+	//회원 - 배송확인
+	public int selectOrderCountByMem_num(Map<String,Object> map);
+	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
+	
+	//작성한 게시글 조회 - 자유게시판
+	@Select("SELECT COUNT(*) FROM free_board WHERE mem_num=#{mem_num}")
+	public int selectFreeRowCount();
 }

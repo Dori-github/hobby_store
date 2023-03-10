@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.member.dao.MemberMapper">  
 	
-	<select id="selectCourseFav" parameterType="map" resultType="courseVO">
+	<!-- <select id="selectCourseFav" parameterType="map" resultType="courseVO">
 		SELECT 
          * 
       FROM (SELECT 
@@ -63,7 +63,19 @@
       WHERE rnum >= #{start} and rnum <= #{end}
       ]]>
 	</select>
-	
+	 -->
+	<sql id="orderSearchByMem_num">
+  		WHERE mem_num = #{mem_num}
+  		<if test="keyword !=null and keyword != ''">
+  			<if test="keyfield == 1">
+  				AND order_num = #{keyword}
+  			</if>
+  			<if test="keyfield == 2">
+  				AND item_name LIKE '%' || #{keyword} || '%'
+  			</if>
+  		</if>
+  	</sql>
+	 
 	<select id="selectOrderList" parameterType="map" resultType="orderVO">
 		SELECT 
 			* 
@@ -135,6 +147,80 @@
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]>                           
+  	</select>
+  	
+  	<select id="selectCourseList" parameterType="map" resultType="courseVO">
+  		SELECT
+  			*
+  		FROM(SELECT
+  				a.*,
+  				rownum rnum
+  			 FROM (SELECT
+  			 		  *
+  			 	   FROM course
+  			 WHERE mem_num=#{mem_num}
+  			 ORDER BY course_date DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
+  	
+  	<select id="selectItemsList" parameterType="map" resultType="itemsVO">
+  		SELECT
+  			*
+  		FROM(SELECT
+  				a.*,
+  				rownum rnum
+  			 FROM (SELECT
+  			 		  *
+  			 	   FROM items
+  			 WHERE mem_num=#{mem_num}
+  			 ORDER BY items_date DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
+  	
+  	<select id="selectSpaceList" parameterType="map" resultType="spaceVO">
+  		SELECT
+  			*
+  		FROM(SELECT
+  				a.*,
+  				rownum rnum
+  			 FROM (SELECT
+  			 		  *
+  			 	   FROM space
+  			 WHERE mem_num=#{mem_num}
+  			 ORDER BY space_date DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
+  	
+  	<!-- 회원별 주문 정보 -->
+  	<select id="selectListOrderByMem_num"
+  	        parameterType="map" resultType="orderVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  		            FROM orders
+  		            <include refid="orderSearchByMem_num"></include>
+  		            ORDER BY order_num DESC)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>            
+  	</select>
+  	
+  	<select id="selectOrderCountByMem_num"
+  	       parameterType="map" resultType="integer">
+  		SELECT
+  		   COUNT(*)
+  		FROM orders
+  		<include refid="orderSearchByMem_num"></include>
   	</select>
 </mapper>
 

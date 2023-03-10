@@ -585,28 +585,93 @@ public class MemberController {
 	
 	//좋아요 게시물 조회
 	@RequestMapping("/member/fav.do")
-	public ModelAndView favList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, @RequestParam int cate_num, HttpSession session) {
+	public ModelAndView favList(@RequestParam int cate_num, HttpSession session) {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(cate_num==1) {
-			int count = memberService.selectCourseFavCount(user.getMem_num());
 			
-			PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+			List<CourseVO> list = null;
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectCourseFav(map);
+			
+			logger.debug("<<좋아요 목록>> : " + list);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("favList");
+			mav.addObject("list",list);
+			mav.addObject("cate_num",cate_num);
+			
+			return mav;
+			
+		}else if(cate_num==2) {
+			
+			List<ItemsVO> list = null;
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectItemsFav(map);
+			
+			logger.debug("<<좋아요 목록>> : " + list);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("favList");
+			mav.addObject("list",list);
+			mav.addObject("cate_num",cate_num);
+			
+			return mav;
+			
+		}else if(cate_num==3) {
+			
+			List<SpaceVO> list = null;
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectSpaceFav(map);
+			
+			logger.debug("<<좋아요 목록>> : " + list);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("favList");
+			mav.addObject("list",list);
+			mav.addObject("cate_num",cate_num);
+			
+			return mav;
+			
+		}else {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("notice");
+			return mav;
+		}
+	}
+	
+	//회원삭제 폼 호출
+	@RequestMapping("/member/delete.do")
+	public String formDelete() {
+		return "memberDelete";
+	}
+	
+	//등록 상품 조회
+	@RequestMapping("/member/regisList.do")
+	public ModelAndView regisList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, HttpSession session, int cate_num) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(cate_num==1) {
+			int count = memberService.selectCourseListCount(user.getMem_num());
+			
+			PagingUtil page = new PagingUtil(currentPage,count,12,10,"regisList.do?cate_num=1&");
 			
 			List<CourseVO> list = null;
 			if(count > 0) {
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
 				map.put("mem_num", user.getMem_num());
-				list = memberService.selectCourseFav(map);
+				list = memberService.selectCourseList(map);
 			}
 			
-			logger.debug("<<좋아요 목록>> : " + count);
+			logger.debug("<<등록 클래스 목록>> : " + count);
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("favList");
+			mav.setViewName("regisList");
 			mav.addObject("count",count);
 			mav.addObject("list",list);
 			mav.addObject("cate_num",cate_num);
@@ -615,22 +680,22 @@ public class MemberController {
 			return mav;
 			
 		}else if(cate_num==2) {
-			int count = memberService.selectItemsFavCount(user.getMem_num());
+			int count = memberService.selectItemsListCount(user.getMem_num());
 			
-			PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+			PagingUtil page = new PagingUtil(currentPage,count,12,10,"regisList.do?cate_num=2&");
 			
 			List<ItemsVO> list = null;
 			if(count > 0) {
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
 				map.put("mem_num", user.getMem_num());
-				list = memberService.selectItemsFav(map);
+				list = memberService.selectItemsList(map);
 			}
 			
-			logger.debug("<<좋아요 목록>> : " + count);
+			logger.debug("<<등록 상품 목록>> : " + count);
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("favList");
+			mav.setViewName("regisList");
 			mav.addObject("count",count);
 			mav.addObject("list",list);
 			mav.addObject("cate_num",cate_num);
@@ -639,22 +704,22 @@ public class MemberController {
 			return mav;
 			
 		}else if(cate_num==3) {
-			int count = memberService.selectSpaceFavCount(user.getMem_num());
+			int count = memberService.selectSpaceListCount(user.getMem_num());
 			
-			PagingUtil page = new PagingUtil(currentPage,count,12,10,"fav.do");
+			PagingUtil page = new PagingUtil(currentPage,count,12,10,"regisList.do?cate_num=3&");
 			
 			List<SpaceVO> list = null;
 			if(count > 0) {
 				map.put("start", page.getStartRow());
 				map.put("end", page.getEndRow());
 				map.put("mem_num", user.getMem_num());
-				list = memberService.selectSpaceFav(map);
+				list = memberService.selectSpaceList(map);
 			}
 			
 			logger.debug("<<좋아요 목록>> : " + count);
 			
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("favList");
+			mav.setViewName("regisList");
 			mav.addObject("count",count);
 			mav.addObject("list",list);
 			mav.addObject("cate_num",cate_num);
@@ -669,15 +734,47 @@ public class MemberController {
 		}
 	}
 	
-	//작성 게시글 조회
-	/*@RequestMapping("/member/board.do")
-	public ModelAndView boardList(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
+	//사용자 주문목록
+		@RequestMapping("/member/order.do")
+		public ModelAndView orderList(
+				@RequestParam(value="pageNum",defaultValue="1") 
+				int currentPage,
+				String keyfield,String keyword,
+				HttpSession session) {
 
-		mav.setViewName("boardList");
-		
-		return mav;
-	}*/
+			MemberVO user = 
+					(MemberVO)session.getAttribute("user");
+			Map<String,Object> map = 
+					new HashMap<String,Object>();
+			map.put("keyfield", keyfield);
+			map.put("keyword", keyword);
+			map.put("mem_num", user.getMem_num());
+
+			//총글의 개수 또는 검색된 글의 개수
+			int count = 
+					memberService.selectOrderCountByMem_num(map);
+			logger.debug("<<사용자 주문정보 count>> : " + count);
+
+			//페이지 처리
+			PagingUtil page = 
+					new PagingUtil(keyfield,keyword,
+							currentPage,count,10,10,
+							"orderList.do");
+			List<OrderVO> list = null;
+			if(count > 0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				list = memberService.selectListOrderByMem_num(map);
+			}
+
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("orderList");
+			mav.addObject("count", count);
+			mav.addObject("list", list);
+			mav.addObject("page", page.getPage());
+
+			return mav;
+		}
 	
 	//배송조회
 	/*@RequestMapping("/member/order.do")

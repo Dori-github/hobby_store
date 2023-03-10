@@ -5,7 +5,7 @@
 <mapper namespace="kr.spring.course.dao.CourseMapper">
 	<!-- sql 태그와 include 태그를 이용해 SQL문 재사용 -->
 	<!-- ====================키필드,키워드====================== -->
-	<sql id="courseSearch">
+	<sql id="courseSearch"> 
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<if test="keyfield==1">

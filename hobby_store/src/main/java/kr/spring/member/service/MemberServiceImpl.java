@@ -101,7 +101,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int selectCourseFavCount(int mem_num) {
-		return memberMapper.selectCourseFavCount(mem_num);
+		return 0;
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int selectItemsFavCount(int mem_num) {
-		return memberMapper.selectItemsFavCount(mem_num);
+		return 0;
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int selectSpaceFavCount(int mem_num) {
-		return memberMapper.selectSpaceFavCount(mem_num);
+		return 0;
 	}
 
 	@Override
@@ -154,7 +154,44 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.updateByAdmin(memberVO);
 	}
 
+	@Override
+	public int selectCourseListCount(int mem_num) {
+		return memberMapper.selectCourseListCount(mem_num);
+	}
 
-	
+	@Override
+	public List<CourseVO> selectCourseList(Map<String, Object> map) {
+		return memberMapper.selectCourseList(map);
+	}
+
+	@Override
+	public int selectItemsListCount(int mem_num) {
+		return memberMapper.selectItemsListCount(mem_num);
+	}
+
+	@Override
+	public List<ItemsVO> selectItemsList(Map<String, Object> map) {
+		return memberMapper.selectItemsList(map);
+	}
+
+	@Override
+	public int selectSpaceListCount(int mem_num) {
+		return memberMapper.selectSpaceListCount(mem_num);
+	}
+
+	@Override
+	public List<SpaceVO> selectSpaceList(Map<String, Object> map) {
+		return memberMapper.selectSpaceList(map);
+	}
+
+	@Override
+	public int selectOrderCountByMem_num(Map<String, Object> map) {
+		return memberMapper.selectOrderCountByMem_num(map);
+	}
+
+	@Override
+	public List<OrderVO> selectListOrderByMem_num(Map<String, Object> map) {
+		return memberMapper.selectListOrderByMem_num(map);
+	}
 
 }

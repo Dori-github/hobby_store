@@ -3,10 +3,12 @@ package kr.spring.items.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyFavVO;
 import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 
@@ -58,10 +60,26 @@ public interface ItemsService {
 	
 
 	
-	public float selectStar(Integer items_num);
+	public Float selectStar(Integer items_num);
 	public int selectReplyCount(Integer items_num);
 	
-	public int select5star();
+	public int select5star(Integer items_num);
 	public int selectallstar(Integer items_num);
+	
+	//후기 좋아요
+	public ItemsReplyFavVO selectReplyFav(ItemsReplyFavVO rfav);
+	//후기 좋아요 삭제 
+	public void deleteReplyFav(Integer fav_num);
+	//후기 좋아요 등록
+	public void insertReplyFav(ItemsReplyFavVO fav);
+	//후기 좋아요 췍
+	public int selectReplyFavCount(Integer fav_num);
+	// 후기 삭제 후 좋아요 삭제
+	public void deleteFavByCourseNum(Integer reply_num);
+	//후기 좋아요 누른 사람 	
+	public List<ItemsReplyFavVO> selectReplyFavMem();
+	
+	public int selectReplyFavCheck(Integer reply_num);
+
 	
 }

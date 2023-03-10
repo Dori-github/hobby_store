@@ -1,6 +1,6 @@
 $(function(){
 	//좋아요 읽기
-	//좋아요 선택 여부
+	//좋아요 선택 여부 
 	function selectFav(course_num){
 		$.ajax({
 			url:'getFav.do',

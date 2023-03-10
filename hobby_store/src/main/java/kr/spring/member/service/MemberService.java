@@ -52,6 +52,22 @@ public interface MemberService {
 	public int selectOrderCount(int mem_num);
 	public List<OrderVO> selectOrderList(Map<String, Object> map);
 	
+	//강사 - 등록 강의 리스트
+	public int selectCourseListCount(int mem_num);
+	public List<CourseVO> selectCourseList(Map<String,Object> map);
+	
+	//강사 - 등록 상품 리스트
+	public int selectItemsListCount(int mem_num);
+	public List<ItemsVO> selectItemsList(Map<String,Object> map);
+	
+	//강사 - 등록 공간대여 리스트
+	public int selectSpaceListCount(int mem_num);
+	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
+	
+	//회원 - 배송확인
+	public int selectOrderCountByMem_num(Map<String,Object> map);
+	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
+	
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);

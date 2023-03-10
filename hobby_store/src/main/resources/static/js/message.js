@@ -141,6 +141,8 @@ $(function(){
 			$('#member_search').focus();
 			return false;
 		}
+	});
+	
 	//======채팅 데이터 읽기========//
 	function selectMsg(){
 		$.ajax({
@@ -150,8 +152,14 @@ $(function(){
 			dataType:'json',
 			success:function(param){
 				if(param.result == 'logout'){
-					alert('로그인 후 사용하세요!');
-					message_socket.close();
+					Swal.fire({
+                    icon: 'warning',
+                    title:'로그인 후 사용하세요!',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+					//message_socket.close();
 				}else if(param.result == 'success'){
 					$('#chatting_message').empty();
 					
@@ -165,29 +173,31 @@ $(function(){
 							output += '<p class="text-center" style="background-color: #F2F2F2;">'+chat_date+'</p>';
 						}
 						
+						//0이상일 경우 탈퇴메세지가 존재
 						if(item.message.indexOf('@{exit}@')>=0){
 							//탈퇴 메시지 처리
 							output += '<div class="exit-message">';
 							output += item.message.substring(0,
 							       item.message.indexOf('@{exit}@'));
 							output += '</div>';
-						}else{
+						}else{ //탈퇴 메세지가 없을 경우 마이너스를 반환
 							//일반 메시지 처리
 							if(item.mem_num == $('#mem_num').val()){
 								//본인 메시지
-								output += '<div class="from-position">'+item.mem_nickname;
+								output += '<div class="myChat">' +item.mem_nickname;
 								output += '<div>';
 							}else{
 								//타인 메시지
-								output += '<div class="to-position">';
+								output += '<div class="notMyChat">';
 								output += '<div class="space-photo">';
 								output += '<img src="../member/viewProfile.do?mem_num='+item.mem_num+'" width="40" height="40" class="my-photo">';
+								output += item.mem_nickname;	
 								output += '</div><div class="space-message">';
-								output += item.mem_nickname;
 							}
-							output += '<div class="item">';
+							output += '<div class="chatBox">';
+							//메시지 내용
 							output += item.read_count + '<span>' + item.message.replace(/\r\n/g,'<br>').replace(/\r/,'<br>').replace(/\n/,'<br>') + '</span>';
-							//시간 표시
+							//개별 메세지 시간 표시
 							output += '<div class="align-right">' + item.chat_date.split(' ')[1] + '</div>'; 
 							output += '</div>';
 							output += '</div><div class="space-clear"></div>';
@@ -203,22 +213,115 @@ $(function(){
 					
 				}else{
 					alert('채팅 메시지 읽기 오류 발생');
-					message_socket.close();
+					selectMsg();
+					//message_socket.close();
 				}
 			},
 			error:function(){
 				alert('네트워크 오류 발생');
-				message_socket.close();
+				selectMsg();
+				//message_socket.close();
 			}
 		});
+}
+
+
+	
+	//------------------임시 처리 시작-------------//
+	if('$talkDetail'.length==1){
+		selectMsg();
 	}
-		
+	//------------------임시 처리 끝--------------//
+	
+	
+	
+	//=========메시지 입력 후 enter 이벤트 처리=====//
+	$('#message').keydown(function(event){
+		if(event.keyCode == 13 && !event.shiftKey){
+			$('#detail_form').trigger('submit');
+		}
 	});
 	
 	
-	
+	//=======채팅 등록========//
+	$('#detail_form').submit(function(event){
+		
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+		if($('#message').val().trim()==''){
+			Swal.fire({
+                    icon: 'warning',
+                    title:'메세지를 입력하세요!',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+			$('#message').val('').focus();
+			return false;
+		}
+		
+		//글자수 체크
+		if($('#message').val().length>1333){
+			Swal.fire({
+                    icon: 'warning',
+                    title:'메세지는 1333까지만 입력 가능합니다.',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+			return false;
+		}
+		//폼에 있는 데이터 읽어오기
+		let form_data = $(this).serialize();
+		
+		//서버와 통신
+		$.ajax({
+			url:'../talk/writeTalk.do',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					Swal.fire({
+                    icon: 'warning',
+                    title:'로그인 해야 작성 할 수 있습니다,',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+					//message_socket.close();
+					selectMsg();
+				}else if(param.result == 'success'){
+					//폼 초기화
+					$('#message').val('').focus();
+					//메시지가 저장되었다고 소켓에 신호를 보냄
+					//message_socket.send('msg:');
+					selectMsg();
+				}else{
+					Swal.fire({
+                    icon: 'warning',
+                    title:'메시지 등록 오류',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+					//message_socket.close();
+					selectMsg();
+				}
+			},
+			error:function(){
+				Swal.fire({
+                    icon: 'warning',
+                    title:'네트워크 오류',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+				//message_socket.close();
+				selectMsg();
+			}
+		});
+		
+	});
 });
-
-
-
-

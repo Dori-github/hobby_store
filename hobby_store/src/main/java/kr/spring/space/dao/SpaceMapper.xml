@@ -110,7 +110,7 @@
 			reply_num DESC
 		</if>
 		<if test="order==2"><!-- 별점순 -->
-			star DESC
+			star_auth DESC
 		</if>
 		<if test="order==3"><!-- 추천순 -->
 			fav_cnt DESC

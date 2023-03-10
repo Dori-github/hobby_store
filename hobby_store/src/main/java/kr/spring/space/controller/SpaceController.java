@@ -47,7 +47,7 @@ public class SpaceController {
 	public SpaceVO initCommand() {
 		return new SpaceVO();
 	}
-
+  
 	// =======공간대여 상품 목록=========//
 	@RequestMapping("/space/list.do")
 	public ModelAndView process(@RequestParam(value = "pageNum", defaultValue = "1")  int currentPage,

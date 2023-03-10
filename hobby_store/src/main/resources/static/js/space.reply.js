@@ -6,7 +6,7 @@ $(function(){
     let totalItem;//총 레코드 수
 
 	
-	//댓글 목록
+	//후기 목록
 	function selectList(pageNum,order){
 		currentPage = pageNum;
 
@@ -22,11 +22,17 @@ $(function(){
 				//로딩 이미지 감추기
 				$('#loading').hide();
 
-				//호출시 해당 ID의 div의 내부 내용물 제거
-				$('#output').empty();
-				$('.paging-btn').empty();
+				if (pageNum > 0) {
+					$('#output').empty();
+				}
+				//별점 평균
 
-				//댓글 목록 작업
+				$('#starAvg').text(param.itemsStar);
+				//후기 개수
+				$('#reply').text(param.itemsReply);
+				$('#reply_1').text('후기 '+param.itemsReply+' 개');
+
+				//후기 목록 작업
 				$(param.list).each(function(index,item){
 					let output = '<div class="wid"><span class="r-list-star">';
 					for(let i=1;i<=5;i++){

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.spring.items.dao.ItemsMapper;
 import kr.spring.items.vo.ItemsFavVO;
+import kr.spring.items.vo.ItemsReplyFavVO;
 import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 
@@ -155,7 +156,7 @@ public class ItemsServiceImpl implements ItemsService  {
 
 
 	@Override
-	public float selectStar(Integer items_num) {
+	public Float selectStar(Integer items_num) {
 
 		return itemsMapper.selectStar(items_num);
 	}
@@ -167,15 +168,57 @@ public class ItemsServiceImpl implements ItemsService  {
 	}
 
 	@Override
-	public int select5star() {
+	public int select5star(Integer items_num) {
 		
-		return itemsMapper.select5star();
+		return itemsMapper.select5star(items_num);
 	}
 
 	@Override
 	public int selectallstar(Integer items_num) {
 		
 		return itemsMapper.selectallstar(items_num);
+	}
+
+	@Override
+	public ItemsReplyFavVO selectReplyFav(ItemsReplyFavVO rfav) {
+		
+		return itemsMapper.selectReplyFav(rfav);
+	}
+
+	@Override
+	public void deleteReplyFav(Integer fav_num) {
+		itemsMapper.deleteReplyFav(fav_num);
+		
+	}
+
+	@Override
+	public void insertReplyFav(ItemsReplyFavVO fav) {
+		itemsMapper.insertReplyFav(fav);
+		
+	}
+
+	@Override
+	public int selectReplyFavCount(Integer reply_num) {
+		// TODO Auto-generated method stub
+		return itemsMapper.selectReplyFavCount(reply_num);
+	}
+
+	@Override
+	public void deleteFavByCourseNum(Integer reply_num) {
+		itemsMapper.deleteFavByCourseNum(reply_num);
+		
+	}
+
+	@Override
+	public List<ItemsReplyFavVO> selectReplyFavMem() {
+		// TODO Auto-generated method stub
+		return itemsMapper.selectReplyFavMem();
+	}
+
+	@Override
+	public int selectReplyFavCheck(Integer reply_num) {
+		
+		return itemsMapper.selectReplyFavCheck(reply_num);
 	}
 
 	

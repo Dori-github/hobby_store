@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,9 +78,13 @@ public class MemberAdminController {
 	}
 	
 	//수정 폼에서 전송된 데이터 처리
-	@PostMapping("/member/admin_update.do")
-	public String submit(MemberVO memberVO,Model model,
-			                HttpServletRequest request) {
+	@PostMapping("/member/admin_modify.do")
+	public String submit(@RequestParam int mem_num,@RequestParam int mem_auth, Model model, HttpServletRequest request) {
+		
+		MemberVO memberVO = new MemberVO();
+		
+		memberVO.setMem_num(mem_num);
+		memberVO.setMem_auth(mem_auth);
 		
 		logger.debug("<<관리자 회원권한수정>> : " + memberVO);
 		
@@ -89,8 +94,7 @@ public class MemberAdminController {
 		//View에 표시할 메시지
 		model.addAttribute("message", "회원권한수정 완료!");
 		model.addAttribute("url", 
-				request.getContextPath()
-				+"/member/admin_update.do?mem_num="+memberVO.getMem_num());
+				request.getContextPath()+"/member/admin_list.do");
 		
 		return "common/resultView";
 	}
