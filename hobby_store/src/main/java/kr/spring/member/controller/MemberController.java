@@ -734,6 +734,48 @@ public class MemberController {
 		}
 	}
 	
+	//사용자 주문목록
+		@RequestMapping("/member/order.do")
+		public ModelAndView orderList(
+				@RequestParam(value="pageNum",defaultValue="1") 
+				int currentPage,
+				String keyfield,String keyword,
+				HttpSession session) {
+
+			MemberVO user = 
+					(MemberVO)session.getAttribute("user");
+			Map<String,Object> map = 
+					new HashMap<String,Object>();
+			map.put("keyfield", keyfield);
+			map.put("keyword", keyword);
+			map.put("mem_num", user.getMem_num());
+
+			//총글의 개수 또는 검색된 글의 개수
+			int count = 
+					memberService.selectOrderCountByMem_num(map);
+			logger.debug("<<사용자 주문정보 count>> : " + count);
+
+			//페이지 처리
+			PagingUtil page = 
+					new PagingUtil(keyfield,keyword,
+							currentPage,count,10,10,
+							"orderList.do");
+			List<OrderVO> list = null;
+			if(count > 0) {
+				map.put("start", page.getStartRow());
+				map.put("end", page.getEndRow());
+				list = memberService.selectListOrderByMem_num(map);
+			}
+
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("orderList");
+			mav.addObject("count", count);
+			mav.addObject("list", list);
+			mav.addObject("page", page.getPage());
+
+			return mav;
+		}
+	
 	//배송조회
 	/*@RequestMapping("/member/order.do")
 	public ModelAndView orderList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, HttpSession session) {

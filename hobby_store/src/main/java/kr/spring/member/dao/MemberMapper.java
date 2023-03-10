@@ -108,7 +108,7 @@ public interface MemberMapper {
 	public int selectOrderCount(int mem_num);
 	public List<OrderVO> selectOrderList(Map<String, Object> map);
 	
-	//회원관리 - 관리자
+	//관리자 - 회원관리
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);
 	@Update("UPDATE member SET mem_auth=#{mem_auth} WHERE mem_num=#{mem_num}")
@@ -118,14 +118,21 @@ public interface MemberMapper {
 	@Select("SELECT COUNT(*) FROM course WHERE mem_num=#{mem_num}")
 	public int selectCourseListCount(int mem_num);
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
-	//강사 등록 상품 리스트
+	//강사 - 등록 상품 리스트
 	@Select("SELECT COUNT(*) FROM items WHERE mem_num=#{mem_num}")
 	public int selectItemsListCount(int mem_num);
 	public List<ItemsVO> selectItemsList(Map<String,Object> map);
-	//강사 등록 공간대여 리스트
+	//강사 - 등록 공간대여 리스트
 	@Select("SELECT COUNT(*) FROM space WHERE mem_num=#{mem_num}")
 	public int selectSpaceListCount(int mem_num);
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
+	
+	//강사 - 배송상태 관리
+	
+	
+	//회원 - 배송확인
+	public int selectOrderCountByMem_num(Map<String,Object> map);
+	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
 	
 	//작성한 게시글 조회 - 자유게시판
 	@Select("SELECT COUNT(*) FROM free_board WHERE mem_num=#{mem_num}")

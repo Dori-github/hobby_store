@@ -64,6 +64,10 @@ public interface MemberService {
 	public int selectSpaceListCount(int mem_num);
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
 	
+	//회원 - 배송확인
+	public int selectOrderCountByMem_num(Map<String,Object> map);
+	public List<OrderVO> selectListOrderByMem_num(Map<String,Object> map);
+	
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);

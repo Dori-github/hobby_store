@@ -23,7 +23,7 @@
         <li><a href="${pageContext.request.contextPath}/member/order.do" class="item"><div>나의 구매내역</div></a></li>
         <li><a href="${pageContext.request.contextPath}/member/event.do" class="item"><div>이벤트</div></a></li>
         <c:if test="${user.mem_auth > 2}">
-        <li><a href="#" class="item"><div>배송목록</div></a></li>
+        <li><a href="delivery.do" class="item"><div>배송목록</div></a></li>
         </c:if>
         <li><a href="${pageContext.request.contextPath}/member/delete.do" class="item"><div>회원탈퇴</div></a></li>
         <li><a href="${pageContext.request.contextPath}/talk/talkList.do" class="item"><div>채팅</div></a></li>

@@ -184,4 +184,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectSpaceList(map);
 	}
 
+	@Override
+	public int selectOrderCountByMem_num(Map<String, Object> map) {
+		return memberMapper.selectOrderCountByMem_num(map);
+	}
+
+	@Override
+	public List<OrderVO> selectListOrderByMem_num(Map<String, Object> map) {
+		return memberMapper.selectListOrderByMem_num(map);
+	}
+
 }

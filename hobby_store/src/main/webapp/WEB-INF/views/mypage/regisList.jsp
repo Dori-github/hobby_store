@@ -42,6 +42,7 @@
 			<img src="${pageContext.request.contextPath}/course/imageView.do?course_num=${course.course_num}&item_type=1" width="50" height="50">
 			${course.course_name}
 			<input type="button" value="수정" onclick="location.href='#'">
+			<input type="button" value="삭제" onclick="location.href='#'">
 			</td>
 			<td>${course.course_date}</td>
 		</tr>
@@ -55,6 +56,7 @@
 			  <img src="${pageContext.request.contextPath}/items/imageView.do?items_num=${items.items_num}&items_type=1" width="40" height="40">
 			${items.items_name}
 			<input type="button" value="수정" onclick="location.href='#'">
+			<input type="button" value="삭제" onclick="location.href='#'">
 			</td>
 			<td>${items.reg_date}</td>
 		</tr>
@@ -68,6 +70,7 @@
 			<img src="/space/imageView.do?space_num=${space.space_num}&space_type=1" width="40" height="40">
 			${space.space_name}
 			<input type="button" value="수정" onclick="location.href='#'">
+			<input type="button" value="삭제" onclick="location.href='#'">
 			</td>
 			<td>${space.space_date}</td>
 		</tr>
@@ -78,8 +81,6 @@
 		${page}
 	</div>
 	<div class="align-right">
-	<input type="button" value="수정" onclick="location.href='#'">
-	<input type="button" value="삭제" onclick="location.href='#'">
 	</div>
 	</c:if>
 	
