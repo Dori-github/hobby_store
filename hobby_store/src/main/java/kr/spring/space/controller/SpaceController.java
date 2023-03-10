@@ -26,13 +26,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import kr.spring.course.vo.CourseReplyFavVO;
-import kr.spring.course.vo.CourseReplyVO;
-import kr.spring.course.vo.CourseVO;
-import kr.spring.items.vo.ItemsVO;
+
 import kr.spring.member.vo.MemberVO;
 import kr.spring.space.service.SpaceService;
 import kr.spring.space.vo.SpaceFavVO;
+import kr.spring.space.vo.SpaceReplyFavVO;
 import kr.spring.space.vo.SpaceReplyVO;
 import kr.spring.space.vo.SpaceVO;
 import kr.spring.util.PagingUtil;
@@ -268,13 +266,15 @@ public class SpaceController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("space_num", space_num);
 		map.put("order", order);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		map.put("mem_num", user.getMem_num());//
 
 		//총 글의 개수
 		int count = spaceService.selectReplyCount(map);
 		//logger.debug("후기 갯수 "+ count);
 
 		//별점 평균
-		float star_auth = spaceService.selectStar(space_num);
+		Float star_auth = spaceService.selectStar(space_num);
 
 		//전체 후기 중 5점의 퍼센트
 		int star5 = spaceService.select5star(space_num);
@@ -302,7 +302,7 @@ public class SpaceController {
 		mapJson.put("star5_per", star5_per);
 
 		//===== 로그인 한 회원정보 셋팅 =====//
-		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		if(user!=null) {
 			mapJson.put("user_num", user.getMem_num());
 		}	
@@ -409,5 +409,39 @@ public class SpaceController {
 		return mapJson;
 	}
 	//후기좋아요
+	@RequestMapping("/space/writeReplyFav.do")
+	@ResponseBody
+	public Map<String,Object> writeReplyFav(SpaceReplyFavVO fav,HttpSession session){
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			//로그인된 회원번호 셋팅
+			fav.setFmem_num(user.getMem_num());
+			
+			logger.debug("<<부모글 좋아요 등록>> : " + fav);
+			
+			SpaceReplyFavVO spaceReplyFav = spaceService.selectReplyFav(fav);
+
+			if(spaceReplyFav!=null) {
+				//좋아요가 이미 등록되어있으면 삭제
+				spaceService.deleteReplyFav(spaceReplyFav.getFav_num());
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "noFav");
+			}else {
+				//좋아요 미등록이면 등록
+				spaceService.insertReplyFav(fav);
+			
+				
+				mapJson.put("result", "success");
+				mapJson.put("status", "yesFav");
+			}
+			mapJson.put("count", spaceService.selectReplyFavCount(spaceReplyFav.getReply_num()));
+		}
+		return mapJson;
+	}
 
 }

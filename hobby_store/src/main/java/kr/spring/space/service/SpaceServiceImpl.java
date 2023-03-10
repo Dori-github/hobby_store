@@ -1,6 +1,7 @@
 package kr.spring.space.service;
 
 import java.util.Arrays;
+
 import java.util.List;
 import java.util.Map;
 
@@ -138,8 +139,8 @@ public class SpaceServiceImpl implements SpaceService{
 		spaceMapper.updateReply(spaceReply);
 	}
 	@Override
-	public void deleteReply(Integer re_num) {
-		spaceMapper.deleteReply(re_num);
+	public void deleteReply(Integer reply_num) {
+		spaceMapper.deleteReply(reply_num);
 	}
 	@Override
 	public void deleteReplyBySpaceNum(Integer space_num) {
@@ -189,6 +190,11 @@ public class SpaceServiceImpl implements SpaceService{
 	public void deleteReplyFavByReplyNum(Integer reply_num) {
 		spaceMapper.deleteReplyFavByReplyNum(reply_num);
 		
+	}
+
+	@Override
+	public SpaceReplyFavVO selectReplyFavCheck() {
+		return spaceMapper.selectReplyFavCheck();
 	}
 
 }
