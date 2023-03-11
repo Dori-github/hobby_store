@@ -17,7 +17,7 @@
 			onclick="location.href='regisList.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
 			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
 		</div>
-	<c:if test="${count==0}">
+	<c:if test="${empty list}">
 	<table class="table align-center">
 		<tr>
 			<td>
@@ -27,7 +27,7 @@
 	</table>
 	</c:if>
 	
-	<c:if test="${count>0}">
+	<c:if test="${!empty list}">
 	<table class="table table-group-divider align-center">
 		<tr>
 			<td>강의번호</td>

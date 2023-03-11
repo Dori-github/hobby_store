@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.order.vo.OrderDetailVO;
@@ -38,6 +39,9 @@ public interface MemberService {
 	
 	//회원정보 업데이트
 	public void updateMember(MemberVO member);
+	public void updatePassword(MemberVO member);
+	public void deleteMember(Integer mem_num);
+	public void updateProfile(MemberVO member);
 	
 	//강의 좋아요 리스트
 	public int selectCourseFavCount(int mem_num);
@@ -80,6 +84,10 @@ public interface MemberService {
 	//강사 - 배송관리 조회
 	public int selectDeliveryCount(Map<String,Object> map);
 	public List<OrderVO> selectListDelivery(Map<String,Object> map);
+	
+	//이벤트 조회
+	public int selectEventApplyCount(Map<String,Object> map);
+	public List<EventVO> selectListEventApply(Map<String,Object> map);
 	
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);

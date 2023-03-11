@@ -76,8 +76,8 @@ $(function(){
 	</table>
 	<form action="lec_modify.do" method="post" id="order_modify">
 	    <input type="hidden" name="order_num" value="${order.order_num}">    
-	    <input type="hidden" name="order_status" value="${order.order_status}" disabled="disabled">
-	    <input type="hidden" name="refund_status" value="${order.refund_status}" disabled="disabled">                     
+	    <input type="hidden" name="order_status" value="${order.order_status}" disabled>
+	    <input type="hidden" name="refund_status" value="${order.refund_status}" disabled>                     
 		<ul>
 		    <c:if test="${order.order_status < 2 && order.refund_status == null}">
 			<li>

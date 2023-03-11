@@ -186,11 +186,13 @@ public class EventController {
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(user!=null & user.getMem_auth() == 2){
+		if(user!=null && (user.getMem_auth() == 2 || user.getMem_auth() == 3)){
 			EventApplyVO apply = new EventApplyVO();
 			apply.setEvent_num(event_num);
 			apply.setMem_num(user.getMem_num());
 			eventService.insertEventApply(apply);
+		}else {
+			return "common/notice";
 		}
 		
 		//View에 메시지 표시

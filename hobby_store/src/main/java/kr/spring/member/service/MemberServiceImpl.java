@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.dao.MemberMapper;
 import kr.spring.member.vo.MemberVO;
@@ -223,6 +224,32 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<OrderVO> selectListDelivery(Map<String, Object> map) {
 		return memberMapper.selectListDelivery(map);
+	}
+
+	@Override
+	public void updatePassword(MemberVO member) {
+		memberMapper.updatePassword(member);
+	}
+
+	@Override
+	public void deleteMember(Integer mem_num) {
+		memberMapper.deleteMember(mem_num);
+		memberMapper.deleteMember_detail(mem_num);
+	}
+
+	@Override
+	public void updateProfile(MemberVO member) {
+		memberMapper.updateProfile(member);
+	}
+
+	@Override
+	public int selectEventApplyCount(Map<String, Object> map) {
+		return memberMapper.selectEventApplyCount(map);
+	}
+
+	@Override
+	public List<EventVO> selectListEventApply(Map<String, Object> map) {
+		return memberMapper.selectListEventApply(map);
 	}
 
 }

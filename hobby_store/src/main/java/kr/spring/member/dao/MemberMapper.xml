@@ -86,7 +86,6 @@
   		  ]]>
 	</select>
 	
-	<!-- 좋아요 조회 -->
 	<select id="selectMemberRowCount" resultType="integer">
   		SELECT
   		  COUNT(*)
@@ -140,6 +139,7 @@
   		]]>                           
   	</select>
   	
+  	<!-- 
   	<select id="selectCourseList" parameterType="map" resultType="courseVO">
   		SELECT
   			*
@@ -187,7 +187,7 @@
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]> 
   	</select>
-  	
+  	-->
   	<!-- 주문 정보 -->
   	
 	<sql id="orderSearchByMem_num">
@@ -292,6 +292,37 @@
   		  COUNT(*)
   		FROM orders
   		<include refid="orderSearch"></include>	
+  	</select>
+  	
+  	<select id="selectEventApplyCount" resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM event e JOIN event_apply a
+  		ON e.event_num=a.event_num
+  		WHERE a.mem_num=#{mem_num}                   
+  	</select>
+  	
+  	<select id="selectListEventApply" parameterType="map" resultType="eventVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  		            FROM event e JOIN event_apply a
+  					ON e.event_num=a.event_num 
+  		            where a.mem_num=#{mem_num}
+				  			<if test="keyfield == 1">
+				  				ORDER BY a.event_a_date DESC
+				  			</if>
+				  			<if test="keyfield == 2">
+				  				ORDER BY e.event_rdate DESC
+				  			</if>
+				  			)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>                           
   	</select>
   	
 </mapper>

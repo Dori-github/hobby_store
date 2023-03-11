@@ -584,6 +584,68 @@ public class MemberController {
 		}
 	}
 	
+	//=====프로필 사진 업로드======//
+	@RequestMapping("/member/updateMyPhoto.do")
+	@ResponseBody
+	public Map<String,String> processProfile(MemberVO memberVO,HttpSession session){
+
+		Map<String,String> mapAjax = new HashMap<String,String>();
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapAjax.put("result", "logout");
+		}else {
+			memberVO.setMem_num(user.getMem_num());
+			memberService.updateProfile(memberVO);
+
+			mapAjax.put("result", "success");
+		}
+
+		return mapAjax;
+	}
+	
+	//=====비밀번호 변경=====//
+	//비밀번호 변경 폼 호출
+	@GetMapping("/member/changePassword.do")
+	public String formChangePassword() {
+		return "changePassword";
+	}
+	
+	//비밀번호 변경 폼에서 전송된 데이터 처리
+	@PostMapping("/member/changePassword.do")
+	public String submitChangePassword(@Valid MemberVO memberVO,BindingResult result,
+			HttpSession session,Model model,HttpServletRequest request) {
+
+		logger.debug("<<비밀번호변경 처리>> : " + memberVO);
+
+		//유효성 체크 결과 오류가 있으면 폼 호출
+		if(result.hasFieldErrors("now_pw") || result.hasFieldErrors("pw")) {
+			return formChangePassword();
+		}
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		memberVO.setMem_num(user.getMem_num());
+
+		MemberVO db_member = memberService.selectMember(memberVO.getMem_num());
+		
+		//폼에서 전송한 현재 비밀번호와 DB에서 받아온 비밀번호 일치 여부 체크
+		if(!db_member.getMem_pw().equals(memberVO.getNow_pw())) {
+			result.rejectValue("now_pw","invalidPassword");
+			return formChangePassword();
+		}
+
+		//비밀번호변경
+		memberService.updatePassword(memberVO);
+
+		//모든 브라우저에 설정된 자동로그인 해제
+		memberService.deleteAu_id(memberVO.getMem_num());
+
+		model.addAttribute("message", "비밀번호 변경이 완료되었습니다");
+		model.addAttribute("url", request.getContextPath()+"/member/myPage.do");
+
+		return "common/resultView";
+	}
+	
 	//좋아요 게시물 조회
 	@RequestMapping("/member/fav.do")
 	public ModelAndView favList(@RequestParam int cate_num, HttpSession session) {
@@ -651,80 +713,49 @@ public class MemberController {
 	
 	//등록 상품 조회
 	@RequestMapping("/member/regisList.do")
-	public ModelAndView regisList(@RequestParam(value="pageNum", defaultValue="1") int currentPage, HttpSession session, int cate_num) {
+	public ModelAndView regisList(HttpSession session, int cate_num) {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(cate_num==1) {
-			int count = memberService.selectCourseListCount(user.getMem_num());
-			
-			PagingUtil page = new PagingUtil(currentPage,count,12,10,"regisList.do?cate_num=1&");
-			
+
 			List<CourseVO> list = null;
-			if(count > 0) {
-				map.put("start", page.getStartRow());
-				map.put("end", page.getEndRow());
-				map.put("mem_num", user.getMem_num());
-				list = memberService.selectCourseList(map);
-			}
-			
-			logger.debug("<<등록 클래스 목록>> : " + count);
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectCourseList(map);;
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("regisList");
-			mav.addObject("count",count);
 			mav.addObject("list",list);
 			mav.addObject("cate_num",cate_num);
-			mav.addObject("page",page.getPage());
 			
 			return mav;
 			
 		}else if(cate_num==2) {
-			int count = memberService.selectItemsListCount(user.getMem_num());
-			
-			PagingUtil page = new PagingUtil(currentPage,count,12,10,"regisList.do?cate_num=2&");
-			
+
 			List<ItemsVO> list = null;
-			if(count > 0) {
-				map.put("start", page.getStartRow());
-				map.put("end", page.getEndRow());
-				map.put("mem_num", user.getMem_num());
-				list = memberService.selectItemsList(map);
-			}
-			
-			logger.debug("<<등록 상품 목록>> : " + count);
+
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectItemsList(map);
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("regisList");
-			mav.addObject("count",count);
 			mav.addObject("list",list);
 			mav.addObject("cate_num",cate_num);
-			mav.addObject("page",page.getPage());
 			
 			return mav;
 			
 		}else if(cate_num==3) {
-			int count = memberService.selectSpaceListCount(user.getMem_num());
-			
-			PagingUtil page = new PagingUtil(currentPage,count,12,10,"regisList.do?cate_num=3&");
 			
 			List<SpaceVO> list = null;
-			if(count > 0) {
-				map.put("start", page.getStartRow());
-				map.put("end", page.getEndRow());
-				map.put("mem_num", user.getMem_num());
-				list = memberService.selectSpaceList(map);
-			}
 			
-			logger.debug("<<좋아요 목록>> : " + count);
+			map.put("mem_num", user.getMem_num());
+			list = memberService.selectSpaceList(map);
 			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("regisList");
-			mav.addObject("count",count);
 			mav.addObject("list",list);
 			mav.addObject("cate_num",cate_num);
-			mav.addObject("page",page.getPage());
 			
 			return mav;
 			
@@ -845,7 +876,7 @@ public class MemberController {
 		logger.debug("<<전체 주문정보 count>> : " + count);
 
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,20,10,"admin_orderList.do");
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"admin_orderList.do");
 		List<OrderVO> list = null;
 		if(count > 0) {
 			map.put("start", page.getStartRow());
@@ -909,6 +940,39 @@ public class MemberController {
 		return "common/resultView";
 	}
 
+	//이벤트 신청목록
+	@RequestMapping("/member/event.do")
+	public ModelAndView eventApplyList(@RequestParam(value="pageNum",defaultValue="1") 
+			int currentPage,String keyfield,String keyword,HttpSession session) {
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		map.put("mem_num", user.getMem_num());
+
+		//총글의 개수 또는 검색된 글의 개수
+		int count = memberService.selectEventApplyCount(map);
+		logger.debug("<<신청이벤트 조회 count>> : " + count);
+
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"event.do");
+		List<EventVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			list = memberService.selectListEventApply(map);
+		}
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("eventApplyList");
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("page", page.getPage());
+
+		return mav;
+	}
 	
 	//배송조회
 	/*@RequestMapping("/member/order.do")

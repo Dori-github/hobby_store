@@ -3,6 +3,7 @@ package kr.spring.member.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -10,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import kr.spring.course.vo.CourseVO;
+import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.order.vo.OrderDetailVO;
@@ -93,6 +95,17 @@ public interface MemberMapper {
 	public void updateMember(MemberVO member);
 	@Update("UPDATE member_detail SET mem_name=#{mem_name},mem_cell=#{mem_cell},mem_email=#{mem_email},mem_zipcode=#{mem_zipcode},mem_address1=#{mem_address1},mem_address2=#{mem_address2},mem_mdate=SYSDATE WHERE mem_num=#{mem_num}")
 	public void updateMember_detail(MemberVO member);
+	//프로필 이미지 업데이트
+	@Update("UPDATE member_detail SET mem_photo=#{mem_photo},mem_pname=#{mem_pname} WHERE mem_num=#{mem_num}")
+	public void updateProfile(MemberVO member);
+	//비밀번호 변경
+	@Update("UPDATE member_detail SET mem_pw=#{mem_pw} WHERE mem_num=#{mem_num}")
+	public void updatePassword(MemberVO member);
+	@Update("UPDATE member SET mem_auth=0 WHERE mem_num=#{mem_num}")
+	public void deleteMember(Integer mem_num);
+	@Delete("DELETE FROM member_detail WHERE mem_num=#{mem_num}")
+	public void deleteMember_detail(Integer mem_num);
+		
 	
 	//강사 좋아요 리스트
 	@Select("SELECT * FROM course_fav f JOIN member m ON f.fmem_num=m.mem_num JOIN course c ON f.course_num=c.course_num WHERE f.fmem_num=#{mem_num}")
@@ -118,14 +131,17 @@ public interface MemberMapper {
 	//강사 - 등록 클래스 리스트
 	@Select("SELECT COUNT(*) FROM course WHERE mem_num=#{mem_num}")
 	public int selectCourseListCount(int mem_num);
+	@Select("SELECT * FROM course WHERE mem_num=#{mem_num}")
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
 	//강사 - 등록 상품 리스트
 	@Select("SELECT COUNT(*) FROM items WHERE mem_num=#{mem_num}")
 	public int selectItemsListCount(int mem_num);
+	@Select("SELECT * FROM items WHERE mem_num=#{mem_num}")
 	public List<ItemsVO> selectItemsList(Map<String,Object> map);
 	//강사 - 등록 공간대여 리스트
 	@Select("SELECT COUNT(*) FROM space WHERE mem_num=#{mem_num}")
 	public int selectSpaceListCount(int mem_num);
+	@Select("SELECT * FROM space WHERE mem_num=#{mem_num}")
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
 	
 	//회원 - 주문확인
@@ -146,6 +162,10 @@ public interface MemberMapper {
 	//강사 - 배송관리 조회
 	public int selectDeliveryCount(Map<String,Object> map);
 	public List<OrderVO> selectListDelivery(Map<String,Object> map);
+	
+	//이벤트 조회
+	public int selectEventApplyCount(Map<String,Object> map);
+	public List<EventVO> selectListEventApply(Map<String,Object> map);
 	
 	//작성한 게시글 조회 - 자유게시판
 	@Select("SELECT COUNT(*) FROM free_board WHERE mem_num=#{mem_num}")

@@ -26,7 +26,16 @@ public class EventVO {
 	private int items_num;
 	@NotEmpty
 	private String event_detail;
+	private int event_a_win;
 	
+	public int getEvent_a_win() {
+		return event_a_win;
+	}
+
+	public void setEvent_a_win(int event_a_win) {
+		this.event_a_win = event_a_win;
+	}
+
 	//업로드 파일 처리
 	public void setUpload(MultipartFile upload) throws IOException {
 		//Multipart -> byte[] 배열로 변환

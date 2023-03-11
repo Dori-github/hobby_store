@@ -1,10 +1,13 @@
 package kr.spring.member.vo;
 
+import java.io.IOException;
 import java.sql.Date;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
 	private int mem_num;
@@ -38,12 +41,25 @@ public class MemberVO {
 	private Date mem_date;
 	private Date mem_mdate;
 	
+	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
+	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
+	private String now_pw;
+	
 	//====비밀번호 일치 여부 체크====//
 	public boolean isCheckedPassword(String userPasswd) {
 		if(mem_auth > 1 && mem_pw.equals(userPasswd)) {
 			return true;
 		}
 		return false;
+	}
+	
+	//====이미지 BLOB 처리====//
+	//폼에서 파일업로드 파라미터네임은 반드시 upload로 지정할 것
+	public void setUpload(MultipartFile upload)throws IOException{
+		//MultipartFile -> byte[]
+		setMem_photo(upload.getBytes());
+		//파일 이름
+		setMem_pname(upload.getOriginalFilename());
 	}
 	
 	public int getMem_num() {
@@ -172,7 +188,14 @@ public class MemberVO {
 	public void setMem_mdate(Date mem_mdate) {
 		this.mem_mdate = mem_mdate;
 	}
-	
+	public String getNow_pw() {
+		return now_pw;
+	}
+
+	public void setNow_pw(String now_pw) {
+		this.now_pw = now_pw;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [mem_num=" + mem_num + ", mem_id=" + mem_id + ", mem_nickname=" + mem_nickname + ", mem_auth="
