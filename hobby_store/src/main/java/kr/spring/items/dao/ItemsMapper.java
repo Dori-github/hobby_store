@@ -31,7 +31,7 @@ public interface ItemsMapper {
 	public ItemsVO selectItems(Integer items_num);
 	//상품 수정
 	public void updateItems(ItemsVO itemsVO);
-	//상품 삭제
+	//상품 삭제 
 	@Delete("DELETE FROM items WHERE items_num = #{items_num}")
 	public void deleteItems(Integer items_num);
 	//카테고리 이름 
