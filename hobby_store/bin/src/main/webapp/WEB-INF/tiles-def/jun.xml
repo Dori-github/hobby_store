@@ -5,10 +5,47 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-   <definition name="" extends="main">
-    	<put-attribute name="title" value="회원가입"/>
+	<!-- Notice 공지사항  -->
+	<!-- 관리자 -->
+    <definition name="adminList" extends="admin">
+    	<put-attribute name="title" value="공지목록(관리자)"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/member/memberRegister.jsp"/>        
+    	  value="/WEB-INF/views/notice/admin_list.jsp"/>        
+    </definition>
+    <definition name="noticeAdminWrite" extends="admin">
+    	<put-attribute name="title" value="공지등록(관리자)"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/admin_writeForm.jsp"/>        
+    </definition>
+    <definition name="noticeModify" extends="admin">
+    	<put-attribute name="title" value="공지수정(관리자)"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/admin_modifyForm.jsp"/>        
+    </definition>
+    
+    <!-- 일반회원 및 비회원 -->
+   <definition name="noticeList" extends="main">
+    	<put-attribute name="title" value="공지사항목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/user_noticeList.jsp"/>        
+    </definition>
+    <definition name="noticeView" extends="main">
+    	<put-attribute name="title" value="상세정보"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/notice/user_noticeView.jsp"/>        
+    </definition>
+    
+    
+    <!-- Qna 문의 -->
+    <definition name="qnaList" extends="main">
+    	<put-attribute name="title" value="문의글목록"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/qna/qnaList.jsp"/>        
+    </definition>
+    <definition name="qnaWrite" extends="main">
+    	<put-attribute name="title" value="문의글쓰기"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/qna/qnaWrite.jsp"/>        
     </definition>
 </tiles-definitions>
 

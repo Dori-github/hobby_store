@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/items.css"
 	rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <!-- 중앙 컨텐츠 시작 -->
 <script src="${pageContext.request.contextPath}/js/itemsFav.js"></script>
 <script src="${pageContext.request.contextPath}/js/itemsReply.js"></script>
@@ -78,7 +79,7 @@
 		<p>
 			${items.mem_nickname} <span class="heart"
 				data-num="${items.items_num}"><i class="fa-regular fa-heart"
-				style="color: red;"></i> 찜하기 <span class="heart-count" id="heart-count"></span></span>
+				style="color: red;"></i> 찜하기 </span>
 
 		</p>
 		<p></p>
@@ -98,23 +99,39 @@
 				<i class="fa-regular fa-star" style="color: orange;"></i> <span id="starAvg"> </span>
 			</p>
 		</div>
+		<form id="itemsOn_cart" method="post">
+			<div class="reservation">
+				<c:if test="${items.items_quantity lt 5}">
+					<p class="soldout">품절 임박</p>
+				</c:if>
+				<p>재고</p>
+				<span>구매수량<input type="number" value="1" name="items_quan"></span>
+				<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
+				<hr size="2" noshade width="100%" style="color: gray;">
 
-		<div class="reservation">
-			<c:if test="${items.items_quantity lt 5}">
-				<p class="soldout">품절 임박</p>
-			</c:if>
-			<p>재고</p>
-			<p>구매 수량</p>
-			<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
-			<hr size="2" noshade width="100%" style="color: gray;">
-			<div style="display: flex;">
-				<div class="buy" style="width: 50%;">장바구니</div>
-				<div style="width: 5%;"></div>
-				<div class="buy" style="width: 50%;">상품 구매</div>
+				<input type="hidden" name="items_num" value="${items.items_num}"
+					id="items_num"> <input type="hidden" name="items_price"
+					value="${items.items_price}" id="items_price"> <input
+					type="hidden" name="items_name" value="${items.items_name}"
+					id="items_name"> <input type="hidden" name="items_quantity"
+					value="${items.items_quantity}" id="items_quantity">
+				<div class="reservation"></div>
+				<div style="display: flex; justify-content: space-between;">
+					<input type="submit" class="buy" value="장바구니"
+						formaction="/cart/insert.do"><i
+						class="fa-solid fa-cart-plus"></i> <input type="submit"
+						class="buy" value="구매하기" formaction="/order/orderNowForm.do">
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
+
+		
+
+		
+
+			
 
 <div class="course-d-info">
 	<ul class="title">
@@ -124,7 +141,7 @@
 	</ul>
 	<hr size="2" noshade width="100%" style="color: gray; margin: 0;">
 	<div class="c-content">
-		${itmes.items_content}
+		${items.items_content}
 		<div class="map">
 			위치<br> 지도표시
 		</div>
@@ -139,29 +156,9 @@
 			<li><span id = "reply_2"></span><br><span id = "star_per"> 의 고객이 5점을 주었어요!</span> </li>
 		</ul>
 
-		<%-- 정렬 --%>
-		<div style="position: relative;">
-			<div class="btn-select">
-				<span class="whole">최신순</span> <i
-					class="fa-solid fa-chevron-down icon"
-					style="float: right; padding-bottom: 5px; font-size: 15px;"></i> <i
-					class="fa-solid fa-chevron-up icon"
-					style="float: right; font-size: 15px; display: none;"></i>
-			</div>
-			<div class="list-box">
-				<ul class="list-cate">
-					<li data-value="1">최신순</li>
-					<li data-value="2">별점순</li>
-					<li data-value="3">추천순</li>
-				</ul>
-			</div>
-		</div>
-		<hr size="2" noshade width="100%" style="color: gray;">
-	</div>
 
-
-
-	<form class="mb-3" name="reply-form" id="reply-form" method="post">
+	<form class="mb-3" name="reply_form" id="reply_form" <c:if test="${empty user}">style="height:370px;"</c:if>>
+	<c:if test="${!empty user}">
 		<div class="reply_star">
 			별점
 			<fieldset>
@@ -175,31 +172,67 @@
 					value="1" id="rate5"><label for="rate5">★</label>
 			</fieldset>
 		</div>
-		<div>
-			<input type="hidden" name="items_num" value="${items.items_num}"
-				id="items_num"> <span class="letter-count">300/300</span>
-			<input type="hidden" name="items_price" value="${items.items_price}">
-			<input type="hidden" name="items_name" value="${items.items_name}">
-			<input type="hidden" name="items_quantity" value="${items.items_quantity}">
-			
-			<textarea class="col-auto form-control" id="reply_content"
-				name="reply_content" placeholder="좋은 상품평을 남겨 "></textarea>
-
+		</c:if>
+			<input type="hidden" name="items_num" value="${items.items_num}" id="items_num">
+		<textarea rows="3" cols="50" name="reply_content" id="reply_content" class="reply-content" 
+				<c:if test="${empty user}">disabled="disabled"</c:if>
+				><c:if test="${empty user}">로그인해야 작성할 수 있습니다.</c:if></textarea>
+		<c:if test="${!empty user}">
+		<div class="reply-photo">
+			<ul class="image">
+				<li>
+					<img class="course-photo1">
+					<label for="upload1" class="label1 l1">
+						<i class="fa-solid fa-circle-plus"></i><br>
+					</label>
+					<i class="fa-solid fa-circle-xmark d1"></i>
+					<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
+				</li>
+				<li>
+					<img class="course-photo2">
+					<label for="upload2" class="label1 l2">
+						<i class="fa-solid fa-circle-plus"></i><br>
+					</label>
+					<i class="fa-solid fa-circle-xmark d2"></i>
+					<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
+				</li>
+				<li>
+					<img class="course-photo3">
+					<label for="upload3" class="label1 l3">
+						<i class="fa-solid fa-circle-plus"></i><br>
+					</label>
+					<i class="fa-solid fa-circle-xmark d3"></i>
+					<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
+				</li>
+			</ul>
+			<div class="reply-submit-btn">
+				<label for="submit" style="width:40px;height:40px;"><i class="fa-solid fa-paper-plane"></i></label>
+				<input type="submit" id="submit" style="display:none;">
+			</div>
 		</div>
-		<div>
-			<label for="upload1">상품사진1</label> <input type="file" name="upload1"
-				id="upload1" accept="image/gif,image/png,image/jpeg"> <label
-				for="upload2">상품사진2</label> <input type="file" name="upload2"
-				id="upload2" accept="image/gif,image/png,image/jpeg"> <label
-				for="upload3">상품사진3</label> <input type="file" name="upload3"
-				id="upload3" accept="image/gif,image/png,image/jpeg">
-		</div>
-		<input type="submit" value="등록">
+		</c:if>
 	</form>
+	<%-- 정렬 --%>
+		<div class="reply-search">
+		<div class="btn-select"><span class="whole">최신순</span>
+			<i class="fa-solid fa-chevron-down icon" style="float: right;padding-bottom:5px;font-size:15px;"></i>
+			<i class="fa-solid fa-chevron-up icon" style="float: right;font-size:15px;display:none;"></i>
+			<%-- 최신순 정렬 --%>
+			<div class="list-box">
+		        <ul class="list-cate">
+		            <li data-value="1">최신순</li>
+		            <li data-value="2">별점순</li>
+		            <li data-value="3">추천순</li>
+		        </ul>
+	        </div>
+	    </div>
+		<hr size="2" noshade style="color:gray;">
+	</div>
 	<!-- 후기 목록 출력 -->
 	<div id="output"></div>
 
 	<div class="paging-button" style="display: none;"></div>
+	
 	<div id="loading" style="display: none;">
 		<img src="${pageContext.request.contextPath}/images/loading.gif"
 			width="50" height="50">

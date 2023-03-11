@@ -40,7 +40,7 @@
 				 	
 					<a href="${pageContext.request.contextPath}/course/courseDetail.do?course_num=${course.course_num}" style="display:block;">
 						<div class="card-img-top">
-						  <img src="/course/imageView.do?course_num=${course.course_num}&item_type=1" width="100%" height="100%">
+						  <img src="${pageContext.request.contextPath}/course/imageView.do?course_num=${course.course_num}&item_type=1" width="100%" height="100%">
 						</div>
 						<div class="card-body">
 						  	<h5 class="card-title"><b>${course.course_name}</b></h5>

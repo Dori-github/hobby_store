@@ -5,7 +5,7 @@
 <mapper namespace="kr.spring.course.dao.CourseMapper">
 	<!-- sql 태그와 include 태그를 이용해 SQL문 재사용 -->
 	<!-- ====================키필드,키워드====================== -->
-	<sql id="courseSearch"> 
+	<sql id="courseSearch">
 		<where>
 			<if test="keyword!=null and keyword!=''">
 				<if test="keyfield==1">
@@ -105,6 +105,7 @@
   	<select id="selectListReply" parameterType="map" resultType="courseReplyVO">
   			SELECT * FROM
   			(SELECT a.*, rownum rnum FROM
+  			(SELECT * FROM
   		    (SELECT reply_num,
   		            <![CDATA[
   		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
@@ -116,16 +117,33 @@
   		            mem_num,
   		            mem_id,
   		            mem_nickname,
-  		            mem_photo FROM course_reply 
+  		            mem_photo,
+  		            star_auth
+  		            FROM course_reply 
   		            JOIN member USING (mem_num) 
-  		            JOIN member_detail USING(mem_num)
-  		 			FULL OUTER JOIN (SELECT reply_num,COUNT(fav_num) AS favcount FROM course_reply_fav GROUP BY reply_num) USING(reply_num) 
+  		            JOIN member_detail USING(mem_num))
+  		            LEFT OUTER JOIN (SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num}) USING(reply_num)
+                    LEFT OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount 
+                    FROM course_reply_fav group by reply_num) USING (reply_num)
   		          WHERE course_num = #{course_num}
-  		          ORDER BY <include refid="replyOrder"></include>)a)
+  		          ORDER BY <include refid="replyOrder"></include>)a) 
   		    <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>          
   	</select>
+	
+	<update id="deleteReplyPhoto" parameterType="Integer">
+		<if test="photo_type==1">
+			UPDATE course_reply SET reply_photo1='',reply_photo_name1='' WHERE reply_num=#{reply_num}
+		</if>
+		<if test="photo_type==2">
+			UPDATE course_reply SET reply_photo2='',reply_photo_name2='' WHERE reply_num=#{reply_num}
+		</if>
+		<if test="photo_type==3">
+			UPDATE course_reply SET reply_photo3='',reply_photo_name3='' WHERE reply_num=#{reply_num}
+		</if>
+	</update>
+	 
 	
 	
 </mapper> 

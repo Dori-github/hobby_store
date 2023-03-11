@@ -261,6 +261,7 @@ input::-webkit-search-results-decoration{
 
 
 
+#course_form input[type=date],
 #course_form input[type=text],
 #course_form input[type=number],#course_vprice{
 	width:100%;
@@ -271,6 +272,7 @@ input::-webkit-search-results-decoration{
 }
 #course_form input[type=text]:hover,#course_form input[type=text]:focus,
 #course_form input[type=number]:hover,#course_form input[type=number]:focus,
+#course_form input[type=date]:hover,#course_form input[type=date]:focus,
 .btn-select:hover,#course_vprice:hover{
 	outline:3px solid gray;
 }
@@ -458,15 +460,17 @@ li.ui-timepicker-selected, .ui-timepicker-list li:hover{
 	margin:0;
 	padding:0;
 }
+/*정기-시작날짜*/
+#course_form #course_startdate{
+	width:200px;
+}
+
 
 /*수강인원수*/
 #course_form .monthCount td input{
 	width:200px;
 	text-align: right;
 }
-
-
-/*수강인원수*/
 #course_form .limit ul{
 	width:200px;
 	height:30px;
@@ -931,6 +935,7 @@ input[type='number']::-webkit-inner-spin-button {
 #output .fa-thumbs-up{
 	padding-left:20px;
 	line-height:35px;
+	margin-right:10px;
 }
 #output .fa-thumbs-up:hover{
 	transform:scale(1.1);
@@ -1054,13 +1059,13 @@ input[type='number']::-webkit-inner-spin-button {
 	color:gray;
 }
 
-/*댓글 수정폼*/
+/*후기 수정폼*/
 #mreply_form{
 	height:380px;
 	padding:0 50px;
 }
 .mletter-count{
-	top:-10px;
+	right:50px;
 }
 #mreply_form .submit-btn,#mreply_form .reply-reset{
 	float:right;
@@ -1069,8 +1074,29 @@ input[type='number']::-webkit-inner-spin-button {
 	margin-right:10px;
 	text-align: center;
 }
-
-
+/*후기 수정 이미지*/
+.mreply-photo{
+	background-color:#FF4E02;
+	border-radius: 20px;
+	color:#FFF;
+	padding:10px 20px;
+	font-size: 10pt;
+	margin-bottom:10px;
+	margin-right:10px;
+	cursor: pointer;
+}
+.mreply-photo:hover{
+	background-color:#E84601;
+}
+.reply-photo-name{
+	margin-right:20px;
+}
+.saved{
+	color:#B2B2B2;
+}
+.del{
+	margin-left:10px;
+}
 
 
 

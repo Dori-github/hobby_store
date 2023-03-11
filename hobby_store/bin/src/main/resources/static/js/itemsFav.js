@@ -54,8 +54,22 @@ $(function() {
       }else{
          $('.fa-heart').css('font-weight','normal');
       }
-		$('#heart-count').text(param.count);
+		
    }	
+
+
+
+	function displayFav(param){
+      if(param.status == 'yesFav'){
+         $('.fa-heart').css('font-weight','bold');
+      }else{
+         $('.fa-heart').css('font-weight','normal');
+      }
+		
+   }	
+
+	
+	
 
 	//초기 데이터 표시 
 	selectFav($('.heart').attr('data-num'));

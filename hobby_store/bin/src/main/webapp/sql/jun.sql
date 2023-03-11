@@ -7,9 +7,11 @@ create table notice_board(
  noti_date date default sysdate not null,
  noti_mdate date,
  noti_end date,
- noti_ip varchar2(40) not null,
- noti_photo varchar2(150),
- noti_attr number(1) not null,
+ status number(1) not null,
+ photo1 blob not null,
+ photo_name1 varchar2(90) not null,
+ photo2 blob not null,
+ photo_name2 varchar2(90) not null,
  mem_num number not null,
  constraint notice_board_pk primary key (noti_num),
  constraint notice_board_fk1 foreign key (mem_num)
@@ -51,7 +53,7 @@ create table free_board(
                     references member (mem_num)
 );
 
-create sequence spboard_seq;
+create sequence free_board_seq;
 
 --자유게시판 좋아요
 create table free_fav(
@@ -101,6 +103,58 @@ create sequence free_reply_fav_seq;
 
 ----------------------------------------------------------
 
+Q&A 게시판 수정함!!!!
+
+-Q&A게시판
+create table qna(
+ qna_num number,
+ qna_title varchar2(150) not null,
+ qna_content clob not null,
+ qna_hit number(8) default 0 not null,
+ qna_date date default sysdate not null,
+ qna_mdate date,
+ items_num number,
+ course_num number,
+ space_num number,
+ mem_num number not null,
+ constraint qna_pk primary key (qna_num),
+ constraint qna_fk1 foreign key (mem_num)
+                    references member (mem_num),
+ constraint qna_fk2 foreign key (items_num)
+                    references items (items_num)
+ constraint qna_fk3 foreign key (course_num)
+                    references course (course_num),
+ constraint qna_fk4 foreign key (space_num)
+                    references space (space_num)                                      
+);
+
+create sequence qna_seq;
+
+-Q&A 댓글 
+create table qna_reply(
+ re_num number,
+ re_content varchar2(900) not null,
+ re_date date default sysdate not null,
+ re_mdate date,
+ qna_num number not null,
+ mem_num number not null,
+ constraint qna_reply_pk primary key (re_num),
+ constraint qna_reply_fk1 foreign key (qna_num)
+                        references qna (qna_num),
+ constraint qna_reply_fk2 foreign key (mem_num)
+                        references member (mem_num)
+);
+
+create sequence qna_reply_seq;
+
+
+
+
+이 아래는 사용 안함!!!
+
+
+
+-------------------------------------------------------
 
 -강의 Q&A게시판
 create table course_qna_detail(

@@ -44,6 +44,11 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/memberModify.jsp"/>
     </definition>
+    <definition name="changePassword" extends="myPage">
+    	<put-attribute name="title" value="비밀번호 변경"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/changePassword.jsp"/>
+    </definition>
     <definition name="favList" extends="myPage">
     	<put-attribute name="title" value="좋아요 목록"/>
     	<put-attribute name="body"
@@ -64,6 +69,26 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/orderList.jsp"/>
     </definition>
+    <definition name="orderModify" extends="myPage">
+    	<put-attribute name="title" value="주문 상세"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/orderModify.jsp"/>
+    </definition>
+    <definition name="lecOrderList" extends="myPage">
+    	<put-attribute name="title" value="주문 상세"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/lec_orderList.jsp"/>
+    </definition>
+    <definition name="lecOrderModify" extends="myPage">
+    	<put-attribute name="title" value="주문 수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/lec_orderModify.jsp"/>
+    </definition>
+    <definition name="eventApplyList" extends="myPage">
+    	<put-attribute name="title" value="신청 이벤트 조회"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/eventApplyList.jsp"/>
+    </definition>
     <definition name="memberDelete" extends="myPage">
     	<put-attribute name="title" value="회원탈퇴"/>
     	<put-attribute name="body"
@@ -79,7 +104,7 @@
     	  <put-attribute name="nav"
     	  value="/WEB-INF/views/template/admin_nav.jsp"/>
     	<put-attribute name="body"
-    	  value="/WEB-INF/views/main/admin.jsp"/>
+    	  value="/WEB-INF/views/main/main.jsp"/>
     	<put-attribute name="footer"
     	  value="/WEB-INF/views/template/footer.jsp"/>          
     </definition>
