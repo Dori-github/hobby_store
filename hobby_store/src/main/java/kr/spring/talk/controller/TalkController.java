@@ -44,6 +44,19 @@ public class TalkController {
 	public String talkRoomWrite() {
 		return "talkRoomWrite";
 	}
+	
+
+	//폼에서 전송된 데이터 처리
+	@PostMapping("/talk/talkRoomWrite.do")
+	public String submitTalkRoom(TalkRoomVO vo) {
+		
+		logger.debug("<<채팅방 생성>> : " + vo);
+		
+		talkService.insertTalkRoom(vo);
+		
+		return "redirect:/talk/talkList.do";
+	}
+	
 
 	//=====채팅 목록========//
 	@RequestMapping("/talk/talkList.do")
@@ -67,16 +80,6 @@ public class TalkController {
 		return "talkList";
 	}
 
-	//폼에서 전송된 데이터 처리
-	@PostMapping("/talk/talkRoomWrite.do")
-	public String submitTalkRoom(TalkRoomVO vo) {
-
-		logger.debug("<<채팅방 생성>> : " + vo);
-
-		talkService.insertTalkRoom(vo);
-
-		return "redirect:/talk/talkList.do";
-	}
 
 	//=====채팅회원검색========//
 	@RequestMapping("/talk/memberSearchAjax.do")

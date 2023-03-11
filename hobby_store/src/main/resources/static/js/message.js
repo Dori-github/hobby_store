@@ -6,7 +6,7 @@ $(function(){
 	
 	//웹소켓 연결
 	function alarm_connect(){
-		message_socket = new WebSocket("ws://localhost:8000/message-ws.do");
+		message_socket = new WebSocket("ws://localhost:8001/message-ws.do");
 		message_socket.onopen=function(evt){
 			//채팅 페이지에 진입하면 채팅 메시지 발송
 			if($('#talkDetail').length == 1){
