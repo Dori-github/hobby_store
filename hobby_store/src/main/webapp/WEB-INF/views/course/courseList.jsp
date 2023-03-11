@@ -53,13 +53,13 @@
 		<div id="onoff">
 			<label for="off" class="off <c:if test="${param.onoff==1}">click1</c:if>"><b>오프라인</b></label>
 			<input type="radio" id="off" name="onoff" value="1" <c:if test="${param.onoff==1}">checked="checked"</c:if>
-					onclick="location.href='courseList.do?onoff=1&oneweek=1'">
+					onclick="location.href='courseList.do?onoff=1&oneweek=1&cate=전체'">
 			<label for="on" class="on  <c:if test="${param.onoff==2}">click1</c:if>"><b>온라인</b></label>
 			<input type="radio" id="on" name="onoff" value="2" <c:if test="${param.onoff==2}">checked="checked"</c:if>
-					onclick="location.href='courseList.do?onoff=2'">
+					onclick="location.href='courseList.do?onoff=2&cate=전체'">
 		</div>
 		<div id="course_search">
-			<form action="/course/courseList.do?onoff=${param.onoff}&oneweek=${param.oneweek}&cate=${param.cate}" method="post" class="navbar-expand search-form d-flex" id="search_form">
+			<form action="/course/courseList.do?onoff=${param.onoff}<c:if test="${param.onoff==1}">&oneweek=${param.oneweek}</c:if>&cate=${param.cate}" method="post" class="navbar-expand search-form d-flex" id="search_form">
 				<select class="form-select" name="keyfield">
 					<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>전체</option>
 					<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>제목</option>
@@ -81,24 +81,24 @@
 			
 			<select class="form-select select" id="location" name="location">
 				<option hidden="hidden">지역</option>
-				<option value="1" <c:if test="${param.location == 1}">selected</c:if>>전체</option>
-				<option value="2" <c:if test="${param.location == 2}">selected</c:if>>서울</option>
-				<option value="3" <c:if test="${param.location == 3}">selected</c:if>>경기</option>
-				<option value="4" <c:if test="${param.location == 4}">selected</c:if>>인천</option>
-				<option value="5" <c:if test="${param.location == 5}">selected</c:if>>강원</option>
-				<option value="6" <c:if test="${param.location == 6}">selected</c:if>>충북</option>
-				<option value="7" <c:if test="${param.location == 7}">selected</c:if>>세종</option>
-				<option value="8" <c:if test="${param.location == 8}">selected</c:if>>충남</option>
-				<option value="9" <c:if test="${param.location == 9}">selected</c:if>>대전</option>
-				<option value="10" <c:if test="${param.location == 10}">selected</c:if>>경북</option>
-				<option value="11" <c:if test="${param.location == 11}">selected</c:if>>대구</option>
-				<option value="12" <c:if test="${param.location == 12}">selected</c:if>>울산</option>
-				<option value="13" <c:if test="${param.location == 13}">selected</c:if>>부산</option>
-				<option value="14" <c:if test="${param.location == 14}">selected</c:if>>경남</option>
-				<option value="15" <c:if test="${param.location == 15}">selected</c:if>>전북</option>
-				<option value="16" <c:if test="${param.location == 16}">selected</c:if>>전남</option>
-				<option value="17" <c:if test="${param.location == 17}">selected</c:if>>광주</option>
-				<option value="18" <c:if test="${param.location == 18}">selected</c:if>>제주</option>
+				<option value="전체" <c:if test="${param.location == '전체'}">selected</c:if>>전체</option>
+				<option value="서울" <c:if test="${param.location == '서울'}">selected</c:if>>서울</option>
+				<option value="경기" <c:if test="${param.location == '경기'}">selected</c:if>>경기</option>
+				<option value="인천" <c:if test="${param.location == '인천'}">selected</c:if>>인천</option>
+				<option value="강원" <c:if test="${param.location =='강원'}">selected</c:if>>강원</option>
+				<option value="충북" <c:if test="${param.location =='충북'}">selected</c:if>>충북</option>
+				<option value="세종" <c:if test="${param.location == '세종'}">selected</c:if>>세종</option>
+				<option value="충남" <c:if test="${param.location == '충남'}">selected</c:if>>충남</option>
+				<option value="대전" <c:if test="${param.location == '대전'}">selected</c:if>>대전</option>
+				<option value="경북" <c:if test="${param.location == '경북'}">selected</c:if>>경북</option>
+				<option value="대구" <c:if test="${param.location == '대구'}">selected</c:if>>대구</option>
+				<option value="울산" <c:if test="${param.location == '울산'}">selected</c:if>>울산</option>
+				<option value="부산" <c:if test="${param.location == '부산'}">selected</c:if>>부산</option>
+				<option value="경남" <c:if test="${param.location == '경남'}">selected</c:if>>경남</option>
+				<option value="전북" <c:if test="${param.location == '전북'}">selected</c:if>>전북</option>
+				<option value="전남" <c:if test="${param.location == '전남'}">selected</c:if>>전남</option>
+				<option value="광주" <c:if test="${param.location == '광주'}">selected</c:if>>광주</option>
+				<option value="제주" <c:if test="${param.location == '제주'}">selected</c:if>>제주</option>
 			</select>
 			</c:if>
 			
