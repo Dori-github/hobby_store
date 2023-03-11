@@ -156,7 +156,7 @@ public interface MemberMapper {
 	public void updateOrder(OrderVO order);
 	
 	//회원 - 주문취소
-	@Update("UPDATE orders SET refund_status=0 WHERE order_num=#{order_num}")
+	@Update("UPDATE orders SET refund_status=1 WHERE order_num=#{order_num}")
 	public void updateOrderCancel(Integer order_num);
 	
 	//강사 - 배송관리 조회

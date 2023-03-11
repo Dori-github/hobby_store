@@ -297,6 +297,7 @@ public class OrderController {
 		orderVO.setOrder_name(order_name);// 대표 상품명
 		orderVO.setOrder_price(allTotal);// 총주문금액
 		orderVO.setMem_num(user.getMem_num());// 주문자
+		orderVO.setOrder_status(0);
 		pointsVO.setUsed_points(allTotal);// 주문자
 		pointsVO.setMem_num(user.getMem_num());
 		logger.debug("<<insertOrder 전 order_name>> : " + order_name);
@@ -379,6 +380,7 @@ public class OrderController {
 			orderVO.setOrder_name(course_name[0]);// 대표 상품명
 			orderVO.setOrder_price(coursePrice);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(0);
 			pointsVO.setUsed_points(coursePrice);
 			pointsVO.setMem_num(user.getMem_num());
 		}
@@ -407,6 +409,7 @@ public class OrderController {
 			orderVO.setOrder_name(course_name[0]);// 대표 상품명
 			orderVO.setOrder_price(courseTotal);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(1);
 			pointsVO.setUsed_points(courseTotal);
 			pointsVO.setMem_num(user.getMem_num());
 		}
@@ -433,6 +436,7 @@ public class OrderController {
 			orderVO.setOrder_name(items_name[0]);// 대표 상품명
 			orderVO.setOrder_price(itemsTotal);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(0);
 			pointsVO.setUsed_points(itemsTotal);
 			pointsVO.setMem_num(user.getMem_num());
 		}
@@ -458,6 +462,7 @@ public class OrderController {
 			orderVO.setOrder_name(space_name[0]);// 대표 상품명
 			orderVO.setOrder_price(spaceTotal);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(1);
 			pointsVO.setUsed_points(spaceTotal);
 			pointsVO.setMem_num(user.getMem_num());
 		}
