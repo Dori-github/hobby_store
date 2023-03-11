@@ -21,7 +21,7 @@ public interface ItemsMapper {
 	@Insert("INSERT INTO items (items_num, cate_num, items_name, items_price, items_quantity, items_photo1, items_photo2, items_photo3, items_photo_name1, items_photo_name2, items_photo_name3, items_content, mem_num, status, packaging, items_zipcode, items_address1, items_address2 ) "
 			+ "VALUES (items_seq.nextval, #{cate_num}, #{items_name}, #{items_price}, #{items_quantity}, #{items_photo1}, #{items_photo2}, #{items_photo3},#{items_photo_name1},#{items_photo_name2}, #{items_photo_name3}, #{items_content}, #{mem_num}, #{status}, #{packaging}, #{items_zipcode}, #{items_address1}, #{items_address2})")
 	public void insertItems(ItemsVO items);
-	
+	 
 	//상품 목록 //xml
 	public List<ItemsVO> selectItemsList(Map<String, Object> map);
 	//상품 카운트 //xml
