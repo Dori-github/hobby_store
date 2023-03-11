@@ -164,14 +164,14 @@ public class CartController {//메서드 생성, 데이터 처리
 	@RequestMapping("/cart/insert.do")
 	public String insert(CourseCartVO courseCart, ItemCartVO itemCart, 
 			HttpServletRequest request, HttpServletResponse response,
-			HttpSession session, Model model) {	
-		logger.debug("<<ㅇ>> : ");
+			HttpSession session, Model model) {
 		
 		MemberVO user = 
 				(MemberVO)session.getAttribute("user");
 
 		String[] course_onoff = request.getParameterValues("course_onoff");
 		logger.debug("<<cㅇ>> : "+ course_onoff);
+		logger.debug("<<cㅇ>> : "+ course_onoff[0]);
 		
 		if(course_onoff != null) {
 			courseCart.setMem_num(user.getMem_num());

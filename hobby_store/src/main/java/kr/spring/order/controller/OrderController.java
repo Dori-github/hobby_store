@@ -339,7 +339,6 @@ public class OrderController {
 
 		if(space_price != null) {	
 			logger.debug("<<s quan>>:" + space_price[0]);
-//			logger.debug("<<s quan>>:"+Integer.parseInt(order_quantity[0]));
 			int spacePrice = Integer.parseInt(space_price[0]);
 			int orderQuantity = Integer.parseInt(order_quantity[0]);
 			int spaceTotal = spacePrice * orderQuantity;
@@ -384,10 +383,22 @@ public class OrderController {
 			pointsVO.setUsed_points(coursePrice);
 			pointsVO.setMem_num(user.getMem_num());
 		}
+		logger.debug("<<1d>> : " + course_num[0]);
+		logger.debug("<<1d>> : " + course_onoff);
+		logger.debug("<<1d>> : " + (course_onoff[0]));
+		logger.debug("<<1d>> : " + (course_onoff[0]="off"));
+		logger.debug("<<1d>> : " + (course_onoff != null));
+		logger.debug("<<11dddd>> : " + (course_onoff[0] == "off"));
 		
-		if(course_onoff != null && course_onoff[0] == "off") {//오프라인 클래스
+		if(course_onoff != null) {//오프라인 클래스
+			logger.debug("<<1d>> : " + course_num[0]);
 			String[] course_quan = request.getParameterValues("course_quan");
 			String[] course_total = request.getParameterValues("course_total");
+			
+			logger.debug("<<1d>> : " + course_num[0]);
+			logger.debug("<<2d>> : " + course_quan[0]);
+			logger.debug("<<3d>> : " + course_price[0]);
+			logger.debug("<<4d>> : " + course_total[0]);
 			
 			int courseNum = Integer.parseInt(course_num[0]);
 			int courseQuan = Integer.parseInt(course_quan[0]);
