@@ -13,7 +13,6 @@
         <a href="#" class="item"><div>나의 활동내역</div></a>
 	        <ul class="big-menu">
 		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/fav.do?cate_num=1">좋아요 조회</a></li>
-		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/board.do">작성 게시글 조회</a></li>
 		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/regisList.do?cate_num=1">등록 상품 조회</a></li>
 	        </ul>
         </li>

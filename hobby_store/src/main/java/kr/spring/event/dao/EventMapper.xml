@@ -75,8 +75,8 @@
   <update id="updateEvent" parameterType="eventVO">
   	UPDATE event SET
   		<if test="event_photo_name != ''">
-  		event_photo=#{event_photo},
-  		event_photo_name=#{event_photo_name},
+	  	event_photo=#{event_photo},
+	  	event_photo_name=#{event_photo_name},
   		</if>
   		<if test="course_num!=''">course_num=#{course_num},</if>
   		<if test="items_num!=''">items_num=#{items_num},</if>

@@ -23,12 +23,6 @@
 		</ul>
 	</form>
 </div>
-<div class="select-list">
-	<select>
-		<option>최신순</option>
-		<option>마감순</option>
-	</select>
-</div>
 	<div class="event-space">
 	<c:if test="${count > 0}">
 		<ul class="event-list">

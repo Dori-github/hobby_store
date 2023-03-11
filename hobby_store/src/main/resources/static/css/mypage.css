@@ -121,7 +121,6 @@ div#page_body{
 .cate-btn:click{
 	background-color:#FF4E02;
 }
-/*카드 목록*/
 #content .card{
 	cursor:pointer;
 }

@@ -100,6 +100,7 @@
 				</td>
 				<td>
 				<form:input path="event_end" class="datepicker"/>
+				<form:errors path="event_end" cssClass="error-color"/>
 				</td>
 			</tr>
 			<tr>
