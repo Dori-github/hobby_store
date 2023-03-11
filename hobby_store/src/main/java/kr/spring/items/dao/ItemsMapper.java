@@ -32,7 +32,8 @@ public interface ItemsMapper {
 	//상품 수정
 	public void updateItems(ItemsVO itemsVO);
 	//상품 삭제
-	public void deleteItems(ItemsVO itemsVO);
+	@Delete("DELETE FROM items WHERE items_num = #{items_num}")
+	public void deleteItems(Integer items_num);
 	//카테고리 이름 
 	@Select("SELECT cate_name, cate_num FROM items_cate WHERE cate_parent is NULL")
 	public List<ItemsVO> selectCate1();
@@ -43,7 +44,9 @@ public interface ItemsMapper {
 	//상품 조회수
 	@Update("UPDATE items SET items_hit = items_hit+1 WHERE items_num = #{items_num}")
 	public void updateHit(Integer items_num);
-	
+	//상품 등록한 사람 
+	@Select("SELECT mem_num FROM items WHERE items_num = #{items_num}")	
+	public int itemsOner(Integer items_num);
 	//상품 좋아요
 	@Select("SELECT * FROM items_fav WHERE items_num = #{items_num} AND fmem_num = #{fmem_num} ")
 	public ItemsFavVO selectItemsFav(ItemsFavVO fav);
@@ -51,7 +54,7 @@ public interface ItemsMapper {
 	@Select("DELETE FROM items_fav WHERE fav_num = #{fav_num}")
 	public void deleteItemsFav(Integer fav_num);
 	//상품 좋아요 등록
-	@Insert("INSERT INTO items_fav (fav_num, fmem_num, items_num ) VALUES (items_fav_seq.nextval, #{fmem_num}, #{items_num} )")
+	@Insert("INSERT INTO items_fav (fav_num, fmem_num, items_num) VALUES (items_fav_seq.nextval, #{fmem_num}, #{items_num)")
 	public void insertItemsFav(ItemsFavVO fav);
 	//좋아요 수 췤
 	@Select("SELECT COUNT(*) FROM items_fav WHERE items_num = #{items_num}")
@@ -59,6 +62,12 @@ public interface ItemsMapper {
 	//상품 좋아요를 누른 사람 찾기 
 	@Select("select * from items a join items_fav b ON a.items_num = b.items_num  ")
 	public List<ItemsVO> selectFavMem();
+	//상품의 모든 좋아요 삭제
+	@Select("DELETE FROM items_fav WHERE items_num = #{items_num}")
+	public void deleteItemsAllFav(Integer items_num);
+	@Delete("DELETE FROM items_reply WHERE reply_num = #{reply_num}")
+	public void deleteReply(ItemsVO reply);
+	
 	
 	//후기
 	public List<ItemsReplyVO> selectListReply(Map<String, Object> map);
@@ -70,10 +79,10 @@ public interface ItemsMapper {
 	public ItemsReplyVO selectReply(Integer reply_num);
 	@Update("UPDATE items_reply SET reply_content = {reply_content}, reply_mdate = SYSDATE, reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}, reply_photo2 = #{reply_photo2,jdbcType=BLOB}, reply_photo_name2 = #{reply_photo_name2,jdbcType=VARCHAR}, reply_photo3 = #{reply_photo3,jdbcType=BLOB}, reply_photo_name3 = #{reply_photo_name3,jdbcType=VARCHAR}")
 	public void updateReply(ItemsReplyVO itemsReply);
-	@Delete("DELETE FROM items_reply WHERE reply_num = #{reply_num}")
-	public void deleteReply(Integer reply_num);
+	@Delete("DELETE FROM items_reply WHERE items_num = #{items_num}")
+	public void deleteReply2(Integer items_num);
 	
-	
+	@Delete("DELETE FROM items_reply WHERE items_num = #{items_num}")
 	public void deleteReplyByItemsNum(Integer items_num);
 	
 	//상세페이지 별점
@@ -101,20 +110,35 @@ public interface ItemsMapper {
 	//후기 좋아요 췍
 	@Select("SELECT COUNT(*) FROM items_reply_fav WHERE reply_num = #{reply_num}")
 	public int selectReplyFavCount(Integer reply_num);
+	
 	@Delete("DELETE FROM items_reply_fav WHERE reply_num = #{reply_num}")
-	public void deleteFavByCourseNum(Integer reply_num);
+	public void deleteFavByReplyNum(ItemsVO reply_num);
+	@Select("SELECT reply_num FROM items_reply WHERE items_num = #{items_num}")
+	public ItemsVO selectReplyByItemsNum(Integer items_num);
+	
 	//후기 좋아요를 누른 사람 찾기 
 	@Select("select * from items_reply a join items_reply_fav b ON a.reply_num = b.reply_num ")
 	public List<ItemsReplyFavVO> selectReplyFavMem();
 	//일단 써보는 쿼리
 	@Select("SELECT * FROM items_reply_fav WHERE reply_num = #{reply_num}")
 	public int selectReplyFavCheck(Integer reply_num);
-	
+	//후기삭제 시 후기 좋아요 PK 뽑아오기
 	@Select("SELECT fav_num FROM items_reply_fav WHERE reply_num = #{reply_num}")
 	public ItemsReplyVO deleteFav(ItemsReplyVO reply);
+	//삭제할 후기와 연결된 모든 좋아요 삭제 
 	@Delete("DELETE FROM items_reply_fav WHERE fav_num = #{fav_num}")
 	public void deleteAllFav(ItemsReplyVO fav);
 
-
-	
+	@Select("SELECT reply_num FROM items_reply WHERE items_num = #{items_num}")
+	public ItemsVO searchFav(Integer items_num);
+	///////////////////////////////////////////////////////////////////////////////////////
+	@Select("SELECT reply_num FROM items_reply WHERE items_num = #{items_num}")
+	public List<Integer> selectReplyNum(Integer items_num);
+	public void deleteReplyNum(Integer items_num);
+	@Delete("DELETE FROM items_reply WHERE items_num = #{items_num}")
+	public void deleteReplyItems(Integer items_num);
+	@Delete("DELETE FROM items_reply_fav WHERE reply_num = #{reply_num}")
+	public void deleteReplytoFav(Integer reply_num);
+	@Delete("DELETE FROM item_cart WHERE items_num = #{items_num}")
+	public void deleteItemsCart(Integer items_num);
 }

@@ -25,7 +25,7 @@ public interface ItemsService {
 	//상품 수정
 	public void updateItems(ItemsVO itemsVO);
 	//상품 삭제
-	public void deleteItems(ItemsVO itemsVO);
+	public void deleteItems(Integer items_num);
 	
 	//부모 카테고리 
 	public List<ItemsVO> selectCate1();
@@ -55,8 +55,10 @@ public interface ItemsService {
 	public ItemsReplyVO selectReply(Integer reply_num);
 	
 	public void updateReply(ItemsReplyVO itemsReply);
-	public void deleteReply(Integer reply_num);
-	public void deleteReplyByItemsNum(Integer items_num);
+	public void deleteReply(ItemsVO reply);
+	public void deleteReply2(Integer items_num);
+	public void deleteFavByReplyNum(ItemsVO reply_num);
+	public ItemsVO selectReplyByItemsNum(Integer items_num);
 	
 
 	
@@ -74,8 +76,6 @@ public interface ItemsService {
 	public void insertReplyFav(ItemsReplyFavVO fav);
 	//후기 좋아요 췍
 	public int selectReplyFavCount(Integer fav_num);
-	// 후기 삭제 후 좋아요 삭제
-	public void deleteFavByCourseNum(Integer reply_num);
 	//후기 좋아요 누른 사람 	
 	public List<ItemsReplyFavVO> selectReplyFavMem();
 	
@@ -85,7 +85,19 @@ public interface ItemsService {
 	
 	public void deleteAllFav(ItemsReplyVO fav);
 	
+	public int itemsOner(Integer items_num);
 	
+	public void deleteReplyByItemsNum(Integer items_num);
 
+	public void deleteItemsAllFav(Integer items_num);
+	
+	public ItemsVO searchFav(Integer items_num);
+/////////////////////////////////////////////////////////////////
+	
+	public List<Integer> selectReplyNum(Integer items_num);
+	public void deleteReplyNum(Integer items_num);
+	public void deleteReplyItems(Integer items_num);
+	public void deleteReplytoFav(Integer reply_num);
+	public void deleteItemsCart(Integer items_num);
 	
 }

@@ -208,7 +208,7 @@ public class ItemsReplyVO {
 					+ ", mem_nickname=" + mem_nickname + ", mem_photo=" + mem_photo + ", starcount=" + starcount
 					+ ", star5_per=" + star5_per + ", star5=" + star5 + ", starall=" + starall + ", favcount="
 					+ favcount + ", fav_num=" + fav_num + "]";
-		}
+		}								
 		
 		
 		
