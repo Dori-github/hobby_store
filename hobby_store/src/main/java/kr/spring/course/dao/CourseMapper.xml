@@ -132,5 +132,18 @@
   		    ]]>          
   	</select>
 	
+	<update id="deleteReplyPhoto" parameterType="Integer">
+		<if test="photo_type==1">
+			UPDATE course_reply SET reply_photo1='',reply_photo_name1='' WHERE reply_num=#{reply_num}
+		</if>
+		<if test="photo_type==2">
+			UPDATE course_reply SET reply_photo2='',reply_photo_name2='' WHERE reply_num=#{reply_num}
+		</if>
+		<if test="photo_type==3">
+			UPDATE course_reply SET reply_photo3='',reply_photo_name3='' WHERE reply_num=#{reply_num}
+		</if>
+	</update>
+	 
+	
 	
 </mapper> 

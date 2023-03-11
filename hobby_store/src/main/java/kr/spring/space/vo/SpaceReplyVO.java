@@ -21,12 +21,13 @@ public class SpaceReplyVO {
 	private String reply_mdate;
 	private int space_num;
 	private int mem_num;
-	
+	private int fmem_num;
 	private String mem_id;
 	private String mem_nickname;
 	private byte[] mem_photo;
 	
-	private int fav_cnt;
+	private int fav_cnt;//게시글좋아요
+	private int favcount;//후기 좋아요
 	private float star_avg;//==starcount 평균
 
 	private float star5_per;
@@ -187,4 +188,18 @@ public class SpaceReplyVO {
 	public void setStar_auth(int star_auth) {
 		this.star_auth = star_auth;
 	}
+	public int getFavcount() {
+		return favcount;
+	}
+	public void setFavcount(int favcount) {
+		this.favcount = favcount;
+	}
+	public int getFmem_num() {
+		return fmem_num;
+	}
+	public void setFmem_num(int fmem_num) {
+		this.fmem_num = fmem_num;
+	}
+	
+	
 }

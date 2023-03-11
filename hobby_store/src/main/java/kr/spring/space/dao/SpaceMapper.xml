@@ -123,30 +123,45 @@
 	</select>
 	
   	<select id="selectListReply" parameterType="map" resultType="spaceReplyVO">
-  		SELECT
-  		   *
-  		FROM(SELECT
-  		       a.*,
-  		       rownum rnum
-  		     FROM(SELECT
-  		            reply_num,
-  		            <![CDATA[
-  		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
-  		            ]]>
-  		            reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
-  		            reply_date,
-  		            reply_mdate,
-  		            space_num,
-  		            star_auth,
-  		            mem_num, 
-  		            mem_id,
-  		            mem_nickname,
-  		            mem_photo
-  		          FROM space_reply JOIN member USING (mem_num) JOIN member_detail USING(mem_num) 
-  		          WHERE space_num = #{space_num}
-  		          ORDER BY <include refid="replyOrder"></include>)a)
+  		SELECT * FROM
+           (SELECT a.*, rownum rnum FROM
+           (SELECT * FROM
+            (SELECT reply_num,
+                    <![CDATA[
+                    REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
+                    ]]>
+                    reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
+                    reply_date,
+                    reply_mdate,
+                    space_num,
+                    mem_num,
+                    mem_id,
+                    mem_nickname,
+                    mem_photo,
+                    star_auth
+                    FROM space_reply 
+                    JOIN member USING (mem_num) 
+                    JOIN member_detail USING(mem_num))
+                    LEFT OUTER JOIN (SELECT * FROM space_reply_fav WHERE fmem_num=#{mem_num}) USING(reply_num)
+                    LEFT OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount 
+                    FROM space_reply_fav group by reply_num) USING (reply_num)
+                  WHERE space_num = #{space_num}
+                 ORDER BY <include refid="replyOrder"></include>)a)
   		    <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>          
   	</select>
+
+  	<!-- 후기 수정 -->
+  	<update id="updateSpaceReply" parameterType="SpaceReplyVO">
+  		UPDATE space_reply SET
+  		  <if test="filename != ''">
+  		  uploadfile=#{uploadfile},
+  		  filename=#{filename},
+  		  </if>
+  		  reply_content=#{reply_content},
+  		  modify_date=SYSDATE
+  		WHERE space_num=#{space_num}  
+  	</update>
+  	
 </mapper>

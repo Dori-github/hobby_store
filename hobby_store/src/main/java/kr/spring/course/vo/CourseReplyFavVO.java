@@ -2,9 +2,18 @@ package kr.spring.course.vo;
 
 public class CourseReplyFavVO {
 	private int fav_num;
+	private int course_num;
 	private int reply_num;
 	private int fmem_num;
 	
+	
+	
+	public int getCourse_num() {
+		return course_num;
+	}
+	public void setCourse_num(int course_num) {
+		this.course_num = course_num;
+	}
 	public int getFav_num() {
 		return fav_num;
 	}
@@ -25,8 +34,10 @@ public class CourseReplyFavVO {
 	}
 	@Override
 	public String toString() {
-		return "CourseReplyFavVO [fav_num=" + fav_num + ", reply_num=" + reply_num + ", fmem_num=" + fmem_num + "]";
+		return "CourseReplyFavVO [fav_num=" + fav_num + ", course_num=" + course_num + ", reply_num=" + reply_num
+				+ ", fmem_num=" + fmem_num + "]";
 	}
+	
 	
 	
 }

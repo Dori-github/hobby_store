@@ -43,6 +43,11 @@ public interface SpaceMapper {
 	@Update("UPDATE space SET space_hit=space_hit+1 WHERE space_num=#{space_num}")
 	public void updateHit(Integer space_num);
 	public void updateSpace(SpaceVO spaceVO);
+	@Delete("DELETE FROM space WHERE space_num=#{space_num}")
+	public void deleteSpace(Integer space_num);
+
+	@Update("UPDATE space SET uploadfile='',filename='' WHERE space_num=#{space_num}")
+	public void deletePhoto(Integer space_num);
 	
 	
 	//좋아요
@@ -73,7 +78,9 @@ public interface SpaceMapper {
 	public void insertReply(SpaceReplyVO spaceReply);
 	@Update("UPDATE space_reply SET reply_content=#{reply_content},reply_photo1=#{reply_photo1},reply_photo2=#{reply_photo2},"
 			+ "reply_photo3=#{reply_photo3},reply_mdate=SYSDATE WHERE reply_num=#{reply_num}")
+
 	public void updateReply(SpaceReplyVO spaceReply);
+	//후기삭제
 	@Delete("DELETE FROM space_reply WHERE reply_num=#{reply_num}")
 	public void deleteReply(Integer reply_num);
 	@Delete("DELETE FROM space_reply WHERE space_num=#{space_num}")
@@ -90,21 +97,29 @@ public interface SpaceMapper {
 	public int selectallstar(Integer space_num);
 	
 	//후기 좋아요
-	@Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
-	public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
-	@Select("SELECT COUNT(*) FROM space_reply_fav WHERE reply_num=#{reply_num}")
-	public int selectReplyFavCount(Integer reply_num);
-	@Insert("INSERT INTO space_reply_fav (fav_num,reply_num,fmem_num) VALUES (space_reply_fav_seq.nextval,#{reply_num},#{fmem_num})")
-	public void insertReplyFav(SpaceReplyFavVO fav);
-	@Delete("DELETE FROM space_reply_fav WHERE fav_num=#{fav_num}")
-	public void deleteReplyFav(Integer fav_num);
-	@Delete("DELETE FROM space_reply_fav WHERE reply_num=#{reply_num}")
-	public void deleteReplyFavByReplyNum(Integer reply_num);
 	
-	@Delete("DELETE FROM space WHERE space_num=#{space_num}")
-	public void deleteSpace(Integer space_num);
-	@Update("UPDATE space SET uploadfile='',filename='' WHERE space_num=#{space_num}")
-	public void deletePhoto(Integer space_num);
+	 @Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
+		public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
+	
+	 @Select("SELECT * FROM space_reply_fav WHERE fmem_num=#{mem_num} AND reply_num=#{mem_num}")
+		public SpaceReplyFavVO selectReplyFavCheck();
+	
+		@Select("SELECT COUNT(*) FROM space_reply_fav WHERE reply_num=#{reply_num}")
+		public int selectReplyFavCount(Integer reply_num);
+		@Insert("INSERT INTO space_reply_fav(fav_num,reply_num,fmem_num) VALUES (space_reply_fav_seq.nextval,#{reply_num},#{fmem_num})")
+		public void insertReplyFav(SpaceReplyFavVO fav);
+		//후기 좋아요 삭제
+		@Delete("DELETE FROM space_reply_fav WHERE fav_num=#{fav_num}")
+		public void deleteReplyFav(Integer fav_num);
+		@Delete("DELETE FROM space_reply_fav WHERE reply_num=#{reply_num}")
+		public void deleteReplyFavByReplyNum(Integer reply_num);
+	    //후기사진삭제
+		@Update("UPDATE space SET uploadfile='',filename='' WHERE reply_num=#{reply_num}")
+		public void deleteReplyPhoto(Integer reply_num);
+
+	
+	
+
 }
 
 

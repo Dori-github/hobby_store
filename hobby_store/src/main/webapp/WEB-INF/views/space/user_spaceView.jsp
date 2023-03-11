@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,6 +10,7 @@
 <script src="${pageContext.request.contextPath}/js/space.js"></script>
 <script src="${pageContext.request.contextPath}/js/space.fav.js"></script>
 <script src="${pageContext.request.contextPath}/js/space.reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/space.reply.fav.js"></script>
 <!-- 상품 상세 시작 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/space.js"></script>
 <div class="page-main">
@@ -107,12 +109,7 @@
 			<div class="reservation">
 				<%-- 공간대여 예약 --%>
 				<p class="gray">날짜선택<input type="date"></p>
-				
-			
-				<%-- <p>
-				공간수 &nbsp; / ${space.space_limit} &nbsp &nbsp 최대인원수 &nbsp; / ${space.space_np}</p>
-				<span>구매수량 <input></span>  --%>
-			    <!-- 강사님 폼 -->
+	
 			    <div class="gray" id="spacepay">
 				<span>가격 : <b><fmt:formatNumber value="${space.space_price}"/></b></span>
 				<span>재고 : <span><fmt:formatNumber value="${space.space_limit}"/></span></span>
@@ -198,30 +195,28 @@
 		<c:if test="${!empty user}">
 		<div class="reply-photo">
 			<ul class="image">
-				<li>
-					<img class="space-photo1">
-					<label for="upload1" class="label1 l1">
-						<i class="fa-solid fa-circle-plus"></i><br>
-					</label>
-					<i class="fa-solid fa-circle-xmark d1"></i>
-					<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
-				</li>
-				<li>
-					<img class="space-photo2">
-					<label for="upload2" class="label1 l2">
-						<i class="fa-solid fa-circle-plus"></i><br>
-					</label>
-					<i class="fa-solid fa-circle-xmark d2"></i>
-					<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
-				</li>
-				<li>
-					<img class="space-photo3">
-					<label for="upload3" class="label1 l3">
-						<i class="fa-solid fa-circle-plus"></i><br>
-					</label>
-					<i class="fa-solid fa-circle-xmark d3"></i>
-					<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
-				</li>
+				<img class="space-photo1">
+               <label for="upload1" class="label1 l1">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d1"></i>
+               <input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
+            </li>
+            <li>
+               <img class="space-photo2">
+               <label for="upload2" class="label1 l2">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d2"></i>
+               <input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
+            </li>
+            <li>
+               <img class="space-photo3">
+               <label for="upload3" class="label1 l3">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d3"></i>
+               <input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
 			</ul>
 			<div class="reply-submit-btn">
 				<label for="submit" style="width:40px;height:40px;"><i class="fa-solid fa-paper-plane"></i></label>

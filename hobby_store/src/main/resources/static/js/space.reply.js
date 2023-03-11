@@ -39,7 +39,7 @@ $(function(){
 				$('#output').empty();
 				$('.paging-btn').empty();
 			
-				//후기 목록 작업 이새키 때문에 오류남
+				
 				//후기 목록 작업
 				$(param.list).each(function(index,item){
 					
@@ -47,9 +47,20 @@ $(function(){
 					for(let i=1;i<=item.star_auth;i++){
 						output += '★';
                 	}
-					//output += item.star_auth+'점';
 					output += '</span>';
-					output += '<span class="r-list-fav" data-num="'+item.reply_num+'"><i class="fa-regular fa-thumbs-up"></i> '+item.favcount+'</span></div>';
+					
+					output += '<span class="r-list-fav" data-num="'+item.reply_num+'">';
+					
+					if(item.fav_num != 0) {
+					output += '<i class="fa-regular fa-thumbs-up" style ="color :#FF4E02;"></i>';
+					}
+					if (item.fav_num == 0) {
+					output += '<i class="fa-regular fa-thumbs-up style ="color :#000;"></i>';
+					}					
+					output += '<span class="favcount">'+item.favcount+'</span>';
+					output += '</span>';
+					output += '</div>';
+					
 					output += '<div class="item">';
 					output += '<ul class="detail-info">';
 					output += '<li>';
@@ -198,6 +209,17 @@ $(function(){
 		//기본 이벤트 제거
 		event.preventDefault();
 		
+		if(!$('.reply_star input[type=radio]').is(':checked')){
+         Swal.fire({
+                    icon: 'warning',
+                    title:'별점을 입력하세요!',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+         return false;
+        }
+		
 		if($('#reply_content').val().trim()==''){
 			Swal.fire({
                     icon: 'warning',
@@ -211,7 +233,7 @@ $(function(){
 		}
 		
 		
-		$.ajax({
+		$.ajax({//ajax는 등록된 후
 			url:'writeReply.do',
 			type:'post',
 			data: new FormData($('#reply_form')[0]),
@@ -454,13 +476,13 @@ $(function(){
 	//댓글 삭제
 	$(document).on('click','.delete-btn',function(){
 		//댓글 번호
-		let re_num = $(this).attr('data-num');
+		let reply_num = $(this).attr('data-num');
 		
 		//서버와 통신
 		$.ajax({
 			url:'deleteReply.do',
 			type:'post',
-			data:{re_num:re_num},
+			data:{reply_num:reply_num},
 			dataTpye:'json',
 			success:function(param){
 				if(param.result == 'logout'){

@@ -123,10 +123,7 @@
 				    <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
 				    <form:errors path="sapce_photo" cssClass="error-color"/>     
 				</div>
-								<input type="file" name="upload" id="upload" 
-				     accept="image/gif,image/png,image/jpeg">
-				<%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
-				<form:errors path="space_photo" cssClass="error-color"/>  
+							
 								</td>
 							</tr>
 							<tr>
@@ -139,11 +136,7 @@
 				    <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
 				    <form:errors path="space_photo1" cssClass="error-color"/>     
 				</div>
-								<input type="file" name="upload1" id="upload1" 
-				     accept="image/gif,image/png,image/jpeg">
-				<%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
-				<form:errors path="space_photo1" cssClass="error-color"/>     
-								</td>
+				
 							</tr>
 
 							<tr>
@@ -156,10 +149,7 @@
 				    <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
 				    <form:errors path="space_photo2" cssClass="error-color"/>     
 				</div>	
-								<input type="file" name="upload2" id="upload2" 
-				     accept="image/gif,image/png,image/jpeg">
-				<%--(주의) upload2은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
-				<form:errors path="space_photo2" cssClass="error-color"/>     
+								 
 								</td>
 							</tr>
 							<tr>
@@ -172,10 +162,7 @@
 				    <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
 				    <form:errors path="space_photo3" cssClass="error-color"/>     
 				</div>	
-				<input type="file" name="upload3" id="upload3" 
-				     accept="image/gif,image/png,image/jpeg">
-				<%--(주의) upload2은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
-				<form:errors path="space_photo3" cssClass="error-color"/>     
+				
 								</td>
 							</tr>
 							<tr>

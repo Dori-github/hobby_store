@@ -53,7 +53,7 @@
 		<div id="onoff">
 			<label for="off" class="off <c:if test="${param.onoff==1}">click1</c:if>"><b>오프라인</b></label>
 			<input type="radio" id="off" name="onoff" value="1" <c:if test="${param.onoff==1}">checked="checked"</c:if>
-					onclick="location.href='courseList.do?onoff=1'">
+					onclick="location.href='courseList.do?onoff=1&oneweek=1'">
 			<label for="on" class="on  <c:if test="${param.onoff==2}">click1</c:if>"><b>온라인</b></label>
 			<input type="radio" id="on" name="onoff" value="2" <c:if test="${param.onoff==2}">checked="checked"</c:if>
 					onclick="location.href='courseList.do?onoff=2'">
@@ -71,6 +71,8 @@
 			</form>
 		</div>
 		<div id="select">
+			<!-- 원데이,정기와 지역은 오프라인 선택시에만 보임 -->
+			<c:if test="${param.onoff==1}">
 			<span id="total">총 ${count}개</span>
 			<select class="form-select select" id="oneweek" name="oneweek">
 				<option value="1" <c:if test="${param.oneweek == 1}">selected</c:if>>원데이</option>
@@ -98,6 +100,7 @@
 				<option value="17" <c:if test="${param.location == 17}">selected</c:if>>광주</option>
 				<option value="18" <c:if test="${param.location == 18}">selected</c:if>>제주</option>
 			</select>
+			</c:if>
 			
 			<select class="form-select select" id="order" name="order">
 				<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>

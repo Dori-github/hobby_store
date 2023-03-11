@@ -46,6 +46,7 @@ public interface SpaceService {
 	public void updateReply(SpaceReplyVO spaceReply);
 	public void deleteReply(Integer reply_num);
 	public void deleteReplyBySpaceNum(Integer space_num);
+	public void deleteReplyPhoto(Integer reply_num);
 
     //별점
 	public float selectStar(Integer space_num);
@@ -53,11 +54,12 @@ public interface SpaceService {
 	public int selectallstar(Integer space_num);
 	
 	//후기 좋아요
-		public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
-		public int selectReplyFavCount(Integer reply_num);
-		public void insertReplyFav(SpaceReplyFavVO fav);
-		public void deleteReplyFav(Integer fav_num);
-		public void deleteReplyFavByReplyNum(Integer reply_num);
+	public SpaceReplyFavVO selectReplyFavCheck();
+	public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
+	public int selectReplyFavCount(Integer reply_num);
+	public void insertReplyFav(SpaceReplyFavVO fav);
+	public void deleteReplyFav(Integer fav_num);
+	public void deleteReplyFavByReplyNum(Integer reply_num);
 		
 	
 

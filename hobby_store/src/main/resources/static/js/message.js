@@ -249,7 +249,7 @@ $(function(){
 	//=========메시지 입력 후 enter 이벤트 처리=====//
 	$('#message').keydown(function(event){
 		if(event.keyCode == 13 && !event.shiftKey){
-			//action_submit();
+			action_submit();
 		}
 	});
 	
@@ -258,7 +258,7 @@ $(function(){
 	$('#detail_form').submit(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
-		action_submit();
+		
 	});
 	
 	function action_submit(){

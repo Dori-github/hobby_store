@@ -166,7 +166,10 @@ public class CourseServiceImpl implements CourseService{
 	public int selectallstar(Integer course_num) {
 		return courseMapper.selectallstar(course_num);
 	}
-
+	@Override
+	public void deleteReplyPhoto(Integer reply_num, Integer photo_type) {
+		courseMapper.deleteReplyPhoto(reply_num, photo_type);
+	}
 	
 	
 	
@@ -201,5 +204,7 @@ public class CourseServiceImpl implements CourseService{
 	public CourseReplyFavVO selectReplyFavCheck() {
 		return courseMapper.selectReplyFavCheck();
 	}
+
+	
 	
 }
