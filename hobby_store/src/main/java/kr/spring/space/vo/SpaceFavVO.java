@@ -5,6 +5,8 @@ public class SpaceFavVO {
 	private int space_num;
 	private int fmem_num;
 	private int mem_num;
+	
+	
 	public int getFav_num() {
 		return fav_num;
 	}

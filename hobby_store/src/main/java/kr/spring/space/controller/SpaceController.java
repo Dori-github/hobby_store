@@ -53,13 +53,13 @@ public class SpaceController {
 	public ModelAndView process(@RequestParam(value = "pageNum", defaultValue = "1")  int currentPage,
 			@RequestParam(value="order",defaultValue="1") String order,
 			String keyfield,String keyword,
-			@RequestParam(value="cate",defaultValue="") String cate,String location,
+			@RequestParam(value="cate_num",defaultValue="") String cate,String location,
 			HttpSession session) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
-		map.put("cate", cate);
+		map.put("cate_num", cate);
 		map.put("location", location);
 		map.put("order", order);
 

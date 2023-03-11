@@ -38,7 +38,7 @@ public interface SpaceService {
 	public void deleteFavBySpaceNum(Integer space_num);
 
 	//후기
-	public float selectStarAvg(Integer space_num);
+	//public float selectStarAvg(Integer space_num);
 	public List<SpaceReplyVO> selectListReply(Map<String,Object> map);
 	public int selectReplyCount(Map<String,Object> map);
 	public SpaceReplyVO selectReply(Integer reply_num);

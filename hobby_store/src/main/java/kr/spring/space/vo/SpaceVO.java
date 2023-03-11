@@ -49,12 +49,12 @@ public class SpaceVO {
 
 	private String space_reg_date;
 	private String space_reg_time;
-    private int fav_num;//좋아요 갯수 
+    private int fav_num;
     private int reply_num;
-    private double star_avg;//별점평균
-    private int star_auth;
+    private double star_avg;
+    private int star_auth;//별점평균
     private int cate_num;
-    private int fav_cnt;
+    private int fav_cnt;//좋아요 갯수 
     private int replycount;//후기 갯수
     private List<SpaceTimeVO> spaceTimeVO;
     

@@ -14,7 +14,7 @@
 			<label class="btn btn-outline-primary" for="btnradio2">상품</label>
 			
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-			onclick="location.href='regisList.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
+			onclick="location.href='modify.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
 			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
 		</div>
 	<c:if test="${empty list}">

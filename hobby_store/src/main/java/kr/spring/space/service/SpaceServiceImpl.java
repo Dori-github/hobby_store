@@ -113,10 +113,7 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	//후기
-	@Override
-	public float selectStarAvg(Integer space_num) {
-		return spaceMapper.selectStarAvg(space_num);
-	}
+
 	
 	@Override
 	public List<SpaceReplyVO> selectListReply(Map<String, Object> map) {
@@ -210,6 +207,8 @@ public class SpaceServiceImpl implements SpaceService{
 		spaceMapper.deleteReplyBySpaceNum(space_num);
 		
 	}
+
+	
 
 
 	

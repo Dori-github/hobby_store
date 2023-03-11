@@ -97,7 +97,7 @@
 			</p>
 			</c:if>
 			<p>
-				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
+				<span><i class="fa-regular fa-star" style="color:orange;"></i>${space.star_avg} (후기 ${space.replycount})</span>	
 			</p>
 		</div>
 		<%-- 결제정보 전송 폼(공간 번호,가격,요일) --%>
@@ -142,7 +142,7 @@
 <div class="space-d-info">
 	<ul class="title">
 		<li class="active">소개</li>
-		<li>후기 <span class="badge" >${space.replycount}</span></li>
+		<li>후기 <span class="badge" ><ul class="reply-avg"><span class="count"></span></ul></span></li>
 		<li>문의 <span class="badge" >4</span></li>
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">

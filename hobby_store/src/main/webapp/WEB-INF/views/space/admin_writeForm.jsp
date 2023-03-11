@@ -20,29 +20,26 @@
 <script src="${pageContext.request.contextPath}/js/space.js"></script>
 
 <!--  중앙 컨텐츠 시작 -->
-<div class="page-1">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-12" id="space_form">
+<div id=space_form>
+
            
-            <h1 class="align-center">상품 등록</h1>
 
 
             <form:form modelAttribute="spaceVO" name="adminWrite"
                id="adminWrite" enctype="multipart/form-data"
                action="admin_write.do">
-               <table class="table table-condensed table-bordered mt-4">
-                  <thead>
-                     <tr>
-                        <th colspan="2" class="align-center">
-                           <h3>상품 등록</h3>
-                        </th>
-                     </tr>
-                  </thead>
+
+
+                     <div class="title">공간등록</div>
+	                  <table class="reg-form">
+               
                   <tbody>
-                     <tr>
-                        <td width="20%"><b>카테고리</b></td>
-                        <td width="80%"><select name="cate_num" id="cate_parent">
+                  
+    
+                        <td><b>카테고리</b></td>
+                        <div class="list-box">
+			            <ul class="list-cate">
+                        <td><select class="form-select-lg" aria-label="Default select example" name="cate_num" id="cate_parent">
                               <option value="">카테고리</option>
                               <option value="1">촬영 스튜디오</option>
                               <option value="2">댄스공간</option>
@@ -50,31 +47,34 @@
                               <option value="4">악기 연습실</option>
                               <option value="5">공연장</option>
                               <option value="6">그외</option>
-                        </select>
+                       </select>
                         </td>
-                     </tr>
+    
                     	
-                     
+                     </ul>
+                     </div>
                      <tr>
-                              <td>우편번호</td>
-                           <td>
-                              <form:input path="space_zipcode"/>
-                        
-                              <form:button class="btn btn-secondary" type="button" 
-                                 onclick="execDaumPostcode()">우편번호 찾기</form:button>
-                                 <form:errors path="space_zipcode" cssClass="error-color"/>
-                        </td>
-                  
-                     </tr>
+			<td>공간명</td>
+			<td><form:input path="space_name"/></td>
+			<form:errors element="div" path="space_name" cssClass="error-color"/>
+		      </tr>
+                    
                      <tr>
-   
-                            <td width="20%">주소</td>
-                        <td width="80%">
-                           <form:input path="space_address1"/>
-                             <form:errors path="space_address1" cssClass="error-color"/>
-                        </td>
-                        </tr>
+			<td>우편번호</td >
+			<td id="zipcode">
+				<form:input path="space_zipcode"/>
+				<input type="button" onclick="execDaumPostcode()" value="우편번호찾기">
+				<form:errors element="div" path="space_zipcode" cssClass="error-color"/>
+			</td>
+		</tr>
                          <tr>
+                          <td width="20%"><b>상세주소</b></td>
+                            <td width="80%">
+                            <form:input path="space_address1"/>
+                             <form:errors path="space_address1" cssClass="error-color"/>
+                          </td>
+                          </tr>
+                           <tr>
                           <td width="20%"><b>상세주소</b></td>
                             <td width="80%">
                             <form:input path="space_address2"/>
@@ -82,32 +82,27 @@
                           </td>
                           </tr>
 
-                     <tr>
-                        <td width="20%">공간명</td>
-                        <td width="80%">
-                        <form:input path="space_name"/>
-                            <form:errors path="space_name" cssClass="error-color"/>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td width="20%">공간가격</td>
-                        <td width="80%">
-                        <form:input path="space_price" type="number"/>
-            <form:errors path="space_price" 
-                              cssClass="error-color"/>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td width="20%">인원수</td>
-                        <td width="80%">
+                    
+             <tr id="price">
+			<td>가격</td>
+			<!-- 자바빈에 데이터가 없으면 int값은 자동으로 0값을 가짐 -->
+			<td>
+			<form:hidden path="space_price"/>
+			<input id="space_vprice"/>
+			 원</td>
+			<form:errors element="div" path="space_price" cssClass="error-color"/>
+		</tr>
+                     <tr class="limit" style="display:none;">
+			<tr>
+                        <td>인원수</td>
+                        <td>
                         <form:input path="space_np" type="number"/>
-                            <form:errors path="space_np" 
-                              cssClass="error-color"/>
+                         <form:errors path="space_np" cssClass="error-color"/>
                         </td>
                      </tr>
                      <tr>
-                        <td width="20%">공간수</td>
-                        <td width="80%">
+                        <td>공간수</td>
+                        <td>
                         <form:input path="space_limit" type="number"/>
             <form:errors path="space_limit" 
                               cssClass="error-color"/>
@@ -168,22 +163,15 @@
                      </script>                   
                      </td>
                      </tr>   
-               
-               
-                                 
-      
-
-                     
-<!-- 중앙 컨텐츠 끝 -->
-   </tbody>
-</table>
-                 <input type = "submit" value = "전송" >
-               <input type = "button" value = "목록" onclick = "location.href ='list.do'">
+               </table>
+	<div class="align-center margin-top">
+		<form:button class="form-btn">등록</form:button>
+		<input type="button" value="홈으로" class="form-btn" onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+	</div>
             </form:form>   
-      </div>
-   </div>
+
 </div>
-</div>
+
       <!-- 우편번호 검색 시작 -->
                            <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
                            <div id="layer"
