@@ -87,8 +87,6 @@
   		  	space_photo2=#{space_photo2},
   		  	space_photo_name2=#{space_photo_name2},
   		  </if>
-  	
-  		  space_cate=#{space_cate},
   		  space_zipcode=#{space_zipcode},
   		  space_address1=#{space_address1},
   		  space_address2=#{space_address2},
@@ -98,7 +96,7 @@
   		  space_limit=#{space_limit},
 
   		  space_content=#{space_content},
-  		  space_modate=SYSDATE
+  		  space_mdate=SYSDATE
 
   		WHERE space_num=#{space_num}    
   	</update>

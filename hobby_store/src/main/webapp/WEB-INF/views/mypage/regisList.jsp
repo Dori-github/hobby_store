@@ -14,7 +14,7 @@
 			<label class="btn btn-outline-primary" for="btnradio2">상품</label>
 			
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-			onclick="location.href='admin_modify.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
+			onclick="location.href='regisList.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
 			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
 		</div>
 	<c:if test="${empty list}">
@@ -69,7 +69,7 @@
 			<td>
 			<img src="/space/imageView.do?space_num=${space.space_num}&space_type=1" width="40" height="40">
 			${space.space_name}
-			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/space/modify.do?space_num=${space.space_num}'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/space/admin_modify.do?space_num=${space.space_num}'">
 			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/space/delete.do?space_num=${space.space_num}'">
 			</td>
 			<td>${space.space_date}</td>

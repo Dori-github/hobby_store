@@ -38,7 +38,7 @@ public class SpaceVO {
 	private int space_price;
 	private Date date;
 	private Date mdate;
-	
+
 	private int mem_num;
 	private String id;
 	private String mem_nickname;

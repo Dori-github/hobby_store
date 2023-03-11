@@ -111,6 +111,7 @@ public class SpaceAdminController {
 		//공간 수정
 		//공간수정 폼 호출
 		@GetMapping("/space/admin_modify.do")
+		//@RequestMapping(value="excel", method = {RequestMethod.GET, RequestMethod.POST})
 		public String formUpdate(
 				       @RequestParam int space_num,
 				                       Model model) {
@@ -124,25 +125,29 @@ public class SpaceAdminController {
 		//폼에서 전송된 데이터 처리
 		@PostMapping("/space/admin_modify.do")
 		public String submitUpdate(
-				@Valid SpaceVO vo,BindingResult result,
+				@Valid SpaceVO spaceVO,BindingResult result,
 				Model model, HttpServletRequest request) {
 			
-			logger.debug("<<상품수정>> : " + vo);
+			logger.debug("<<상품수정>> : " + spaceVO);
 			
 			//유효성 체크 결과 오류가 있으면 폼 호출
 			if(result.hasErrors()) {
+				SpaceVO vo = spaceService.selectSpace(
+						spaceVO.getSpace_num());
+				vo.setSpace_photo(vo.getSpace_photo());
+				
 				return "spaceAdminModify";
-			}
 			
-			spaceService.updateSpace(vo);
+			}
+			spaceService.updateSpace(spaceVO);
 			
 			//View에 표시할 메시지
 			model.addAttribute("message", 
 					"공간 수정이 완료되었습니다.");
 			model.addAttribute("url", 
 					request.getContextPath() 
-			      + "/space/admin_modify.do?space_num="
-							       +vo.getSpace_num());
+			      + "/space/detail.do?space_num="
+							       +spaceVO.getSpace_num());
 			
 			return "common/resultView";
 			}

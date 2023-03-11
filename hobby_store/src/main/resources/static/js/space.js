@@ -285,5 +285,83 @@ $(function(){
       $('.d3').hide();
    });
 	
+  //=================수정=================//
+     let photo_path = $('#photo').attr('src');
+	 let photo_path2 = $('.my-photo').attr('src');
+     let photo_path3 = $('.my-photo').attr('src');
+	let my_photo; //업로드하고자 선택한 이미지 저장
+	$('.image2 #upload').change(function(){
+		my_photo = this.files[0];
+		if(!my_photo){
+			$('.my-photo').attr('src',photo_path);
+			return;
+		}
+		
+		if(my_photo.size > 1024*1024){
+			alert(Math.round(my_photo.size/1024) 
+			   + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('#photo1').attr('src',photo_path);
+			$(this).val('');
+			return;			
+		}
+		
+		//이미지 미리보기 처리
+		let reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+		
+		reader.onload=function(){
+			$('#photo').attr('src',reader.result);
+		};
+	});//end of change
+	
+	//추가이미지1
+	$('.image2 #upload1').change(function(){
+		my_photo = this.files[0];
+		if(!my_photo){
+			$('.my-photo').attr('src',photo_path1);
+			return;
+		}
+		
+		if(my_photo.size > 1024*1024){
+			alert(Math.round(my_photo.size/1024) 
+			   + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('#photo1').attr('src',photo_path1);
+			$(this).val('');
+			return;			
+		}
+		
+		//이미지 미리보기 처리
+		let reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+		
+		reader.onload=function(){
+			$('#photo1').attr('src',reader.result);
+		};
+	});//end of change
+	
+	//추가이미지2
+	$('.image2 #upload2').change(function(){
+		my_photo = this.files[0];
+		if(!my_photo){
+			$('.my-photo').attr('src',photo_path2);
+			return;
+		}
+		
+		if(my_photo.size > 1024*1024){
+			alert(Math.round(my_photo.size/1024) 
+			   + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('#photo2').attr('src',photo_path2);
+			$(this).val('');
+			return;			
+		}
+		
+		//이미지 미리보기 처리
+		let reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+		
+		reader.onload=function(){
+			$('#photo2').attr('src',reader.result);
+		};
+	});//end of change	
 	
 });
