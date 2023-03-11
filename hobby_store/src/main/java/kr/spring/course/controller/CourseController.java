@@ -450,7 +450,21 @@ public class CourseController {
 	}
 	
 	//후기 사진 삭제
-	
+	@RequestMapping("/course/deleteReplyPhoto.do")
+	@ResponseBody
+	public Map<String,String> processFile(int reply_num,int photo_type,HttpSession session){
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			courseService.deleteReplyPhoto(reply_num,photo_type);
+			
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
 	
 	
 	
@@ -512,7 +526,7 @@ public class CourseController {
 				mapJson.put("result", "success");
 				mapJson.put("status", "yesFav");
 			}
-			mapJson.put("count", courseService.selectReplyFavCount(courseReplyFav.getReply_num()));
+			mapJson.put("count", courseService.selectReplyFavCount(fav.getReply_num()));
 		}
 		return mapJson;
 	}

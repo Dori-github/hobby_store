@@ -8,7 +8,11 @@ $(function(){
 	cate.on('click',function(){  
 		let item = $(this);//대분류
 		
-		location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
+		if(item.text()=='전체'){
+			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
+		}else{
+			location.href='courseList.do?cate='+item.text()+'&onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val();
+		}
 	});
 	cate.each(function(){
 		if($(this).hasClass('active')){
@@ -27,8 +31,13 @@ $(function(){
 		}
 	});
 		
-		
 	//==============클래스 목록==================//
+	//
+//$('input[name=onoff]').on('change',function(){
+	//	location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$(this).val();
+	//});
+	
+	
 	//원데이,정기 선택
 	$('#select #oneweek').on('change',function(){
 		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$(this).val();
@@ -118,18 +127,22 @@ $(function(){
 			$('#course_form .address1').hide();
 			$('#course_form .address2').hide();
 			$('#course_form .monthCount').hide();
+			$('#course_form #course_mc').show();
 			$('#course_form #datetime').hide();
 		 }
 	});
 	
 	
 	$('input[name=course_oneweek]').click(function(){
+
 		if($('#course_form #course_oneweek1').is(':checked')){//원데이 선택
 			$('#course_form .monthCount').hide();
 			$('#course_form #datetime').show();
 		}
 		if($('#course_form #course_oneweek2').is(':checked')){//정기 선택
+			$('#course_form .startDate').show();
 			$('#course_form .monthCount').show();
+			$('#course_form #course_mc').hide();
 			$('#course_form #datetime').hide();
 		}
 	});
@@ -323,6 +336,8 @@ $(function(){
 		$('#course_form #course_price').val(Number($(this).val().replace(/,/g,'')));
 		
 	});
+	
+	
 	
 	//===============인원수===================//
 	$('#minus').on('click',function(){

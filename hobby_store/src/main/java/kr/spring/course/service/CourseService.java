@@ -42,7 +42,7 @@ public interface CourseService {
 	public float selectStar(Integer course_num);
 	public int select5star(Integer course_num);
 	public int selectallstar(Integer course_num);
-	
+	public void deleteReplyPhoto(Integer reply_num,Integer photo_type);
 	
 	//후기 좋아요
 	public CourseReplyFavVO selectReplyFavCheck();

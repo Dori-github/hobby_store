@@ -24,10 +24,10 @@ public interface CourseMapper {
 	public int selectCourseCount(Map<String,Object> map);
 	@Insert("INSERT INTO course (course_num,mem_num,course_name,course_onoff,course_oneweek,cate_nums,course_zipcode,course_address1,course_address2,"
 			+ "course_photo1,course_photo_name1,course_photo2,course_photo_name2,course_photo3,course_photo_name3,"
-			+ "course_month,course_count,course_limit,course_price,course_content) VALUES "
+			+ "course_startdate,course_month,course_count,course_limit,course_price,course_content) VALUES "
 			+ "(#{course_num},#{mem_num},#{course_name},#{course_onoff},#{course_oneweek, jdbcType=VARCHAR},#{cate_nums},#{course_zipcode},"
 			+ "#{course_address1},#{course_address2},#{course_photo1},#{course_photo_name1},#{course_photo2},#{course_photo_name2},#{course_photo3},#{course_photo_name3},"
-			+ "#{course_month},#{course_count},#{course_limit},#{course_price},#{course_content})")
+			+ "#{course_startdate},#{course_month},#{course_count},#{course_limit},#{course_price},#{course_content})")
 	public void insertCourse(CourseVO course);
 	
 	@Insert("INSERT INTO course_time (ctime_num,course_num,mem_num,course_reg_date,course_reg_time) VALUES "
@@ -80,11 +80,13 @@ public interface CourseMapper {
 	public void deleteReplyByCourseNum(Integer course_num);
 	//후기 별점평균
 	@Select("SELECT ROUND(AVG(star_auth),1) AS starcount  FROM course_reply WHERE course_num = #{course_num} GROUP BY course_num")
-	public Float selectStar(Integer course_num);
+	public float selectStar(Integer course_num);
 	@Select("SELECT COUNT(reply_num) AS star5 FROM course_reply WHERE star_auth = 5 AND course_num = #{course_num}")
 	public int select5star(Integer course_num);
 	@Select("SELECT COUNT(reply_num) AS starall FROM course_reply WHERE course_num = #{course_num}")
 	public int selectallstar(Integer course_num);
+	//@Update("UPDATE course_reply SET reply_photo_name1")
+	public void deleteReplyPhoto(Integer reply_num,Integer photo_type);
 	
 	
 	//후기 좋아요

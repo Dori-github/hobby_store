@@ -34,12 +34,11 @@ $(function(){
 	
 	//좋아요 등록 - 상세페이지
 	$(document).on('click','.r-list-fav',function(){
-		alert('aa');
 		let replyFav = $(this);
 		$.ajax({
 			url:'writeReplyFav.do',
 			type:'post',
-			data:{reply_num:$(this).attr('data-num')},
+			data:{reply_num:$(this).attr('data-num'),course_num:$(this).attr('data-cnum')},
 			dataType:'json',
 			success:function(param){
 				if(param.result == 'logout'){

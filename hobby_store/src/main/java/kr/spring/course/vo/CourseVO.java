@@ -2,11 +2,9 @@ package kr.spring.course.vo;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +23,7 @@ public class CourseVO {
 	private String course_photo_name1;
 	private String course_photo_name2;
 	private String course_photo_name3;
+	private String course_startdate;
 	private int course_month;
 	private int course_count;
 	private int course_price;
@@ -306,19 +305,27 @@ public class CourseVO {
 	public void setFav_num(int fav_num) {
 		this.fav_num = fav_num;
 	}
+	
+	public String getCourse_startdate() {
+		return course_startdate;
+	}
+	public void setCourse_startdate(String course_startdate) {
+		this.course_startdate = course_startdate;
+	}
 	@Override
 	public String toString() {
 		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums
 				+ ", course_name=" + course_name + ", course_content=" + course_content + ", course_photo_name1="
 				+ course_photo_name1 + ", course_photo_name2=" + course_photo_name2 + ", course_photo_name3="
-				+ course_photo_name3 + ", course_month=" + course_month + ", course_count=" + course_count
-				+ ", course_price=" + course_price + ", course_limit=" + course_limit + ", course_zipcode="
-				+ course_zipcode + ", course_address1=" + course_address1 + ", course_address2=" + course_address2
-				+ ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek + ", course_hit=" + course_hit
-				+ ", course_date=" + course_date + ", course_mdate=" + course_mdate + ", cate_parent=" + cate_parent
-				+ ", cate_name=" + cate_name + ", cate_num=" + cate_num + ", mem_nickname=" + mem_nickname
-				+ ", staravg=" + staravg + ", replycount=" + replycount + ", fav=" + fav + ", fmem_num=" + fmem_num
-				+ ", fav_num=" + fav_num + ", courseTimeVO=" + courseTimeVO + ", course_reg_date=" + course_reg_date
-				+ ", course_reg_time=" + course_reg_time + "]";
+				+ course_photo_name3 + ", course_startdate=" + course_startdate + ", course_month=" + course_month
+				+ ", course_count=" + course_count + ", course_price=" + course_price + ", course_limit=" + course_limit
+				+ ", course_zipcode=" + course_zipcode + ", course_address1=" + course_address1 + ", course_address2="
+				+ course_address2 + ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek
+				+ ", course_hit=" + course_hit + ", course_date=" + course_date + ", course_mdate=" + course_mdate
+				+ ", cate_parent=" + cate_parent + ", cate_name=" + cate_name + ", cate_num=" + cate_num
+				+ ", mem_nickname=" + mem_nickname + ", staravg=" + staravg + ", replycount=" + replycount + ", fav="
+				+ fav + ", fmem_num=" + fmem_num + ", fav_num=" + fav_num + ", courseTimeVO=" + courseTimeVO
+				+ ", course_reg_date=" + course_reg_date + ", course_reg_time=" + course_reg_time + "]";
 	}
+	
 }

@@ -61,6 +61,10 @@
 </script>
 <!-- 중앙 컨텐츠 시작 -->
 <form:form action="/course/courseWrite.do" id="course_form" modelAttribute="courseVO" enctype="multipart/form-data">
+    <div id="course_mc" style="display:none;">
+    	<input type="hidden" id="course_month" name="course_month" value="0">
+		<input type="hidden" id="course_count" name="course_count" value="0"/>
+    </div>
 	<div class="title">클래스 등록</div>
 	<table class="reg-form">
 		<tr>
@@ -210,7 +214,7 @@
 		<tr class="startDate" style="display:none;">
 			<td>시작날짜</td>
 			<td>
-				<form:input path="course_startdate"/>
+				<form:input type="date" path="course_startdate"/>
 				<form:errors element="div" path="course_startdate" cssClass="error-color"/>
 			</td>
 		</tr>

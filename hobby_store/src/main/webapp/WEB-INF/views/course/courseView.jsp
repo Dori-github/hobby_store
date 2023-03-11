@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/course.css" rel="stylesheet">
 <!-- 중앙 컨텐츠 시작 -->
-<script src="${pageContext.request.contextPath}/js/course.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.fav.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.reply.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.reply.fav.js"></script>
@@ -228,18 +227,11 @@
 
 	<%-- 정렬 --%>
 	<div class="reply-search">
-		<div class="btn-select"><span class="whole">최신순</span>
-			<i class="fa-solid fa-chevron-down icon" style="float: right;padding-bottom:5px;font-size:15px;"></i>
-			<i class="fa-solid fa-chevron-up icon" style="float: right;font-size:15px;display:none;"></i>
-			<%-- 최신순 정렬 --%>
-			<div class="list-box">
-		        <ul class="list-cate">
-		            <li data-value="1">최신순</li>
-		            <li data-value="2">별점순</li>
-		            <li data-value="3">추천순</li>
-		        </ul>
-	        </div>
-	    </div>
+		<select class="form-select select" id="order" name="order" style="width:100px;">
+			<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
+			<option value="2" <c:if test="${param.order == 2}">selected</c:if>>별점순</option>
+			<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요순</option>
+		</select>
 		<hr size="2" noshade style="color:gray;">
 	</div>
 	
