@@ -704,12 +704,6 @@ public class MemberController {
 		}
 	}
 	
-	//회원삭제 폼 호출
-	@RequestMapping("/member/delete.do")
-	public String formDelete() {
-		return "memberDelete";
-	}
-	
 	//등록 상품 조회
 	@RequestMapping("/member/regisList.do")
 	public ModelAndView regisList(HttpSession session, int cate_num) {
@@ -857,7 +851,7 @@ public class MemberController {
 		return "common/resultView";
 	}
 	
-	//관리자 주문목록
+	//강사 주문목록
 	@RequestMapping("/member/lec_order.do")
 	public ModelAndView admin_list(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
 			String keyfield,String keyword,HttpSession session) {
@@ -877,6 +871,7 @@ public class MemberController {
 		//페이지 처리
 		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"lec_order.do");
 		List<OrderVO> list = null;
+		
 		if(count > 0) {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
@@ -1082,6 +1077,53 @@ public class MemberController {
 				request.getContextPath()+"/member/eventWinList.do?event_num="+event_num);
 		
 		return "common/resultView";
+	}
+	
+	//회원삭제 폼 호출
+	@RequestMapping("/member/delete.do")
+	public String formDelete() {
+		return "memberDelete";
+	}
+
+	//회원삭제 폼에서 전송된 데이터 처리
+	@PostMapping("/member/delete.do")
+	public String submitDelete(@Valid MemberVO memberVO,BindingResult result,
+			HttpSession session,HttpServletRequest request,Model model) {
+		logger.debug("<<회원탈퇴>> : " + memberVO);
+		
+		//id, passwd 필드의 에러만 체크
+		if(result.hasFieldErrors("id") || result.hasFieldErrors("passwd")) {
+			return formDelete();
+		}
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MemberVO db_member = memberService.selectMember(user.getMem_num());
+		boolean check = false;
+		
+		//비밀번호 일치 여부 체크
+		try {
+			if(db_member!=null && db_member.getMem_id().equals(memberVO.getMem_id())) {
+				//비밀번호 일치 여부 체크
+				check = db_member.isCheckedPassword(memberVO.getMem_pw());
+			}
+
+			if(check) {
+				//인증 성공, 회원정보삭제
+				memberService.deleteMember(user.getMem_num());
+				//로그아웃
+				session.invalidate();
+
+				model.addAttribute("message", "회원탈퇴를 완료했습니다.");
+				model.addAttribute("url",request.getContextPath()+"/main/main.do");
+
+				return "common/resultView";
+			}
+			//인증 실패
+			throw new AuthCheckException();
+		}catch(AuthCheckException e) {
+			result.reject("invalidIdOrPassword");
+			return formDelete();
+		}
 	}
 	
 	//배송조회

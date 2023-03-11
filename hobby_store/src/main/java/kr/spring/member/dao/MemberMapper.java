@@ -101,6 +101,7 @@ public interface MemberMapper {
 	//비밀번호 변경
 	@Update("UPDATE member_detail SET mem_pw=#{mem_pw} WHERE mem_num=#{mem_num}")
 	public void updatePassword(MemberVO member);
+	//회원탈퇴
 	@Update("UPDATE member SET mem_auth=0 WHERE mem_num=#{mem_num}")
 	public void deleteMember(Integer mem_num);
 	@Delete("DELETE FROM member_detail WHERE mem_num=#{mem_num}")
