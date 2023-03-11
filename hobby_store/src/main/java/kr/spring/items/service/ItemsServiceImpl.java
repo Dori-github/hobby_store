@@ -293,7 +293,7 @@ public class ItemsServiceImpl implements ItemsService  {
 	public void deleteItemsCart(Integer items_num) {
 		itemsMapper.deleteItemsCart(items_num);
 	}
-
+	
 	@Override
 	public void deleteReplyNum(Integer items_num) {
 		//items_num을 사용하여 reply_num을 list 형태로 저장
@@ -308,6 +308,12 @@ public class ItemsServiceImpl implements ItemsService  {
 					itemsMapper.deleteReplytoFav(rep);
 					//댓글 번호가 있을때 댓글 삭제 
 					itemsMapper.deleteReplyItems(items_num);
+					//아이템의 좋아요 삭제 
+					itemsMapper.deleteItemsAllFav(items_num);
+					//아이템 카트 삭제
+					itemsMapper.deleteItemsCart(items_num);
+					//아이템 삭제
+					itemsMapper.deleteItems(items_num);
 					
 				}
 			}

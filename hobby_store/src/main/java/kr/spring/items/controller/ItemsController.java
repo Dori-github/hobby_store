@@ -210,14 +210,9 @@ public class ItemsController {
 
 		// 접속한 사람 = 상품 등록자 일 때
 		else if (user != null && user.getMem_num() == mem_num) {
-			//댓글 좋아요 및 댓글 삭제 
+			//몽땅 삭제 	
 			itemsService.deleteReplyNum(items_num);
-			//아이템의 좋아요 삭제 
-			itemsService.deleteItemsAllFav(items_num);
-			//아이템 카트 삭제?
-			itemsService.deleteItemsCart(items_num);
-			//아이템 삭제
-			itemsService.deleteItems(items_num);
+			
 	
 			mapJson.put("result", "success");
 		}
