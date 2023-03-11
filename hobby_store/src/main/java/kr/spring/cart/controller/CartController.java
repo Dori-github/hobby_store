@@ -13,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -265,8 +267,27 @@ public class CartController {//메서드 생성, 데이터 처리
 	@ResponseBody
 	@RequestMapping(value = "/updateCart", method = RequestMethod.POST)
 	public void updateCart(int quantity, int cart_num) throws Exception {
-	 
 		 cartService.updateCart(quantity, cart_num);
 		 logger.debug("cart : " + quantity + "," + cart_num);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/updateCart", method = RequestMethod.GET)
+	public Object updateValue(@ModelAttribute("cartVO") ItemCartVO cartVO, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception  {
+		
+		MemberVO user = 
+				 (MemberVO)session.getAttribute("user");
+		int ququ = cartService.itemTotal(user.getMem_num());
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("kor", "Korea");
+	    map.put("cartVO", cartVO);
+	    map.put("ququ", ququ);
+	    map.put("bb", cartVO.getQuantity());
+
+		System.out.println("eeeee : " + cartVO);
+	        
+		return map;
+		
 	}
 }
