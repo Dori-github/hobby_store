@@ -42,7 +42,7 @@ public interface CartMapper {
 	public CourseCartVO selectCourseCart(CourseCartVO courseCart);
 	//클래스 장바구니 등록
 	@Insert("INSERT INTO course_cart (cart_num, quantity, mem_num, course_num) "
-			+ "VALUES (course_cart_seq.nextval, 1, #{mem_num}, #{course_num})")
+			+ "VALUES (course_cart_seq.nextval, 1,1,1)")
 	public void insertCourseCart(CourseCartVO courseCart);
 	//회원번호(mem_num)별 총 구입액
 	public Integer courseTotal(int num);
