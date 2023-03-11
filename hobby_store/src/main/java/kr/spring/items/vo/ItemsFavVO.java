@@ -5,7 +5,17 @@ public class ItemsFavVO {
 	private int fav_num;
 	private int items_num;
 	private int fmem_num;
+	private	int reply_num;
 	
+	
+	
+	
+	public int getReply_num() {
+		return reply_num;
+	}
+	public void setReply_num(int reply_num) {
+		this.reply_num = reply_num;
+	}
 	public int getFav_num() {
 		return fav_num;
 	}
