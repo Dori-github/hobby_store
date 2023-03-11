@@ -167,6 +167,17 @@ public interface MemberMapper {
 	public int selectEventApplyCount(Map<String,Object> map);
 	public List<EventVO> selectListEventApply(Map<String,Object> map);
 	
+	//등록 이벤트 조회/수정
+	public int selectEventCount(Map<String,Object> map);
+	public List<EventVO> selectListEvent(Map<String,Object> map);
+	@Update("UPDATE event SET event_attr=#{event_attr} WHERE event_num=#{event_num}")
+	public void updateEventAttr(EventVO eventVO);
+	
+	public int selectEventWinCount(Map<String,Object> map);
+	public List<EventVO> selectListEventWin(Map<String,Object> map);
+	@Update("UPDATE event_apply SET event_a_win=#{event_a_win} WHERE mem_num=#{mem_num} AND event_num=#{event_num}")
+	public void updateEventWin(EventVO eventVO);
+	
 	//작성한 게시글 조회 - 자유게시판
 	@Select("SELECT COUNT(*) FROM free_board WHERE mem_num=#{mem_num}")
 	public int selectFreeRowCount();

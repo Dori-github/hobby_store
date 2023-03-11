@@ -279,9 +279,11 @@
   		        rownum rnum
   		      FROM (SELECT
   		              *
-  		            FROM orders
+  		            FROM orders o JOIN orders_detail d ON o.order_num=d.order_num
+  		            			  JOIN course c ON c.course_num=d.course_num
+  		          	WHERE c.mem_num=#{mem_num}
   		            <include refid="orderSearch"></include>
-  		            ORDER BY order_num DESC)a)
+  		            ORDER BY o.order_num DESC)a)
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]>                                        
@@ -290,7 +292,9 @@
   	<select id="selectDeliveryCount" parameterType="map" resultType="integer">
   		SELECT
   		  COUNT(*)
-  		FROM orders
+  		FROM orders o JOIN orders_detail d ON o.order_num=d.order_num
+  		              JOIN course c ON c.course_num=d.course_num
+  		WHERE c.mem_num=#{mem_num}
   		<include refid="orderSearch"></include>	
   	</select>
   	
@@ -314,10 +318,10 @@
   					ON e.event_num=a.event_num 
   		            where a.mem_num=#{mem_num}
 				  			<if test="keyfield == 1">
-				  				ORDER BY a.event_a_date DESC
+				  				ORDER BY a.event_a_date ASC
 				  			</if>
 				  			<if test="keyfield == 2">
-				  				ORDER BY e.event_rdate DESC
+				  				ORDER BY e.event_rdate ASC
 				  			</if>
 				  			)a)
   		<![CDATA[
@@ -325,6 +329,89 @@
   		]]>                           
   	</select>
   	
+  	<select id="selectEventCount" resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM event
+		WHERE mem_num=#{mem_num}
+  	</select>
+  	
+  	<select id="selectListEvent" parameterType="map" resultType="eventVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  		            FROM event e 
+  					WHERE mem_num=#{mem_num}
+				  			<if test="keyfield == 1">
+				  				ORDER BY e.event_date ASC
+				  			</if>
+				  			<if test="keyfield == 2">
+				  				ORDER BY e.event_end ASC
+				  			</if>
+				  			<if test="keyfield == 3">
+				  				ORDER BY e.event_rdate ASC 
+				  			</if>
+				  			)a)
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>                           
+  	</select>
+  	
+  	<select id="selectEventWinCount" resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM event_apply a 
+  			JOIN event e ON a.event_num=e.event_num 
+			JOIN member m ON a.mem_num=m.mem_num
+  		<where>
+  			<if test="keyword !=null and keyword != ''">
+  				<if test="keyfield == 1">
+  					m.mem_id LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					m.mem_nickname LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					e.event_title LIKE '%' || #{keyword} || '%'
+  				</if>
+  			</if>
+  		</where>
+		WHERE a.event_num=#{event_num}
+  	</select>
+  	
+  	<select id="selectListEventWin" resultType="eventVO">
+  		SELECT
+  			*
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              *
+  					FROM event_apply a
+	  				JOIN event e ON a.event_num=e.event_num
+	  				JOIN member m ON a.mem_num=m.mem_num
+			  		WHERE
+			  			<if test="keyword !=null and keyword != ''">
+			  				<if test="keyfield == 1">
+			  					m.mem_id LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  				<if test="keyfield == 2">
+			  					m.mem_nickname LIKE '%' || #{keyword} || '%'
+			  				</if>
+			  				<if test="keyfield == 3">
+			  					e.event_title LIKE '%' || #{keyword} || '%' AND
+			  				</if>
+			  			</if>
+			  		a.event_num=#{event_num}
+	  				ORDER BY event_rdate ASC)a)
+	  	<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]> 
+  	</select>
 </mapper>
 
 

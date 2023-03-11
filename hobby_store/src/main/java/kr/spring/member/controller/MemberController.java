@@ -604,7 +604,6 @@ public class MemberController {
 		return mapAjax;
 	}
 	
-	//=====비밀번호 변경=====//
 	//비밀번호 변경 폼 호출
 	@GetMapping("/member/changePassword.do")
 	public String formChangePassword() {
@@ -876,7 +875,7 @@ public class MemberController {
 		logger.debug("<<전체 주문정보 count>> : " + count);
 
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"admin_orderList.do");
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"lec_order.do");
 		List<OrderVO> list = null;
 		if(count > 0) {
 			map.put("start", page.getStartRow());
@@ -940,7 +939,7 @@ public class MemberController {
 		return "common/resultView";
 	}
 
-	//이벤트 신청목록
+	//신청 이벤트 조회
 	@RequestMapping("/member/event.do")
 	public ModelAndView eventApplyList(@RequestParam(value="pageNum",defaultValue="1") 
 			int currentPage,String keyfield,String keyword,HttpSession session) {
@@ -972,6 +971,117 @@ public class MemberController {
 		mav.addObject("page", page.getPage());
 
 		return mav;
+	}
+	
+	//이벤트 목록
+	@RequestMapping("/member/lec_event.do")
+	public ModelAndView eventList(@RequestParam(value="pageNum",defaultValue="1") 
+		int currentPage,String keyfield,String keyword,HttpSession session) {
+
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		map.put("mem_num", user.getMem_num());
+		
+		//총글의 개수 또는 검색된 글의 개수
+		int count = memberService.selectEventCount(map);
+		logger.debug("<<이벤트 신청 목록 조회 count>> : " + count);
+		
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"lec_event.do");
+		List<EventVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			list = memberService.selectListEvent(map);
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("eventRegisList");
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("page", page.getPage());
+		
+		return mav;
+	}
+	
+	//이벤트 마감여부 변경
+	@PostMapping("/member/lec_modifyAttr.do")
+	public String submitAttr(@RequestParam int event_num,@RequestParam int event_attr, Model model, HttpServletRequest request) {
+		
+		EventVO eventVO = new EventVO();
+		
+		eventVO.setEvent_num(event_num);
+		eventVO.setEvent_attr(event_attr);
+		
+		logger.debug("<<이벤트 마감여부>> : " + eventVO);
+		
+		//회원정보수정
+		memberService.updateEventAttr(eventVO);
+		
+		//View에 표시할 메시지
+		model.addAttribute("message", "이벤트 마감여부 수정 완료!");
+		model.addAttribute("url", 
+				request.getContextPath()+"/member/lec_event.do");
+		
+		return "common/resultView";
+	}
+	
+	//이벤트 신청자 조회
+	@GetMapping("/member/eventWinList.do")
+	public ModelAndView eventWinList(@RequestParam(value="pageNum",defaultValue="1") 
+	int currentPage,String keyfield,String keyword,@RequestParam int event_num,HttpSession session) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("keyfield", keyfield);
+		map.put("keyword", keyword);
+		map.put("event_num", event_num);
+		
+		//총글의 개수 또는 검색된 글의 개수
+		int count = memberService.selectEventWinCount(map);
+		logger.debug("<<이벤트 신청자 조회 count>> : " + count);
+		
+		//페이지 처리
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage,count,10,10,"eventWinList.do");
+		List<EventVO> list = null;
+		if(count > 0) {
+			map.put("start", page.getStartRow());
+			map.put("end", page.getEndRow());
+			list = memberService.selectListEventWin(map);
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("eventWinList");
+		mav.addObject("count", count);
+		mav.addObject("list", list);
+		mav.addObject("page", page.getPage());
+		
+		return mav;
+	}
+	
+	//이벤트 결과 입력
+	@PostMapping("/member/lec_modifyWin.do")
+	public String submitWin(@RequestParam int event_a_win,@RequestParam int mem_num,
+			@RequestParam int event_num, Model model, HttpServletRequest request) {
+		
+		EventVO eventVO = new EventVO();
+		
+		eventVO.setMem_num(mem_num);
+		eventVO.setEvent_a_win(event_a_win);
+		eventVO.setEvent_num(event_num);
+		
+		logger.debug("<<이벤트 당첨여부 수정>> : " + eventVO);
+		
+		//회원정보수정
+		memberService.updateEventWin(eventVO);
+		
+		//View에 표시할 메시지
+		model.addAttribute("message", "이벤트 당첨자 수정 완료!");
+		model.addAttribute("url", 
+				request.getContextPath()+"/member/eventWinList.do?event_num="+event_num);
+		
+		return "common/resultView";
 	}
 	
 	//배송조회

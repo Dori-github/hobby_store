@@ -67,7 +67,7 @@ public class MemberAdminController {
 	
 	//=======회원정보수정=======//
 	//수정 폼 호출
-	@GetMapping("/member/admin_update.do")
+	/*@GetMapping("/member/admin_update.do")
 	public String form(@RequestParam int mem_num,
 			                          Model model) {
 		MemberVO memberVO = 
@@ -75,7 +75,7 @@ public class MemberAdminController {
 		model.addAttribute("memberVO", memberVO);
 		
 		return "admin_memberModify";
-	}
+	}*/
 	
 	//수정 폼에서 전송된 데이터 처리
 	@PostMapping("/member/admin_modify.do")

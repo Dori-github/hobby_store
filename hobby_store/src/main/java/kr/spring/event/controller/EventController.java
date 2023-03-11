@@ -76,17 +76,19 @@ public class EventController {
 	//======이벤트 등록======//
 	//이벤트 폼 이동
 	   @GetMapping("/event/write.do")
-	   public ModelAndView form(@RequestParam Integer mem_num) {
-	      ModelAndView mav = new ModelAndView();
+	   public String form(HttpSession session, Model model) {
+	      
+	      MemberVO user = (MemberVO)session.getAttribute("user");
+	      
+	      int mem_num = user.getMem_num();
 	      
 	      List<CourseVO> course = eventService.selectSearchCourse(mem_num);
 	      List<ItemsVO> items = eventService.selectSearchItems(mem_num);
 	      
-	      mav.setViewName("eventWriteForm");
-	      mav.addObject("course",course);
-	      mav.addObject("items",items);
+	      model.addAttribute("course",course);
+	      model.addAttribute("items",items);
 	      
-	      return mav;
+	      return "eventWriteForm";
 	   }
 	
 	//이벤트 전송된 데이터 저장
@@ -101,10 +103,12 @@ public class EventController {
 		}
 		
 		if(result.hasErrors()) {
-			return "eventWriteForm";
+			return form(session,model);
 		}
 		
 		eventVO.setMem_num(((MemberVO)session.getAttribute("user")).getMem_num());
+		
+		logger.debug("<<이벤트 등록 VO>> : " + eventVO);
 		
 		eventService.insertEvent(eventVO);
 		
@@ -133,6 +137,12 @@ public class EventController {
 	public String formUpdate(@RequestParam int event_num,Model model) {
 			
 		EventVO eventVO = eventService.selectEvent(event_num);
+		
+		List<CourseVO> course = eventService.selectSearchCourse(eventVO.getMem_num());
+	    List<ItemsVO> items = eventService.selectSearchItems(eventVO.getMem_num());
+	      
+	    model.addAttribute("course",course);
+	    model.addAttribute("items",items);
 			
 		model.addAttribute("eventVO",eventVO);
 			
@@ -175,7 +185,11 @@ public class EventController {
 			//이벤트 삭제
 			eventService.deleteEvent(event_num);
 			
-			return "redirect:/event/list.do";
+			//View에 메시지 표시
+			model.addAttribute("message","이벤트 삭제가 완료되었습니다.");
+			model.addAttribute("url",request.getContextPath()+"/event/list.do");
+			
+			return "common/resultView";
 		}
 	
 	//======이벤트 신청======//

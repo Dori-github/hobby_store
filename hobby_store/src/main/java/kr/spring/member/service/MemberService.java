@@ -89,6 +89,15 @@ public interface MemberService {
 	public int selectEventApplyCount(Map<String,Object> map);
 	public List<EventVO> selectListEventApply(Map<String,Object> map);
 	
+	//등록 이벤트 조회/수정
+	public int selectEventCount(Map<String,Object> map);
+	public List<EventVO> selectListEvent(Map<String,Object> map);
+	public void updateEventAttr(EventVO eventVO);
+	
+	public int selectEventWinCount(Map<String,Object> map);
+	public List<EventVO> selectListEventWin(Map<String,Object> map);
+	public void updateEventWin(EventVO eventVO);
+	
 	//회원관리 - 관리자
 	public List<MemberVO> selectMemberList(Map<String,Object> map);
 	public int selectMemberRowCount(Map<String,Object> map);

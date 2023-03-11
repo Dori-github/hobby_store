@@ -26,8 +26,25 @@ public class EventVO {
 	private int items_num;
 	@NotEmpty
 	private String event_detail;
+	private Date event_a_date;
 	private int event_a_win;
+	private String mem_nickname;
 	
+	public String getMem_nickname() {
+		return mem_nickname;
+	}
+
+	public void setMem_nickname(String mem_nickname) {
+		this.mem_nickname = mem_nickname;
+	}
+
+	public Date getEvent_a_date() {
+		return event_a_date;
+	}
+
+	public void setEvent_a_date(Date event_a_date) {
+		this.event_a_date = event_a_date;
+	}
 	public int getEvent_a_win() {
 		return event_a_win;
 	}
@@ -42,6 +59,12 @@ public class EventVO {
 		setEvent_photo(upload.getBytes());
 		//파일명
 		setEvent_photo_name(upload.getOriginalFilename());
+	}
+	
+	public void setEvent_rdate(String event_rdate) {
+		if(event_rdate=="0000-00-00") {
+			this.event_rdate = null;
+		}
 	}
 	
 	public int getEvent_num() {
@@ -128,13 +151,15 @@ public class EventVO {
 	public void setEvent_photo_name(String event_photo_name) {
 		this.event_photo_name = event_photo_name;
 	}
+
 	@Override
 	public String toString() {
 		return "EventVO [event_num=" + event_num + ", event_title=" + event_title + ", event_attr=" + event_attr
 				+ ", event_end=" + event_end + ", event_hit=" + event_hit + ", event_content=" + event_content
 				+ ", event_photo_name=" + event_photo_name + ", event_date=" + event_date + ", event_rdate="
 				+ event_rdate + ", mem_num=" + mem_num + ", course_num=" + course_num + ", items_num=" + items_num
-				+ ", event_detail=" + event_detail + "]";
+				+ ", event_detail=" + event_detail + ", event_a_date=" + event_a_date + ", event_a_win=" + event_a_win
+				+ ", mem_nickname=" + mem_nickname + "]";
 	}
 	
 }

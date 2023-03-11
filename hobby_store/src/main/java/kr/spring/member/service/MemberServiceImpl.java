@@ -252,4 +252,34 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.selectListEventApply(map);
 	}
 
+	@Override
+	public int selectEventCount(Map<String, Object> map) {
+		return memberMapper.selectEventCount(map);
+	}
+
+	@Override
+	public List<EventVO> selectListEvent(Map<String, Object> map) {
+		return memberMapper.selectListEvent(map);
+	}
+
+	@Override
+	public void updateEventAttr(EventVO eventVO) {
+		memberMapper.updateEventAttr(eventVO);
+	}
+
+	@Override
+	public int selectEventWinCount(Map<String, Object> map) {
+		return memberMapper.selectEventWinCount(map);
+	}
+
+	@Override
+	public List<EventVO> selectListEventWin(Map<String, Object> map) {
+		return memberMapper.selectListEventWin(map);
+	}
+
+	@Override
+	public void updateEventWin(EventVO eventVO) {
+		memberMapper.updateEventWin(eventVO);
+	}
+
 }
