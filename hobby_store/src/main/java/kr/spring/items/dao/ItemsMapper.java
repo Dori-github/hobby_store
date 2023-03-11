@@ -54,7 +54,7 @@ public interface ItemsMapper {
 	@Select("DELETE FROM items_fav WHERE fav_num = #{fav_num}")
 	public void deleteItemsFav(Integer fav_num);
 	//상품 좋아요 등록
-	@Insert("INSERT INTO items_fav (fav_num, fmem_num, items_num) VALUES (items_fav_seq.nextval, #{fmem_num}, #{items_num)")
+	@Insert("INSERT INTO items_fav (fav_num, fmem_num, items_num) VALUES (items_fav_seq.nextval, #{fmem_num}, #{items_num})")
 	public void insertItemsFav(ItemsFavVO fav);
 	//좋아요 수 췤
 	@Select("SELECT COUNT(*) FROM items_fav WHERE items_num = #{items_num}")

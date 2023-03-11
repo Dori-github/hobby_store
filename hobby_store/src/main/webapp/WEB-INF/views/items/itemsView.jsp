@@ -104,8 +104,8 @@
 				<c:if test="${items.items_quantity lt 5}">
 					<p class="soldout">품절 임박</p>
 				</c:if>
-				<p>재고</p>
-				<span>구매수량<input type="number" value="1" name="items_quan"></span>
+				<span>재고</span><br>
+				<span>구매수량<input type="number" value="1" name="items_quan"></span><br>
 				<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color: gray;">
 
