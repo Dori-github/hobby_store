@@ -1,4 +1,87 @@
 @charset "UTF-8";
 .page-main{
-	margin:200px 100px;
+	width:1024px;
+	margin:200px auto;
+	margin-right:300px;
 }
+#notice_register h2{
+	width:500px;
+	margin:50px auto;
+	text-align: center;
+}
+#notice_register tr{
+	border-top:1px solid lightgray;
+	border-bottom:1px solid lightgray;
+}
+#notice_register td:first-child{
+	border-bottom:1px solid lightgray;
+	border-right:1px solid lightgray;
+	min-width:150px;
+	width:300px;
+	text-align: center;
+	font-weight:bolder;	
+	background-color: #FFF;
+}
+#register_form td{
+	padding:10px 20px;
+}
+
+/*라디오버튼*/
+#register_form .radio input[type=radio]{
+	margin-right:5px;
+}
+#register_form .radio label{
+	margin-right:20px;
+	cursor: pointer;
+}
+
+#register_form .radio input[type="radio"] {
+	vertical-align:middle;
+	appearance: none;/*기본속성제거*/
+	border: 2px solid gray;
+	border-radius: 50%;
+	width: 1.2em;
+	height: 1.2em;
+	transition: border 0.3s ease-in-out;/*속도 천천-보통-천천*/
+}
+#register_form .radio input[type=radio]:checked{
+	border: 0.4em solid #FF4E02;
+}
+#register_form .radio input[type=radio]:hover {
+	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+	cursor: pointer;
+}
+#register_form .input{
+	width:100%;
+	outline:1px solid lightgray;
+	border:none;
+	border-radius:5px;
+	padding:5px 5px 5px 10px;
+}
+.form-btn{
+	width:90px;
+	height:35px;
+	text-align: center;
+	border:2px solid gray;
+	border-radius: 20px;
+	background-color: #FFF;
+	color:gray;
+	font-size:10pt;
+	font-weight:bold;
+	margin:0 5px;
+}
+.form-btn:hover{
+	background-color: #F2F2F2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
