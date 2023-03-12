@@ -9,7 +9,6 @@
 		<p>보유 포인트</p>
 		<p>${points}</p>
 		<hr size="1" noshade="noshade" width="100%">
-        <p>전체 적립 사용 (탭 구현)</p>
 		<table class="table table-borderless" style="text-align:center;">
 		<colgroup>
 			<col style="width: 15rem">

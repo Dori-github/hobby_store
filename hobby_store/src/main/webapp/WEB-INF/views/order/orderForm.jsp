@@ -9,19 +9,6 @@
 		<c:set var="course_name" value='<%=request.getParameter("course_name") %>'/>
 		<c:set var="items_num" value='<%=request.getParameter("items_num") %>'/>
 		<c:set var="space_name" value='<%=request.getParameter("space_name") %>'/>
-		<c:out value="g${course_name}g"/>
-		<c:out value="aa${items_num}"/>
-		<%--  <c:out value="bb${space_name}"/>
-		 --%>
-		<!-- course_name, course_onoff 넣고난 후 확인하기
-		course.js에 jsp 125~126 확인 --> 
-		<%-- <c:if test="${course_name == null || items_num == null || space_name == null)}">
-		<h2>ss</h2>
-		
-		<script>
-		$(".zaz").hide();
-		</script>
-		</c:if> --%>
 		<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
 		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
 			
@@ -43,19 +30,18 @@
 			<img src="${pageContext.request.contextPath}/images/${cart.course_photo1}"></td>
 			<td style="text-align:left;">${cart.course_name}
 			<br>
-				<c:if test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if>
 				${cart.cate_name}
-			<br>
-				${cart.course_onoff}
 			</td>
-			<td></td>
+			<td>
+			${cart.course_price}
+			</td>
 		</tr>
 		</c:forEach>
 		<tr>
 			<td colspan="2"></td>
 			<td>${courseTotal}</td>
 		</tr>
+
 		</table>
 		
 	</c:if>
@@ -84,23 +70,21 @@
 			<img src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
 			<td style="text-align:left;">${cart.items_name}
 			<br>
-				<c:if test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if>
 				${cart.cate_name}
 			</td>
 			<td>${cart.items_price}
 			<td>			
 			<c:forEach var="quan" items="${itemQuan}" begin="${statusQuan.index}" end="${statusQuan.index}">
-			<div id="quan"></div>
+			<!-- <div id="quan"></div> -->
 			<input type="number" class="quantity" value="${quan.quantity}">
 			</td>
 			
 			<!-- <div class="items_total"> -->
 			<td>${quan.items_total}</td>
 			
+		</c:forEach>
 			</c:forEach>
 		</tr>
-		</c:forEach>
 		
 			<tr>
 			<td colspan="4"></td>
@@ -110,13 +94,7 @@
 		
 		</table>
 		</c:if>
-		<h5><%=request.getParameter("course_price") %></h5>
-		<h5>----</h5>
-		<h5>${course_price} zzzz oooo</h5>
-		<h5>----</h5>
-		<%String password = request.getParameter("course_price");
-		%>
-		<c:if test="${itemCount > 0}">
+	<c:if test="${itemCount > 0}">
 		<ul>			
 			<li>
 				<h4>배송지 정보</h4>       

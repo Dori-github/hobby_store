@@ -3204,19 +3204,11 @@ input[type="button"].btn-block {
     height: 1.5rem;
 }
 
-.quan [type="button"]{
-	border: 1px solid #ebebeb;
-	border-radius: 0;
-	font-size: 1.5rem;
-	height: fit-content;
-	width: fit-content;
-	margin: 0 1rem;
-	padding: 0rem 0.5rem 0.2rem 0.5rem;
-	color: red;
-}
-.quan [type="button"]:active{/* 누르는 중 */
-	border:1px solid #ebebeb;
-	color:red;
+#quan.quantity {
+	border:none;
+	color:black;
+	background-color: #fff;
+    text-align: center;
 }
 
 .quan dec{
@@ -3225,6 +3217,12 @@ input[type="button"].btn-block {
 
 .quan inc{
 	border:none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .fade {
