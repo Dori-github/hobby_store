@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.qna.dao.QnaMapper;
+import kr.spring.qna.vo.QnaReplyVO;
 import kr.spring.qna.vo.QnaVO;
 
 @Service
@@ -34,32 +35,64 @@ public class QnaServiceImpl implements QnaService{
 
 	@Override
 	public QnaVO selectQna(Integer qna_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return qnaMapper.selectQna(qna_num);
 	}
 
 	@Override
 	public void updateHit(Integer qna_num) {
-		// TODO Auto-generated method stub
+		qnaMapper.updateHit(qna_num);
 		
 	}
 
 	@Override
 	public void updateQna(QnaVO qna) {
-		// TODO Auto-generated method stub
-		
+		qnaMapper.updateQna(qna);
 	}
 
 	@Override
 	public void deleteQna(Integer qna_num) {
-		// TODO Auto-generated method stub
-		
+		//댓글 삭제 
+		qnaMapper.deleteReply(qna_num);
+		//부모글 삭제 
+		qnaMapper.deleteQna(qna_num);
 	}
-
+	
+	//파일 넣는거 없어서 사용 안
 	@Override
 	public void deleteFile(Integer qna_num) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	//QnA 댓글 
+	@Override
+	public List<QnaReplyVO> selectListReply(Map<String, Object> map) {
+		return qnaMapper.selectListReply(map);
+	}
+
+	@Override
+	public int selectRowCountReply(Map<String, Object> map) {
+		return qnaMapper.selectRowCountReply(map);
+	}
+
+	@Override
+	public QnaReplyVO selectReply(Integer re_num) {
+		return qnaMapper.selectReply(re_num);
+	}
+
+	@Override
+	public void insertReply(QnaReplyVO qnaReply) {
+		qnaMapper.insertReply(qnaReply);
+	}
+
+	@Override
+	public void updateReply(QnaReplyVO qnaReply) {
+		qnaMapper.updateReply(qnaReply);
+	}
+
+	@Override
+	public void deleteReply(Integer re_num) {
+		qnaMapper.deleteReply(re_num);
 	}
 
 }

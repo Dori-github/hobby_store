@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 중앙 컨텐츠 시작 -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -12,13 +13,11 @@
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <div class="page-main">
-	<h2>QnA 작성</h2>
-	<form:form action="write.do" id="register_form" 
+	<h2>QnA 수정</h2>
+	<form:form action="update.do" id="update_form" 
 	                   modelAttribute="qnaVO"
 	                   enctype="multipart/form-data">
-	    <form:hidden path="course_num"/>  
-	    <form:hidden path="items_num"/> 
-	    <form:hidden path="space_num"/>             
+	    <form:hidden path="qna_num"/>               
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>
 			<li>
@@ -49,13 +48,13 @@
 		            .catch( error => {
 		                console.error( error );
 		            } );
-			    </script>                   
+			    </script>
 			</li>
 		</ul>
 		<div class="align-center">
 			<form:button>전송</form:button>
-			<input type="button" value="목록" 
-			             onclick="location.href='list.do'">
+			<input type="button" value="상세정보" 
+			   onclick="location.href='detail.do?qna_num=${qnaVO.qna_num}'">
 		</div>	                   
 	</form:form>
 </div>

@@ -41,15 +41,18 @@ public class NoticeController {
 	//공지사항 목록 
 	@RequestMapping("/notice/noticeList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
+								@RequestParam(value="order",defaultValue="1") String order,
 			String keyfield, String keyword) {
 
 		Map<String,Object> map = 
 				new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
+		map.put("order", order);
 
 		//글의 총개수 또는 검색된 글의 개수
 		int count = noticeService.selectNoticeCount(map);
+		
 
 		logger.debug("<<count>> : " + count);
 
