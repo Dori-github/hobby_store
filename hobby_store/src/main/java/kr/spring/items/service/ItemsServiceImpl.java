@@ -320,6 +320,30 @@ public class ItemsServiceImpl implements ItemsService  {
 		}
 	}
 
+	@Override
+	public int searchCateName(Integer items_num) {
+		// TODO Auto-generated method stub
+		return itemsMapper.searchCateName(items_num);
+	}
+
+	@Override
+	public ItemsVO searchCateParent(Integer cate_num) {
+		// TODO Auto-generated method stub
+		return itemsMapper.searchCateParent(cate_num);
+	}
+
+	@Override
+	public ItemsVO selectParentCate1() {
+		// TODO Auto-generated method stub
+		return itemsMapper.selectParentCate1();
+	}
+
+	@Override
+	public ItemsVO selectChildCate2(Integer cate_num) {
+		// TODO Auto-generated method stub
+		return itemsMapper.selectChildCate2(cate_num);
+	}
+
 	
 
 
