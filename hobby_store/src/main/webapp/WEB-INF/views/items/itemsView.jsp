@@ -243,14 +243,15 @@
 </div>
 
 	<div class="qna">
-		문의	  <c:if test="${!empty user}">
-		<div class="align-right">
-			<input type="button" value="문의사항 작성"
-						onclick="location.href='${pageContext.request.contextPath}/qna/detail.do?items_num=${items.items_num}'">
-		</div>
-	</c:if>
+		문의	 
 		<hr size="2" noshade width="100%" style="color: gray;">
 	</div>
+	<c:if test="${!empty user}">
+		<div class="align-right">
+			<input type="button" value="문의사항 작성"
+						onclick="location.href='${pageContext.request.contextPath}/qna/write.do?items_num=${items.items_num}'">
+		</div>
+	</c:if>
 	
 
 <!-- 중앙 컨텐츠 끝 -->
