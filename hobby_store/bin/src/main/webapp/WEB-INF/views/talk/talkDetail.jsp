@@ -17,11 +17,8 @@
    href="${pageContext.request.contextPath}/css/talk.css" />
 <!-- 채팅하기 시작 -->
 <div id="talkDetail" class="container">
-   <div>
-      <div class="modal-dialog">
-         <div class="modal-content" style="padding: 20px;margin-left:-200px;height:700px;">
-            <div class="row" 
-               style="margin-top: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0, 0, 0, .1);">
+   <div class="content">
+            <div class="row">
                <div class="col-9" >
                   <div class="modal-title">${talkRoomVO.talkroom_name}</div>
                </div>
@@ -30,11 +27,11 @@
                   <i class="fa fa-bars" style="cursor:pointer;"
                      onclick="location.href='talkList.do'"></i> 
                <!-- 채팅방 나가기 -->
-                     <i class="fa fa-sign-out-alt" style="cursor:pointer;" id="delete_talkroom"></i>
+                    <i class="fa fa-sign-out-alt" style="cursor:pointer;" id="delete_talkroom"></i>
                </div>
-            </div>
+          
 
-            <p>
+            <p style="font-size:12px;">
                채팅 멤버 :
                <c:forEach var="talkVO" items="${list}" varStatus="status">
                   <c:if test="${status.index > 0}">,</c:if>
@@ -42,10 +39,10 @@
                   <c:if test="${status.last}">(${status.count}명)</c:if>
                </c:forEach>
             </p>
+            </div>
 
-
-            
-            <div id="chatting_message" style="min-height: 500px;"></div>
+   
+            <div class="scrollBar" id="chatting_message" style="min-height: 500px;"></div>
     
             <form method="post" id="detail_form">
                <input type="hidden" name="talkroom_num" id="talkroom_num"
@@ -53,13 +50,12 @@
                <input type="hidden" name="mem_num" id="mem_num" value="${user.mem_num}"> 
                <!-- 내용 -->
             <div class="chat">
-               <input type="text" class="msg-input" name="message" placeholder="메세지를 입력해 주세요" id="message">
-               <!-- 전송 -->
-               <button type="submit" class="btn"
-                  style="background-color: #FF4E02; color: white; width: 19%; line-height: 1.5;">전송</button>
+               <textarea class="msg-input" name="message" placeholder="메세지를 입력해 주세요" id="message"></textarea>
+                <!-- 전송 -->
+            <button type="submit" class="btn"
+                  style="background-color: #FF4E02; color: white; width: 10%; line-height: 1.5; float:right;">전송</button> 
             </div>
+ 
          </form>
          </div>
       </div>
-   </div>
-</div>

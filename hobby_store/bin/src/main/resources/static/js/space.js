@@ -6,7 +6,7 @@ $(function(){
 	
 	//세부카테고리 클릭시 드롭다운 고정
 
-	cate.each(function(){
+	cate.on(function(){
 		if($(this).hasClass('active-color')){
 			$(this).parents('.cate').stop().slideDown();
 		}
@@ -17,10 +17,63 @@ $(function(){
 	
 	//지역 선택
 	$('#select #location').on('change',function(){
-		location.href='spaceList.do?cate='+$('#sidebar').data('param')+'&location='+$(this).val();
+		location.href='list.do?cate='+$('#sidebar').data('param')+'&location='+$(this).val()+'&order='+$('#order').val();
 
 	});
 	
+	//최신순 선택
+	$('#select #order').on('change',function(){
+			location.href='list.do?cate='+$('#sidebar').data('param')+'&location='+$('#location').val()+'&order='+$(this).val();
+		
+	});
+	
+	//좋아요 클릭 
+	$(document).on('click','.red-heart',function(){
+		let heart = $(this);
+		$.ajax({
+			url:'writeFav.do',
+			type:'post',
+			data:{space_num:$(this).attr('data-num')},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					Swal.fire({
+				        icon: 'warning',
+				        title:'로그인 후 좋아요를 눌러주세요',
+				        showCancelButton: false,
+				        confirmButtonText: "확인",
+				        confirmButtonColor: "#FF4E02"
+				        });
+				}else if(param.result == 'success'){
+					if(param.status == 'yesFav'){
+						heart.find('.fa-heart').css('font-weight', 'bold');
+						heart.parent().find('.countFav').text(param.count);
+					}else{
+						heart.find('.fa-heart').css('font-weight', 'normal');
+						heart.parent().find('.countFav').text(param.count);
+					}
+				}else{
+					Swal.fire({
+				        icon: 'error',
+				        title:'등록시 오류 발생',
+				        showCancelButton: false,
+				        confirmButtonText: "확인",
+				        confirmButtonColor: "#FF4E02"
+				        });
+				}
+			},
+			error:function(){
+				Swal.fire({
+			        icon: 'error',
+			        title:'네트워크 오류',
+			        showCancelButton: false,
+			        confirmButtonText: "확인",
+			        confirmButtonColor: "#FF4E02"
+			        });
+			}
+		});
+	});
+
 
 //===============요일,시간==================//
 	//요일 클릭시
@@ -108,25 +161,25 @@ $(function(){
 	
 	//===============공간수===================//
 	$('#minus').on('click',function(){
-		let space_num = parseInt($('#space_np').val());
+		let space_num = parseInt($('#space_limit').val());
 		result = space_num - 1;
 		$('#space_np').val(result);
 	});
 	$('#plus').on('click',function(){
-		let space_num = parseInt($('#space_np').val());
+		let space_num = parseInt($('#space_limit').val());
 		result = space_num + 1;
 		$('#space_np').val(result);
 	});
 		//===============인원수제한===================//
 	$('#minus').on('click',function(){
-		let space_num = parseInt($('#space_limit').val());
+		let space_num = parseInt($('#space_np').val());
 		result = space_num - 1;
 		$('#space_limit').val(result);
 	});
 	$('#plus').on('click',function(){
-		let space_num = parseInt($('#space_limit').val());
+		let space_num = parseInt($('#space_np').val());
 		result = space_num + 1;
-		$('#space_limit').val(result);
+		$('#space_np').val(result);
 	});
 	
 	
@@ -232,5 +285,83 @@ $(function(){
       $('.d3').hide();
    });
 	
+  //=================수정=================//
+     let photo_path = $('#photo').attr('src');
+	 let photo_path2 = $('.my-photo').attr('src');
+     let photo_path3 = $('.my-photo').attr('src');
+	let my_photo; //업로드하고자 선택한 이미지 저장
+	$('.image2 #upload').change(function(){
+		my_photo = this.files[0];
+		if(!my_photo){
+			$('.my-photo').attr('src',photo_path);
+			return;
+		}
+		
+		if(my_photo.size > 1024*1024){
+			alert(Math.round(my_photo.size/1024) 
+			   + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('#photo1').attr('src',photo_path);
+			$(this).val('');
+			return;			
+		}
+		
+		//이미지 미리보기 처리
+		let reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+		
+		reader.onload=function(){
+			$('#photo').attr('src',reader.result);
+		};
+	});//end of change
+	
+	//추가이미지1
+	$('.image2 #upload1').change(function(){
+		my_photo = this.files[0];
+		if(!my_photo){
+			$('.my-photo').attr('src',photo_path1);
+			return;
+		}
+		
+		if(my_photo.size > 1024*1024){
+			alert(Math.round(my_photo.size/1024) 
+			   + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('#photo1').attr('src',photo_path1);
+			$(this).val('');
+			return;			
+		}
+		
+		//이미지 미리보기 처리
+		let reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+		
+		reader.onload=function(){
+			$('#photo1').attr('src',reader.result);
+		};
+	});//end of change
+	
+	//추가이미지2
+	$('.image2 #upload2').change(function(){
+		my_photo = this.files[0];
+		if(!my_photo){
+			$('.my-photo').attr('src',photo_path2);
+			return;
+		}
+		
+		if(my_photo.size > 1024*1024){
+			alert(Math.round(my_photo.size/1024) 
+			   + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('#photo2').attr('src',photo_path2);
+			$(this).val('');
+			return;			
+		}
+		
+		//이미지 미리보기 처리
+		let reader = new FileReader();
+		reader.readAsDataURL(my_photo);
+		
+		reader.onload=function(){
+			$('#photo2').attr('src',reader.result);
+		};
+	});//end of change	
 	
 });

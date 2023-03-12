@@ -7,15 +7,15 @@
   	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
   	<sql id="spaceSearch">
   		<where>
-  		  <if test="cate!=null and cate!=''">
-  		  cate_num = #{cate}
+  		  <if test="cate_num!=null and cate_num!=''">
+  		  cate_num = #{cate_num}
   		  </if>
   		<if test="keyword!=null and keyword!=''">
-  		    <if test="cate!=null and cate!=''">
+  		    <if test="cate_num!=null and cate_num!=''">
   		    	AND
   		    </if>
 				<if test="keyfield==1">
-					space_name LIKE '%' || #{keyword} || '%' OR space_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+					space_name LIKE '%' || #{keyword} || '%' OR space_content LIKE '%' || #{keyword} || #{keyword} || '%'
 				</if>
 				<if test="keyfield==2">
 					space_name LIKE '%' || #{keyword} || '%'
@@ -23,9 +23,7 @@
 				<if test="keyfield==3">
 					space_content LIKE '%' || #{keyword} || '%'
 				</if>
-				<if test="keyfield==4">
-					mem_nickname LIKE '%' || #{keyword} || '%'
-				</if>
+				
 			</if>
 
   		</where>
@@ -36,10 +34,10 @@
 			space_num DESC
 		</if>
 		<if test="order==2">
-			space_reply DESC
+			replycount DESC
 		</if>
 		<if test="order==3">
-			space_fav DESC
+			fav_cnt DESC
 		</if>
 		<if test="order==4">
 			space_price ASC
@@ -52,7 +50,7 @@
   		FROM space
   		<include refid="spaceSearch"></include>
   	</select>
-  	<!-- 리스트 좋아요 처리 -->
+  	<!-- 리스트 좋아요,별점평균, 후기 개수 처리 -->
   	<select id="selectSpaceList" parameterType="map"
   	                              resultType="spaceVO">
   	    SELECT
@@ -62,10 +60,14 @@
   	            rownum rnum
   	          FROM (SELECT 
   	                   * 
-  	                 FROM space LEFT OUTER JOIN (SELECT * FROM space_fav WHERE fmem_num=#{mem_num}) USING(space_num)
-  	                            LEFT OUTER JOIN (SELECT space_num, COUNT(*) fav_cnt FROM space_fav GROUP BY space_num) USING(space_num)
-  	                <include refid="spaceSearch"></include>
-  	                ORDER BY space_num DESC)a)
+  	                 FROM space s JOIN member m USING(mem_num) 
+		LEFT JOIN (SELECT space_num , COUNT(reply_num) AS replycount 
+		FROM space_reply GROUP BY space_num) USING(space_num)
+		LEFT JOIN (SELECT space_num,COUNT(fav_num) AS fav_cnt 
+		FROM space_fav GROUP BY space_num) USING(space_num)
+		LEFT JOIN (SELECT space_num , ROUND(AVG(star_auth),1) AS star_avg 
+		FROM space_reply GROUP BY space_num) USING(space_num)
+  	                <include refid="spaceSearch"></include> ORDER BY <include refid="spaceOrder"></include>)a)
   	    <![CDATA[
   	    WHERE rnum >= #{start} AND rnum <= #{end}
   	    ]]>             
@@ -85,11 +87,6 @@
   		  	space_photo2=#{space_photo2},
   		  	space_photo_name2=#{space_photo_name2},
   		  </if>
-  		   <if test="space_photo_name3 !=''">
-  		  	space_photo3=#{space_photo3},
-  		  	space_photo_name3=#{space_photo_name3},
-  		  </if>
-  		  space_cate=#{space_cate},
   		  space_zipcode=#{space_zipcode},
   		  space_address1=#{space_address1},
   		  space_address2=#{space_address2},
@@ -99,7 +96,7 @@
   		  space_limit=#{space_limit},
 
   		  space_content=#{space_content},
-  		  space_modate=SYSDATE
+  		  space_mdate=SYSDATE
 
   		WHERE space_num=#{space_num}    
   	</update>
@@ -123,29 +120,45 @@
 	</select>
 	
   	<select id="selectListReply" parameterType="map" resultType="spaceReplyVO">
-  		SELECT
-  		   *
-  		FROM(SELECT
-  		       a.*,
-  		       rownum rnum
-  		     FROM(SELECT
-  		            reply_num,
-  		            <![CDATA[
-  		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
-  		            ]]>
-  		            reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
-  		            reply_date,
-  		            reply_mdate,
-  		            space_num,
-  		            mem_num,
-  		            mem_id,
-  		            mem_nickname,
-  		            mem_photo
-  		          FROM space_reply JOIN member USING (mem_num) JOIN member_detail USING(mem_num) 
-  		          WHERE space_num = #{space_num}
-  		          ORDER BY <include refid="replyOrder"></include>)a)
+  		SELECT * FROM
+           (SELECT a.*, rownum rnum FROM
+           (SELECT * FROM
+            (SELECT reply_num,
+                    <![CDATA[
+                    REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
+                    ]]>
+                    reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
+                    reply_date,
+                    reply_mdate,
+                    space_num,
+                    mem_num,
+                    mem_id,
+                    mem_nickname,
+                    mem_photo,
+                    star_auth
+                    FROM space_reply 
+                    JOIN member USING (mem_num) 
+                    JOIN member_detail USING(mem_num))
+                    LEFT OUTER JOIN (SELECT * FROM space_reply_fav WHERE fmem_num=#{mem_num}) USING(reply_num)
+                    LEFT OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount 
+                    FROM space_reply_fav group by reply_num) USING (reply_num)
+                  WHERE space_num = #{space_num}
+                 ORDER BY <include refid="replyOrder"></include>)a)
   		    <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>          
   	</select>
+
+  	<!-- 후기 수정 -->
+  	<update id="updateSpaceReply" parameterType="SpaceReplyVO">
+  		UPDATE space_reply SET
+  		  <if test="filename != ''">
+  		  uploadfile=#{uploadfile},
+  		  filename=#{filename},
+  		  </if>
+  		  reply_content=#{reply_content},
+  		  modify_date=SYSDATE
+  		WHERE space_num=#{space_num}  
+  	</update>
+  	
 </mapper>

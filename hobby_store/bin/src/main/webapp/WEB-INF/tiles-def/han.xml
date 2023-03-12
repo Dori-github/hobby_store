@@ -24,6 +24,12 @@
     	  value="/WEB-INF/views/items/itemsView.jsp"/>        
     </definition>
     
+        <definition name="itemsAdminModify" extends="main">
+    	<put-attribute name="title" value="상품수정"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/items/itemsModify.jsp"/>        
+    </definition>
+    
     
 </tiles-definitions>
 

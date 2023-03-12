@@ -76,7 +76,7 @@
 				<input type="radio" name="search-btn" id="reset_btn">없음
 				<div id="course_choice" style="display:none;">
 					<span id="course_name">클래스명</span>
-					<select id="course_select" <c:if test="${empty course}">disabled</c:if>>
+					<select id="course_select" name="course_num" <c:if test="${empty course}">disabled</c:if>>
 					<option value="" style="display:none;"/>
 					<c:forEach var="course" items="${course}">
 						<option value="${course.course_num}">${course.course_name}</option>
@@ -85,7 +85,7 @@
 				</div>
 				<div id="items_choice" style="display:none;">
 					<span id="items_name">상품명</span>
-					<select id="items_select" <c:if test="${empty items}">disabled</c:if>>
+					<select id="items_select" name="course_num" <c:if test="${empty items}">disabled</c:if>>
 					<option value="" style="display:none;"/>
 					<c:forEach var="items" items="${items}">
 						<option value="${items.items_num}">${items.items_name}</option>
@@ -107,7 +107,9 @@
 				<label for="event_rdate">이벤트 당첨 날짜</label><!-- 달력 api는 일단 생각해보기 -->
 				</td>
 				<td>
-				<form:input path="event_rdate" class="datepicker"/>
+				<input type="radio" name="rdate-btn" id="rdate-O">등록
+				<input type="radio" name="rdate-btn" id="rdate-X">미등록
+				<form:input path="event_rdate" class="datepicker" id="rdate"/>
 				</td>
 			</tr>
 			<tr>

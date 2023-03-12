@@ -5,7 +5,27 @@ $(function(){
 	let member_list = [$('#user').attr('data-id')];
 	
 	//웹소켓 연결
-	function alarm_connect(){
+	function alarm_connect(){  
+		message_socket = new WebSocket("ws://localhost:8001/message-ws.do");
+		message_socket.onopen=function(evt){
+			//채팅 페이지에 진입하면 채팅 메시지 발송
+			if($('#talkDetail').length == 1){
+				message_socket.send("msg:");
+			}
+			console.log("채팅페이지 접속");
+		};
+		//서버로부터 메시지를 받으면 호출되는 함수 지정
+		message_socket.onmessage=function(evt){
+			let data = evt.data;
+			if($('#talkDetail').length == 1 && 
+			      data.substring(0,4) == 'msg:'){
+				selectMsg();
+			}
+		};
+		message_socket.onclose=function(evt){
+			//소켓이 종료된 후 부과적인 작업이 있을 경우 명시
+			console.log('채팅 종료');
+		}
 	}
 	alarm_connect();
 	
@@ -159,7 +179,7 @@ $(function(){
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
                 });
-					//message_socket.close();
+					message_socket.close();
 				}else if(param.result == 'success'){
 					$('#chatting_message').empty();
 					
@@ -196,12 +216,13 @@ $(function(){
 							}
 							output += '<div class="chatBox">';
 							//메시지 내용
-							output += item.read_count + '<span>' + item.message.replace(/\r\n/g,'<br>').replace(/\r/,'<br>').replace(/\n/,'<br>') + '</span>';
+							output += '<span>' + item.message.replace(/\r\n/g,'<br>').replace(/\r/,'<br>').replace(/\n/,'<br>') + '</span></div>' ;
 							//개별 메세지 시간 표시
-							output += '<div class="align-right">' + item.chat_date.split(' ')[1] + '</div>'; 
+							output += '<div class="align-right" style="font-size:11px; color:gray;">' + item.chat_date.split(' ')[1] + '</div>'; 
 							output += '</div>';
-							output += '</div><div class="space-clear"></div>';
 							output += '</div>';
+							output += '<div class="space-clear"></div>';
+							
 						}
 						
 						//문서 객체에 추가
@@ -213,42 +234,34 @@ $(function(){
 					
 				}else{
 					alert('채팅 메시지 읽기 오류 발생');
-					selectMsg();
-					//message_socket.close();
+					message_socket.close();
 				}
 			},
 			error:function(){
 				alert('네트워크 오류 발생');
 				selectMsg();
-				//message_socket.close();
+				message_socket.close();
 			}
 		});
 }
 
 
-	
-	//------------------임시 처리 시작-------------//
-	if('$talkDetail'.length==1){
-		selectMsg();
-	}
-	//------------------임시 처리 끝--------------//
-	
-	
-	
 	//=========메시지 입력 후 enter 이벤트 처리=====//
 	$('#message').keydown(function(event){
 		if(event.keyCode == 13 && !event.shiftKey){
-			$('#detail_form').trigger('submit');
+			action_submit();
 		}
 	});
 	
 	
 	//=======채팅 등록========//
 	$('#detail_form').submit(function(event){
-		
 		//기본 이벤트 제거
 		event.preventDefault();
 		
+	});
+	
+	function action_submit(){
 		if($('#message').val().trim()==''){
 			Swal.fire({
                     icon: 'warning',
@@ -273,7 +286,7 @@ $(function(){
 			return false;
 		}
 		//폼에 있는 데이터 읽어오기
-		let form_data = $(this).serialize();
+		let form_data = $('#detail_form').serialize();
 		
 		//서버와 통신
 		$.ajax({
@@ -290,13 +303,12 @@ $(function(){
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
                 });
-					//message_socket.close();
-					selectMsg();
+					message_socket.close();
 				}else if(param.result == 'success'){
 					//폼 초기화
 					$('#message').val('').focus();
 					//메시지가 저장되었다고 소켓에 신호를 보냄
-					//message_socket.send('msg:');
+					message_socket.send('msg:');
 					selectMsg();
 				}else{
 					Swal.fire({
@@ -306,8 +318,8 @@ $(function(){
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
                 });
-					//message_socket.close();
-					selectMsg();
+					message_socket.close();
+					
 				}
 			},
 			error:function(){
@@ -318,10 +330,53 @@ $(function(){
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
                 });
-				//message_socket.close();
-				selectMsg();
+				message_socket.close();
 			}
 		});
+	}
+		//==========채팅방 나가기=============//
+	$('#delete_talkroom').click(function(){
 		
+		$.ajax({
+			url:'../talk/deleteTalkRoomMember.do',
+			type:'post',
+			data:{talkroom_num:$('#talkroom_num').val(),mem_num:$('#mem_num').val()},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					Swal.fire({
+                    icon: 'warning',
+                    title:'로그인해야 작성 할 수 있습니다',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+					message_socket.close();
+				}else if(param.result == 'success'){
+					Swal.fire({
+                    icon: 'success',
+                    title:'정상적으로 채팅방을 나갔습니다',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                }).then(function(){
+						location.href='../talk/talkList.do';
+				});	
+				}else{
+					Swal.fire({
+                    icon: 'error',
+                    title:'네트워크 오류',
+                    showCancelButton: false,
+                    confirmButtonText: "확인",
+                    confirmButtonColor: "#FF4E02"
+                });
+					message_socket.close();
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+				message_socket.close();
+			}
+		});
 	});
 });

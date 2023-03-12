@@ -37,6 +37,13 @@ public interface SpaceMapper {
 	public int selectSpaceCount(Map<String,Object> map);
 	@Select("SELECT space_seq.nextval FROM dual")
 	public int selectSpace_num();
+	
+	@Select("SELECT * FROM space_cate")
+	public List<SpaceVO> selectCate();
+	@Select("SELECT cate_num FROM space_cate WHERE cate_name=#{cate_name}")
+	public int selectCate_num(SpaceVO space);
+	
+	
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
 	@Select("SELECT * FROM space WHERE space_num=#{space_num}")
 	public SpaceVO selectSpace(Integer space_num);
@@ -81,10 +88,10 @@ public interface SpaceMapper {
 	public void updateReply(SpaceReplyVO spaceReply);
 	//후기삭제
 	@Delete("DELETE FROM space_reply WHERE reply_num=#{reply_num}")
-	public void deleteReply(Integer reply_num);
+	public void deleteReply(SpaceVO reply);//2
 	@Delete("DELETE FROM space_reply WHERE space_num=#{space_num}")
 	public void deleteReplyBySpaceNum(Integer space_num);
-    
+	public void deleteReplyNum(Integer space_num);
 	
 	//별점
 	@Select("SELECT ROUND(AVG(star_auth),1) AS star_avg  FROM space_reply  WHERE space_num = #{space_num}")
@@ -96,14 +103,13 @@ public interface SpaceMapper {
 	public int selectallstar(Integer space_num);
 	
 
-	//public float selectStarAvg(Integer space_num);
 	
 	//후기 좋아요
 	
-	 @Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
+	    @Select("SELECT * FROM space_reply_fav WHERE reply_num=#{reply_num} AND fmem_num=#{fmem_num}")
 		public SpaceReplyFavVO selectReplyFav(SpaceReplyFavVO fav);
 	
-	 @Select("SELECT * FROM space_reply_fav WHERE fmem_num=#{mem_num} AND reply_num=#{mem_num}")
+	    @Select("SELECT * FROM space_reply_fav WHERE fmem_num=#{mem_num} AND reply_num=#{mem_num}")
 		public SpaceReplyFavVO selectReplyFavCheck();
 	
 		@Select("SELECT COUNT(*) FROM space_reply_fav WHERE reply_num=#{reply_num}")
@@ -118,8 +124,13 @@ public interface SpaceMapper {
 	    //후기사진삭제
 		@Update("UPDATE space SET uploadfile='',filename='' WHERE reply_num=#{reply_num}")
 		public void deleteReplyPhoto(Integer reply_num);
+		@Delete("DELETE FROM space_reply_fav WHERE reply_num = #{reply_num}")
+		public void deleteFavByReplyNum(SpaceVO reply_num);
+		@Delete("DELETE FROM space_reply WHERE space_num = #{space_num}")
+		public void deleteReplySpace(Integer space_num);//
 
-	
+		@Delete("DELETE FROM space_reply WHERE space_num = #{space_num}")
+		public void deleteReply2(Integer space_num);
 	
 
 }

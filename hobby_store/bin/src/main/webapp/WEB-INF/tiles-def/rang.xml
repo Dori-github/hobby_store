@@ -6,12 +6,12 @@
 
 <tiles-definitions>
  
-    <definition name="spaceAdminWrite" extends="admin">
+    <definition name="spaceAdminWrite" extends="main">
     	<put-attribute name="title" value="공간등록(관리자)"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/space/admin_writeForm.jsp"/>        
     </definition>
-    <definition name="spaceAdminModify" extends="admin">
+    <definition name="spaceAdminModify" extends="main">
     	<put-attribute name="title" value="공간수정(관리자)"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/space/admin_modifyForm.jsp"/>        

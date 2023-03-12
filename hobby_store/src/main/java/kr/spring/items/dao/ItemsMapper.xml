@@ -14,7 +14,7 @@
 			<if test="keyfield == 3"> and items_content LIKE '%' || #{keyword} || '%'</if>
 			<if test="keyfield == 4"> and mem_nickname LIKE '%' || #{keyword} || '%'</if>
 			</if>
-
+ 
 	</sql>
 	<!-- ========================================================================== -->
 	<sql id="itemsSidebar">

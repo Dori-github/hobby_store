@@ -45,7 +45,7 @@
 		<div id="onoff"></div>
 		<div id="items_search">
 			<form
-				action="/items/itemsList.do?check=${param.check}&cate=${param.cate}&packaging=${packaging}"
+				action="/items/itemsList.do?cate=${param.cate}&check=${param.check}&packaging=${param.packaging}" 
 				method="post" class="navbar-expand search-form d-flex"
 				id="search_form">
 				<select class="form-select" name="keyfield">
@@ -64,23 +64,17 @@
 		<div id="select">
 			<span id="total">총 ${count}개</span> <select
 				class="form-select select" id="packaging" name="packaging">
-				<option value="1"
-					<c:if test="${param.packaging == 1}">selected</c:if>>포장 주문
-					여부</option>
-				<option value="2"
-					<c:if test="${param.packaging == 2}">selected</c:if>>포장 주문
-					가능</option>
+				<option value="2" 
+					<c:if test="${param.packaging == 2}">selected</c:if>>포장 가능</option>
 				<option value="3"
-					<c:if test="${param.packaging == 3}">selected</c:if>>포장 주문
-					불가능</option>
-			</select> <select class="form-select select" id="check" name="check">
+					<c:if test="${param.packaging == 3}">selected</c:if>>포장 불가능</option>
+			</select> 
+			<select class="form-select select" id="check" name="check">
 				<option value="1" <c:if test="${param.check == 1}">selected</c:if>>최신순</option>
 				<option value="2" <c:if test="${param.check == 2}">selected</c:if>>리뷰순</option>
 				<option value="3" <c:if test="${param.check == 3}">selected</c:if>>좋아요순</option>
-				<option value="4" <c:if test="${param.check == 4}">selected</c:if>>높은
-					가격 순</option>
-				<option value="5" <c:if test="${param.check == 5}">selected</c:if>>낮은
-					가격 순</option>
+				<option value="4" <c:if test="${param.check == 4}">selected</c:if>>높은가격 순</option>
+				<option value="5" <c:if test="${param.check == 5}">selected</c:if>>낮은가격 순</option>
 			</select>
 		</div>
 		<hr size="3" noshade width="100%" style="color: gray; margin: .8em 0;">

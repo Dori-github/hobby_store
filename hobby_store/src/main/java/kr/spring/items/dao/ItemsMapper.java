@@ -21,7 +21,7 @@ public interface ItemsMapper {
 	@Insert("INSERT INTO items (items_num, cate_num, items_name, items_price, items_quantity, items_photo1, items_photo2, items_photo3, items_photo_name1, items_photo_name2, items_photo_name3, items_content, mem_num, status, packaging, items_zipcode, items_address1, items_address2 ) "
 			+ "VALUES (items_seq.nextval, #{cate_num}, #{items_name}, #{items_price}, #{items_quantity}, #{items_photo1}, #{items_photo2}, #{items_photo3},#{items_photo_name1},#{items_photo_name2}, #{items_photo_name3}, #{items_content}, #{mem_num}, #{status}, #{packaging}, #{items_zipcode}, #{items_address1}, #{items_address2})")
 	public void insertItems(ItemsVO items);
-	
+	 
 	//상품 목록 //xml
 	public List<ItemsVO> selectItemsList(Map<String, Object> map);
 	//상품 카운트 //xml
@@ -31,7 +31,7 @@ public interface ItemsMapper {
 	public ItemsVO selectItems(Integer items_num);
 	//상품 수정
 	public void updateItems(ItemsVO itemsVO);
-	//상품 삭제
+	//상품 삭제 
 	@Delete("DELETE FROM items WHERE items_num = #{items_num}")
 	public void deleteItems(Integer items_num);
 	//카테고리 이름 
@@ -54,7 +54,7 @@ public interface ItemsMapper {
 	@Select("DELETE FROM items_fav WHERE fav_num = #{fav_num}")
 	public void deleteItemsFav(Integer fav_num);
 	//상품 좋아요 등록
-	@Insert("INSERT INTO items_fav (fav_num, fmem_num, items_num) VALUES (items_fav_seq.nextval, #{fmem_num}, #{items_num)")
+	@Insert("INSERT INTO items_fav (fav_num, fmem_num, items_num) VALUES (items_fav_seq.nextval, #{fmem_num}, #{items_num})")
 	public void insertItemsFav(ItemsFavVO fav);
 	//좋아요 수 췤
 	@Select("SELECT COUNT(*) FROM items_fav WHERE items_num = #{items_num}")

@@ -297,6 +297,7 @@ public class OrderController {
 		orderVO.setOrder_name(order_name);// 대표 상품명
 		orderVO.setOrder_price(allTotal);// 총주문금액
 		orderVO.setMem_num(user.getMem_num());// 주문자
+		orderVO.setOrder_status(0);
 		pointsVO.setUsed_points(allTotal);// 주문자
 		pointsVO.setMem_num(user.getMem_num());
 		logger.debug("<<insertOrder 전 order_name>> : " + order_name);
@@ -338,7 +339,6 @@ public class OrderController {
 
 		if(space_price != null) {	
 			logger.debug("<<s quan>>:" + space_price[0]);
-//			logger.debug("<<s quan>>:"+Integer.parseInt(order_quantity[0]));
 			int spacePrice = Integer.parseInt(space_price[0]);
 			int orderQuantity = Integer.parseInt(order_quantity[0]);
 			int spaceTotal = spacePrice * orderQuantity;
@@ -379,13 +379,26 @@ public class OrderController {
 			orderVO.setOrder_name(course_name[0]);// 대표 상품명
 			orderVO.setOrder_price(coursePrice);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(0);
 			pointsVO.setUsed_points(coursePrice);
 			pointsVO.setMem_num(user.getMem_num());
 		}
+		logger.debug("<<1d>> : " + course_num[0]);
+		logger.debug("<<1d>> : " + course_onoff);
+		logger.debug("<<1d>> : " + (course_onoff[0]));
+		logger.debug("<<1d>> : " + (course_onoff[0]="off"));
+		logger.debug("<<1d>> : " + (course_onoff != null));
+		logger.debug("<<11dddd>> : " + (course_onoff[0] == "off"));
 		
-		if(course_onoff != null && course_onoff[0] == "off") {//오프라인 클래스
+		if(course_onoff != null) {//오프라인 클래스
+			logger.debug("<<1d>> : " + course_num[0]);
 			String[] course_quan = request.getParameterValues("course_quan");
 			String[] course_total = request.getParameterValues("course_total");
+			
+			logger.debug("<<1d>> : " + course_num[0]);
+			logger.debug("<<2d>> : " + course_quan[0]);
+			logger.debug("<<3d>> : " + course_price[0]);
+			logger.debug("<<4d>> : " + course_total[0]);
 			
 			int courseNum = Integer.parseInt(course_num[0]);
 			int courseQuan = Integer.parseInt(course_quan[0]);
@@ -407,6 +420,7 @@ public class OrderController {
 			orderVO.setOrder_name(course_name[0]);// 대표 상품명
 			orderVO.setOrder_price(courseTotal);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(1);
 			pointsVO.setUsed_points(courseTotal);
 			pointsVO.setMem_num(user.getMem_num());
 		}
@@ -433,6 +447,7 @@ public class OrderController {
 			orderVO.setOrder_name(items_name[0]);// 대표 상품명
 			orderVO.setOrder_price(itemsTotal);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(0);
 			pointsVO.setUsed_points(itemsTotal);
 			pointsVO.setMem_num(user.getMem_num());
 		}
@@ -458,6 +473,7 @@ public class OrderController {
 			orderVO.setOrder_name(space_name[0]);// 대표 상품명
 			orderVO.setOrder_price(spaceTotal);// 총주문금액
 			orderVO.setMem_num(user.getMem_num());// 주문자
+			orderVO.setOrder_status(1);
 			pointsVO.setUsed_points(spaceTotal);
 			pointsVO.setMem_num(user.getMem_num());
 		}

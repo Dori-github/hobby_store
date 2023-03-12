@@ -45,7 +45,8 @@ $(function(){
 	//지역 선택
 	$('#select #location').on('change',function(){
 		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
-									'&cate='+$('#sidebar').data('param')+'&location='+$(this).val()+'&order='+$('#order').val();
+									'&cate='+$('#sidebar').data('param')+'&location='+$(this).val()+'&order='+$('#order').val()+
+									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 
 	});
 	
@@ -53,9 +54,11 @@ $(function(){
 	$('#select #order').on('change',function(){
 		if($('input[name=onoff]:checked').val()==1){//오프라인
 			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
-									'&cate='+$('#sidebar').data('param')+'&location='+$('#location').val()+'&order='+$(this).val();
+									'&cate='+$('#sidebar').data('param')+'&location='+$('#location').val()+'&order='+$(this).val()+
+									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 		}else{//온라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&cate='+$('#sidebar').data('param')+'&order='+$(this).val();
+			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&cate='+$('#sidebar').data('param')+'&order='+$(this).val()+
+			'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 		}
 
 	});

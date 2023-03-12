@@ -87,8 +87,8 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public int selectCate_num(CourseVO course) {
-		return courseMapper.selectCate_num(course);
+	public int selectCate_num(String cate_name) {
+		return courseMapper.selectCate_num(cate_name);
 	}
 
 	

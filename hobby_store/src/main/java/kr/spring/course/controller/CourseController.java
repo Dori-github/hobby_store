@@ -29,7 +29,6 @@ import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
-import kr.spring.util.FileUtil;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -92,7 +91,7 @@ public class CourseController {
 			return form();
 		}
 		
-		///session에 저장된 회원번호를 VO에 저장 
+		//session에 저장된 회원번호를 VO에 저장 
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		courseVO.setMem_num(user.getMem_num());
 		
@@ -100,7 +99,7 @@ public class CourseController {
 		//대분류 카테고리 번호
 		int cate_parent = courseVO.getCate_parent();
 		//상세 카테고리 번호
-		int cate_num = courseService.selectCate_num(courseVO);
+		int cate_num = courseService.selectCate_num(courseVO.getCate_name());
 		
 		courseVO.setCate_nums(cate_parent+"" + "," + cate_num+"");
 		logger.debug("<<cate_nums>> :" + cate_parent + "," + cate_num);
@@ -123,15 +122,23 @@ public class CourseController {
 	@RequestMapping("/course/courseList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
 								@RequestParam(value="order",defaultValue="1") String order,
-								@RequestParam(value="oneweek",defaultValue="1") String oneweek,
+								String oneweek,
 								String onoff,String cate,
 								String keyfield,String keyword, String location,HttpSession session) {
+		
+		logger.debug("<<onoff>> :" + onoff);
+		
+		//카테고리 고유번호 저장
+		int cate_num = courseService.selectCate_num(cate);
+		
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
 		map.put("onoff", onoff);
 		map.put("oneweek", oneweek);
 		map.put("cate", cate);
+		map.put("cate_num", cate_num);
 		map.put("location", location);
 		map.put("order", order);
 		
@@ -153,16 +160,15 @@ public class CourseController {
 		if(count>0) {
 			map.put("start", page.getStartRow());
 			map.put("end", page.getEndRow());
+
+			list = courseService.selectCourseList(map);
+			
+			logger.debug("<<리스트>> : " + list);
 		}
-		
+
 		//카테고리 목록
 		List<CourseVO> course_cate = null;
 		course_cate = courseService.selectCate();
-		
-		list = courseService.selectCourseList(map);
-		
-		logger.debug("<<리스트>> : " + list);
-		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("courseList");

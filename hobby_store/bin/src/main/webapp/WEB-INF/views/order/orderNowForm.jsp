@@ -6,49 +6,41 @@
 <!DOCTYPE html>
 <form method="post" action="nowOrder.do" id="orderNow_register">
 		<h5>바로주문하기</h5>	
+		<c:set var="course_num" value='<%=request.getParameter("course_num") %>'/>
 		<c:set var="course_name" value='<%=request.getParameter("course_name") %>'/>
+		<c:set var="course_price" value='<%=request.getParameter("course_price") %>'/>
+		<c:set var="course_quan" value='<%=request.getParameter("course_quan") %>'/>
+		<c:set var="course_onoff" value='<%=request.getParameter("course_onoff") %>'/>
+		<c:set var="items_num" value='<%=request.getParameter("items_num") %>'/>
 		<c:set var="items_name" value='<%=request.getParameter("items_name") %>'/>
 		<c:set var="items_price" value='<%=request.getParameter("items_price") %>'/>
-		<c:set var="items_quantity" value='<%=request.getParameter("items_quantity") %>'/>
+		<c:set var="items_quan" value='<%=request.getParameter("items_quan") %>'/>
 		<c:set var="space_num" value='<%=request.getParameter("space_num") %>'/>
 		<c:set var="space_name" value='<%=request.getParameter("space_name") %>'/>
 		<c:set var="space_price" value='<%=request.getParameter("space_price") %>'/>
 		<c:set var="space_np" value='<%=request.getParameter("space_np") %>'/>
-		<c:set var="space_quan" value='<%=request.getParameter("space_quan") %>'/>
-		<c:out value="c${course_name}"/>
-		<c:out value="i${items_name}"/>
-		<c:out value="i${items_price}"/>
-		<c:out value="i${items_quantity}"/>
-		<c:out value="i${space_num}"/>
-		<c:out value="i${space_name}"/>
-		<c:out value="i${space_price}"/>
-		<c:out value="i${space_quan}"/>
+		<c:set var="order_quantity" value='<%=request.getParameter("order_quantity") %>'/>
+		
+		<input type="hidden" name="course_num" value="<c:out value="${course_num}"/>" id="course_num">
+		<input type="hidden" name="course_name" value="<c:out value="${course_name}"/>" id="course_name">
+		<input type="hidden" name="course_price" value="<c:out value="${course_price}"/>" id="course_price">
+		<input type="hidden" name="course_quan" value="<c:out value="${course_quan}"/>" id="course_quan">
+		<input type="hidden" name="course_onoff" value="<c:out value="${course_onoff}"/>" id="course_onoff">
+		<input type="hidden" name="course_total" value="${courseTotal}" id="course_total">
+
+		<input type="hidden" name="items_num" value="<c:out value="${items_num}"/>" id="items_num">
+		<input type="hidden" name="items_name" value="<c:out value="${items_name}"/>" id="items_name">
+		<input type="hidden" name="items_quan" value="<c:out value="${items_quan}"/>" id="items_quan">
+		<input type="hidden" name="items_total" value="${itemsTotal}" id="items_total">
+				
 		<input type="hidden" name="space_num" value="<c:out value="${space_num}"/>" id="space_num">
 		<input type="hidden" name="space_name" value="<c:out value="${space_name}"/>" id="space_name">
 		<input type="hidden" name="space_price" value="<c:out value="${space_price}"/>" id="space_price">			
 		<input type="hidden" name="space_np" value="<c:out value="${space_np}"/>" id="space_quantity">
-		<input type="hidden" name="space_quan" value="<c:out value="${space_quan}"/>" id="space_quan">
-			
-		<!-- course_name, course_onoff 넣고난 후 확인하기
-		course.js에 jsp 125~126 확인 --> 
-		<%-- <c:if test="${course_name == null || items_num == null || space_name == null)}">
-		<h2>ss</h2>
-		
-		<script>
-		$(".zaz").hide();
-		</script>
-		</c:if> --%>
-		
-		<p>spaceTotal<br>
-		${spaceTotal}<br>
-		</p>
-		<!-- 최대 예약 인원 != 예약 인원
-		현재 spaceTotal = space_price * space_np
-		space_np 대신 공간대여 상세페이지의 구매수량 값이 들어가야 함 -->
-			
-		<c:if test="${courseCount > 0}">
-		<h5 class="zaz">Course Cart [ ${courseCount} items ]</h5>	
-		<table class="table table-borderless">
+		<input type="hidden" name="order_quantity" value="<c:out value="${order_quantity}"/>" id="order_quantity">
+
+		<input type="hidden" name="space_total" value="${spaceTotal}" id="space_total">
+		<c:if test="${courseCount > 0}"><table class="table table-borderless">
 		<colgroup>
 			<col style="width: 1rem">
 			<col style="width: 45rem">
@@ -80,10 +72,8 @@
 		</table>
 		
 	</c:if>
-		
 
-		
-		<c:if test="${space_name != null}">
+		<c:if test="${course_name != null || items_name != null || space_name != null}">
 		<table class="table table-borderless">
 		<colgroup>
 			<col style="width: 1rem">
@@ -100,6 +90,7 @@
 		<tr style="border-bottom: 1px solid #ccc;">
 			
 		<td style="text-align:left;">
+			<!-- 이미지 경로 처리 -->
 			<img src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
 			<td colspan="2" style="text-align:left;">
 			${course_name}
@@ -107,18 +98,23 @@
 			${space_name}
 			</td>
 			<td>
+			${course_price}
 			${items_price}
 			${space_price}
 			</td>
-			<td>		
-			${items_quantity}	
-			${space_np}
-			${space_quan}
+			<td>	
+			${course_quan}
+			${items_quan}
+			${order_quantity}
 			</td>
 		</tr>
 			<tr>
 			<td colspan="4"></td>
-			<td>${spaceTotal}</td>
+			<td>
+			${courseTotal}
+			${itemsTotal}
+			${spaceTotal}
+			</td>
 		</tr>
 		
 		</table>

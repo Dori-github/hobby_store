@@ -3,16 +3,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원정보 변경 시작 -->
-<link href="${pageContext.request.contextPath}/css/mypage.css" rel="stylesheet">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/mypage.js"></script>
 <div id="content">
 <form:form action="update.do" id="modify_form"
 	                       modelAttribute="memberVO">
 		<form:errors element="div" cssClass="error-color"/>                          
 		<ul>
 			<li>
+				<img src="${pageContext.request.contextPath}/member/photoView.do" width="200" 
+				           height="200" class="my-photo">
+			</li>
+			<li>
+				<div class="align-center">
+					<input type="button" value="수정" id="photo_btn">
+				</div>
+				<div id="photo_choice" style="display:none;">
+					<input type="file" id="upload" 
+					         accept="image/gif,image/png,image/jpeg">
+					<input type="button" value="전송" id="photo_submit">
+					<input type="button" value="취소" id="photo_reset">         
+				</div>
+			</li>
+			<li>
 				<label for="mem_name">이름</label>
 				<form:input path="mem_name"/>
 				<form:errors path="mem_name" cssClass="error-color"/>
+			</li>
+			<li>
+				<label for="passwd">비밀번호</label>
+				<input type="password" id="passwd" value="11111" disabled>
+				<input type="button" value="비밀번호 수정" onclick="location.href='changePassword.do'">
 			</li>
 			<li>
 				<label for="mem_nickname">별명</label>

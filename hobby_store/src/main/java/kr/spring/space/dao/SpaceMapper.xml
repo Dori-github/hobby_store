@@ -43,11 +43,10 @@
 			space_price ASC
 		</if>
 	</sql>
-  	<select id="selectSpaceCount" parameterType="map"
-  	                               resultType="integer">
+  	<select id="selectSpaceCount" parameterType="map" resultType="integer">
   		SELECT
   		  COUNT(*)
-  		FROM space
+  		FROM space JOIN member USING(mem_num)
   		<include refid="spaceSearch"></include>
   	</select>
   	<!-- 리스트 좋아요,별점평균, 후기 개수 처리 -->

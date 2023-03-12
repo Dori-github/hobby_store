@@ -201,12 +201,25 @@ list-style:none;
 
 /*강의-등록폼,수정폼
 =============================*/
-.container{
-  position:relative;
-  
-  /*원래 있어야 할 위치에서 위에서부터 100px 떨어진다*/
-  top:100px; 
+#spacepay{
+	list-style:none;
 }
+
+#space_form .title{
+	width:80%;
+	margin:0 auto;
+	color:#404040;
+	font-size:35px;
+	text-align: center;
+}
+#space_form .reg-form{
+	position:relative;
+	width:80%;
+	margin:0 auto;
+	margin-top:20px;
+	font-size:10pt;
+}
+
 
 .page-1{
 	
@@ -284,9 +297,6 @@ list-style:none;
 	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
 	cursor: pointer;
 }
-
-
-
 
 
 
@@ -1043,7 +1053,6 @@ input[type='number']::-webkit-inner-spin-button {
 .paging-btn i{
 	color:gray;
 }
-
 /*댓글 수정폼*/
 #mreply_form{
 	height:380px;

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.spring.notice.dao.NoticeMapper">
+	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
+  	<sql id="noticeSearch">
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					b.noti_title LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					b.noti_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					b.noti_title LIKE '%' || #{keyword} || '%' OR 
+  					b.noti_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+  	
+  	<select id="selectNoticeCount" parameterType="map"
+  	                            resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM notice_board b JOIN member m
+  		ON b.mem_num = m.mem_num
+  		<include refid="noticeSearch"></include>                            
+  	</select>
+  	
+  	<select id="selectNoticeList" parameterType="map"
+  	                         resultType="noticeVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		              b.noti_num,
+  		              b.status,
+  		              <![CDATA[
+  		              REPLACE(REPLACE(b.noti_title,'<','&lt;'),'>','&gt;') noti_title,
+  		              ]]>
+  		              b.noti_content,
+  		              b.noti_hit,
+  		              b.noti_date,
+  		              b.noti_end,
+  		              m.mem_num,
+  		              m.mem_id,
+  		              m.mem_nickname
+  		            FROM notice_board b JOIN member m 
+  		            ON b.mem_num = m.mem_num
+  		            <include refid="noticeSearch"></include>
+  		            ORDER BY b.status DESC, b.noti_num DESC)a)                         
+  		<![CDATA[
+  		WHERE rnum >= #{start} AND rnum <= #{end}
+  		]]>
+  	</select>
+  	
+  	<update id="updateNotice" parameterType="noticeVO">
+  		UPDATE notice_board SET
+  		  <if test="photo_name1 !=''">
+  		  	photo1=#{photo1},
+  		  	photo_name1=#{photo_name1},
+  		  </if>
+  		  <if test="photo_name2 !=''">
+  		  	photo2=#{photo2},
+  		  	photo_name2=#{photo_name2},
+  		  </if>
+  		  status=#{status},
+  		  noti_title=#{noti_title},
+  		  noti_content=#{noti_content},
+  		  noti_mdate=SYSDATE,
+  		  noti_end=#{noti_end}
+  		WHERE noti_num=#{noti_num}    
+  	</update>
+  	
+</mapper>

@@ -1,12 +1,29 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/css/space.css" rel="stylesheet">
 <!-- 중앙 컨텐츠 시작 -->
+<!-- 상품 상세 시작 -->
+
 <script src="${pageContext.request.contextPath}/js/space.js"></script>
 <script src="${pageContext.request.contextPath}/js/space.fav.js"></script>
 <script src="${pageContext.request.contextPath}/js/space.reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/space.reply.fav.js"></script>
+<!-- 상품 상세 시작 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/space.js"></script>
+<div class="page-main">
+	<c:if test="${space.space_limit == 0}">
+	<div class="result-display">
+		<div class="align-center">
+			본 상품은 판매 중지 되었습니다.<p>
+			<input type="button" value="판매 상품 보기"
+			     onclick="location.href='list.do'">
+		</div>
+	</div>
+	</c:if>
+	<c:if test="${space.space_limit > 0}">
 <div id="space_detail" class="space-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -80,21 +97,44 @@
 			</p>
 			</c:if>
 			<p>
-				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
+				<span><i class="fa-regular fa-star" style="color:orange;"></i>${space.star_avg} (후기 ${space.replycount})</span>	
 			</p>
 		</div>
-		<%-- 결제정보 전송 폼(공간 번호,가격,요일,시간) --%>
-		<form id="space_cart" action="/order/orderForm.do" method="post">
+		<%-- 결제정보 전송 폼(공간 번호,가격,요일) --%>
+		<form id="space_cart" action="/order/orderNowForm.do" method="post">
 			<input type="hidden" name="space_num" value="${space.space_num}" id="space_num">
+			<input type="hidden" name="space_name" value="${space.space_name}" id="space_name">
 			<input type="hidden" name="space_price" value="${space.space_price}" id="space_price">
+			<input type="hidden" name="space_limit" value="${space.space_limit}" id="space_limit">
 			<div class="reservation">
 				<%-- 공간대여 예약 --%>
-				<p>날짜선택<input type="date"></p>
+				<p class="gray">날짜선택<input type="date"></p>
+	
+			    <div class="gray" id="spacepay">
+				<span>가격 : <b><fmt:formatNumber value="${space.space_price}"/></b></span>
+				<span>재고 : <span><fmt:formatNumber value="${space.space_limit}"/></span></span>
+				<c:if test="${space.space_limit > 0}">
+				<li>
+					<span><label for="order_quantity">구매수량</label></span>
+					<input type="number" name="order_quantity" value="1"
+					   min="1" max="${space.space_limit}" autocomplete="off"
+					   id="order_quantity" class="quantity-width">
+				</li>
+				<li>
+					<span id="space_total_txt">총주문 금액 : 0원</span>
+				</li>
 				
-			
-				<p>공간수 &nbsp; / ${space.space_np} &nbsp &nbsp 최대인원수 &nbsp; / ${space.space_limit}</p>
-				<span>구매수량 <input></span> 
-			
+				<li>
+					<input type="submit" value="공간예약하기">
+				</li>
+				</c:if>
+				<c:if test="${space.space_limit <= 0}">
+				<li class="align-center">
+					<span class="sold-out">품절</span>
+				</li>
+				</c:if>
+				</div>
+			 <!-- 여기까지 --> 
 	        </div>
 	        </form>
       </div>
@@ -102,7 +142,7 @@
 <div class="space-d-info">
 	<ul class="title">
 		<li class="active">소개</li>
-		<li>후기 <span class="badge" >4</span></li>
+		<li>후기 <span class="badge" ><ul class="reply-avg"><span class="count"></span></ul></span></li>
 		<li>문의 <span class="badge" >4</span></li>
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
@@ -155,30 +195,28 @@
 		<c:if test="${!empty user}">
 		<div class="reply-photo">
 			<ul class="image">
-				<li>
-					<img class="course-photo1">
-					<label for="upload1" class="label1 l1">
-						<i class="fa-solid fa-circle-plus"></i><br>
-					</label>
-					<i class="fa-solid fa-circle-xmark d1"></i>
-					<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
-				</li>
-				<li>
-					<img class="course-photo2">
-					<label for="upload2" class="label1 l2">
-						<i class="fa-solid fa-circle-plus"></i><br>
-					</label>
-					<i class="fa-solid fa-circle-xmark d2"></i>
-					<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
-				</li>
-				<li>
-					<img class="course-photo3">
-					<label for="upload3" class="label1 l3">
-						<i class="fa-solid fa-circle-plus"></i><br>
-					</label>
-					<i class="fa-solid fa-circle-xmark d3"></i>
-					<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
-				</li>
+				<img class="space-photo1">
+               <label for="upload1" class="label1 l1">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d1"></i>
+               <input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
+            </li>
+            <li>
+               <img class="space-photo2">
+               <label for="upload2" class="label1 l2">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d2"></i>
+               <input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
+            </li>
+            <li>
+               <img class="space-photo3">
+               <label for="upload3" class="label1 l3">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d3"></i>
+               <input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
 			</ul>
 			<div class="reply-submit-btn">
 				<label for="submit" style="width:40px;height:40px;"><i class="fa-solid fa-paper-plane"></i></label>
@@ -220,5 +258,6 @@
 	</div>
 	<!-- 문의 끝 -->
 </div>
-
+</c:if><!-- 재고 있을때 끝 -->
+</div>
 <!-- 중앙 컨텐츠 끝 -->

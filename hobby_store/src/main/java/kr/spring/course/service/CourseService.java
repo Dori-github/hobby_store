@@ -14,7 +14,7 @@ public interface CourseService {
 	public int selectCourseCount(Map<String,Object> map);
 	public void insertCourse(CourseVO course);
 	public List<CourseVO> selectCate();
-	public int selectCate_num(CourseVO course);
+	public int selectCate_num(String cate_name);
 	public CourseVO selectCourse(Integer course_num);
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);

@@ -4,45 +4,66 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.course.dao.CourseMapper">
 	<!-- sql 태그와 include 태그를 이용해 SQL문 재사용 -->
-	<!-- ====================키필드,키워드====================== -->
-	<sql id="courseSearch">
-		<where>
-			<if test="keyword!=null and keyword!=''">
-				<if test="keyfield==1">
-					course_name LIKE '%' || #{keyword} || '%' OR course_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield==2">
-					course_name LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield==3">
-					course_content LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield==4">
-					mem_nickname LIKE '%' || #{keyword} || '%'
-				</if>
-			</if>
-		</where>
-	</sql>
-	
 	<!-- ====================온라인,오프라인====================== -->
 	<sql id="courseOnoff">
-		<where>
-			<if test="keyword!=null and keyword!=''">
-				<if test="keyfield==1">
-					course_name LIKE '%' || #{keyword} || '%' OR course_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+			<if test="onoff!=null and onoff!=''">
+				<if test="onoff==1"> <!-- 오프라인 -->
+					course_onoff='off'
 				</if>
-				<if test="keyfield==2">
-					course_name LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield==3">
-					course_content LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield==4">
-					mem_nickname LIKE '%' || #{keyword} || '%'
+				<if test="onoff==2"> <!-- 온라인 -->
+					course_onoff='on'
 				</if>
 			</if>
-		</where>
 	</sql>
+	
+	<!-- ====================원데이,정기====================== -->
+	<sql id="courseOneweek">
+		<if test="oneweek!=null and oneweek!=''">
+			<if test="oneweek==1"><!-- 원데이 -->
+				AND course_oneweek='one'
+			</if>
+			<if test="oneweek==2"><!-- 정기 -->
+				AND course_oneweek='week'
+			</if>
+		</if>
+	</sql>
+	
+	<!-- ====================키필드,키워드====================== -->
+	<sql id="courseSearch">
+		<if test="keyword!=null and keyword!=''">
+				<if test="keyfield==1">
+					AND course_name LIKE '%' || #{keyword} || '%' OR course_content LIKE '%' || #{keyword} || '%' OR mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==2">
+					AND course_name LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==3">
+					AND course_content LIKE '%' || #{keyword} || '%'
+				</if>
+				<if test="keyfield==4">
+					AND mem_nickname LIKE '%' || #{keyword} || '%'
+				</if>
+			</if>
+	</sql>
+	
+	<!-- ====================카테고리====================== -->
+	<sql id="courseCate">
+		<if test="cate!=null and cate!=''">
+			<if test="cate_num!=0"> <!-- 전체가 아닐 때 -->
+				AND cate_nums LIKE '%' || #{cate_num} || '%'
+			</if>
+		</if>
+	</sql>
+	
+	<!-- ====================지역====================== -->
+	<sql id="courseLoc">
+      <if test="location!=null and location!=''">
+         <if test="!'전체'.equals(location)">
+            AND course_address1 LIKE #{location} || '%'
+         </if>
+      </if>
+      
+   </sql>
 	
 	<!-- ====================정렬====================== -->
 	<sql id="courseOrder">
@@ -50,7 +71,7 @@
 			course_num DESC
 		</if>
 		<if test="order==2">
-			reply DESC
+			replycount DESC
 		</if>
 		<if test="order==3">
 			fav DESC
@@ -62,7 +83,16 @@
 	
 	
 	<select id="selectCourseCount" parameterType="map" resultType="integer">
-		SELECT COUNT(*) FROM course JOIN member USING(mem_num) <include refid="courseSearch"></include> 
+		SELECT COUNT(*) FROM course JOIN member USING(mem_num) 
+		LEFT JOIN (SELECT course_num , COUNT(reply_num) AS replycount 
+		FROM course_reply GROUP BY course_num) USING(course_num)
+		LEFT JOIN (SELECT course_num,COUNT(fav_num) AS fav 
+		FROM course_fav GROUP BY course_num) USING(course_num)
+		LEFT JOIN (SELECT course_num , ROUND(AVG(star_auth),1) AS staravg 
+		FROM course_reply GROUP BY course_num) USING(course_num)
+		WHERE <include refid="courseOnoff"></include> <include refid="courseOneweek"></include> <include refid="courseSearch"></include>
+		<include refid="courseCate"> </include>
+		ORDER BY <include refid="courseOrder"></include>
 	</select>
 	 
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
@@ -76,7 +106,9 @@
 		FROM course_fav GROUP BY course_num) USING(course_num)
 		LEFT JOIN (SELECT course_num , ROUND(AVG(star_auth),1) AS staravg 
 		FROM course_reply GROUP BY course_num) USING(course_num)
-			<include refid="courseSearch"></include> ORDER BY <include refid="courseOrder"></include>)a)
+			WHERE <include refid="courseOnoff"></include> <include refid="courseOneweek"> </include> <include refid="courseSearch"></include>
+			<include refid="courseCate"> </include> <include refid="courseLoc"> </include>
+			ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}
 			]]>

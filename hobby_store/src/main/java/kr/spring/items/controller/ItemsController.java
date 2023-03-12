@@ -192,8 +192,17 @@ public class ItemsController {
 		return mav;
 	}
 
-	// 2-1 상품 수정
-	// @RequestMapping("/items/modify.do")
+	// 2-1 상품 수정 폼 호출
+	@GetMapping("/items/modify.do")
+	public String formUpdate(int items_num, Model model) {
+		//표시할 Item 불러오기 
+		ItemsVO items = itemsService.selectItems(items_num);
+		
+		//모델 객체에 Item 넣기
+		model.addAttribute("items", items);
+		return "itemsAdminModify";
+	}
+	
 	
 	// 2-2 상품 삭제
 	@RequestMapping("/items/delete.do")

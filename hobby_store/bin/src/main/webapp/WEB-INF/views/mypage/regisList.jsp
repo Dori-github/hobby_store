@@ -17,7 +17,7 @@
 			onclick="location.href='regisList.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
 			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
 		</div>
-	<c:if test="${count==0}">
+	<c:if test="${empty list}">
 	<table class="table align-center">
 		<tr>
 			<td>
@@ -27,7 +27,7 @@
 	</table>
 	</c:if>
 	
-	<c:if test="${count>0}">
+	<c:if test="${!empty list}">
 	<table class="table table-group-divider align-center">
 		<tr>
 			<td>강의번호</td>
@@ -41,7 +41,8 @@
 			<td>
 			<img src="${pageContext.request.contextPath}/course/imageView.do?course_num=${course.course_num}&item_type=1" width="50" height="50">
 			${course.course_name}
-			<input type="button" value="수정" onclick="location.href='#'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/modify.do?course_num=${course.course_num}'">
+			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/course/delete.do?course_num=${course.course_num}'">
 			</td>
 			<td>${course.course_date}</td>
 		</tr>
@@ -54,7 +55,8 @@
 			<td>
 			  <img src="${pageContext.request.contextPath}/items/imageView.do?items_num=${items.items_num}&items_type=1" width="40" height="40">
 			${items.items_name}
-			<input type="button" value="수정" onclick="location.href='#'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/items/modify.do?items_num=${items.items_num}'">
+			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/items/delete.do?items_num=${items.items_num}'">
 			</td>
 			<td>${items.reg_date}</td>
 		</tr>
@@ -67,7 +69,8 @@
 			<td>
 			<img src="/space/imageView.do?space_num=${space.space_num}&space_type=1" width="40" height="40">
 			${space.space_name}
-			<input type="button" value="수정" onclick="location.href='#'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/space/admin_modify.do?space_num=${space.space_num}'">
+			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/space/delete.do?space_num=${space.space_num}'">
 			</td>
 			<td>${space.space_date}</td>
 		</tr>
@@ -78,8 +81,6 @@
 		${page}
 	</div>
 	<div class="align-right">
-	<input type="button" value="수정" onclick="location.href='#'">
-	<input type="button" value="삭제" onclick="location.href='#'">
 	</div>
 	</c:if>
 	

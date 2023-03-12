@@ -94,9 +94,12 @@
 		</div>
 		<%-- 오프라인 결제정보 전송 폼(클래스이름,가격,인원,클래스번호) --%>
 		<c:if test="${course.course_onoff.equals('off')}">
-		<form id="course_cart" action="/order/orderForm.do" method="post">
+		<form id="course_cart" action="/order/orderNowForm.do" method="post">
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
+			<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
+			<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
+
 			<div class="reservation">
 				<%-- 원데이 클래스 --%>
 				<c:if test="${course.course_oneweek.equals('one')}">
@@ -110,27 +113,29 @@
 				</c:if>
 				
 				<p>수업인원 &nbsp; / ${course.course_limit}</p>
-				<span>구매수량 <input></span> 
+				<span>구매수량<input type="number" value="1" name="course_quan"></span>
 				<span class="price"><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color:gray;">
-				<button type="submit" class="buy" style="width:100%;">클래스 예약하기</button>
+				<input type="submit" class="buy" style="width:100%;" value="예약하기"/>
 			</div>
 		</form>
 		</c:if>
 		
 		<%-- 온라인 장바구니정보 전송 폼(클래스번호,회원번호) --%>
 		<c:if test="${course.course_onoff.equals('on')}">
-		<form id="courseOn_cart" action="/order/orderForm.do" method="post">	
+		<form id="courseOn_cart" method="post">	
 			<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
       		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
+      		<input type="hidden" name="course_quan" value="1" id="course_quan">
 			<div class="reservation">
 				<span class="price" style="line-height:70px;"><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color:gray;">
 				<div style="display:flex;justify-content:space-between;">
-					<button type="submit" class="buy"><i class="fa-solid fa-cart-plus"></i> 장바구니</button>
-					<button type="submit" class="buy">클래스 구매하기</button>
+					<input type="submit" class="buy" value="장바구니" formaction="/cart/insert.do">
+					<i class="fa-solid fa-cart-plus"></i>
+					<input type="submit" class="buy" value="구매하기" formaction="/order/orderNowForm.do">
 				</div>
 			</div>
 		</form>
@@ -186,6 +191,9 @@
 		</div>
 		</c:if>
 		<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
+		<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
+		<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
+		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
 		<textarea rows="3" cols="50" name="reply_content" id="reply_content" class="reply-content" 
 				<c:if test="${empty user}">disabled="disabled"</c:if>
 				><c:if test="${empty user}">로그인해야 작성할 수 있습니다.</c:if></textarea>

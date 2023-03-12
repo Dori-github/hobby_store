@@ -80,8 +80,7 @@
 			</select>
 			
 			<select class="form-select select" id="location" name="location">
-				<option hidden="hidden">지역</option>
-				<option value="전체" <c:if test="${param.location == '전체'}">selected</c:if>>전체</option>
+				<option value="전체" <c:if test="${param.location == '전체'}">selected</c:if>>지역 전체</option>
 				<option value="서울" <c:if test="${param.location == '서울'}">selected</c:if>>서울</option>
 				<option value="경기" <c:if test="${param.location == '경기'}">selected</c:if>>경기</option>
 				<option value="인천" <c:if test="${param.location == '인천'}">selected</c:if>>인천</option>
