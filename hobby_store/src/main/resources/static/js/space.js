@@ -1,5 +1,5 @@
 $(function(){
-/*			//jsp안에 자바스크립트보다 먼저 작동
+			//jsp안에 자바스크립트보다 먼저 작동
 	//=================클래스 메인 사이드바==================//
 	let cate = $('#sidebar .cate');
 
@@ -13,7 +13,7 @@ $(function(){
 		if($(this).hasClass('active-color')){
 			$(this).parents('.cate').stop().slideDown();
 		}
-	});*/
+	});
 
 //==============클래스 목록==================//
 

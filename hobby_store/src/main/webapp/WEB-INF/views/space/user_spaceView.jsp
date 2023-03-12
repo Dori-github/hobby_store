@@ -159,7 +159,7 @@
 		<hr size="2" noshade width="100%" style="color:gray;">
 		<ul class="reply-avg">
 			<li><span>★</span> <li>
-			<li><span class="count"></span> 건의 후기 중<br><span class="star5_per"></span> % 의 고객이 5점을 주었어요!</li>
+			<li><span id="star_avg"class="count"></span> 건의 후기 중<br><span id="star_per" class="star5_per"></span> % 의 고객이 5점을 주었어요!</li>
 		</ul>
 	</div>
 	<hr size="2" noshade width="100%" style="color:gray;">

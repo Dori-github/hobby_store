@@ -139,7 +139,7 @@ public class SpaceServiceImpl implements SpaceService{
 	
 
 	@Override
-	public float selectStar(Integer space_num) {
+	public Float selectStar(Integer space_num) {
 		return spaceMapper.selectStar(space_num);
 	}
 

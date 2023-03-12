@@ -52,7 +52,7 @@ public interface SpaceService {
 	public void deleteReplyPhoto(Integer reply_num);
 
     //별점
-	public float selectStar(Integer space_num);
+	public Float selectStar(Integer space_num);
 	public int select5star(Integer space_num);
 	public int selectallstar(Integer space_num);
 	

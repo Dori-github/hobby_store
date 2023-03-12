@@ -280,7 +280,12 @@ public class SpaceController {
 		//전체 후기 중 5점의 퍼센트
 		int star5 = spaceService.select5star(space_num);
 		int starall = spaceService.selectallstar(space_num);
+		
 		float star5_per =  Math.round((float)star5/starall*100);
+		/*
+		 * if(star5>0 ){ float star5_per = Math.round((float)star5/starall*100);
+		 */
+	
 
 
 		//페이지 처리

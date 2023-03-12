@@ -95,7 +95,7 @@ public interface SpaceMapper {
 	
 	//별점
 	@Select("SELECT ROUND(AVG(star_auth),1) AS star_avg  FROM space_reply  WHERE space_num = #{space_num}")
-	public float selectStar(Integer space_num);
+	public Float selectStar(Integer space_num);
 
 	@Select("SELECT COUNT(reply_num) AS star5 FROM space_reply WHERE star_auth = 5")
 	public int select5star();
