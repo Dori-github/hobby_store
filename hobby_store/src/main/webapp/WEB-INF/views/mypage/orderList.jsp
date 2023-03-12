@@ -7,7 +7,7 @@
 <form action="order.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
-				<select name="keyfield">
+				<select name="keyfield" id="keyfield">
 					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>주문번호</option>
 					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>주문품목명</option>
 				</select>
@@ -17,8 +17,7 @@
 				       id="keyword" value="${param.keyword}">
 			</li>
 			<li>
-				<input type="submit" value="찾기">
-				<input type="button" value="목록" onclick="location.href='order.do'">
+				<input type="submit" value="찾기" class="order-search-btn">
 			</li>
 		</ul>                                   
 </form>
@@ -69,5 +68,6 @@
 	</table>
 	<div class="align-center">${page}</div>
 	</c:if>
+	<input type="button" class="order-list-btn" value="목록" onclick="location.href='order.do'" style="float:right;">
 </div>
 <!-- 주문조회 끝 -->

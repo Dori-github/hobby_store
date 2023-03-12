@@ -7,17 +7,17 @@
 <tiles-definitions>
 	<!-- Notice 공지사항  -->
 	<!-- 관리자 -->
-    <definition name="adminList" extends="admin">
+    <definition name="adminList" extends="main">
     	<put-attribute name="title" value="공지목록(관리자)"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/notice/admin_list.jsp"/>        
     </definition>
-    <definition name="noticeAdminWrite" extends="admin">
+    <definition name="noticeAdminWrite" extends="main">
     	<put-attribute name="title" value="공지등록(관리자)"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/notice/admin_writeForm.jsp"/>        
     </definition>
-    <definition name="noticeModify" extends="admin">
+    <definition name="noticeModify" extends="main">
     	<put-attribute name="title" value="공지수정(관리자)"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/notice/admin_modifyForm.jsp"/>        
