@@ -151,7 +151,7 @@
 		<div class="align-center">
 			<form:button>수정</form:button>
 			<input type="button" value="목록"
-				onclick="location.href='admin_list.do'">
+				onclick="location.href='noticeList.do'">
 		</div>
 	</form:form>
 </div>

@@ -188,7 +188,7 @@ public class NoticeAdminController {
 		//글삭제
 		noticeService.deleteNotice(noti_num);
 
-		return "redirect:/notice/list.do";
+		return "redirect:/notice/noticeList.do";
 	}
 
 	//=====파일 삭제=======//

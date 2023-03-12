@@ -28,7 +28,7 @@ public interface QnaMapper {
 	public void updateQna(QnaVO qna);
 	@Delete("DELETE FROM qna WHERE qna_num=#{qna_num}")
 	public void deleteQna(Integer qna_num);
-	//deleteFile은 생략함 
+	
 	public void deleteFile(Integer qna_num);
 	
 	//QnA 댓글

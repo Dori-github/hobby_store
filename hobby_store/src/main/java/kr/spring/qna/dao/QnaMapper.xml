@@ -93,16 +93,7 @@
 		mem_nickname
 		FROM qna_reply JOIN member
 		USING (mem_num)
-		WHERE qna_num = #{qna_num} and 
-        <if test="items_num!=0">
-            items_num = #{items_num}
-        </if>
-        <if test="space_num!=0">
-              space_num  = #{space_num}
-    	</if>
-        <if test="course_num!=0">
-            course_num  = #{course_num}
-        </if>
+		WHERE qna_num = #{qna_num}
 		ORDER BY re_num DESC)a)
          <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}

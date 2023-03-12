@@ -46,7 +46,7 @@
 	</div>
 	<!-- 댓글 UI 시작 -->
 	<div id="reply_div">
-		<span class="re-title">댓글 달기</span>
+		<span class="re-title">Q&A 답변하기</span>
 		<form id="re_form">
 			<input type="hidden" name="qna_num"
 			    value="${qna.qna_num}" id="qna_num">
