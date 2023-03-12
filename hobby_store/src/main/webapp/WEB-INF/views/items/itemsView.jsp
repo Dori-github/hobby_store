@@ -30,7 +30,7 @@
 			<div class="carousel-inner">
 				<div class="carousel-item active">
 					<img src="imageView.do?items_num=${items.items_num}&items_type=1"
-						class="d-block w-100">
+						class="d-block w-100" style="transform:scale(0.5)">
 				</div>
 				<c:if test="${!empty items.items_photo_name2}">
 					<div class="carousel-item">

@@ -57,6 +57,18 @@
 #sidebar .active-black{
 	color:#404040;
 }
+/*hover 이미지 확대*/
+.card-img-top{
+   height:200px;
+   overflow: hidden;
+}
+.card-img-top:hover img{
+   transform: scale(1.15);
+}
+.card-img-top img{
+   transition: all 0.2s linear;
+}
+
 
 
 /*오른쪽 컨텐츠*/
