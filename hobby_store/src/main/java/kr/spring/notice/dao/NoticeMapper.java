@@ -40,18 +40,18 @@ public interface NoticeMapper {
 	@Delete("DELETE FROM notice_board WHERE noti_num=#{noti_num}")
 	public void deleteNotice(Integer noti_num);
 	//공지사항 사진 삭제
-	@Update("UPDATE notice_board SET uploadfile='',filename='' WHERE noti_num=#{noti_num}")
-	public void deleteFile(Integer noti_num);
+	
+	public void deleteFile(Map<String,Integer> map);
 
 	
 	//좋아요
 	@Select("SELECT * FROM notice_fav WHERE "
-			+ "noti_num=#{noti_num} AND mem_num=#{mem_num}")
+			  + "noti_num=#{noti_num} AND mem_num=#{mem_num}")
 	public NoticeFavVO selectFav(NoticeFavVO fav);
 	@Select("SELECT COUNT(*) FROM notice_fav "
 			+ "WHERE noti_num=#{noti_num}")
 	public int selectFavCount(Integer noti_num);
-	@Insert("INSERT INTO spboard_fav (fav_num,"
+	@Insert("INSERT INTO notice_fav (fav_num,"
 			+ "noti_num,mem_num) VALUES (notice_fav_seq.nextval,"
 			+ "#{noti_num},#{mem_num})")
 	public void insertFav(NoticeFavVO fav);

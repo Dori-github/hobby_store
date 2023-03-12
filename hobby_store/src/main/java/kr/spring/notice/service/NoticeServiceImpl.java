@@ -58,8 +58,8 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public void deleteFile(Integer noti_num) {
-		noticeMapper.deleteFile(noti_num);
+	public void deleteFile(Map<String, Integer> map) {
+		noticeMapper.deleteFile(map);
 		
 	}
 	
