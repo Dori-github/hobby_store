@@ -260,7 +260,7 @@
 	text-align:right;
 	margin-top:20px;
 }
-.end-btn #modify_btn{
+.end-btn #modify_btn, #list_btn{
 	width:90px;
 	height:35px;
 	color:white;

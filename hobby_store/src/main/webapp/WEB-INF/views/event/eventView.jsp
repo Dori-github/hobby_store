@@ -50,5 +50,6 @@
 	</c:if>
 	</div>
 	</c:if>
+	<input id="list_btn" type="button" value="목록으로" onclick="location.href='list.do'">
 </div>
 <!-- 이벤트 상세 끝 -->

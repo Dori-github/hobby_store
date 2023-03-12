@@ -55,6 +55,6 @@ public interface EventMapper {
 	@Insert("INSERT INTO event_apply (event_a_num,event_num,mem_num) VALUES(event_apply_seq.nextval,#{event_num},#{mem_num})")
 	public void insertEventApply(EventApplyVO eventApplyVO);
 	//신청 이벤트 상세정보(중복 신청된 이벤트 여부 확인)
-	@Select("SELECT * FROM event_apply WHERE mem_num=#{mem_num}")
-	public EventApplyVO selectEventApply(int mem_num);
+	@Select("SELECT * FROM event_apply WHERE mem_num=#{mem_num} AND event_num=#{event_num}")
+	public EventApplyVO selectEventApply(Map<String,Object> map);
 }

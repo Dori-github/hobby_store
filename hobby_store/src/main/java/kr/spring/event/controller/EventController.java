@@ -196,13 +196,18 @@ public class EventController {
 	@RequestMapping("/event/user_regis.do")
 	public String userRegisForm(@RequestParam int event_num, HttpSession session,HttpServletRequest request, Model model) {
 		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
 		logger.debug("<<이벤트 신청>> : " + event_num);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		map.put("event_num", event_num);
+		map.put("mem_num", user.getMem_num());
+		
 		if(user!=null && user.getMem_auth() <= 3){
 			
-			EventApplyVO db_apply = eventService.selectEventApply(user.getMem_num());
+			EventApplyVO db_apply = eventService.selectEventApply(map);
 			EventVO db_event = eventService.selectEvent(event_num);
 
 			if(db_event.getMem_num()==user.getMem_num()) {

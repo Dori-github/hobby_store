@@ -32,5 +32,5 @@ public interface EventService {
 		public void insertEventApply(EventApplyVO eventApplyVO);
 		
 		//신청 이벤트 상세조회(중복 신청된 이벤트 여부 확인)
-		public EventApplyVO selectEventApply(int mem_num);
+		public EventApplyVO selectEventApply(Map<String,Object> map);
 }
