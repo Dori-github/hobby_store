@@ -163,7 +163,7 @@
             <label for="mem_cell">전화번호</label>
             <form:input path="mem_cell" class="form-control" id="mem_cell" placeholder="000-0000-0000" />
             <div class="invalid-feedback">
-              이메일을 입력해주세요.
+              전화번호를 입력해주세요.
             </div>
           </div>
 
@@ -181,7 +181,7 @@
             <input type="button" class="btn btn-primary mypage-btn btn-sm" style="background-color:#FF4E02; color:white; border:none;"
 				    onclick="execDaumPostcode()" value="우편번호찾기">
             <div class="invalid-feedback">
-              주소를 입력해주세요.
+              우편번호를 입력해주세요.
             </div>
           </div>
 
@@ -221,7 +221,7 @@
           </div>-->
           <hr class="mb-4">
           <div class="mb-4 align-center">
-          <button class="btn btn-primary mypage-btn" type="submit" style="background-color:#FF4E02; color:white; border:none;">수정 완료</button>
+          <form:button class="btn btn-primary mypage-btn" type="submit" style="background-color:#FF4E02; color:white; border:none;">수정 완료</form:button>
           <input class="btn btn-primary mypage-btn" type="button" value="목록으로" onclick="location.href='myPage.do'" style="background-color:#FF4E02; color:white; border:none;">
           </div>
         </form:form>

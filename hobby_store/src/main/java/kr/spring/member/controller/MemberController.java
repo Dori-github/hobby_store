@@ -811,7 +811,7 @@ public class MemberController {
 		List<OrderDetailVO> detailList = memberService.selectListOrderDetail(order_num);
 		logger.debug("<<사용자 주문정보수정 - 주문상세>> : " + detailList);
 		
-		model.addAttribute("order", order);
+		model.addAttribute("orderVO", order);
 		model.addAttribute("detailList", detailList);		
 			
 		return "orderModify";
