@@ -200,7 +200,23 @@ public class EventController {
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(user!=null && (user.getMem_auth() == 2 || user.getMem_auth() == 3)){
+		if(user!=null && user.getMem_auth() <= 3){
+			
+			EventApplyVO db_apply = eventService.selectEventApply(user.getMem_num());
+			EventVO db_event = eventService.selectEvent(event_num);
+
+			if(db_event.getMem_num()==user.getMem_num()) {
+				model.addAttribute("message","본인이 등록한 이벤트는 신청이 불가합니다.");
+				model.addAttribute("url",request.getContextPath()+"/event/detail.do?event_num="+event_num);
+				return "common/resultView";
+			}
+			
+			if(db_apply!=null) {
+				model.addAttribute("message","이미 신청된 이벤트가 존재합니다.");
+				model.addAttribute("url",request.getContextPath()+"/event/detail.do?event_num="+event_num);
+				return "common/resultView";
+			}
+			
 			EventApplyVO apply = new EventApplyVO();
 			apply.setEvent_num(event_num);
 			apply.setMem_num(user.getMem_num());

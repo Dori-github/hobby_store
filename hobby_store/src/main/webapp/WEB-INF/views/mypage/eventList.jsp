@@ -92,21 +92,18 @@ $(function(){
 				<c:if test="${event.event_attr==0}">마감</c:if>
 				<c:if test="${event.event_attr==1}">진행중</c:if>
 			</div>
-			<input type="button" value="권한 수정" class="modify-btn">
+			<input type="button" value="수정" class="modify-btn">
 			</c:if>
 			<c:if test="${event.event_end <= today}">마감</c:if>
 			</td>
 			<td>${event.event_date}</td>
 			<td>${event.event_end}</td>
 			<td>
-			<a href="eventWinList.do?event_num=${event.event_num}">
 			<c:if test="${event.event_rdate < today}">결과 발표 전</c:if>
-			
 			<c:if test="${event.event_rdate >= today}">
 			<c:if test="${event.event_a_win==0}">미당첨</c:if>
 			<c:if test="${event.event_a_win==1}">당첨</c:if>
 			</c:if>
-			</a>
 			</td>
 		</tr>
 		</c:forEach>

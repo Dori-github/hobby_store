@@ -9,23 +9,10 @@
     body {
       min-height: 100vh;
     }
-
-    .input-form {
-      max-width: 400px;
-
-      margin-top: 80px;
-      padding: 32px;
-
-      background: #fff;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      
-      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      
-    }
+	
+	.input-form {
+      max-width: 350px;
+     }
   </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/mypage.js"></script>
 <div id="content">
@@ -64,25 +51,28 @@
       <div class="input-form col-md-12 mx-auto">
         <h4 class="mb-4 align-center">회원정보 수정</h4>
         <div class="align-left">
-        <form:form  action="changePassword.do" id="change_form" modelAttribute="memberVO" class="validation-form">
+        <form:form action="changePassword.do" id="change_form" modelAttribute="memberVO" class="validation-form">
          
           <div class="mb-3">
             <label for="now_pw">현재 비밀번호</label>
-            <form:input path="now_pw" type="password" class="form-control" id="now_pw"/>
+            <form:input path="now_pw" type="password" class="form-control" id="now_pw"
+            style="border: none;background: #eee;"/>
             <form:errors path="now_pw" cssClass="error-color"/>
           </div>
           
           <div class="mb-3">
             <label for="mem_pw">새 비밀번호</label>
-            <form:input path="mem_pw" class="form-control" id="mem_pw"/>
+            <form:input path="mem_pw" class="form-control" id="mem_pw"
+            style="border: none;background: #eee;"/>
             <div class="invalid-feedback">
-              새 비밀번호 입력해주세요.
+              새 비밀번호를 입력해주세요.
             </div>
           </div>
 
           <div class="mb-3">
             <label for="confirm_pw">비밀번호 확인</label>
-            <input type="password" class="form-control" id="confirm_pw"/>
+            <input type="password" class="form-control" id="confirm_pw"
+            style="border: none;background: #eee;"/>
             <span id="message_id"></span>
             <div class="invalid-feedback">
               비밀번호 확인을 입력해주세요.
@@ -98,9 +88,6 @@
         
       </div>
     </div>
-    <footer class="my-3 text-center text-small">
-      <p class="mb-1">&copy; 2021 YD</p>
-    </footer>
   </div>
 </div>
 </div>

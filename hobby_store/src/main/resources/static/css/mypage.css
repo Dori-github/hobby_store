@@ -3,6 +3,9 @@
 	width:1024px;
 	display:flex;
 }
+a{
+	text-decoration:none;
+}
 /* 좌측 메뉴 레이아웃(Admin,MyPage)
 =============================*/
 div#page_nav{
@@ -212,19 +215,19 @@ div#page_body{
 	transition:.2s;
 }
 
-    .input-form {
-      max-width: 680px;
+.input-form {
+  max-width: 680px;
 
-      margin-top: 80px;
-      padding: 32px;
+  margin-top: 80px;
+  margin-bottom: 100px;
+  padding: 32px;
 
-      background: #fff;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
+  background: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
       
-      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      
-    }
+  -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      }

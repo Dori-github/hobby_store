@@ -1027,11 +1027,13 @@ public class MemberController {
 	//이벤트 신청자 조회
 	@GetMapping("/member/eventWinList.do")
 	public ModelAndView eventWinList(@RequestParam(value="pageNum",defaultValue="1") 
-	int currentPage,String keyfield,String keyword,@RequestParam int event_num,HttpSession session) {
+	int currentPage,String keyfield,String keyword,HttpSession session) {
 		Map<String,Object> map = new HashMap<String,Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
-		map.put("event_num", event_num);
+		map.put("mem_num", user.getMem_num());
 		
 		//총글의 개수 또는 검색된 글의 개수
 		int count = memberService.selectEventWinCount(map);

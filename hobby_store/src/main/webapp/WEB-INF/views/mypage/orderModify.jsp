@@ -193,9 +193,10 @@ $(function(){
 				${order.notice}
 			</li> -->
 			</c:if>
-			<c:if test="${orderVO.order_status == 1}">
+			<c:if test="${orderVO.order_status == 1 && orderVO.refund_status==null}">
 			<h4>예약완료</h4>
 			</c:if>
+			<h6>
 				<label>배송상태 :</label>
 				<c:if test="${orderVO.refund_status==null}">
 				<c:if test="${orderVO.order_status==0}">구매완료</c:if>
@@ -207,6 +208,7 @@ $(function(){
 				</c:if>
 				<c:if test="${orderVO.refund_status==0}">환불요청중</c:if>
 				<c:if test="${orderVO.refund_status==1}">환불완료</c:if>
+			</h6>
 		<div class="align-center">
 		<c:if test="${orderVO.order_status<2 && orderVO.refund_status==null}">
 			<form:button class="btn btn-primary btn-sm mypage-btn" style="background-color:#FF4E02; color:white; border:none;">배송지 수정</form:button>
@@ -228,9 +230,6 @@ $(function(){
         
       </div>
     </div>
-    <footer class="my-3 text-center text-small">
-      <p class="mb-1">&copy; 2021 YD</p>
-    </footer>
   </div>
 </div>
 </div>

@@ -32,7 +32,7 @@
 			</c:if>
 		</ul>
 		<input type="button" value="회원정보수정" onclick="location.href='update.do'" class="btn mb-4 mypage-btn">
-	<input type="button" value="포인트 내역 조회" onclick="location.href='${pageContext.request.contextPath}/order/point.do'">   	
+		<input type="button" value="포인트 내역 조회" onclick="location.href='${pageContext.request.contextPath}/order/point.do'" class="btn mb-4 mypage-btn">   	
 		</div>
 	</div>
 	
