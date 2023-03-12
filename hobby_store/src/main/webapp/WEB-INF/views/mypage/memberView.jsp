@@ -6,15 +6,14 @@
 <div id="mypage_main">
 <!-- 사이드바 끝 -->
 <!-- 회원정보 시작 -->
-	<div id="content" style="margin-left:300px;">
+	<div id="content" style="margin-left:200px;">
 		<img src="${pageContext.request.contextPath}/member/photoView.do" width="200" height="200" class="my-photo">
 		<h3><span><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
 			<span><c:if test="${empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
 			 님 환영합니다!
 		</h3>
-		 <input type="button" value="회원정보수정" class="modify-btn"
-		       onclick="location.href='update.do'">
-		
+		 <div><input type="button" value="회원정보수정" class="modify-btn"
+		       onclick="location.href='update.do'"></div>
 		<table class="myPage-info">
 			<tr>
 				<td>이름</td>
