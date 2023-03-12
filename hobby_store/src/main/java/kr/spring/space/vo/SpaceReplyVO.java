@@ -30,8 +30,8 @@ public class SpaceReplyVO {
 	private int favcount;//후기 좋아요
 	private float star_avg;//==starcount 평균
 
-	private float star5_per;
-	private int star5;//5점준 사람의 %
+	private float star5_per;//5점준 사람의 %
+	private int star5;
 	private int starall;
 	private int star_auth;
 	

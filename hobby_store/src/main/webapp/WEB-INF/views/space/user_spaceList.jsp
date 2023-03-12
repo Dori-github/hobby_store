@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <!-- 상품목록 시작 -->
 <script src="${pageContext.request.contextPath}/js/space.fav.js"></script>
+<script src="${pageContext.request.contextPath}/js/space.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 <script type="text/javascript">
@@ -88,7 +89,7 @@
 				<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
 				<option value="2" <c:if test="${param.order == 2}">selected</c:if>>리뷰순</option>
 				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요순</option>
-				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>가격낮은순</option>
+				<option value="4" <c:if test="${param.order == 4}">selected</c:if>>가격낮은순</option>
 			</select>
 		</div>
 		<hr size="3" noshade width="100%" style="color:gray;margin:.8em 0;">

@@ -27,7 +27,7 @@
 <div id="space_detail" class="space-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
-		<!-- 이미지 캐러셀  왜 넘어가질 못하니? 클릭 안됨-->
+		<!-- 이미지 캐러셀 -->
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-indicators" style="display: none;">
 		    <button type="button" id="img1" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -96,10 +96,10 @@
 				<span class="gray"><i class="fa-solid fa-location-dot"></i> &nbsp;${space.space_address1} ${space.space_address2}</span>
 			</p>
 			</c:if>
-			<p>
+			<%-- <p>
 				<span><i class="fa-regular fa-star" style="color:orange;"></i>${space.star_avg} (후기 ${space.replycount})</span>	
-			</p>
-		</div>
+			</p> --%>
+		
 		<%-- 결제정보 전송 폼(공간 번호,가격,요일) --%>
 		<form id="space_cart" action="/order/orderNowForm.do" method="post">
 			<input type="hidden" name="space_num" value="${space.space_num}" id="space_num">
@@ -137,13 +137,14 @@
 			 <!-- 여기까지 --> 
 	        </div>
 	        </form>
+	        </div>
       </div>
 </div>
 <div class="space-d-info">
 	<ul class="title">
 		<li class="active">소개</li>
 		<li>후기 <span class="badge" ><ul class="reply-avg"><span class="count"></span></ul></span></li>
-		<li>문의 <span class="badge" >4</span></li>
+		
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
 	<!-- 소개 시작 -->
@@ -233,13 +234,11 @@
 		<img src="${pageContext.request.contextPath}/images/loading2.gif" width="40" height="40">
 	</div>
 	<!-- 후기 목록 출력 끝 -->
+
 	<!-- 후기 끝 -->
 	
 	<!-- 문의 시작 -->
-	<div class="qna">
-		<h5>문의</h5>
-		<hr size="2" noshade width="100%" style="color:gray;">
-	</div>
+	
 	<!-- 문의 끝 -->
 </div>
 </c:if><!-- 재고 있을때 끝 -->

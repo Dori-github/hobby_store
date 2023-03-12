@@ -45,7 +45,8 @@ public interface SpaceMapper {
 	
 	
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
-	@Select("SELECT * FROM space WHERE space_num=#{space_num}")
+
+	@Select("SELECT * FROM space JOIN member USING (mem_num) WHERE space_num = #{space_num}")
 	public SpaceVO selectSpace(Integer space_num);
 	@Update("UPDATE space SET space_hit=space_hit+1 WHERE space_num=#{space_num}")
 	public void updateHit(Integer space_num);
@@ -95,10 +96,10 @@ public interface SpaceMapper {
 	
 	//별점
 	@Select("SELECT ROUND(AVG(star_auth),1) AS star_avg  FROM space_reply  WHERE space_num = #{space_num}")
-	public float selectStar(Integer space_num);
+	public Float selectStar(Integer space_num);
 
-	@Select("SELECT COUNT(reply_num) AS star5 FROM space_reply WHERE star_auth = 5")
-	public int select5star();
+	@Select("SELECT COUNT(reply_num) AS star5 FROM space_reply WHERE star_auth = 5 AND space_num = #{space_num}")
+	public int select5star(Integer space_num);
 	@Select("SELECT COUNT(reply_num) AS starall FROM space_reply WHERE space_num = #{space_num}")
 	public int selectallstar(Integer space_num);
 	
