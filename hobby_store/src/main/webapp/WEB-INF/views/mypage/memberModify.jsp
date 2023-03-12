@@ -3,34 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 회원정보 변경 시작 -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  <style>
-    body {
-      min-height: 100vh;
-    }
-
-    .input-form {
-      max-width: 680px;
-
-      margin-top: 80px;
-      padding: 32px;
-
-      background: #fff;
-      -webkit-border-radius: 10px;
-      -moz-border-radius: 10px;
-      border-radius: 10px;
-      
-      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-      
-    }
-  </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/mypage.js"></script>
 <div id="content">
-<!--<form:form action="update.do" id="modify_form"
+<form:form action="update.do" id="modify_form"
 	                       modelAttribute="memberVO">
 		<form:errors element="div" cssClass="error-color"/>                          
 		<ul>
@@ -39,47 +14,79 @@
 				           height="200" class="my-photo">
 			</li>
 			<li>
-				<div class="align-center">
-					<input type="button" value="수정" id="photo_btn">
+				<div>
+					<input type="button" value="프로필 수정" id="photo_btn" class="mod-btn">
 				</div>
 				<div id="photo_choice" style="display:none;">
 					<input type="file" id="upload" 
-					         accept="image/gif,image/png,image/jpeg">
+					         accept="image/gif,image/png,image/jpeg"><br>
 					<input type="button" value="전송" id="photo_submit">
 					<input type="button" value="취소" id="photo_reset">         
 				</div>
 			</li>
+		</ul>
+		<table class="myPage-info myPage-mInfo">
+			<tr>
+				<td width="150">이름</td>
+				<td>
+					<form:input path="mem_name"/>
+					<form:errors path="mem_name" cssClass="error-color"/>
+				</td>
+				<td width="150">이메일</td>
+				<td>
+					<form:input path="mem_email"/>
+					<form:errors path="mem_email" cssClass="error-color"/>
+				</td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td>
+					<input type="password" id="passwd" value="11111" disabled>
+					<input type="button" value="비밀번호 수정" onclick="location.href='changePassword.do'" id="passwd_btn">
+				</td>
+				<td>우편번호</td>
+				<td>
+					<form:input path="mem_zipcode"/>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호찾기" id="zip_btn">
+					<form:errors path="mem_zipcode" cssClass="error-color"/>
+				</td>
+			</tr>
+			<tr>
+				<td>별명</td>
+				<td><form:input path="mem_nickname"/></td>
+				<td>주소</td>
+				<td>
+					<form:input path="mem_address1"/>
+					<form:errors path="mem_address1" cssClass="error-color"/>
+				</td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td>
+					<form:input path="mem_cell"/>
+					<form:errors path="mem_cell" cssClass="error-color"/>
+				</td>
+				<td>상세주소</td>
+				<td>
+					<form:input path="mem_address2"/>
+					<form:errors path="mem_address2" cssClass="error-color"/>
+				</td>
+			</tr>
+		</table>
+		<!-- 
 			<li>
-				<div class="row">
-					<div class="col-md-6 mb-3">
-						<label for="mem_name">닉네임</label>
-					</div>
-					<div class="col-auto">
-						<input type="text" id="mem_name" class="form-control">
-						<form:errors path="mem_name" cssClass="error-color"/>
-					</div>
-				</div>
+				<label for="mem_name">이름</label>
+				<form:input path="mem_name"/>
+				<form:errors path="mem_name" cssClass="error-color"/>
 			</li>
 			<li>
-				<div class="row">
-					<div class="col-auto">
-						<label for="password2">Password</label>
-					</div>
-					<div class="col-auto">
-						<input type="password" id="password2" class="form-control" disabled>
-					</div>
-				</div>
+				<label for="passwd">비밀번호</label>
+				<input type="password" id="passwd" value="11111" disabled>
+				<input type="button" value="비밀번호 수정" onclick="location.href='changePassword.do'">
 			</li>
 			<li>
-				<div class="row">
-					<div class="col-auto">
-						<label for="mem_nickname">닉네임</label>
-					</div>
-					<div class="col-auto">
-						<input type="text" id="mem_nickname" class="form-control">
-						<form:errors path="mem_nickname" cssClass="error-color"/>
-					</div>
-				</div>
+				<label for="mem_nickname">별명</label>
+				<form:input path="mem_nickname"/>
 			</li>
 			<li>
 				<label for="mem_cell">전화번호</label>
@@ -108,146 +115,13 @@
 				<form:input path="mem_address2"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
 			</li>
-		</ul>
-		<div class="align-center">
-			<form:button>수정</form:button>
-			<input type="button" value="My페이지"
+			-->
+		<div class="align-center" style="margin:100px;">
+			<form:button  class="mod-btn" style="margin-right:10px;">수정</form:button>
+			<input type="button" value="My페이지"  class="mod-btn"
 			   onclick="location.href='myPage.do'">
 		</div>
-	</form:form>-->
-	
- <div class="container">
-    <div class="input-form-backgroud row">
-      <div class="input-form col-md-12 mx-auto">
-        <h4 class="mb-4 align-center">회원정보 수정</h4>
-        <div class="align-center">
-        <img src="${pageContext.request.contextPath}/member/photoView.do" width="200" 
-				           height="200" class="my-photo">
-		</div>
-		<div class="align-center">
-		<input type="button" value="수정" id="photo_btn" class="btn btn-primary mypage-btn btn-sm" style="background-color:#FF4E02; color:white; border:none;">
-		</div>
-		<div id="photo_choice" style="display:none;">
-		<div class="input-group">
-			<input type="file" id="upload" class="form-control"
-			         accept="image/gif,image/png,image/jpeg">
-			<input type="button" value="전송" id="photo_submit">
-			<input type="button" value="취소" id="photo_reset"> 
-		</div>        
-		</div>
-        <form:form  action="update.do" id="modify_form" modelAttribute="memberVO" class="validation-form">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="mem_name">이름</label>
-              <form:input path="mem_name" class="form-control" id="mem_name"/>
-              <div class="invalid-feedback">
-                이름을 입력해주세요.
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="mem_nickname">닉네임</label>
-               <form:input path="mem_nickname" class="form-control" id="mem_name" placeholder=""/>
-              <div class="invalid-feedback">
-                별명을 입력해주세요.
-              </div>
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label for="mem_pw">비밀번호</label>
-            <input type="password" name="mem_pw" class="form-control" id="mem_pw" value="0000" disabled />
-            <input type="button" value="비밀번호 수정" onclick="location.href='changePassword.do'"  class="btn btn-primary mypage-btn btn-sm" style="background-color:#FF4E02; color:white; border:none;">
-          </div>
-          
-          <div class="mb-3">
-            <label for="mem_cell">전화번호</label>
-            <form:input path="mem_cell" class="form-control" id="mem_cell" placeholder="000-0000-0000" />
-            <div class="invalid-feedback">
-              전화번호를 입력해주세요.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="mem_email">이메일</label>
-            <form:input path="mem_email" class="form-control" id="mem_email" placeholder="you@example.com" />
-            <div class="invalid-feedback">
-              이메일을 입력해주세요.
-            </div>
-          </div>
-
-		  <div class="mb-3">
-            <label for="mem_zipcode">우편번호</label>
-            <form:input path="mem_zipcode" class="form-control" id="mem_zipcode"/>
-            <input type="button" class="btn btn-primary mypage-btn btn-sm" style="background-color:#FF4E02; color:white; border:none;"
-				    onclick="execDaumPostcode()" value="우편번호찾기">
-            <div class="invalid-feedback">
-              우편번호를 입력해주세요.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="mem_address1">주소</label>
-            <form:input path="mem_address1" class="form-control" id="mem_address1" placeholder="서울특별시 강남구"/>
-            <div class="invalid-feedback">
-              주소를 입력해주세요.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="mem_address2">상세주소</label>
-            <form:input path="mem_address2" class="form-control" id="mem_address2" placeholder="상세주소를 입력해주세요."/>
-          	<div class="invalid-feedback">
-              상세주소를 입력해주세요.
-            </div>
-          </div>
-
-       <!-- <div class="row">
-            <div class="col-md-8 mb-3">
-              <label for="root">선호지역</label>
-              <select class="custom-select d-block w-100" id="root">
-                <option value=""></option>
-              </select>
-              <div class="invalid-feedback">
-                선호 지역을 선택해주세요.
-              </div>
-            </div>
-            <div class="col-md-4 mb-3">
-              <label for="code">관심사</label>
-              <input type="text" class="form-control" id="code" placeholder="" required>
-              <div class="invalid-feedback">
-                관심사를 입력해주세요.
-              </div>
-            </div>
-          </div>-->
-          <hr class="mb-4">
-          <div class="mb-4 align-center">
-          <form:button class="btn btn-primary mypage-btn" type="submit" style="background-color:#FF4E02; color:white; border:none;">수정 완료</form:button>
-          <input class="btn btn-primary mypage-btn" type="button" value="목록으로" onclick="location.href='myPage.do'" style="background-color:#FF4E02; color:white; border:none;">
-          </div>
-        </form:form>
-      </div>
-    </div>
-    <footer class="my-3 text-center text-small">
-      <p class="mb-1">&copy; 2021 YD</p>
-    </footer>
-  </div>
-  <script>
-    window.addEventListener('load', () => {
-      const forms = document.getElementsByClassName('validation-form');
-
-      Array.prototype.filter.call(forms, (form) => {
-        form.addEventListener('submit', function (event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  </script>
-
+	</form:form>
 <!-- 우편번호 검색 시작 -->
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">

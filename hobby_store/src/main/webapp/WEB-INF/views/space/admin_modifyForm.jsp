@@ -78,24 +78,23 @@
                           </tr>
 
                       
-             <tr id="price">
-			<td>가격</td>
-			<!-- 자바빈에 데이터가 없으면 int값은 자동으로 0값을 가짐 -->
-			<td>
-			<form:hidden path="space_price"/>
-			<input id="space_vprice"/>
-			 원</td>
-			<form:errors element="div" path="space_price" cssClass="error-color"/>
-		</tr>
-                     <tr class="limit" style="display:none;">
-			<tr>
+             <tr>
+                        <td width="20%">공간가격</td>
+                        <td width="80%">
+                        <form:input path="space_price" type="number"/>
+            <form:errors path="space_price" 
+                              cssClass="error-color"/>
+                        </td>
+                     </tr>
+                   <tr>
+		
                         <td>인원수</td>
                         <td>
                         <form:input path="space_np" type="number"/>
                          <form:errors path="space_np" cssClass="error-color"/>
                         </td>
                      </tr>
-                     <tr>
+                   <tr>
                         <td>공간수</td>
                         <td>
                         <form:input path="space_limit" type="number"/>
@@ -110,7 +109,7 @@
                <img src="imageView.do?space_num=${spaceVO.space_num}&space_type=1" width="70" height="70" id="photo" class="space-space_photo">
                <input type="file" name="upload" id="upload" 
                       accept="image/gif,image/png,image/jpeg">
-              <c:if test="${!empty spaceVO.space_photo_name}">
+             <%--  <c:if test="${!empty spaceVO.space_photo_name}">
 				<div id="file_detail">
 					(${spaceVO.space_photo_name})파일이 등록되어 있습니다.
 					<input type="button" value="파일삭제"
@@ -143,8 +142,8 @@
 						});
 					});
 				</script>
-				</c:if>
-				</div>       
+				</c:if> 
+				</div>  --%>     
                 <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
                 <form:errors path="space_photo" cssClass="error-color"/>     
             </div>

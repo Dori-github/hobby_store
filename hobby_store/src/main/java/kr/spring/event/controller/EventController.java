@@ -153,7 +153,8 @@ public class EventController {
 	public String submitUpdate(@Valid EventVO eventVO, BindingResult result, HttpServletRequest request, Model model) {
 		
 		logger.debug("<<글수정>> : " + eventVO);
-		logger.debug("<<업로드 파일 용량>> : " + eventVO.getEvent_photo().length);
+		logger.debug("<<업로드 파일 용량>> : " 
+		           + eventVO.getEvent_photo().length);
 		
 		if(eventVO.getEvent_photo().length > 5*1024*1024) {//5MB
 			result.reject("limitUploadSize", new Object[] {"5MB"},null);
@@ -163,7 +164,6 @@ public class EventController {
 		if(result.hasErrors()) {
 			EventVO vo = eventService.selectEvent(eventVO.getEvent_num());
 			eventVO.setEvent_photo_name(vo.getEvent_photo_name());
-			return "eventModify";
 		}
 		
 		//이벤트 수정

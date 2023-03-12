@@ -34,10 +34,10 @@
 			space_num DESC
 		</if>
 		<if test="order==2">
-			replycount DESC
+			replycount DESC NULLS LAST
 		</if>
 		<if test="order==3">
-			fav_cnt DESC
+			fav_cnt DESC NULLS LAST
 		</if>
 		<if test="order==4">
 			space_price ASC
@@ -71,6 +71,9 @@
   	    WHERE rnum >= #{start} AND rnum <= #{end}
   	    ]]>             
   	</select>
+  
+  	
+  	
   	  	
   	<update id="updateSpace" parameterType="spaceVO">
   		UPDATE space SET

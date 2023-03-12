@@ -83,7 +83,7 @@ $(function(){
 	});
 	
 	//이미지 변경
-	$('#file_modify').click(function(){
+	/*$('#file_modify').click(function(){
 		$('.file-detail').hide();
 		$('#file_modifyForm').show();
 	});
@@ -91,6 +91,5 @@ $(function(){
 	$('#photo_reset').click(function(){
 		$('.file-detail').show();
 		$('#file_modifyForm').hide();
-		$('#upload').val('');
-	});
+	});*/
 });

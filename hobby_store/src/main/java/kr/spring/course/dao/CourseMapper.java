@@ -41,10 +41,30 @@ public interface CourseMapper {
 	public CourseVO selectCourse(Integer course_num);
 	@Update("UPDATE course SET course_hit=course_hit+1 WHERE course_num=#{course_num}")
 	public void updateHit(Integer course_num);
-	public void updateCourse(CourseVO course);
-	public void deleteCourse(Integer course_num);
-	public void deletePhoto(Integer course_num);
+	@Select("SELECT reply_num FROM course_reply WHERE course_num = #{course_num}")
+	public List<Integer> selectReplyNum(Integer course_num);
 	
+	//클래스수정
+	//@
+	public void updateCourse(CourseVO course);
+	//클래스 삭제
+	@Delete("DELETE FROM course WHERE course_num = #{course_num}")
+	public void deleteCourse(Integer course_num);
+	public void deleteCourseWithAll(Integer course_num);
+	@Delete("DELETE FROM course_time WHERE course_num=#{course_num}")
+	public void deleteCourseTime(Integer course_num);
+	
+	
+	//클래스 사진 1,2,3 삭제
+	@Delete("UPDATE course SET course_photo1='',course_photo_name1='' WHERE course_num = #{course_num}")
+	public void deletePhoto1(Integer course_num);
+	@Delete("UPDATE course SET course_photo2='',course_photo_name2='' WHERE course_num = #{course_num}")
+	public void deletePhoto2(Integer course_num);
+	@Delete("UPDATE course SET course_photo1='',course_photo_name3='' WHERE course_num = #{course_num}")
+	public void deletePhoto3(Integer course_num);
+	//클래스가 담긴 장바구니 삭제
+	@Delete("DELETE FROM course_cart WHERE course_num = #{course_num}")
+	public void deleteCourseCart(Integer course_num);
 	 
 	//좋아요
 	@Select("SELECT * FROM course FULL OUTER JOIN course_fav USING(course_num)")
@@ -80,14 +100,18 @@ public interface CourseMapper {
 	public void deleteReplyByCourseNum(Integer course_num);
 	//후기 별점평균
 	@Select("SELECT ROUND(AVG(star_auth),1) AS starcount  FROM course_reply WHERE course_num = #{course_num} GROUP BY course_num")
-	public float selectStar(Integer course_num);
+	public Float selectStar(Integer course_num);
 	@Select("SELECT COUNT(reply_num) AS star5 FROM course_reply WHERE star_auth = 5 AND course_num = #{course_num}")
 	public int select5star(Integer course_num);
 	@Select("SELECT COUNT(reply_num) AS starall FROM course_reply WHERE course_num = #{course_num}")
 	public int selectallstar(Integer course_num);
-	//@Update("UPDATE course_reply SET reply_photo_name1")
-	public void deleteReplyPhoto(Integer reply_num,Integer photo_type);
-	
+	//후기 사진 1,2,3 삭제
+	@Update("UPDATE course_reply SET reply_photo1='',reply_photo_name1='' WHERE reply_num=#{reply_num}")
+	public void deleteReplyPhoto1(Integer reply_num);
+	@Update("UPDATE course_reply SET  reply_photo1='',reply_photo_name2='' WHERE reply_num=#{reply_num}")
+	public void deleteReplyPhoto2(Integer reply_num);
+	@Update("UPDATE course_reply SET  reply_photo3='',reply_photo_name2='' WHERE reply_num=#{reply_num}")
+	public void deleteReplyPhoto3(Integer reply_num);
 	
 	//후기 좋아요
 	@Select("SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num} AND reply_num=#{mem_num}")

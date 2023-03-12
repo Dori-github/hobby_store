@@ -47,7 +47,7 @@ public class CourseVO {
 	private String mem_nickname;
 	private byte[] mem_photo;
 	//별점평균
-	private float staravg;
+	private Float staravg;
 	//후기 개수
 	private int replycount;
 	//좋아요 개수
@@ -245,10 +245,10 @@ public class CourseVO {
 		this.mem_photo = mem_photo;
 	}
 	
-	public float getStaravg() {
+	public Float getStaravg() {
 		return staravg;
 	}
-	public void setStaravg(float staravg) {
+	public void setStaravg(Float staravg) {
 		this.staravg = staravg;
 	}
 	public int getReplycount() {

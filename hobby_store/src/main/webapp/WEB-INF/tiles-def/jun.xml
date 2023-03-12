@@ -47,16 +47,6 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/qna/qnaWrite.jsp"/>        
     </definition>
-    <definition name="qnaView" extends="main">
-    	<put-attribute name="title" value="상세정보"/>
-    	<put-attribute name="body"
-    	  value="/WEB-INF/views/qna/qnaView.jsp"/>        
-    </definition>
-    <definition name="qnaModify" extends="main">
-    	<put-attribute name="title" value="문의글수정"/>
-    	<put-attribute name="body"
-    	  value="/WEB-INF/views/qna/qnaModify.jsp"/>        
-    </definition>
 </tiles-definitions>
 
 

@@ -100,11 +100,10 @@
     	  value="/WEB-INF/views/mypage/eventWinList.jsp"/>
     </definition>
     <definition name="memberDelete" extends="myPage">
-    	<put-attribute name="title" value="이벤트 신청자 조회"/>
+    	<put-attribute name="title" value="회원탈퇴"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/memberDeleteForm.jsp"/>
     </definition>
-    
     
     <!-- 관리자 마이페이지 -->
     <definition name="admin" 

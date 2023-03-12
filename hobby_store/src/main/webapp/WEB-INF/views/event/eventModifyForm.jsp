@@ -59,31 +59,30 @@
 				<td>
 			</tr>
 			<tr>
-				<!--  -->
+				<!-- <div class="file-detail">
+					<img src="imageView.do?event_num=${eventVO.event_num}" width="70" height="70">
+					${eventVO.event_photo_name}이 등록되어 있습니다.
+					<input type="button" value="이미지 변경" id="file_modify">
+				</div> -->
+				<div id="file_modifyForm">
 				<td>
 					<label for="upload">이미지 변경</label>
 				</td>
 				<td>
-				 <!-- <label class="file-detail">
-					<img src="imageView.do?event_num=${eventVO.event_num}" width="70" height="70">
-					${eventVO.event_photo_name}이 등록되어 있습니다.
-					<input type="button" value="이미지 변경" id="file_modify">
-				</label> -->
-				<div id="file_modifyForm">
 					<input type="file" name="upload" id="upload" accept="image/gif,image/png,image/jpeg">
+					<input type="button" value="취소" id="photo_reset">
 					<form:errors path="event_photo" cssClass="error-color"/>
-				</div>	
 				</td>
+				</div>
 			</tr>
 			<tr>
 				<td>
 				<label for="search_item">클래스/상품 등록</label>
 				</td>
 				<td>
-				
-				<input type="radio" name="search-btn" id="course_btn" <c:if test="${event.course_num!=''}">checked</c:if>>클래스
-				<input type="radio" name="search-btn" id="items_btn" <c:if test="${event.items_num!=''}">checked</c:if>>상품
-				<input type="radio" name="search-btn" id="reset_btn" <c:if test="${event.course_num!='' && event.items_num!=''}">checked</c:if>>없음
+				<input type="radio" name="search-btn" id="course_btn">클래스
+				<input type="radio" name="search-btn" id="items_btn">상품
+				<input type="radio" name="search-btn" id="reset_btn">없음
 				<div id="course_choice" style="display:none;">
 					<span id="course_name">클래스명</span>
 					<select id="course_select" name="course_num" <c:if test="${empty course}">disabled</c:if>>
@@ -117,8 +116,8 @@
 				<label for="event_rdate">이벤트 당첨 날짜</label><!-- 달력 api는 일단 생각해보기 -->
 				</td>
 				<td>
-				<input type="radio" name="rdate-btn" id="rdate-O" <c:if test="${event.event_rdate!=null}">checked</c:if>>등록
-				<input type="radio" name="rdate-btn" id="rdate-X" <c:if test="${event.event_rdate==null}">checked</c:if>>미등록
+				<input type="radio" name="rdate-btn" id="rdate-O">등록
+				<input type="radio" name="rdate-btn" id="rdate-X">미등록
 				<form:input path="event_rdate" class="datepicker" id="rdate" style="display:none;"/>
 				</td>
 			</tr>

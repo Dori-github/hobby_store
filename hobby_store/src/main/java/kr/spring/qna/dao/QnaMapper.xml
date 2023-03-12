@@ -4,124 +4,61 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.qna.dao.QnaMapper">
 	<!-- sql 태그와 include 태그를 이용해 SQL문을 재사용 -->
-	<sql id="qnaSearch">
-		<where>
-			<if test="keyword != null and keyword != ''">
-				<if test="keyfield == 1">
-					b.qna_title LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield == 2">
-					b.qna_content LIKE '%' || #{keyword} || '%'
-				</if>
-				<if test="keyfield == 3">
-					b.qna_title LIKE '%' || #{keyword} || '%' OR
-					b.qna_content LIKE '%' || #{keyword} || '%'
-				</if>
-			</if>
-		</where>
-	</sql>
-
-	<select id="selectRowCount" parameterType="map"
-		resultType="integer">
-		SELECT
-		COUNT(*)
-		FROM qna b JOIN member m
-		ON b.mem_num = m.mem_num
-		<include refid="qnaSearch"></include>
-	</select>
-
-	<select id="selectList" parameterType="map" resultType="qnaVO">
-		SELECT
-		*
-		FROM (SELECT
-		a.*,
-		rownum rnum
-		FROM (SELECT
-		b.course_num,
-		b.items_num,
-		b.space_num,
-		b.qna_num,
+  	<sql id="qnaSearch">
+  		<where>
+  			<if test="keyword != null and keyword != ''">
+  				<if test="keyfield == 1">
+  					b.qna_title LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 2">
+  					b.qna_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  				<if test="keyfield == 3">
+  					b.qna_title LIKE '%' || #{keyword} || '%' OR 
+  					b.qna_content LIKE '%' || #{keyword} || '%'
+  				</if>
+  			</if>
+  		</where>
+  	</sql>
+  	
+  	<select id="selectRowCount" parameterType="map"
+  	                            resultType="integer">
+  		SELECT
+  		  COUNT(*)
+  		FROM qna b JOIN member m
+  		ON b.mem_num = m.mem_num
+  		<include refid="qnaSearch"></include>                            
+  	</select>
+  	
+  	<select id="selectList" parameterType="map"
+  	                         resultType="qnaVO">
+  		SELECT
+  		   *
+  		FROM (SELECT
+  		        a.*,
+  		        rownum rnum
+  		      FROM (SELECT
+  		      		  b.couse_num,
+  		      		  b.items_num,
+  		      		  b.space_num,
+  		              b.qna_num,
   		              <![CDATA[
   		              REPLACE(REPLACE(b.qna_title,'<','&lt;'),'>','&gt;') qna_title,
   		              ]]>
-		b.qna_content,
-		b.qna_hit,
-		b.qna_date,
-		b.mem_num,
-		m.mem_id,
-		m.mem_nickname
-		FROM qna b JOIN member m ON b.mem_num = m.mem_num
-			LEFT OUTER JOIN course c ON b.course_num = c.course_num
-			LEFT OUTER JOIN items i ON b.items_num = i.items_num
-			LEFT OUTER JOIN space s ON b.space_num = s.space_num
-		<include refid="qnaSearch"></include>
-		ORDER BY b.qna_num DESC)a) /* 강의,상품,공간대여 세가지로 나누는 방법 */                       
+  		              b.qna_content,
+  		              b.qna_hit,
+  		              b.qna_date,
+  		              b.mem_num,
+  		              m.mem_id,
+  		              m.mem_nickname
+  		            FROM qna b JOIN member m ON b.mem_num = m.mem_num
+  		            	 qna b JOIN course c ON b.course_num = c.course_num
+  		            	 qna b JOIN items i ON b.items_num = i.items_num
+  		            	 qna b JOIN space s ON b.space_num = s.space_num 
+  		            <include refid="qnaSearch"></include>
+  		            ORDER BY b.qna_num DESC)a) <!-- 강의,상품,공간대여 세가지로 나누는 방법  -->                        
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]>
-	</select>
-
-	<update id="updateQna" parameterType="qnaVO">
-		UPDATE qna SET
-		qna_title=#{qna_title},
-		qna_content=#{qna_content},
-		qna_mdate=SYSDATE
-		WHERE qna_num=#{qna_num}
-	</update>
-
-	<!-- 댓글 목록 -->
-	<select id="selectListReply" parameterType="map"
-		resultType="qnaReplyVO">
-		SELECT
-		*
-		FROM(SELECT
-		a.*,
-		rownum rnum
-		FROM(SELECT
-		re_num,
-  		            <![CDATA[
-  		            REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') re_content,
-  		            ]]>
-		re_date,
-		re_mdate,
-		qna_num,
-		mem_num,
-		mem_id,
-		mem_nickname
-		FROM qna_reply JOIN member
-		USING (mem_num)
-		WHERE qna_num = #{qna_num}
-		ORDER BY re_num DESC)a)
-  		    <![CDATA[
-  		    WHERE rnum >= #{start} AND rnum <= #{end}
-  		    ]]>
-	</select>
-	
-	<insert id="insertQna" parameterType="qnaVO">
-	INSERT INTO qna (qna_num,
-	<if test="items_num!=0">
-	items_num,
-	</if>
-	<if test="space_num!=0">
-	space_num,
-	</if>
-	<if test="course_num!=0">
-	course_num,
-	</if>
-	qna_title,
-			  qna_content,mem_num)
-			  VALUES (qna_seq.nextval,
-			  <if test="items_num!=0">
-			  #{items_num},
-			  </if>
-			  <if test="space_num!=0">
-			  #{space_num},
-			  </if>
-			  <if test="course_num!=0">
-			  #{course_num},
-			  </if>
-			  #{qna_title},
-			  #{qna_content},#{mem_num})
-	</insert>
-	
+  	</select>
 </mapper>

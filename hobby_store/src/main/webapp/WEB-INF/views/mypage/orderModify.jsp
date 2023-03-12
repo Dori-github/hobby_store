@@ -4,13 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>   
 <!-- 주문정보수정 시작 -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<style>
-  body {
-    min-height: 100vh;
-  }
-</style>
 <script type="text/javascript">
 $(function(){
 	$('#order_modify').submit(function(){
@@ -64,18 +57,13 @@ $(function(){
 			<td class="align-center"><fmt:formatNumber value="${order.order_price}"/>원</td>
 		</tr>
 	</table>
-	
-<div class="container">
-    <div class="input-form-backgroud row">
-      <div class="input-form col-md-12 mx-auto">
-        <h4 class="mb-4 align-left">배송정보 수정</h4>
-        <div class="align-left">
-        <form:form  action="orderModify.do" id="change_form" modelAttribute="orderVO" class="validation-form">
-	    <input type="hidden" name="order_num" value="${orderVO.order_num}">
-	    <input type="hidden" name="order_status" value="${orderVO.order_status}">
-	    <input type="hidden" name="refund_status" value="${orderVO.refund_status}">                                             
-		    <c:if test="${orderVO.order_status < 1 && orderVO.refund_status==null}">
-			<!-- <li>
+	<form:form action="orderModify.do" method="post" id="order_modify" modelAttribute="orderVO">
+	    <input type="hidden" name="order_num" value="${order.order_num}">
+	    <input type="hidden" name="order_status" value="${order.order_status}">
+	    <input type="hidden" name="refund_status" value="${refund.order_status}">                                             
+		<ul>
+		    <c:if test="${order.order_status < 2}">
+			<li>
 				<label for="receive_name">받는 사람</label>
 				<input type="text" name="receive_name" value="${order.receive_name}"
 				       id="receive_name" maxlength="10">       
@@ -106,69 +94,10 @@ $(function(){
 				<label for="notice">배송메시지</label>
 				<input type="text" name="notice" value="${order.notice}" 
 					id="notice" maxlength="300">       
-			</li> -->
-			
-			<div class="mb-3">
-            <label for="receive_name">수취인</label>
-            <form:input path="receive_name" class="form-control" id="receive_name" />
-            <div class="invalid-feedback">
-              수취인을 입력해주세요.
-            </div>
-          </div>
-
-		  <div class="mb-3">
-            <label for="receive_post">우편번호</label>
-            <form:input path="receive_post" class="form-control" id="receive_post"/>
-            <input type="button" class="btn btn-primary mypage-btn btn-sm" style="background-color:#FF4E02; color:white; border:none;"
-				    onclick="execDaumPostcode()" value="우편번호찾기">
-            <div class="invalid-feedback">
-              우편번호를 입력해주세요.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="receive_address1">주소</label>
-            <form:input path="receive_address1" class="form-control" id="receive_address1" placeholder="ex)서울특별시 강남구"/>
-            <div class="invalid-feedback">
-              주소를 입력해주세요.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="receive_address2">상세주소</label>
-            <form:input path="receive_address2" class="form-control" id="receive_address2" placeholder="ex)1000동 1000호"/>
-          	<div class="invalid-feedback">
-              상세주소를 입력해주세요.
-            </div>
-          </div>
-			
-		  <div class="mb-3">
-            <label for="receive_phone">전화번호</label>
-            <form:input path="receive_phone" class="form-control" id="receive_phone" placeholder="000-0000-0000" />
-            <div class="invalid-feedback">
-              전화번호를 입력해주세요.
-            </div>
-          </div>
-          
-          <div class="mb-3">
-            <label for="notice">배송 메모</label>
-            <form:input path="notice" class="form-control" id="notice" />
-          </div>
-          
+			</li>
 			</c:if>
-			<c:if test="${orderVO.order_status >= 2 || orderVO.refund_status!=null}">
-			<div class="card" style="width:43rem; cursor:default">
-			<div class="card-body">
-				<h4 class="cart-title">배송정보</h4>
-				<p class="card-text">받는 사람 : ${orderVO.receive_name}</p>
-				<p class="card-text">우편번호 : ${orderVO.receive_post}</p>
-				<p class="card-text">주소 : ${orderVO.receive_address1}</p>
-				<p class="card-text">상세주소 : ${orderVO.receive_address2}</p>
-				<p class="card-text">전화번호 : ${orderVO.receive_phone}</p>
-				<p class="card-text">남기실 말씀 : ${orderVO.notice}</p>
-			</div>
-			</div>
-			<!-- <li>
+			<c:if test="${order.order_status >= 2 || order.refund_status!=null}">
+			<li>
 				<label>받는 사람</label>
 				${order.receive_name}
 			</li>
@@ -191,25 +120,24 @@ $(function(){
 			<li>
 				<label>남기실 말씀</label>
 				${order.notice}
-			</li> -->
+			</li>
 			</c:if>
-			<c:if test="${orderVO.order_status == 1}">
-			<h4>예약완료</h4>
-			</c:if>
-				<label>배송상태 :</label>
-				<c:if test="${orderVO.refund_status==null}">
-				<c:if test="${orderVO.order_status==0}">구매완료</c:if>
-				<c:if test="${orderVO.order_status==1}">예약완료</c:if>
-				<c:if test="${orderVO.order_status==2}">배송준비중</c:if>
-				<c:if test="${orderVO.order_status==3}">배송중</c:if>
-				<c:if test="${orderVO.order_status==4}">배송완료</c:if>
-				<c:if test="${orderVO.order_status==5}">주문취소</c:if>
+			<li>
+				<label>배송상태</label>
+				<c:if test="${order.refund_status==0}">
+				<c:if test="${order.order_status==0}">구매완료</c:if>
+				<c:if test="${order.order_status==1}">예약완료</c:if>
+				<c:if test="${order.order_status==2}">배송준비중</c:if>
+				<c:if test="${order.order_status==3}">배송중</c:if>
+				<c:if test="${order.order_status==4}">배송완료</c:if>
+				<c:if test="${order.order_status==5}">주문취소</c:if>
 				</c:if>
-				<c:if test="${orderVO.refund_status==0}">환불요청중</c:if>
-				<c:if test="${orderVO.refund_status==1}">환불완료</c:if>
+				<c:if test="${order.refund_status==1}">환불요청중</c:if>
+				<c:if test="${order.refund_status==2}">환불완료</c:if>
+			</li>
+		</ul>
 		<div class="align-center">
-		<c:if test="${orderVO.order_status<2 && orderVO.refund_status==null}">
-			<form:button class="btn btn-primary btn-sm mypage-btn" style="background-color:#FF4E02; color:white; border:none;">배송지 수정</form:button>
+		<c:if test="${order.order_status<2 && order.refund_status==0}">
 			<input type="button" value="주문취소" id="order_cancel">
 			<script>
 				let order_cancel = document.getElementById('order_cancel');
@@ -221,35 +149,11 @@ $(function(){
 				};
 			</script>
 		</c:if>
-			<input class="btn btn-primary btn-sm mypage-btn" style="background-color:#FF4E02; color:white; border:none;" type="button" value="목록" onclick="location.href='order.do'">
-			<input class="btn btn-primary btn-sm mypage-btn" style="background-color:#FF4E02; color:white; border:none;" type="button" value="MyPage" onclick="location.href='myPage.do'">       
+			<input type="button" value="목록" onclick="location.href='order.do'">
+			<input type="button" value="MyPage" onclick="location.href='myPage.do'">       
 		</div>
 	</form:form>
-        
-      </div>
-    </div>
-    <footer class="my-3 text-center text-small">
-      <p class="mb-1">&copy; 2021 YD</p>
-    </footer>
-  </div>
 </div>
-</div>
-<script>
-    window.addEventListener('load', () => {
-      const forms = document.getElementsByClassName('validation-form');
-
-      Array.prototype.filter.call(forms, (form) => {
-        form.addEventListener('submit', function (event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  </script>
 <!-- 우편번호 검색 시작 -->
 <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
 <div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
@@ -308,11 +212,11 @@ $(function(){
                 //(수정) }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('receive_post').value = data.zonecode;
+                document.getElementById('zipcode').value = data.zonecode;
                 //(수정) + extraAddr를 추가해서 address1에 참고항목이 보여지도록 수정
-                document.getElementById("receive_address1").value = addr + extraAddr;
+                document.getElementById("address1").value = addr + extraAddr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("receive_address2").focus();
+                document.getElementById("address2").focus();
 
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

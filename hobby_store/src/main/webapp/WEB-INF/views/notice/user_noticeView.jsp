@@ -4,7 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- 중앙 컨텐츠 시작 -->
 <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
-<script src="${pageContext.request.contextPath}/js/notice.fav.js"></script>
+<script src="${pageContext.request.contextPath}/js/board.fav.js"></script>
+<script src="${pageContext.request.contextPath}/js/board.reply.js"></script>
 <div class="page-main">
 	<h1 class="align-center">공지사항</h1>
 	<br>
@@ -12,7 +13,7 @@
 	<br>
 	<h2 class="align-center">${notice.noti_title}</h2>
 	<ul class="detail-info">
-		<!--
+		<!-- 
 		<li>
 			<div class="noti-image">
 			<img src="imageView.do?noti_num=${notice.noti_num}&noti_type=2" width="400" height="400" >
@@ -66,7 +67,7 @@
 				};
 			</script>
 			<input type="button" value="목록"
-				onclick="location.href='noticeList.do'">
+				onclick="location.href='admin_list.do'">
 		</c:if>
 		<c:if test="${empty user || user.mem_auth < 9}">
 			<input type="button" value="목록"

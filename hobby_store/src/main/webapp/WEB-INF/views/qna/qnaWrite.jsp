@@ -12,13 +12,10 @@
 <script src="${pageContext.request.contextPath}/js/ckeditor.js"></script>
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <div class="page-main">
-	<h2>QnA 작성</h2>
+	<h2>글쓰기</h2>
 	<form:form action="write.do" id="register_form" 
 	                   modelAttribute="qnaVO"
 	                   enctype="multipart/form-data">
-	    <form:hidden path="course_num"/>  
-	    <form:hidden path="items_num"/> 
-	    <form:hidden path="space_num"/>             
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>
 			<li>

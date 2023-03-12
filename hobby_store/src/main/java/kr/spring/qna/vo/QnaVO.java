@@ -19,8 +19,8 @@ public class QnaVO {
 	private int course_num;
 	private int space_num;
 	
-	private String mem_id;
-	private String mem_nickname;
+	private String id;
+	private String nick_name;
 	
 	public int getQna_num() {
 		return qna_num;
@@ -82,23 +82,24 @@ public class QnaVO {
 	public void setSpace_num(int space_num) {
 		this.space_num = space_num;
 	}
-	public String getMem_id() {
-		return mem_id;
+	public String getId() {
+		return id;
 	}
-	public void setMem_id(String mem_id) {
-		this.mem_id = mem_id;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getMem_nickname() {
-		return mem_nickname;
+	public String getNick_name() {
+		return nick_name;
 	}
-	public void setMem_nickname(String mem_nickname) {
-		this.mem_nickname = mem_nickname;
+	public void setNick_name(String nick_name) {
+		this.nick_name = nick_name;
 	}
+	
 	@Override
 	public String toString() {
 		return "QnaVO [qna_num=" + qna_num + ", qna_title=" + qna_title + ", qna_content=" + qna_content + ", qna_hit="
 				+ qna_hit + ", qna_date=" + qna_date + ", qna_mdate=" + qna_mdate + ", mem_num=" + mem_num
-				+ ", items_num=" + items_num + ", course_num=" + course_num + ", space_num=" + space_num + ", mem_id="
-				+ mem_id + ", mem_nickname=" + mem_nickname + "]";
+				+ ", items_num=" + items_num + ", course_num=" + course_num + ", space_num=" + space_num + ", id=" + id
+				+ ", nick_name=" + nick_name + "]";
 	}
 }

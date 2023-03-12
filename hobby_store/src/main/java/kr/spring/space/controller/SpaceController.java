@@ -277,10 +277,21 @@ public class SpaceController {
 		//별점 평균
 		Float star_auth = spaceService.selectStar(space_num);
 
+		
 		//전체 후기 중 5점의 퍼센트
 		int star5 = spaceService.select5star(space_num);
 		int starall = spaceService.selectallstar(space_num);
+		
 		float star5_per =  Math.round((float)star5/starall*100);
+		
+		logger.debug("<<별점 평균 >>" +star5);
+		logger.debug("<<별점 평균 >>" +starall);
+		logger.debug("<<별점 평균 >>" +star5_per);
+		
+		/*
+		 * if(star5>0 ){ float star5_per = Math.round((float)star5/starall*100);
+		 */
+	
 
 
 		//페이지 처리

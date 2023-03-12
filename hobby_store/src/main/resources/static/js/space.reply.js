@@ -22,22 +22,23 @@ $(function(){
 				//로딩 이미지 감추기
 				$('#loading').hide();
 
-				//후기 개수 표시
-				let count = param.count;
-				$('.reply b').text(count);
-				$('.reply-avg .count').text(count);
-				
-				//별점 5점 %
-				let star5_per = param.star5_per;
-				$('.reply-avg .star5_per').text(star5_per);
-				
-				//별점 평균
-				let star_auth = param.star_auth;
-				$('.reply-avg li:first-child').append(star_auth);
-				
-				//호출시 해당 ID의 div의 내부 내용물 제거
-				$('#output').empty();
-				$('.paging-btn').empty();
+			//후기 개수 표시
+            let count = param.count;
+            $('.reply b').text(count);
+            $('.reply-avg .count').text(count);
+            
+            //별점 5점 %
+            let star5_per = param.star5_per;
+            $('.reply-avg .star5_per').text(star5_per);
+            
+            //별점 평균
+            let star_auth = param.star_auth;
+            $('.reply-avg li:first-child').append(star_auth);
+            
+            //호출시 해당 ID의 div의 내부 내용물 제거
+            $('#output').empty();
+            $('.paging-btn').empty(); 
+			
 			
 				
 				//후기 목록 작업

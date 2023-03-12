@@ -194,7 +194,7 @@
   		WHERE mem_num = #{mem_num}
   		<if test="keyword !=null and keyword != ''">
   			<if test="keyfield == 1">
-  				AND order_num LIKE '%' || #{keyword} || '%'
+  				AND order_num = #{keyword}
   			</if>
   			<if test="keyfield == 2">
   				AND order_name LIKE '%' || #{keyword} || '%'

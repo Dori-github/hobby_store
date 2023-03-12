@@ -61,7 +61,7 @@
 				<th>작성일</th>
 				<th>조회수</th>
 			</tr>
-			<c:forEach var="qna" items="${list}">
+			<c:forEach var="notice" items="${list}">
 				<tr>
 					<td>
 						<c:if test="${empty qna.course_num && qna.space_num}">${qna.items_num}</c:if>
@@ -80,7 +80,7 @@
 					    <c:if test="${!empty qna.mem_nickname}">${qna.mem_nickname}</c:if>
 					</td>
 					<td>${qna.qna_date}</td>
-					<td>${qna.qna_hit}</td>
+					<td>${notice.noti_hit}</td>
 				</tr>
 			</c:forEach>
 			<hr size="1" width="100%">

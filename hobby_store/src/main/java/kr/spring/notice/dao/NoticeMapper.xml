@@ -21,19 +21,6 @@
   		</where>
   	</sql>
   	
-  	<!-- ====================정렬====================== -->
-	<sql id="noticeOrder">
-		<if test="order==1">
-			b.status DESC, b.noti_num DESC
-		</if>
-		<if test="order==2">
-			noti_num DESC
-		</if>
-		<if test="order==3">
-			fav_cnt DESC
-		</if>
-	</sql>
-  	
   	<select id="selectNoticeCount" parameterType="map"
   	                            resultType="integer">
   		SELECT
@@ -62,14 +49,11 @@
   		              b.noti_end,
   		              m.mem_num,
   		              m.mem_id,
-  		              m.mem_nickname,
-  		              NVL(f.fav_cnt,0) fav_cnt
+  		              m.mem_nickname
   		            FROM notice_board b JOIN member m 
   		            ON b.mem_num = m.mem_num
-  		            LEFT OUTER JOIN (SELECT noti_num, COUNT(*) fav_cnt FROM notice_fav GROUP BY noti_num) f
-                    ON b.noti_num = f.noti_num
   		            <include refid="noticeSearch"></include>
-  		            ORDER BY <include refid="noticeOrder"></include>)a)                         
+  		            ORDER BY b.status DESC, b.noti_num DESC)a)                         
   		<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}
   		]]>

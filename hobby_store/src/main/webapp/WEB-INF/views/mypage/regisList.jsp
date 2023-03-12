@@ -3,19 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 등록 상품 조회 시작 -->
 <div id="content">
-	<h2>등록 상품 조회</h2>
-	<div class="btn-group top-btn">
+	<h2 style="margin-bottom:50px;" class="align-center">등록 상품 조회</h2>
+	<div class="btn-group top-btn" id="reg_item">
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio1"
 			onclick="location.href='regisList.do?cate_num=1'" <c:if test="${cate_num==1}">checked</c:if>>
-			<label class="btn btn-outline-primary" for="btnradio1">클래스</label>
+			<label class="btn" for="btnradio1">클래스</label>
 			
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio2"
 			onclick="location.href='regisList.do?cate_num=2'" <c:if test="${cate_num==2}">checked</c:if>>
-			<label class="btn btn-outline-primary" for="btnradio2">상품</label>
+			<label class="btn" for="btnradio2">상품</label>
 			
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio3"
 			onclick="location.href='regisList.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
-			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
+			<label class="btn" for="btnradio3">공간대여</label>
 		</div>
 	<c:if test="${empty list}">
 	<table class="table align-center">
@@ -41,7 +41,7 @@
 			<td>
 			<img src="${pageContext.request.contextPath}/course/imageView.do?course_num=${course.course_num}&item_type=1" width="50" height="50">
 			${course.course_name}
-			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/update.do?course_num=${course.course_num}'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/modify.do?course_num=${course.course_num}'">
 			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/course/delete.do?course_num=${course.course_num}'">
 			</td>
 			<td>${course.course_date}</td>

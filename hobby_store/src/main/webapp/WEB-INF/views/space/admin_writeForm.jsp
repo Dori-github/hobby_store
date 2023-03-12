@@ -82,18 +82,16 @@
                           </td>
                           </tr>
 
-                    
-             <tr id="price">
-			<td>가격</td>
-			<!-- 자바빈에 데이터가 없으면 int값은 자동으로 0값을 가짐 -->
-			<td>
-			<form:hidden path="space_price"/>
-			<input id="space_vprice"/>
-			 원</td>
-			<form:errors element="div" path="space_price" cssClass="error-color"/>
-		</tr>
+             <tr>
+                        <td width="20%">공간가격</td>
+                        <td width="80%">
+                        <form:input path="space_price" type="number"/>
+            <form:errors path="space_price" 
+                              cssClass="error-color"/>
+                        </td>
+                     </tr>
                      <tr class="limit" style="display:none;">
-			<tr>
+		
                         <td>인원수</td>
                         <td>
                         <form:input path="space_np" type="number"/>

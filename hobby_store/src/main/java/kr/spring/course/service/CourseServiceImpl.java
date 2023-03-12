@@ -1,6 +1,7 @@
 package kr.spring.course.service;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -76,10 +77,6 @@ public class CourseServiceImpl implements CourseService{
 		courseMapper.deleteCourse(course_num);
 	}
 
-	@Override
-	public void deletePhoto(Integer course_num) {
-		courseMapper.deletePhoto(course_num);
-	}
 
 	@Override
 	public List<CourseVO> selectCate() {
@@ -154,7 +151,7 @@ public class CourseServiceImpl implements CourseService{
 		courseMapper.deleteReplyByCourseNum(course_num);
 	}
 	@Override
-	public float selectStar(Integer course_num) {
+	public Float selectStar(Integer course_num) {
 		return courseMapper.selectStar(course_num);
 	}
 	@Override
@@ -165,10 +162,6 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public int selectallstar(Integer course_num) {
 		return courseMapper.selectallstar(course_num);
-	}
-	@Override
-	public void deleteReplyPhoto(Integer reply_num, Integer photo_type) {
-		courseMapper.deleteReplyPhoto(reply_num, photo_type);
 	}
 	
 	
@@ -205,6 +198,93 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.selectReplyFavCheck();
 	}
 
-	
+	@Override
+	public void deletePhoto1(Integer course_num) {
+		courseMapper.deletePhoto1(course_num);
+	}
+
+	@Override
+	public void deletePhoto2(Integer course_num) {
+		courseMapper.deletePhoto2(course_num);
+	}
+
+	@Override
+	public void deletePhoto3(Integer course_num) {
+		courseMapper.deletePhoto2(course_num);
+	}
+
+	@Override
+	public void deleteReplyPhoto1(Integer reply_num) {
+		courseMapper.deleteReplyPhoto1(reply_num);
+	}
+
+	@Override
+	public void deleteReplyPhoto2(Integer reply_num) {
+		courseMapper.deleteReplyPhoto2(reply_num);
+	}
+
+	@Override
+	public void deleteReplyPhoto3(Integer reply_num) {
+		courseMapper.deleteReplyPhoto3(reply_num);
+	}
+
+	@Override
+	public void deleteCourseCart(Integer course_num) {
+		courseMapper.deleteCourseCart(course_num);
+	}
+
+	@Override
+	public void deleteCourseWithAll(Integer course_num) {
+			//course_num을 사용하여 course_num을 list 형태로 저장
+			
+			List<Integer> reply_nums = courseMapper.selectReplyNum(course_num);
+			for(Integer num : reply_nums ) {
+				//댓글 번호가 있을때 댓글 번호를 통한 댓글의 좋아요 삭제	
+				courseMapper.deleteReplyFavByReplyNum(num);
+			}
+			//댓글 번호가 있을때 댓글 삭제 
+			courseMapper.deleteReplyByCourseNum(course_num);
+			//아이템의 좋아요 삭제 
+			courseMapper.deleteFavByCourseNum(course_num);
+			//아이템 카트 삭제
+			courseMapper.deleteCourseCart(course_num);
+			//요일,시간 테이블 삭제
+			courseMapper.deleteCourseTime(course_num);
+			//아이템 삭제
+			courseMapper.deleteCourse(course_num);
+			
+			
+			/*
+			for(Iterator<Integer> reply = course_num1.iterator(); reply.hasNext();) {
+				while(reply.hasNext()) {
+					Integer rep =  reply.next();
+					if(rep != null) {
+						//댓글 번호가 있을때 댓글 번호를 통한 댓글의 좋아요 삭제	
+						courseMapper.deleteReplyFavByReplyNum(rep);
+						//댓글 번호가 있을때 댓글 삭제 
+						courseMapper.deleteReplyByCourseNum(course_num);
+						//아이템의 좋아요 삭제 
+						courseMapper.deleteFavByCourseNum(course_num);
+						//아이템 카트 삭제
+						courseMapper.deleteCourseCart(course_num);
+						//아이템 삭제
+						courseMapper.deleteCourse(course_num);
+						
+					}
+				}
+			}
+			*/
+		
+		}
+
+	@Override
+	public List<Integer> selectReplyNum(Integer course_num) {
+		return courseMapper.selectReplyNum(course_num);
+	}
+
+
 	
 }
+	
+	
+

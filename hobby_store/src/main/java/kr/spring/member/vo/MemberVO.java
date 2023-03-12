@@ -42,7 +42,7 @@ public class MemberVO {
 	private Date mem_mdate;
 	
 	//비밀번호 변경시 현재 비밀번호를 저장하는 용도로 사용
-	//@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
+	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
 	private String now_pw;
 	
 	//====비밀번호 일치 여부 체크====//
