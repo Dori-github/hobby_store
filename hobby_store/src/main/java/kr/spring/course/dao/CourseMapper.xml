@@ -50,7 +50,13 @@
 	<sql id="courseCate">
 		<if test="cate!=null and cate!=''">
 			<if test="cate_num!=0"> <!-- 전체가 아닐 때 -->
-				AND cate_nums LIKE '%' || #{cate_num} || '%'
+				<if test="cate_num lte 6">
+				AND cate_nums LIKE #{cate_num} || '%'
+			</if>
+			 	<if test="cate_num gte 7">
+				AND cate_nums LIKE '%' || #{cate_num}
+			</if>
+			
 			</if>
 		</if>
 	</sql>

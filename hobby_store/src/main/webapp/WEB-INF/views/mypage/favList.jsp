@@ -6,18 +6,19 @@
 <!-- 좋아요 목록 시작 -->
 <div id="content">
 <div id="fav_size">
+	<h2 style="margin-bottom:50px;" class="align-center">좋아요 조회</h2>
 	<div class="btn-group top-btn">
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio1"
 			onclick="location.href='fav.do?cate_num=1'" <c:if test="${cate_num==1}">checked</c:if>>
-			<label class="btn btn-outline-primary" for="btnradio1">클래스</label>
+			<label class="btn" for="btnradio1">클래스</label>
 			
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio2"
 			onclick="location.href='fav.do?cate_num=2'" <c:if test="${cate_num==2}">checked</c:if>>
-			<label class="btn btn-outline-primary" for="btnradio2">상품</label>
+			<label class="btn" for="btnradio2">상품</label>
 			
 			<input type="radio" class="btn-check" name="btnradio" id="btnradio3"
 			onclick="location.href='fav.do?cate_num=3'" <c:if test="${cate_num==3}">checked</c:if>>
-			<label class="btn btn-outline-primary" for="btnradio3">공간대여</label>
+			<label class="btn" for="btnradio3">공간대여</label>
 		</div>
 	<c:if test="${empty list}">
 		<table class="table table-group-divider align-center">

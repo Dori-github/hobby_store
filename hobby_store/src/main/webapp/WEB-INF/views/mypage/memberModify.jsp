@@ -14,16 +14,66 @@
 				           height="200" class="my-photo">
 			</li>
 			<li>
-				<div class="align-center">
-					<input type="button" value="수정" id="photo_btn">
+				<div>
+					<input type="button" value="프로필 수정" id="photo_btn" class="mod-btn">
 				</div>
 				<div id="photo_choice" style="display:none;">
 					<input type="file" id="upload" 
-					         accept="image/gif,image/png,image/jpeg">
+					         accept="image/gif,image/png,image/jpeg"><br>
 					<input type="button" value="전송" id="photo_submit">
 					<input type="button" value="취소" id="photo_reset">         
 				</div>
 			</li>
+		</ul>
+		<table class="myPage-info myPage-mInfo">
+			<tr>
+				<td width="150">이름</td>
+				<td>
+					<form:input path="mem_name"/>
+					<form:errors path="mem_name" cssClass="error-color"/>
+				</td>
+				<td width="150">이메일</td>
+				<td>
+					<form:input path="mem_email"/>
+					<form:errors path="mem_email" cssClass="error-color"/>
+				</td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td>
+					<input type="password" id="passwd" value="11111" disabled>
+					<input type="button" value="비밀번호 수정" onclick="location.href='changePassword.do'" id="passwd_btn">
+				</td>
+				<td>우편번호</td>
+				<td>
+					<form:input path="mem_zipcode"/>
+					<input type="button" onclick="execDaumPostcode()" value="우편번호찾기" id="zip_btn">
+					<form:errors path="mem_zipcode" cssClass="error-color"/>
+				</td>
+			</tr>
+			<tr>
+				<td>별명</td>
+				<td><form:input path="mem_nickname"/></td>
+				<td>주소</td>
+				<td>
+					<form:input path="mem_address1"/>
+					<form:errors path="mem_address1" cssClass="error-color"/>
+				</td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td>
+					<form:input path="mem_cell"/>
+					<form:errors path="mem_cell" cssClass="error-color"/>
+				</td>
+				<td>상세주소</td>
+				<td>
+					<form:input path="mem_address2"/>
+					<form:errors path="mem_address2" cssClass="error-color"/>
+				</td>
+			</tr>
+		</table>
+		<!-- 
 			<li>
 				<label for="mem_name">이름</label>
 				<form:input path="mem_name"/>
@@ -65,10 +115,10 @@
 				<form:input path="mem_address2"/>
 				<form:errors path="mem_address2" cssClass="error-color"/>
 			</li>
-		</ul>
-		<div class="align-center">
-			<form:button>수정</form:button>
-			<input type="button" value="My페이지"
+			-->
+		<div class="align-center" style="margin:100px;">
+			<form:button  class="mod-btn" style="margin-right:10px;">수정</form:button>
+			<input type="button" value="My페이지"  class="mod-btn"
 			   onclick="location.href='myPage.do'">
 		</div>
 	</form:form>

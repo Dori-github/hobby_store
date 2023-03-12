@@ -175,3 +175,117 @@ div#page_body{
 #align-center{
 	text-align:center;
 }
+
+
+
+/*=========나의 프로필============*/
+.my-photo{
+	margin-bottom:30px;
+	border-radius: 50%;
+}
+.my-photo + h3{
+	float:right;
+	margin:130px;
+	margin-left:30px;
+	margin-top:50px;
+}
+#content .my-photo + h3 span{
+	color:#FF4E02;
+	font-weight: bold;
+	font-size: 30pt;
+}
+.modify-btn{
+	background-color:#FF4E02; 
+	font-size:10pt;
+	border:none;
+	border-radius:10px;
+	color:#FFF;
+	padding:10px 20px;
+	margin-left:40px;
+}
+.myPage-info{
+	margin:50px 0;
+	background-color: #f2f2f2;
+	border-radius: 10px;
+	padding:20px 40px;
+}
+.myPage-info td{
+	padding:20px 40px;
+	
+}
+/*===============프로필 수정===============*/
+.mod-btn,#photo_choice input[type=button]{
+	width:150px;
+	padding:10px 15px;
+	background-color: #fff;
+	border-radius: 20px;
+	border:1px solid lightgray;
+	cursor: pointer;
+}
+.mod-btn:hover{
+	background-color: #f2f2f2;
+	font-weight: bold;
+}
+#photo_btn{
+	margin:0 0 50px 30px;
+}
+#upload{
+	margin:0 0 20px 30px;
+}
+#photo_choice #photo_submit{
+	margin-left:30px;	
+	width:80px;
+}
+#photo_choice #photo_reset{
+	margin:5px;
+	width:80px;
+}
+#photo_choice{
+	margin-bottom:50px;
+}
+.myPage-mInfo{
+	background-color: #fff;
+	margin-left:50px;
+	width:100%;
+}
+.myPage-mInfo input,.passwd-change input{
+	border:1px solid lightgray;
+	border-radius: 10px;
+	padding: 10px 20px;
+}
+#passwd_btn:hover,#zip_btn:hover{
+	background-color: #404040;
+	color:#fff;
+}
+
+/*============비번변경============*/
+#change_form{
+	width:500px;
+	margin:50px auto;
+}
+#change_form h2{
+	margin:0 0 50px 120px;
+}
+#change_form ul{
+	padding:0;
+}
+#change_form li{
+	margin:20px;
+}
+.passwd-change{
+	background-color: #fff;
+}
+
+/*=============좋아요 리스트==============*/
+#fav_size .btn,#reg_item .btn{
+	border:1px solid lightgray;
+	padding:10px 20px;
+}
+#fav_size .btn:hover,input[type="radio"]:checked + .btn{
+	background-color:#FF4E02;
+	color:#fff;
+}
+
+
+
+

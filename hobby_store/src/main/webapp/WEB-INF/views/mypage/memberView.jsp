@@ -6,24 +6,47 @@
 <div id="mypage_main">
 <!-- 사이드바 끝 -->
 <!-- 회원정보 시작 -->
-	<div id="content">
+	<div id="content" style="margin-left:300px;">
 		<img src="${pageContext.request.contextPath}/member/photoView.do" width="200" height="200" class="my-photo">
-		<h2><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if>
-			<c:if test="${empty member.mem_nickname}">${member.mem_nickname}</c:if>
+		<h3><span><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
+			<span><c:if test="${empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
 			 님 환영합니다!
-		 <input type="button" value="회원정보수정"
-		       onclick="location.href='update.do'"></h2>
-		<ul>
-			<li>이름 : ${member.mem_name}</li>
-			<li>전화번호 : ${member.mem_cell}</li>
-			<li>이메일 : ${member.mem_email}</li>
-			<li>우편번호 : ${member.mem_zipcode}</li>
-			<li>주소 : ${member.mem_address1} ${member.mem_address2}</li>
-			<li>가입날짜 : ${member.mem_date}</li>
+		</h3>
+		 <input type="button" value="회원정보수정" class="modify-btn"
+		       onclick="location.href='update.do'">
+		
+		<table class="myPage-info">
+			<tr>
+				<td>이름</td>
+				<td>${member.mem_name}</td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td>${member.mem_cell}</td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td>${member.mem_email}</td>
+			</tr>
+			<tr>
+				<td>우편번호</td>
+				<td>${member.mem_zipcode}</td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td>${member.mem_address1} ${member.mem_address2}</td>
+			</tr>
+			<tr>
+				<td>가입날짜</td>
+				<td>${member.mem_date}</td>
+			</tr>
 			<c:if test="${!empty member.mem_mdate}">
-			<li>정보 수정일 : ${member.mem_mdate}</li>
+			<tr>
+				<td>정보수정일</td>
+				<td>${member.mem_mdate}</td>
+			</tr>
 			</c:if>
-		</ul>       
+		</table>
 	</div>
 </div>
 <!-- 회원정보 끝 -->
