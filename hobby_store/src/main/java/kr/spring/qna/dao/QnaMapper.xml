@@ -72,16 +72,19 @@
 	<!-- 댓글 목록 -->
 	<select id="selectListReply" parameterType="map"
 		resultType="qnaReplyVO">
-		SELECT
+		
+	SELECT
 		*
 		FROM(SELECT
 		a.*,
 		rownum rnum
 		FROM(SELECT
 		re_num,
+  		           
   		            <![CDATA[
   		            REPLACE(REPLACE(re_content,'<','&lt;'),'>','&gt;') re_content,
   		            ]]>
+  		           
 		re_date,
 		re_mdate,
 		qna_num,
@@ -90,13 +93,23 @@
 		mem_nickname
 		FROM qna_reply JOIN member
 		USING (mem_num)
-		WHERE qna_num = #{qna_num}
+		WHERE qna_num = #{qna_num} and 
+        <if test="items_num!=0">
+            items_num = #{items_num}
+        </if>
+        <if test="space_num!=0">
+              space_num  = #{space_num}
+    	</if>
+        <if test="course_num!=0">
+            course_num  = #{course_num}
+        </if>
 		ORDER BY re_num DESC)a)
-  		    <![CDATA[
+         <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>
 	</select>
 	
+	<!-- 각 게시판에서 문의 글 작성 폼으로 이 -->
 	<insert id="insertQna" parameterType="qnaVO">
 	INSERT INTO qna (qna_num,
 	<if test="items_num!=0">

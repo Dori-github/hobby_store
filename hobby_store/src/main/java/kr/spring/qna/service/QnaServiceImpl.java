@@ -67,7 +67,8 @@ public class QnaServiceImpl implements QnaService{
 	//QnA 댓글 
 	@Override
 	public List<QnaReplyVO> selectListReply(Map<String, Object> map) {
-		return qnaMapper.selectListReply(map);
+		return (List<QnaReplyVO>) qnaMapper.selectListReply(map);
+		//return qnaMapper.selectListReply(map);
 	}
 
 	@Override

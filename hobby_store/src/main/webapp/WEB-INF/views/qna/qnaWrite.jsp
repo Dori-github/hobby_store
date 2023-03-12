@@ -16,8 +16,8 @@
 	<form:form action="write.do" id="register_form" 
 	                   modelAttribute="qnaVO"
 	                   enctype="multipart/form-data">
-	    <form:hidden path="course_num"/>  
-	    <form:hidden path="items_num"/> 
+	     <form:hidden path="items_num"/>
+	    <form:hidden path="course_num"/>   
 	    <form:hidden path="space_num"/>             
 		<form:errors element="div" cssClass="error-color"/>
 		<ul>
