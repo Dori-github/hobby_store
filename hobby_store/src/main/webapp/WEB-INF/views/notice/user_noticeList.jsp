@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="${pageContext.request.contextPath}/css/notice.css" rel="stylesheet">
 <!-- 중앙 컨텐츠 시작 -->
 <script type="text/javascript">
 	let result = '${result}';
@@ -21,11 +22,11 @@
 	});	
 </script>
 
-<div class="page-main">
+<div class="page-main" style="width:100%;">
 	<h2>공지사항 목록</h2>
 	<form action="noticeList.do" id="search_form" method="get">
 		<ul class="search">
-			<li><select name="keyfield" id="keyfield">
+			<li><select name="keyfield" id="keyfield" class="form-select">
 					<option value="1"
 						<c:if test="${param.keyfield == 1}">selected</c:if>>제목</option>
 					<option value="2"
@@ -35,18 +36,19 @@
 			</select></li>
 			<li><input type="search" name="keyword" id="keyword"
 				value="${param.keyword}"></li>
-			<li><input type="submit" value="검색"> <input
-				type="button" value="목록" onclick="location.href='noticeList.do'">
+			<li>
+				<input type="submit" value="검색" class="order-search-btn"> 
 			</li>
 		</ul>
 	</form>
 	<c:if test="${!empty user}">
 		<div class="align-right">
 			<input type="button" value="공지사항 작성"
-				onclick="location.href='admin_write.do'">
+				onclick="location.href='admin_write.do'"class="order-search-btn" style="width:200px;">
 		</div>
 	</c:if>
 	<c:if test="${count == 0}">
+		<hr size="1" width="100%">
 		<div class="result-display">공지사항이 없습니다.</div>
 	</c:if>
 	<c:if test="${count > 0}">
@@ -95,5 +97,6 @@
 		<div class="align-center">${page}</div>
 		<hr size="1" width="100%">
 	</c:if>
+	<div><input type="button" value="목록" onclick="location.href='noticeList.do'" class="order-list-btn"></div>
 </div>
 <!-- 중앙 컨텐츠 끝 -->

@@ -5,6 +5,7 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <link href="${pageContext.request.contextPath}/css/notice.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet">
 <style>
 .ck-editor__editable_inline{
 	min-height:250px;
