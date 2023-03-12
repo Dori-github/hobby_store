@@ -1,5 +1,6 @@
 package kr.spring.cart.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,15 +52,14 @@ public class CartController {//메서드 생성, 데이터 처리
 	@RequestMapping("/cart/cartList.do")
 	public ModelAndView getList(HttpSession session) {	
 		
+		MemberVO user = 
+				 (MemberVO)session.getAttribute("user");
+		
 			//글의 총 개수
-			int courseCount = cartService.getCartCount();
-			int itemCount = cartService.getItemCount();
+			int courseCount = cartService.getCartCount(user.getMem_num());
+			int itemCount = cartService.getItemCount(user.getMem_num());
 			logger.debug("클래스수" + courseCount);
 			logger.debug("상품수" + itemCount);
-			
-			
-			MemberVO user = 
-					 (MemberVO)session.getAttribute("user");
 				
 			//목록 호출(장바구니 비었을 때 처리 추가)
 			List<CourseCartVO> courseList = null;
@@ -229,10 +231,12 @@ public class CartController {//메서드 생성, 데이터 처리
 			CourseCartVO db_cart = 
 					cartService.selectCourseCart(courseCart);
 			if(db_cart==null) {//등록된 동일 클래스 없음
+				logger.debug("<<zzzz##@@@ㅇ>> : "+ db_cart);
 				logger.debug("<<##@@@ㅇ>> : "+ courseCart);
 				
 				cartService.insertCourseCart(courseCart);
-
+				model.addAttribute("accessMsg", "장바구니에 성공적으로 담겼습니다.");
+				
 				logger.debug("<<!<FFFF:" + courseCart);
 				logger.debug("<<!@!@!@!@");
 			}else {//등록된 동일 클래스 있음
@@ -298,4 +302,72 @@ public class CartController {//메서드 생성, 데이터 처리
 		return map;
 		
 	}
+	
+	
+	//장바구니 상품 삭제
+		@RequestMapping("/cart/deleteCart.do")
+		@ResponseBody
+		public Map<String,String> delete(
+				             @RequestParam(value="c_cart_num", required=false) Integer c_cart_num,
+				             @RequestParam(value="i_cart_num", required=false) Integer i_cart_num,
+				             HttpSession session,
+				             HttpServletRequest repuest, Model model){
+			Map<String,String> mapAjax = 
+					new HashMap<String,String>();
+			MemberVO user = 
+				(MemberVO)session.getAttribute("user");
+			if(user==null) {
+				mapAjax.put("result", "logout");
+			}else {
+				logger.debug(c_cart_num + " aa " + i_cart_num);
+				if(i_cart_num != null) {cartService.deleteItemCart(i_cart_num);}
+				
+				if(c_cart_num != null) {cartService.deleteCourseCart(c_cart_num);}
+				mapAjax.put("result", "success");
+			}
+			
+			return mapAjax;
+		}
+		
+		//장바구니 상품 삭제
+		@RequestMapping(value="/cart/deleteCheck.do", method={RequestMethod.GET})
+		@ResponseBody
+		public Map<String, String> deleteCheck(@RequestParam(value="delCourse[]") List<Integer> delCourse,
+				@RequestParam(value="delItem[]") List<Integer> delItem,
+				HttpSession session,
+				HttpServletRequest repuest, Model model) throws Exception{
+				{
+			Map<String,String> mapAjax = 
+					new HashMap<String,String>();
+			MemberVO user = 
+					(MemberVO)session.getAttribute("user");
+			
+			logger.debug(" aa " + delCourse);	
+			
+			ArrayList<Integer> delCourseArr = new ArrayList<Integer>();
+			 for(int i=0;i<delCourse.size();i++){
+			        delCourseArr.add(delCourse.get(i));
+			        cartService.deleteCourseCart(delCourse.get(i));
+			        logger.debug("dfdf : " + delCourseArr.get(i));
+			    }
+			
+			 ArrayList<Integer> delItemArr = new ArrayList<Integer>();
+			 for(int i=0;i<delItem.size();i++){
+				 delItemArr.add(delItem.get(i));
+				 cartService.deleteItemCart(delItem.get(i));
+			        
+				 logger.debug("dfdf : " + delItemArr.get(i));
+			 }
+			 
+			
+			
+			if(user==null) {
+				mapAjax.put("result", "logout");
+			}else {
+				mapAjax.put("result", "success");
+			}
+			
+			return mapAjax;
+		}
+		}
 }

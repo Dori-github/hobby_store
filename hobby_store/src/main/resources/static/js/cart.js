@@ -1,5 +1,81 @@
 $(function(){
 	$(document).ready(function(){
+		$(".order_btn").on('click',function(){
+			var delCourse = new Array();
+			var delItem = new Array();
+			delCourse.push(0);
+			delItem.push(0);
+			
+			$("input[class='choice-btn']").each(function(){
+				if( $(this).is(":checked") == false ){
+
+				if($(this).closest('tr').find(".cart-del")
+				.attr('data-course-del') != undefined){
+					delCourse.push($(this).closest('tr').find('.cart-del')
+					.attr('data-course-del'));
+					}
+
+				if($(this).closest('tr').find(".cart-del")
+				.attr('data-item-del') != undefined){
+					delItem.push($(this).closest('tr').find(".cart-del")
+					.attr('data-item-del'));
+					}
+				}
+			});
+
+	$.ajax({
+		url:'deleteCheck.do',
+		type:'get',
+		data: {
+			delCourse : delCourse,
+			delItem : delItem
+		},
+		dataType:'json',
+		success:function(param){
+			console.log(param);
+			if(param.result == 'logout'){
+				alert('로그인 후 사용하세요!');
+			}else if(param.result == 'success'){
+				/*orderRocation();*/
+					$(location).attr('href', '/order/orderForm.do');
+	
+			}else{
+				alert('상품 삭제 중 오류가 발생했습니다.');
+			}
+		},
+		error:function(){
+			alert('네트워크 오류가 발생했습니다.');
+		}
+	});	
+});
+
+
+
+	$('.cart-del').on('click',function(){
+		$.ajax({
+			url:'deleteCart.do',
+			type:'post',
+			data:{
+				c_cart_num:$(this).attr('data-course-del'),
+				i_cart_num:$(this).attr('data-item-del')				
+			},
+			dataType:'json',
+			success:function(param){
+				if(param.result == 'logout'){
+					alert('로그인 후 사용하세요!');
+				}else if(param.result == 'success'){
+					alert('선택한 상품을 삭제했습니다.');
+					location.href='cartList.do';
+				}else{
+					alert('장바구니 상품 삭제 오류');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류');
+			}
+		});
+	});
+
 
 		/* 수량 감소 */
 		$(".quan_dec").click(
@@ -7,7 +83,7 @@ $(function(){
 				var quantity = $(this).parent().find('.quantity').val();
 				quantity = Number(quantity) - Number(1);
 				var cart_num = $(this).parent().find('.cart_num').val();
-				
+
 				if (quantity < 1) {
 					alert('상품을 1개 이상 넣어주세요');
 				return;
@@ -23,15 +99,12 @@ $(function(){
 					type : "post",
 					data : data,
 					success : function(result) {
-						console.log("수량-1\n" + "cart_num:" + cart_num
-								+ " quantity:" + quantity);
+						location.reload();
 					},
 					error : function() {
-						alert("수량 변경 실패");
+						alert("수량 변경에 실패했습니다.");
 					}
 				});
-			$(this).parent().find("#quan").val(quantity);
-			location.reload();
 		});
 		
 		/* 수량 증가 */
@@ -39,14 +112,11 @@ $(function(){
 			function() {
 				var quantity = $(this).parent().find('.quantity').val();
 				quantity = Number(quantity) + Number(1);
-				var item_quan = $(this).parent().find('.item_quan').val();
+				var max = $(this).parent().find('.quantity').attr('max');
 				var cart_num = $(this).parent().find('.cart_num').val();
-				$(this).closest('tr').find(".item-price").css("color","blue");
-				
-				var item_price = $(this).closest('tr').find(".item-price").attr("data-price");
-				
-				if (quantity > item_quan) {
-					alert('주문 가능한 수량을 초과했습니다');
+
+				if (quantity > max) {
+					alert('주문 가능한 수량을 초과합니다');
 					return;
 				}
 	
@@ -60,57 +130,21 @@ $(function(){
 					type : "post",
 					data : data,
 					success : function(data) {
-						console.log("수량+1\n" + "cart_num:" + cart_num
-								+ " quantity:" + quantity);
+						location.reload();
 					},
 					error : function() {
-						alert("수량 변경 실패");
+						alert("수량 변경에 실패했습니다.");
 					}
 				});
-			$(this).parent().find("#quan").val(quantity);
-			location.reload();
 		});
 		
-		//장바구니 클래스-상품 선택/해제
-		/*
-		$.ajax({
-			url : "/updateCart",
-			type : "get",
-			data : {
-				quantity : "quantity"
-			},
-			dataType:"text" //json으로도 해봄
-		,
-		error: function(error){
-			console.log("noooo");
-		},
-		success: function(response, status, request){
-					alert("success")
-					alert("response : "+response);
-					alert("status : "+status);
-					alert("request : "+request);
-					}
-	});
 		
-	function out(resp){
-		var result = "";
-		result +='<h2>ssssooooddddd</h2>'
-		$.each(JSON.parse(resp),function(index,item){
-			result +='<h4>'+item["cartVO"]+'</h4>'
-		})
-		$('#ss').append(result);
-	}*/
-		
-		
-		
+		/* 장바구니 개별/전체 선택 */
 		let course_cart_sum = $('.courseTotal').attr('data-courseTotal');
 	 	let item_cart_sum = $('.itemTotal').attr('data-itemTotal');
 	 	let item_sum = $('.itemSum').attr('data-itemSum');
 		let cart_sum = $('.allTotal').attr('data-allTotal');
-	console.log(course_cart_sum);
-	console.log(item_cart_sum);
-	console.log(course_cart_sum + item_cart_sum);
-	console.log(cart_sum);
+	
 		//전체 선택/해제
 		$('#chk_all').on('click',function(){
 		if($('#chk_all').is(':checked')){//전체 선택
@@ -134,14 +168,6 @@ $(function(){
 			$('.itemTotal').attr('data-itemTotal', item_cart_sum);			
 			$('.allTotal').attr('data-allTotal', cart_sum);
 			
-			console.log("courseTotal전체선택:" 
-			+ $('.courseTotal').attr('data-courseTotal') + " / " + course_cart_sum);
-			console.log("itemTotal전체선택:" 
-			+ $('.itemTotal').attr('data-itemTotal') + " / " + item_cart_sum);
-			console.log("allTotal전체선택:" 
-			+ $('.allTotal').attr('data-allTotal') + " / " + cart_sum);
-	
-			
 		}else{//전체 해제
 			$('.item-setting').remove();
 			$('.choice-btn').prop('checked',false);
@@ -158,21 +184,13 @@ $(function(){
 			$('.itemTotal').attr('data-itemTotal',0);
 			$('.allTotal').text('₩0');
 			$('.allTotal').attr('data-allTotal',0);
-			
-			console.log("2courseTotal전체선택:" 
-			+ $('.courseTotal').attr('data-courseTotal') + " / " + course_cart_sum);
-			console.log("2itemTotal전체선택:" 
-			+ $('.itemTotal').attr('data-itemTotal') + " / " + item_cart_sum);
-			console.log("2allTotal전체선택:" 
-			+ $('.allTotal').attr('data-allTotal') + " / " + cart_sum);
-			
 			}
 			let ctotal = Number($('.courseTotal').attr('data-courseTotal'));
-			$('.courseTotal').text(ctotal.toLocaleString()+'원');
+			$('.courseTotal').text('₩' + ctotal.toLocaleString());
 			let itotal = Number($('.itemTotal').attr('data-itemTotal'));
-			$('.itemTotal').text(itotal.toLocaleString()+'원');
+			$('.itemTotal').text('₩' + itotal.toLocaleString());
 			let total = Number($('.allTotal').attr('data-allTotal'));
-			$('.allTotal').text(total.toLocaleString()+'원');
+			$('.allTotal').text('₩' + total.toLocaleString());
 		});	
 		
 	
@@ -235,12 +253,8 @@ $(function(){
 	               Number($(this).closest('tr')
 	                      .find('.itemSum')
 	                      .attr('data-itemSum'))
-					);				
-							
+					);									
 		}
-	
-		
-		
 		
 		}else{
 			//체크를 해제하면 수량, 가격, 상품별 합계가 모두 0으로 처리
@@ -257,7 +271,6 @@ $(function(){
                       .find('.course-price')
                       .attr('data-coursePrice')));
 
-		console.log("클래스 해제 전 : " + $('.allTotal').attr('data-allTotal'));
 		$('.allTotal').attr('data-allTotal',
 			   Number($('.allTotal').attr('data-allTotal')) - 
                Number($(this).closest('tr')
@@ -265,9 +278,7 @@ $(function(){
                       .attr('data-coursePrice'))
 
 
-				);
-		console.log("클래스 해제 후 : " + $('.allTotal').attr('data-allTotal'));
-				
+				);		
 }
 
 			if($(this).attr("name") == 'item_numbers'){
@@ -286,10 +297,6 @@ $(function(){
                       .find('.itemSum')
                       .attr('data-itemSum'))
 				);
-				console.log("상품 해제");
-			/*$(this).closest('tr')
-                      .find('.itemSum').css("color","green");*/
-
 			}
 		}
 		
@@ -298,15 +305,8 @@ $(function(){
 			//구매 가능
 			$('#order_btn').prop('disabled',false);
 			//총구매금액을 선택과 미선택에 따라 다시 산출
-			console.log("총 금액:" + $('.allTotal').attr('data-allTotal'));
-			
 			if($(this).is(':checked')){//선택					
-			/*console.log("nnn"+Number($('.courseTotal').attr('data-courseTotal')));
-			console.log("bbb"+Number($(this).parents('tr')
-                      .find('.course-price')
-                      .attr('data-coursePrice')));*/
-
-
+			
 			if($(this).attr("name") == 'course_numbers'){
 			$('.courseTotal').attr('data-courseTotal',
 			   Number($('.courseTotal').attr('data-courseTotal')));
@@ -315,12 +315,6 @@ $(function(){
 			console.log("ccqq:"+$('.allTotal').attr('data-allTotal'));
 			}
 			
-			/*if($(this).attr("name") == 'item_numbers'){
-			$('.itemTotal').attr('data-itemTotal',
-			   Number($('.itemTotal').attr('data-itemTotal')));
-			console.log("iiqq:"+$('.allTotal').attr('data-allTotal'));
-			}*/
-			
 			}else{//미선택
 			console.log("nnn"+Number($('.courseTotal').attr('data-courseTotal')));
 			console.log("bbb"+Number($(this).parents('tr')
@@ -328,28 +322,13 @@ $(function(){
                       .attr('data-coursePrice')));
 			
 			if($(this).attr("name") == 'course_numbers'){
-			/*$('.courseTotal').attr('data-courseTotal',
-			   Number($('.courseTotal').attr('data-courseTotal')) - 
-               Number($(this).parents('tr')
-                      .find('.course-price')
-                      .attr('data-coursePrice')));*/
-
+			
 			$('.allTotal').attr('data-allTotal',
 			   Number($('.allTotal').attr('data-allTotal')) + 
                Number($(this).parents('table')
                       .find('.courseTotal')
                       .attr('data-courseTotal')))
-			
-			}
-
-			if($(this).attr("name") == 'item_numbers'){
-			/*$('.itemTotal').attr('data-itemTotal',
-			   Number($('.itemTotal').attr('data-itemTotal')) - 
-               Number($(this).parents('tr')
-                      .find('.itemSum')
-                      .attr('data-itemSum')));*/
-			}
-			
+			}			
 			}
 			//총구매금액 표시
 		if($(this).attr("name") == 'course_numbers'){
@@ -363,50 +342,29 @@ $(function(){
 			Number($('.itemTotal').attr('data-itemTotal'))
 			                      .toLocaleString());
 		}
-		
-		$('.allTotal').css("color","red");
-		$('.allTotal').text(
+		$('.allTotal').text('₩' + 
 			Number($('.allTotal').attr('data-allTotal'))
-			                      .toLocaleString()+'원');
-		/*$('.allTotal').attr('data-allTotal',
-			   Number($('.allTotal').attr('data-allTotal')) + 
-               Number($(this).parents('table')
-                      .find('.courseTotal')
-                      .attr('data-courseTotal')) +
-               Number($(this).parents('table')
-                      .find('.itemTotal')
-                      .attr('data-itemTotal'))	
-);*/
+			                      .toLocaleString());
 
-	console.log("qq:"+$('.allTotal').attr('data-allTotal'));
-	console.log("ㅎ:" + (Number($('.allTotal').attr('data-allTotal'))) + 
-               Number($(this).parents('table')
-                      .find('.courseTotal')
-                      .attr('data-courseTotal')) +
-               Number($(this).parents('table')
-                      .find('.itemTotal')
-                      .attr('data-itemTotal')));
+		$('.allTotal').attr('data-allTotal', 
+		Number($('.allTotal').attr('data-allTotal')));	
+		}
+		else{//아무것도 선택 안됨
 	
-		
-	}
-	else{
-	//선택된게 아무것도 없음
-	console.log("전체 해제");
+		$('.courseTotal').text('₩' + 
+					Number($('.courseTotal').attr('data-courseTotal'))
+					                      .toLocaleString());
+		$('.itemTotal').text('₩' + 
+					Number($('.itemTotal').attr('data-itemTotal'))
+					                      .toLocaleString());
+		$('.allTotal').text('₩' + 
+					Number($('.allTotal').attr('data-allTotal'))
+					                      .toLocaleString());
+		}
+	});		
+});
 	
-	
-$('.courseTotal').text(
-			Number($('.courseTotal').attr('data-courseTotal'))
-			                      .toLocaleString()+'원');
-$('.itemTotal').text(
-			Number($('.itemTotal').attr('data-itemTotal'))
-			                      .toLocaleString()+'원');
-$('.allTotal').text(
-			Number($('.allTotal').attr('data-allTotal'))
-			                      .toLocaleString()+'fff원');
-console.log("금ㅇㄹㅇㄹ:" + $('.allTotal').attr('data-allTotal'));
+function orderRocation(){
+	$(location).attr('href', '${pageContext.request.contextPath}/order/orderForm.do');
 	}
 });
-		
-	});
-});
-

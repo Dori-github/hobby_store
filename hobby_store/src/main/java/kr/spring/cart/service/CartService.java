@@ -15,7 +15,7 @@ public interface CartService {
 	//클래스 장바구니 목록
 	public List<CourseCartVO> getCourseCart(int num);
 	//총 레코드 수
-	public int getCartCount();
+	public int getCartCount(int num);
 	//클래스 장바구니 정보
 	public CourseCartVO selectCourseCart(CourseCartVO courseCart);
 	//클래스 장바구니 등록
@@ -23,6 +23,7 @@ public interface CartService {
 	//회원번호(mem_num)별 총 구입액
 	public Integer courseTotal(int num);
 	//클래스 장바구니 삭제
+	public void deleteCourseCart(Integer c_cart_num);
 
 	//=====상품 장바구니=====//
 	//상품 장바구니 목록
@@ -31,7 +32,7 @@ public interface CartService {
 	public List<ItemCartVO> getItemQuan(int num);
 	public ItemCartVO getStoredQuan(int mem_num, int items_num);
 	//총 레코드 수
-	public int getItemCount();
+	public int getItemCount(int num);
 	//상품 장바구니 정보
 	public ItemCartVO selectItemCart(ItemCartVO itemCart);
 	//상품 장바구니 등록
@@ -43,4 +44,5 @@ public interface CartService {
 	//상품 장바구니 수정(상품번호와 회원변호별 변경)
 	public void updateCartByItems_num(ItemCartVO itemCart);
 	//상품 장바구니 삭제
+	public void deleteItemCart(Integer i_cart_num);
 }

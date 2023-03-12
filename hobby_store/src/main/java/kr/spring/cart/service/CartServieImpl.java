@@ -26,13 +26,8 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public int getCartCount() {
-		return cartmapper.getCartCount();
-	}
-
-	@Override
 	public void insertCourseCart(CourseCartVO courseCart) {
-		return;
+		cartmapper.insertCourseCart(courseCart);
 	}
 
 	@Override
@@ -46,8 +41,8 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public int getItemCount() {
-		return cartmapper.getItemCount();
+	public int getItemCount(int num) {
+		return cartmapper.getItemCount(num);
 	}
 
 	@Override
@@ -88,6 +83,21 @@ public class CartServieImpl implements CartService{
 	@Override
 	public void updateCartByItems_num(ItemCartVO itemCart) {
 		cartmapper.updateCartByItems_num(itemCart);
+	}
+
+	@Override
+	public void deleteCourseCart(Integer c_cart_num) {
+		cartmapper.deleteCourseCart(c_cart_num);
+	}
+
+	@Override
+	public void deleteItemCart(Integer i_cart_num) {
+		cartmapper.deleteItemCart(i_cart_num);
+	}
+
+	@Override
+	public int getCartCount(int num) {
+		return cartmapper.getCartCount(num);
 	}
 
 }

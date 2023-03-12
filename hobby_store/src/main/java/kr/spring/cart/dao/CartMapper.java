@@ -2,6 +2,7 @@ package kr.spring.cart.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -33,8 +34,8 @@ public interface CartMapper {
 	 
 	public List<CourseCartVO> getCourseCart(int num);
 	//총 레코드 수
-	@Select("SELECT COUNT(*) FROM course_cart")
-	public int getCartCount();
+	@Select("SELECT COUNT(*) FROM course_cart WHERE mem_num = ${mem_num}")
+	public int getCartCount(int num);
 	//클래스 장바구니 정보
 	@Select("SELECT * FROM course_cart WHERE "
 			+ "course_num=#{course_num} AND "
@@ -42,11 +43,13 @@ public interface CartMapper {
 	public CourseCartVO selectCourseCart(CourseCartVO courseCart);
 	//클래스 장바구니 등록
 	@Insert("INSERT INTO course_cart (cart_num, quantity, mem_num, course_num) "
-			+ "VALUES (course_cart_seq.nextval, 1,1,1)")
+			+ "VALUES (course_cart_seq.nextval, 1, #{mem_num}, #{course_num})")
 	public void insertCourseCart(CourseCartVO courseCart);
 	//회원번호(mem_num)별 총 구입액
 	public Integer courseTotal(int num);
 	//클래스 장바구니 삭제
+	@Delete("DELETE FROM course_cart WHERE cart_num=#{cart_num}")
+	public void deleteCourseCart(Integer c_cart_num);
 
 	//=====상품 장바구니=====//
 	//상품 장바구니 목록
@@ -58,8 +61,8 @@ public interface CartMapper {
 	public ItemCartVO getStoredQuan(int mem_num, int items_num);
 	
 	//총 레코드 수
-	@Select("SELECT COUNT(*) FROM item_cart")
-	public int getItemCount();
+	@Select("SELECT COUNT(*) FROM item_cart WHERE mem_num = ${mem_num}")
+	public int getItemCount(int num);
 	//상품 장바구니 정보
 	@Select("SELECT * FROM item_cart WHERE "
 			+ "items_num=#{items_num} AND "
@@ -82,4 +85,6 @@ public interface CartMapper {
 			+ "mem_num=#{mem_num}")
 	public void updateCartByItems_num(ItemCartVO itemCart);
 	//상품 장바구니 삭제
+	@Delete("DELETE FROM item_cart WHERE cart_num=#{cart_num}")
+	public void deleteItemCart(Integer i_cart_num);
 }

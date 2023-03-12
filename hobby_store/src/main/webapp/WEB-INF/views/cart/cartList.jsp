@@ -11,9 +11,7 @@
 	<c:if test="${courseCount < 1 && itemCount < 1}">
 	<h4>장바구니가 비어있습니다</h4>
 	</c:if>
-	<form id="cart_order"
-		action="${pageContext.request.contextPath}/order/orderForm.do"
-		method="post">
+	<form id="cart_order" action="/order/orderForm.do" method="post">
 		
 			
 		<c:if test="${courseCount > 0}">
@@ -24,6 +22,7 @@
 					<col style="width: 1rem">
 					<col style="width: 45rem">
 					<col style="width: 15rem">
+					<col style="width: 1rem">
 				</colgroup>
 				<tr>
 					<th style="border-bottom: 1px solid #ccc;">
@@ -32,6 +31,8 @@
 					<th colspan="2"
 						style="text-align: left; border-bottom: 1px solid #ccc;">Course</th>
 					<th style="border-bottom: 1px solid #ccc;">Price</th>
+					<th style="border-bottom: 1px solid #ccc;">delete</th>
+					</th>
 				</tr>
 				<c:forEach var="cart" items="${courseList}">
 					<c:if test="${courseCount == 0}">
@@ -42,27 +43,31 @@
 						<input type="checkbox" name="course_numbers" checked="checked"
 							class="choice-btn" value="${cart.cart_num}">
 						</td>
-						<td style="text-align: left;"><img
+						<td style="text-align: left; cursor:pointer;" onclick="location.href='../course/courseDetail.do?course_num=${cart.course_num}'"><img
 							src="${pageContext.request.contextPath}/images/${cart.course_photo1}"></td>
-						<td style="text-align: left;">${cart.course_name}<br> <c:if
-								test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if> ${cart.cate_name} <br>
-							${cart.course_onoff}
+						<td style="text-align: left; cursor:pointer;" onclick="location.href='../course/courseDetail.do?course_num=${cart.course_num}'">${cart.course_name}
+						<br>${cart.cate_name}
 						</td>
 						<td>
 						<span class="course-price" data-coursePrice="${cart.course_price}">
 						₩<fmt:formatNumber value="${cart.course_price}"/></span>
 						</td>
+						<th><input type="button" value="삭제" class="cart-del" data-course-del="${cart.cart_num}">
+				
 					</tr>
+					
+				</c:forEach>
 				<tr>
+				
 					<td colspan="2"></td>
+					
 					<td><span class="courseTotal"
 						data-courseTotal="${courseTotal}"> ₩<fmt:formatNumber
 								value="${courseTotal}" />
 					</span></td>
+					
 				</tr>
 				
-				</c:forEach>
 			</table>
 		</c:if>
 		<br>
@@ -78,6 +83,7 @@
 					<col style="width: 10rem">
 					<col style="width: 10rem">
 					<col style="width: 15rem">
+					<col style="width: 1rem">
 				</colgroup>
 				<tr>
 					<th style="border-bottom: 1px solid #ccc;"></th>
@@ -86,6 +92,7 @@
 					<th style="border-bottom: 1px solid #ccc;">Price</th>
 					<th style="border-bottom: 1px solid #ccc;">Quantity</th>
 					<th style="border-bottom: 1px solid #ccc;">TotalPrice</th>
+					<th style="border-bottom: 1px solid #ccc;">delete</th>
 				</tr>
 				<c:forEach var="cart" items="${itemList}" varStatus="statusQuan">
 					<c:forEach var="quan" items="${itemQuan}"
@@ -98,35 +105,33 @@
 						<input type="checkbox" name="item_numbers" checked="checked"
 							class="choice-btn" value="${cart.cart_num}">
 						</td>
-						<td style="text-align: left;"><img
+						<td style="text-align: left; cursor:pointer;" onclick="location.href='../items/itemsDetail.do?items_num=${cart.items_num}'"><img
 							src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
-						<td style="text-align: left;">${cart.items_name}<br> <c:if
-								test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if> ${cart.cate_name}
+						<td style="text-align: left; cursor:pointer;" onclick="location.href='../items/itemsDetail.do?items_num=${cart.items_num}'">${cart.items_name}
+						<br>${cart.cate_name}
 						</td>
 						<td>
 						<span class="item-price" data-price="${cart.items_price}">
 						₩<fmt:formatNumber value="${cart.items_price}"/></span>
-						<td><input class="item-quan" type="text"
-							value="재고:${cart.items_quantity}" />
-						
-
-								<input class="cart_num" type="text" value="${quan.cart_num}" />
-
-								<input class="quan_dec" type="button" value="-" />
-								<input type="number" id="quan" name="quantity" class="quantity"
-									value="${quan.quantity}" data-quantity="${quan.quantity}">
-								<input class="quan_inc" type="button" value="+" /></td>
+						<td>
+							<input type="hidden" class="cart_num" value="${cart.cart_num}">
+							<input class="quan_dec" type="button" value="-" />
+							<input type="number" id="quan" name="quantity" class="quantity"
+								min="1" max="${cart.items_quantity}"
+								value="${quan.quantity}" data-quantity="${quan.quantity}" readonly>
+							<input class="quan_inc" type="button" value="+" />
+						</td>
 						<td><span class="itemSum"
 							data-itemSum="${quan.items_total}"> ₩<fmt:formatNumber
 									value="${quan.items_total}"/>
 						</span></td>
+						<th><input type="button" value="삭제" class="cart-del" data-item-del="${cart.cart_num}">
+				</th>
 				</c:forEach>
 				</tr>
 				</c:forEach>
 				<tr>
 					<td colspan="4"></td>
-					<!-- <div class="itemTotal"> -->
 					<td><span class="itemTotal" data-itemTotal="${itemTotal}">
 							₩<fmt:formatNumber value="${itemTotal}" />
 					</span></td>
@@ -138,10 +143,13 @@
 			<span class="allTotal" data-allTotal="<c:out value="${allTotal}"/>">
 				₩<fmt:formatNumber value="${allTotal}" />
 			</span>
-			<input type="submit" id="order_btn" value="구매하기">
-		</c:if>
+			<input type="submit" class="order_btn" id="order_btn" value="구매하기">
+			
+			</c:if>
 	</form>
 
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
+<script>
+</script>
