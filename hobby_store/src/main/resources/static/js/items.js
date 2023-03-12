@@ -107,7 +107,7 @@ $(function() {
 		});
 		
 		
-		
+	
 	//좋아요 클릭 
 	$(document).on('click','.red-heart',function(){
 		let heart = $(this);

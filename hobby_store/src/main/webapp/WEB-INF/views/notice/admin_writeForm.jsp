@@ -72,12 +72,10 @@
 		            } );
 			    </script>                   
 			</li>
-			<!-- 
 			<li>
 				<label for="noti_end">기간종료</label>
 				<input type="date" name="noti_end" id="noti_end">
 			</li>
-			 -->
 		</ul>
 		<div class="align-center">
 			<form:button>전송</form:button>

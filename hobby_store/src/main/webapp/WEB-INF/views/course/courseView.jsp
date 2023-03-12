@@ -89,7 +89,7 @@
 			</p>
 			</c:if>
 			<p>
-				<i class="fa-regular fa-star" style="color:orange;"></i> 4.5 <span class="gray">(후기 N)</span>	
+				<i class="fa-regular fa-star" style="color:orange;"></i>${starall}<span class="gray">(후기 <span class="reply-count"></span>)</span>	
 			</p>
 		</div>
 		<%-- 오프라인 결제정보 전송 폼(클래스이름,가격,인원,클래스번호) --%>
@@ -104,7 +104,11 @@
 				<%-- 원데이 클래스 --%>
 				<c:if test="${course.course_oneweek.equals('one')}">
 				<p>날짜선택<input type="date" name></p>
-				<p>시간선택 &nbsp;<input type="radio"></p>
+				<p>시간선택 &nbsp;
+				<input type="radio" value="09 : 00">
+				<input type="radio" value="10 : 00">
+				<input type="radio" value="11 : 00">
+				</p>
 				</c:if>
 				<%-- 정기 클래스 --%>
 				<c:if test="${course.course_oneweek.equals('week')}">
@@ -147,17 +151,13 @@
 <div class="course-d-info">
 	<ul class="title">
 		<li class="active">소개</li>
-		<li>후기 <span class="badge">4</span></li>
-		<li>문의 <span class="badge">4</span></li>
+		<li>후기 <span class="badge reply-badge"></span></li>
+		<li>문의</li>
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
 	<!-- 소개 시작 -->
 	<div class="c-content">
 		${course.course_content}
-		<div class="map">
-		위치<br>
-		지도표시
-		</div>
 	</div>
 	<!-- 소개 끝 -->
 	

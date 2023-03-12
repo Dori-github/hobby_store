@@ -58,8 +58,30 @@ public class ItemsController {
 		mav.setViewName("itemsRegister");
 		mav.addObject("items_cate", items_cate);
 
-		return mav;
+		return mav; 
 	}
+	// 2-1 상품 수정 폼 호출
+		@GetMapping("/items/modify.do")
+		public ModelAndView formUpdate(@RequestParam int items_num) {
+			ModelAndView mav = new ModelAndView();
+			
+			//카테고리 이름 찾기
+			int cate_num = itemsService.searchCateName(items_num);
+			//부모 카테고리 찾기 
+			ItemsVO cateSearch = itemsService.searchCateParent(cate_num);
+	
+			//select option 1개만 입력된 부모 카테고리를 넣고 나머지는 foreach로 뿌려야 되나 .. 
+			List<ItemsVO> parent_list = itemsService.selectCate1();
+			
+			logger.debug("카테고리 번호, 이름 ="+cateSearch);
+			logger.debug("부모 카테고리  ="+parent_list);
+			
+			mav.addObject("cateSearch",cateSearch);
+			mav.addObject("parent_list", parent_list);
+			mav.setViewName("itemsModify");
+			
+			return mav;
+		}
 
 	// 1-2 상세 카테고리 및 아이템 등록 폼
 	@ResponseBody
@@ -79,6 +101,45 @@ public class ItemsController {
 
 		return mapJson;
 
+	}
+	
+	// 2-2 상품 수정 폼 호출
+	@ResponseBody
+	@GetMapping("/items/modify2.do")
+	public Map<String, Object> formUpdate2(@RequestParam int cate_num) {
+		// ModelAndView mav = new ModelAndView();
+		/*List<ItemsVO> items_child = null;
+
+		items_child = itemsService.selectCate2(cate_num);
+		logger.debug("<<items_child>> :" + items_child);
+
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+
+		mapJson.put("items_child", items_child);-------------------------------------
+		logger.debug("<<Map_items_child>> : " + mapJson);
+
+		return mapJson;
+		*/
+		
+		ItemsVO items_child = null;
+		items_child = itemsService.selectChildCate2(cate_num);
+		
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		mapJson.put("items_child", items_child);
+		//HashMap 형태로 보내면 
+		return mapJson;
+
+	}
+	//2-3 상품 수정 폼 폼 호출
+	@GetMapping("/items/modify3.do")
+	public ModelAndView formUpdate3(int items_num) {
+		ModelAndView mav = new ModelAndView();
+		ItemsVO itemsVO = itemsService.selectItems(items_num);
+		logger.debug("수정폼에 출력할 아이템 정보 "+itemsVO);
+		
+		mav.addObject("itemsVO",itemsVO);
+		mav.setViewName("Modifyitems");
+		return mav;
 	}
 
 	// 1-3 아이템 등록 데이터 처리
@@ -192,16 +253,7 @@ public class ItemsController {
 		return mav;
 	}
 
-	// 2-1 상품 수정 폼 호출
-	@GetMapping("/items/modify.do")
-	public String formUpdate(int items_num, Model model) {
-		//표시할 Item 불러오기 
-		ItemsVO items = itemsService.selectItems(items_num);
-		
-		//모델 객체에 Item 넣기
-		model.addAttribute("items", items);
-		return "itemsAdminModify";
-	}
+	
 	
 	
 	// 2-2 상품 삭제

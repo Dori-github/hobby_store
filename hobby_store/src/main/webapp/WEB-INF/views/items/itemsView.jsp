@@ -103,8 +103,7 @@
 			<div class="reservation">
 				<c:if test="${items.items_quantity lt 5}">
 					<p class="soldout">품절 임박</p>
-				</c:if>
-				<span>재고</span><br>
+				</c:if> 
 				<span>구매수량<input type="number" value="1" name="items_quan"></span><br>
 				<span>가격</span> <span class="price"><fmt:formatNumber>${items.items_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color: gray;">
@@ -118,8 +117,7 @@
 				<div class="reservation"></div>
 				<div style="display: flex; justify-content: space-between;">
 					<input type="submit" class="buy" value="장바구니"
-						formaction="/cart/insert.do"><i
-						class="fa-solid fa-cart-plus"></i> <input type="submit"
+						formaction="/cart/insert.do"> <input type="submit"
 						class="buy" value="구매하기" formaction="/order/orderNowForm.do">
 				</div>
 			</div>
@@ -214,17 +212,15 @@
 	</form>
 	<%-- 정렬 --%>
 		<div class="reply-search">
-		<div class="btn-select"><span class="whole">최신순</span>
-			<i class="fa-solid fa-chevron-down icon" style="float: right;padding-bottom:5px;font-size:15px;"></i>
-			<i class="fa-solid fa-chevron-up icon" style="float: right;font-size:15px;display:none;"></i>
-			<%-- 최신순 정렬 --%>
-			<div class="list-box">
-		        <ul class="list-cate">
-		            <li data-value="1">최신순</li>
-		            <li data-value="2">별점순</li>
-		            <li data-value="3">추천순</li>
-		        </ul>
-	        </div>
+		<select class="btn-select">
+		
+			        	<option value = "1">최신순</option>
+			        	<option value = "2">좋아요순</option>
+			        	<option value = "3">별점순</option>
+			        
+			       
+	    
+	        </select>
 	    </div>
 		<hr size="2" noshade style="color:gray;">
 	</div>

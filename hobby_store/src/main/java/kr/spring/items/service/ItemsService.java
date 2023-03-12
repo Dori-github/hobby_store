@@ -27,6 +27,15 @@ public interface ItemsService {
 	//상품 삭제
 	public void deleteItems(Integer items_num);
 	
+	//상품 수정 관련
+	//카테고리 이름 찾기
+	public int searchCateName(Integer items_num);
+	//부모 카테고리 찾기 
+	public ItemsVO searchCateParent(Integer cate_num);
+	
+	public ItemsVO selectParentCate1();
+	public ItemsVO selectChildCate2(Integer cate_num);
+	
 	//부모 카테고리 
 	public List<ItemsVO> selectCate1();
 	
