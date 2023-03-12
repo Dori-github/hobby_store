@@ -10,7 +10,7 @@ import java.util.Map;
 import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseVO;
-
+import kr.spring.items.vo.ItemsVO;
 import kr.spring.space.vo.SpaceFavVO;
 import kr.spring.space.vo.SpaceReplyFavVO;
 import kr.spring.space.vo.SpaceReplyVO;
@@ -22,6 +22,10 @@ public interface SpaceService {
 	public void insertspace(SpaceVO spaceVO);
 	public int selectSpaceCount(Map<String,Object> map);
 	public List<SpaceVO> selectSpaceList(Map<String,Object> map);
+	
+	public List<SpaceVO> selectCate();
+	public int selectCate_num(SpaceVO space);
+	
 	public SpaceVO selectSpace(Integer space_num);
 	public void updateHit(Integer space_num);
 	public void updateSpace(SpaceVO spaceVO);
@@ -38,13 +42,12 @@ public interface SpaceService {
 	public void deleteFavBySpaceNum(Integer space_num);
 
 	//후기
-	//public float selectStarAvg(Integer space_num);
 	public List<SpaceReplyVO> selectListReply(Map<String,Object> map);
 	public int selectReplyCount(Map<String,Object> map);
 	public SpaceReplyVO selectReply(Integer reply_num);
 	public void insertReply(SpaceReplyVO spaceReply);
 	public void updateReply(SpaceReplyVO spaceReply);
-	public void deleteReply(Integer reply_num);
+	public void deleteReplyNum(Integer space_num);
 	public void deleteReplyBySpaceNum(Integer space_num);
 	public void deleteReplyPhoto(Integer reply_num);
 
@@ -60,7 +63,9 @@ public interface SpaceService {
 	public void insertReplyFav(SpaceReplyFavVO fav);
 	public void deleteReplyFav(Integer fav_num);
 	public void deleteReplyFavByReplyNum(Integer reply_num);
-		
+	public void deleteFavByReplyNum(SpaceVO reply_num);
+	public void deleteReply(SpaceVO reply);
+	void deleteReply2(Integer space_num);
 	
 
 }

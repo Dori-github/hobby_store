@@ -77,7 +77,7 @@
                           </td>
                           </tr>
 
-                    
+                      
              <tr id="price">
 			<td>가격</td>
 			<!-- 자바빈에 데이터가 없으면 int값은 자동으로 0값을 가짐 -->
@@ -110,6 +110,41 @@
                <img src="imageView.do?space_num=${spaceVO.space_num}&space_type=1" width="70" height="70" id="photo" class="space-space_photo">
                <input type="file" name="upload" id="upload" 
                       accept="image/gif,image/png,image/jpeg">
+              <c:if test="${!empty spaceVO.space_photo_name}">
+				<div id="file_detail">
+					(${spaceVO.space_photo_name})파일이 등록되어 있습니다.
+					<input type="button" value="파일삭제"
+					                     id="file_del">
+				</div>
+				<script type="text/javascript">
+					$(function(){
+						$('#file_del').click(function(){
+							let choice = confirm('삭제하시겠습니까?');
+							if(choice){
+								$.ajax({
+									url:'deleteFile.do',
+									data:{space_num:${spaceVO.space_num}},
+									type:'post',
+									dataType:'json',
+									success:function(param){
+										if(param.result == 'logout'){
+											alert('로그인 후 사용하세요');
+										}else if(param.result == 'success'){
+											$('#file_detail').hide();
+										}else{
+											alert('파일 삭제 오류 발생');
+										}
+									},
+									error:function(){
+										alert('네트워크 오류 발생');
+									}
+								});
+							}
+						});
+					});
+				</script>
+				</c:if>
+				</div>       
                 <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>      
                 <form:errors path="space_photo" cssClass="error-color"/>     
             </div>

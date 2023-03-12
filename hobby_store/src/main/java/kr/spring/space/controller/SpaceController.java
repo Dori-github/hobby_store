@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -378,36 +379,36 @@ public class SpaceController {
 		return mapJson;
 	}
 
-	//======댓글 삭제========//
-	@RequestMapping("/space/deleteReply.do")
-	@ResponseBody
-	public Map<String,String> deleteReply(
-			@RequestParam int reply_num,
-			HttpSession session){
-		logger.debug("<<댓글 삭제>> : " + reply_num);
+	//후기 삭제
+		@RequestMapping("/space/replyDelete.do")
+		@ResponseBody
+		public Map<String, String> replyDelete(SpaceVO reply, HttpSession session) {
+			Map<String, String> mapJson = new HashMap<String, String>();
+			MemberVO user = (MemberVO) session.getAttribute("user");
+			logger.debug("reply" + reply);
 
-		Map<String,String> mapJson = 
-				new HashMap<String,String>();
+			SpaceReplyVO selectReply = spaceService.selectReply(reply.getReply_num());
+			logger.debug("selectReply" + selectReply);
+			if (user == null) {
+				mapJson.put("result", "logout");
+			}
 
-		MemberVO user = 
-				(MemberVO)session.getAttribute("user");
-		SpaceReplyVO db_reply = 
-				spaceService.selectReply(reply_num);
-		if(user==null) {
-			//로그인이 되어있지 않음
-			mapJson.put("result", "logout");
-		}else if(user!=null && 
-				user.getMem_num()==db_reply.getMem_num()) {
-			//로그인한 회원번호와 작성자 회원번호 일치
-			spaceService.deleteReply(reply_num);
-			mapJson.put("result", "success");
-		}else {
-			//로그인한 회원번호와 작성자 회원번호 불일치
-			mapJson.put("result", "wrongAccess");
+			else if (user != null && user.getMem_num() == selectReply.getMem_num()) {
+				
+				
+				//후기의 좋아요 삭제
+				spaceService.deleteFavByReplyNum(reply);
+				//후기 삭제 
+				spaceService.deleteReply(reply);
+
+				mapJson.put("result", "success");
+			} else {
+				mapJson.put("result", "wrongAccess");
+			}
+
+			return mapJson;
 		}
 
-		return mapJson;
-	}
 	//후기좋아요
 	@RequestMapping("/space/writeReplyFav.do")
 	@ResponseBody

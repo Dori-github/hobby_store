@@ -70,6 +70,18 @@ $(function(){
 		}
 	});
 	
+	
+	$('#rdate-O').click(function(){
+		$('#rdate').show();
+		$('#rdate').datepicker('option','disabled',false);
+	});
+	
+	$('#rdate-X').click(function(){
+		$('#rdate').hide();
+		$('#rdate').datepicker('option','disabled',true);
+		$('#rdate').val('0000-00-00');
+	});
+	
 	//이미지 변경
 	/*$('#file_modify').click(function(){
 		$('.file-detail').hide();

@@ -473,64 +473,66 @@ $(function(){
 		
 	});
 	
-	//댓글 삭제
-	$(document).on('click','.delete-btn',function(){
+	//후기 삭제
+	$(document).on('click', '.delete-btn', function() {
 		//댓글 번호
 		let reply_num = $(this).attr('data-num');
-		
+
 		//서버와 통신
 		$.ajax({
-			url:'deleteReply.do',
-			type:'post',
-			data:{reply_num:reply_num},
-			dataTpye:'json',
-			success:function(param){
-				if(param.result == 'logout'){
+			url: 'replyDelete.do',
+			type: 'post',
+			data: { reply_num: reply_num },
+			dataTpye: 'json',
+			success: function(param) {
+				if (param.result == 'logout') {
 					Swal.fire({
-	                    icon: 'warning',
-	                    title:'로그인 후 삭제할 수 있습니다',
-	                    showCancelButton: false,
-	                    confirmButtonText: "확인",
-	                    confirmButtonColor: "#FF4E02"
-	                });
-				}else if(param.result == 'success'){
+						icon: 'warning',
+						title: '로그인 후 삭제할 수 있습니다',
+						showCancelButton: false,
+						confirmButtonText: "확인",
+						confirmButtonColor: "#FF4E02"
+					});
+				} else if (param.result == 'success') {
 					Swal.fire({
-	                    icon: 'success',
-	                    title:'후기 삭제 완료!',
-	                    showCancelButton: false,
-	                    confirmButtonText: "확인",
-	                    confirmButtonColor: "#FF4E02"
-	                });
+						icon: 'success',
+						title: '후기 삭제 완료!',
+						showCancelButton: false,
+						confirmButtonText: "확인",
+						confirmButtonColor: "#FF4E02"
+					});
 					selectList(1);
-				}else if(param.result == 'wrongAccess'){
+				} else if (param.result == 'wrongAccess') {
 					Swal.fire({
-	                    icon: 'warning',
-	                    title:'타인의 후기을 삭제할 수 없습니다',
-	                    showCancelButton: false,
-	                    confirmButtonText: "확인",
-	                    confirmButtonColor: "#FF4E02"
-	                });
-				}else{
+						icon: 'warning',
+						title: '타인의 후기을 삭제할 수 없습니다',
+						showCancelButton: false,
+						confirmButtonText: "확인",
+						confirmButtonColor: "#FF4E02"
+					});
+				} else {
 					Swal.fire({
-	                    icon: 'error',
-	                    title:'후기삭제 시 오류 발생!',
-	                    showCancelButton: false,
-	                    confirmButtonText: "확인",
-	                    confirmButtonColor: "#FF4E02"
-	                });
+						icon: 'error',
+						title: '후기삭제 시 오류 발생!',
+						showCancelButton: false,
+						confirmButtonText: "확인",
+						confirmButtonColor: "#FF4E02"
+					});
 				}
 			},
-			error:function(){
+			error: function() {
 				Swal.fire({
-                    icon: 'error',
-                    title:'네트워크 오류 발생!',
-                    showCancelButton: false,
-                    confirmButtonText: "확인",
-                    confirmButtonColor: "#FF4E02"
-                });
+					icon: 'error',
+					title: '네트워크 오류 발생!',
+					showCancelButton: false,
+					confirmButtonText: "확인",
+					confirmButtonColor: "#FF4E02"
+				});
 			}
 		});
 	});
+
+
 	
 	
 	

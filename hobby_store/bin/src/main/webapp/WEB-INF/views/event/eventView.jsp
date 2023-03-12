@@ -29,7 +29,7 @@
 		</c:if>
 	</div>
 	<div class="end-btn">
-	<c:if test="${user.mem_auth>2}">
+	<c:if test="${user.mem_auth>2 && user.mem_num==event.mem_num}">
 			<input id="modify_btn" type="button" value="이벤트 수정" onclick="location.href='update.do?event_num=${event.event_num}'">
 			<input id="delete_btn" type="button" value="이벤트 삭제" id="event_delete">
 			<script type="text/javascript">

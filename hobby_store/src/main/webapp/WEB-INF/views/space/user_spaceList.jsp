@@ -49,7 +49,7 @@
 
 <!-- 검색폼 시작 -->
 <div id="space_search">                           <!-- get이엇음 -->
-			<form action="/space/list.do" method="post" class="navbar-expand search-form d-flex" id="search_form">
+			<form action="/space/list.do" method="get" class="navbar-expand search-form d-flex" id="search_form">
 				<select class="form-select" name="keyfield">
 					<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>전체</option>
 					<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>제목</option>
@@ -88,7 +88,7 @@
 				<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
 				<option value="2" <c:if test="${param.order == 2}">selected</c:if>>리뷰순</option>
 				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요순</option>
-				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>가격순</option>
+				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>가격낮은순</option>
 			</select>
 		</div>
 		<hr size="3" noshade width="100%" style="color:gray;margin:.8em 0;">

@@ -89,6 +89,16 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/mypage/eventApplyList.jsp"/>
     </definition>
+    <definition name="eventRegisList" extends="myPage">
+    	<put-attribute name="title" value="작성 이벤트 조회"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/eventList.jsp"/>
+    </definition>
+    <definition name="eventWinList" extends="myPage">
+    	<put-attribute name="title" value="이벤트 신청자 조회"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/mypage/eventWinList.jsp"/>
+    </definition>
     <definition name="memberDelete" extends="myPage">
     	<put-attribute name="title" value="회원탈퇴"/>
     	<put-attribute name="body"

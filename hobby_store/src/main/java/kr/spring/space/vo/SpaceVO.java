@@ -39,6 +39,7 @@ public class SpaceVO {
 	private Date date;
 	private Date mdate;
 
+
 	private int mem_num;
 	private String id;
 	private String mem_nickname;

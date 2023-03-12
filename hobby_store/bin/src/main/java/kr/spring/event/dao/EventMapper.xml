@@ -25,7 +25,9 @@
   		event_title,
   		event_attr,
   		event_end,
+  		<if test="event_rdate!=null">
   		event_rdate,
+  		</if>
   		event_content,
   		mem_num,
   		<if test="course_num!=''">course_num,</if>
@@ -37,7 +39,9 @@
 	  		#{event_title},
 	  		#{event_attr},
 	  		#{event_end},
+	  		<if test="event_rdate!=null">
 	  		#{event_rdate},
+	  		</if>
 	  		#{event_content},
 	  		#{mem_num},
 	  		<if test="course_num!=''">#{course_num},</if>
@@ -80,7 +84,12 @@
   		event_attr=#{event_attr},
   		event_content=#{event_content},
   		event_end=#{event_end},
+  		<if test="event_rdate!=null">
   		event_rdate=#{event_rdate}
+  		</if>
+  		<if test="event_rdate==null">
+  		event_rdate=null
+  		</if>
    	WHERE event_num=#{event_num}
   </update>
 </mapper>

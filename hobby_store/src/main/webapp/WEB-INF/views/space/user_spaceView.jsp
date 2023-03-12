@@ -149,10 +149,7 @@
 	<!-- 소개 시작 -->
 	<div class="c-content">
 		${space.space_content}
-		<div class="map">
-		위치<br>
-		지도표시
-		</div>
+
 	</div>
 	<!-- 소개 끝 -->
 	
@@ -225,20 +222,7 @@
 		</div>
 		</c:if>
 	</form>
-	
-	
-	<%-- 정렬 --%>
-	<div class="reply-search" align="right">
-		<select class="form-select select" id="order" name="order" style="width:100px;">
-			<option value="1">최신순</option>
-			<option value="2">별점순</option>
-			<option value="3">추천순</option>
-		</select>
-		
-	<hr size="2" noshade style="color:gray;">
-	</div>
-	
-	    
+   
 		
 	<!-- 후기 목록 출력 시작 -->
 	<div id="output"></div>

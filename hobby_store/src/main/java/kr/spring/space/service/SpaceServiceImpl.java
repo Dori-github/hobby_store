@@ -2,6 +2,7 @@ package kr.spring.space.service;
 
 import java.util.Arrays;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -135,10 +136,7 @@ public class SpaceServiceImpl implements SpaceService{
 	public void updateReply(SpaceReplyVO spaceReply) {
 		spaceMapper.updateReply(spaceReply);
 	}
-	@Override
-	public void deleteReply(Integer reply_num) {
-		spaceMapper.deleteReply(reply_num);
-	}
+	
 
 	@Override
 	public float selectStar(Integer space_num) {
@@ -190,30 +188,78 @@ public class SpaceServiceImpl implements SpaceService{
 		return spaceMapper.selectReplyFavCheck();
 	}
 
-	@Override
-	public void deleteReplyPhoto(Integer reply_num) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void deleteFavBySpaceNum(Integer space_num) {//좋아요삭제
 		spaceMapper.deleteFavBySpaceNum(space_num); 
 		
 	}
+    //후기삭제
+	
 
 	@Override
-	public void deleteReplyBySpaceNum(Integer space_num) {//댓글삭제
-		spaceMapper.deleteReplyBySpaceNum(space_num);
+	public void deleteReplyBySpaceNum(Integer space_num) {
+	      spaceMapper.deleteReplyBySpaceNum(space_num);
+		
+	}
+	@Override
+	public void deleteReplyPhoto(Integer reply_num) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	
+
+
+	@Override
+	public void deleteFavByReplyNum(SpaceVO reply_num) {
+		spaceMapper.deleteFavByReplyNum(reply_num);
+		
+	}
+
+	@Override
+	public void deleteReply(SpaceVO reply) {
+	   spaceMapper.deleteReply(reply);
+		
+	}
+
+
+	@Override
+	public void deleteReply2(Integer space_num) {
+		spaceMapper.deleteReply2(space_num);
+	}
+
+	@Override
+	public void deleteReplyNum(Integer space_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<SpaceVO> selectCate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectCate_num(SpaceVO space) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
+
 
 
 	
+
 }
 
+	
+
+
+	
 
 
 

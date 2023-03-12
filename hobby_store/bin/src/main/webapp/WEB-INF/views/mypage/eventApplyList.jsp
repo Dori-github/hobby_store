@@ -4,7 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 신청 이벤트 조회 시작 -->
 <div id="content">
-	<ul class="search">
+	<form action="event.do" id="search_form" method="get">
+		<ul class="search">
 			<li>
 				<select name="keyfield">
 					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>신청 날짜순</option>
@@ -19,7 +20,7 @@
 				<input type="button" value="목록" onclick="location.href='event.do'">
 			</li>
 		</ul>
-		
+	</form>
 	<c:if test="${count==0}">
 		<table class="table table-group-divider align-center">
 			<tr>
@@ -35,20 +36,28 @@
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today"/>
 	<table class="table table-group-divider align-center">
 		<tr>
-			<th>이벤트 번호</th>
 			<th>제목</th>
 			<th>진행 상태</th>
+			<th>이벤트 신청일</th>
 			<th>당첨결과일</th>
 			<th>당첨 여부</th>
 		</tr>
 		<c:forEach var="event" items="${list}">
 		<tr>
-			<td>${event.event_num}</td>
-			<td>${event.event_title}</td>
 			<td>
+			<a href="${pageContext.request.contextPath}/event/detail.do?event_num=${event.event_num}">
+			<img src="${pageContext.request.contextPath}/event/imageView.do?event_num=${event.event_num}" width="60" height="60">
+			${event.event_title}
+			</a>
+			</td>
+			<td>
+			<c:if test="${event.event_end > today}">마감</c:if>
+			<c:if test="${event.event_end <= today}">
 			<c:if test="${event.event_attr == 0}">마감</c:if>
 			<c:if test="${event.event_attr == 1}">진행중</c:if>
+			</c:if>
 			</td>
+			<td>${event.event_a_date}</td>
 			<td>${event.event_rdate}</td>
 			<td>
 			<c:if test="${event.event_rdate < today}">결과 발표 전</c:if>

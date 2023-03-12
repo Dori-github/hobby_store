@@ -59,7 +59,7 @@
 		</div>
 	<div class="move-btn float-clear">
 	<c:if test="${user.mem_auth>2}">
-		<input class="form-btn" type="button" value="이벤트 등록" onclick="location.href='write.do?mem_num=${user.mem_num}'">
+		<input class="form-btn" type="button" value="이벤트 등록" onclick="location.href='write.do'">
 	</c:if>
 		<input class="form-btn" type="button" value="이벤트 목록" onclick="location.href='list.do'">
 	</div>

@@ -98,12 +98,12 @@ $(function() {
 		
 	//3-1 포장, 픽업 여부 
 	$('#select #packaging').change(function(){
-		location.href = 'itemsList.do?cate='+$('#sidebar').data('param')+'&packaging='+$('#select #packaging').val()+'&keyfield='+$('.form-select').val()+'&keyword='+$('#search-bar').val();
+		location.href = 'itemsList.do?cate='+$('#sidebar').data('param')+'&packaging='+$('#select #packaging').val()+'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 	});
 	
 	//3-2 최신,리뷰,좋아요순 정렬 시작
 	$('#select #check').change(function() {
-		location.href = 'itemsList.do?cate='+$('#sidebar').data('param')+'&packaging='+$('#select #packaging').val()+'&check='+$('#select #check').val()+'&keyfield='+$('.form-select').val()+'&keyword='+$('#search-bar').val();
+		location.href = 'itemsList.do?cate='+$('#sidebar').data('param')+'&packaging='+$('#select #packaging').val()+'&check='+$('#select #check').val()+'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 		});
 		
 		

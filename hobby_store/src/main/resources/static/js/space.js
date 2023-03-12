@@ -1,32 +1,36 @@
 $(function(){
-			//jsp안에 자바스크립트보다 먼저 작동
+/*			//jsp안에 자바스크립트보다 먼저 작동
 	//=================클래스 메인 사이드바==================//
 	let cate = $('#sidebar .cate');
+
 
 	
 	//세부카테고리 클릭시 드롭다운 고정
 
-	cate.on(function(){
+	cate.on('click',function(){
+			let item = $(this);
+			
 		if($(this).hasClass('active-color')){
 			$(this).parents('.cate').stop().slideDown();
 		}
-	});
+	});*/
 
 //==============클래스 목록==================//
 
 	
 	//지역 선택
 	$('#select #location').on('change',function(){
-		location.href='list.do?cate='+$('#sidebar').data('param')+'&location='+$(this).val()+'&order='+$('#order').val();
+		location.href='list.do?cate_num='+$('#sidebar').data('param')+'&location='+$(this).val()+'&order='+$('#order').val();
 
 	});
 	
 	//최신순 선택
 	$('#select #order').on('change',function(){
-			location.href='list.do?cate='+$('#sidebar').data('param')+'&location='+$('#location').val()+'&order='+$(this).val();
+			location.href='list.do?cate_num='+$('#sidebar').data('param')+'&location='+$('#location').val()+'&order='+$(this).val();
 		
 	});
 	
+
 	//좋아요 클릭 
 	$(document).on('click','.red-heart',function(){
 		let heart = $(this);
@@ -363,5 +367,44 @@ $(function(){
 			$('#photo2').attr('src',reader.result);
 		};
 	});//end of change	
+	
+	
+	$(function(){
+	/*-----------------------
+	 *예약공간수 변경
+	 *-----------------------*/
+	$('#order_quantity').on('keyup mouseup',function(){
+		if($('#order_quantity').val()==''){
+			$('#space_total_txt').text('총주문 금액 : 0원');
+			return;
+		}
+		if($('#order_quantity').val() <= 0){
+			$('#order_quantity').val('');
+			return;
+		}
+		if(Number($('#space_limit').val()) < 
+		                $('#order_quantity').val()){
+			alert('인원수를 초과하셨습니다!');
+			$('#order_quantity').val('');
+			$('#space_total_txt').text('총주문 금액 : 0원');
+			return;
+		}
+		
+		let total = $('#space_price').val() * 
+		                 $('#order_quantity').val();
+		$('#space_total_txt').text('총주문 금액 : ' +
+		                 total.toLocaleString() + '원');
+		
+	});
+	
+
+	
+});
+
+	
+	
+	
+	
+	
 	
 });
