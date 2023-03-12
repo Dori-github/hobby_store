@@ -166,7 +166,7 @@ public class SpaceAdminController {
 			return "redirect:/space/list.do";
 		}
 		 
-		
+		 
 		//=====파일 삭제=======//
 		@RequestMapping("/space/deleteFile.do")
 		@ResponseBody
