@@ -91,7 +91,7 @@
 		LEFT JOIN (SELECT course_num , ROUND(AVG(star_auth),1) AS staravg 
 		FROM course_reply GROUP BY course_num) USING(course_num)
 		WHERE <include refid="courseOnoff"></include> <include refid="courseOneweek"></include> <include refid="courseSearch"></include>
-		<include refid="courseCate"> </include>
+		<include refid="courseCate"> </include> <include refid="courseLoc"> </include>
 		ORDER BY <include refid="courseOrder"></include>
 	</select>
 	 
@@ -135,47 +135,37 @@
 	</select>
 	
   	<select id="selectListReply" parameterType="map" resultType="courseReplyVO">
-  			SELECT * FROM
-  			(SELECT a.*, rownum rnum FROM
-  			(SELECT * FROM
-  		    (SELECT reply_num,
-  		            <![CDATA[
-  		            REPLACE(REPLACE(reply_content,'<','&lt;'),'>','&gt;') reply_content,
-  		            ]]>
-  		            reply_photo1,reply_photo2,reply_photo3,reply_photo_name1,reply_photo_name2,reply_photo_name3,
-  		            reply_date,
-  		            reply_mdate,
-  		            course_num,
-  		            mem_num,
-  		            mem_id,
-  		            mem_nickname,
-  		            mem_photo,
-  		            star_auth
-  		            FROM course_reply 
-  		            JOIN member USING (mem_num) 
-  		            JOIN member_detail USING(mem_num))
-  		            LEFT OUTER JOIN (SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num}) USING(reply_num)
-                    LEFT OUTER JOIN (SELECT reply_num, COUNT(reply_num) AS favcount 
-                    FROM course_reply_fav group by reply_num) USING (reply_num)
-  		          WHERE course_num = #{course_num}
-  		          ORDER BY <include refid="replyOrder"></include>)a) 
+  		SELECT
+          *
+       FROM (SELECT 
+               m.*, 
+               rownum rnum 
+             FROM (SELECT 
+                      *
+                    FROM (SELECT 
+                            *
+                          FROM course_reply where course_num = #{course_num}) r 
+                               JOIN member m USING(mem_num)
+                               JOIN member_detail d USING(mem_num)
+                               LEFT OUTER JOIN 
+                               <if test="mem_num!=null">
+                               (SELECT *  FROM (SELECT reply_num, COUNT(reply_num) AS favcount 
+                                                FROM course_reply_fav group by reply_num)a 
+                                                     LEFT OUTER JOIN 
+                                                     (SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num})b 
+                                                     USING(reply_num))f 
+                              </if>
+                              <if test="mem_num==null">
+                               (SELECT reply_num, COUNT(reply_num) AS favcount 
+                                FROM course_reply_fav group by reply_num)f
+                              </if>                       
+                              USING(reply_num) 
+                              ORDER BY <include refid="replyOrder"></include>)m) 
   		    <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>          
   	</select>
 	
-	<update id="deleteReplyPhoto" parameterType="Integer">
-		<if test="photo_type==1">
-			UPDATE course_reply SET reply_photo1='',reply_photo_name1='' WHERE reply_num=#{reply_num}
-		</if>
-		<if test="photo_type==2">
-			UPDATE course_reply SET reply_photo2='',reply_photo_name2='' WHERE reply_num=#{reply_num}
-		</if>
-		<if test="photo_type==3">
-			UPDATE course_reply SET reply_photo3='',reply_photo_name3='' WHERE reply_num=#{reply_num}
-		</if>
-	</update>
-	 
 	
 	
 </mapper> 

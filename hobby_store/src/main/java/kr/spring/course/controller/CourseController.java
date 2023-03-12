@@ -1,5 +1,6 @@
 package kr.spring.course.controller;
 
+import java.net.http.HttpRequest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -231,22 +232,105 @@ public class CourseController {
 	
 	
 	
-	//=========게시판 글 수정===========//
+	//=========클래스 글 수정===========//
 	//수정 폼 호출
-	
+	@GetMapping("/course/update.do")
+	public String formUpdate(@RequestParam int course_num,Model model) {
+		CourseVO courseVO = courseService.selectCourse(course_num);
+		
+		List<CourseVO> course_cate = null;
+		course_cate = courseService.selectCate();
+		
+		model.addAttribute("courseVO",courseVO);
+		model.addAttribute("course_cate",course_cate);
+		
+		return "courseModify";
+	}
 	//수정 폼에서 전송된 데이터 처리
+	@PostMapping("/course/update.do")
+	public String submitUpdate(@Valid CourseVO courseVO,
+			                   BindingResult result,
+			                   HttpServletRequest request,
+			                   Model model) {
+		
+		logger.debug("<<글수정>> : " + courseVO);
+		logger.debug("<<업로드 파일 용량1>> : "+courseVO.getCourse_photo1().length);
+		logger.debug("<<업로드 파일 용량2>> : "+courseVO.getCourse_photo2().length);
+		logger.debug("<<업로드 파일 용량3>> : "+courseVO.getCourse_photo3().length);
+
+		if(courseVO.getCourse_photo1().length > 5*1024*1024) {//5MB
+			result.reject("limitUploadSize",new Object[]{"5MB"},null);
+		}
+		if(courseVO.getCourse_photo2().length > 5*1024*1024) {//5MB
+			result.reject("limitUploadSize",new Object[]{"5MB"},null);
+		}
+		if(courseVO.getCourse_photo3().length > 5*1024*1024) {//5MB
+			result.reject("limitUploadSize",new Object[]{"5MB"},null);
+		}
+		
+		//유효성 체크 결과 오류가 있으면 폼을 호출
+		if(result.hasErrors()) {
+			//title 또는 content가 입력되지 않아서 유효성
+			//체크에 걸리면 파일 정보를 잃어버리기 때문에
+			//폼을 호출할 때 파일 정보를 다시 셋팅
+			CourseVO vo = courseService.selectCourse(courseVO.getCourse_num());
+			courseVO.setCourse_photo_name1(vo.getCourse_photo_name1());
+			courseVO.setCourse_photo_name2(vo.getCourse_photo_name2());
+			courseVO.setCourse_photo_name3(vo.getCourse_photo_name3());
+			return "courseModify";
+		}
+		
+		//글수정
+		courseService.updateCourse(courseVO);
+		
+		//View에 표시할 메시지
+		model.addAttribute("message", "글수정을 완료했습니다");
+		model.addAttribute("url", request.getContextPath()+"/course/detail.do?course_num="+courseVO.getCourse_num());
+		
+		return "common/resultView";
+	}
 	
 	
 	
+	//클래스 사진 삭제
+	@RequestMapping("/course/deletePhoto.do")
+	@ResponseBody
+	public Map<String,String> deletePhoto(int course_num,int photo_type,HttpSession session){
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user==null) {
+			mapJson.put("result", "logout");
+		}else {
+			if(photo_type==1) {
+				courseService.deletePhoto1(course_num);
+			}else if(photo_type==2) {
+				courseService.deletePhoto2(course_num);
+			}else if(photo_type==3){
+				courseService.deletePhoto3(course_num);
+			}
+			mapJson.put("result", "success");
+		}
+		return mapJson;
+	}
+
 	
-	//파일삭제
-	
-	
-	//===========게시판 글삭제============//
-	
-	
-	
-	
+	//===========클래스 글삭제============//
+	@RequestMapping("/course/delete.do")
+	public String deleteCourse(@RequestParam int course_num,Model model,HttpServletRequest request) {
+		
+		//몽땅 삭제 	
+		courseService.deleteCourseWithAll(course_num);
+			
+		
+		
+		//View에 표시할 메시지
+		model.addAttribute("message", "글삭제을 완료했습니다");
+		model.addAttribute("url", request.getContextPath()+"/course/courseList.do?onoff=1&oneweek=1&cate=전체");
+		
+		return "common/resultView";
+	}
+
 	
 	
 	
@@ -354,9 +438,9 @@ public class CourseController {
 		map.put("course_num", course_num);
 		map.put("order", order);
 		map.put("mem_num",user.getMem_num());
-		
 		//후기 개수
 		int count = courseService.selectReplyCount(map);
+		/*
 		//별점 평균
 		Float star_auth = courseService.selectStar(course_num);
 		//별점 5점 %
@@ -364,7 +448,7 @@ public class CourseController {
 		int starall = courseService.selectallstar(course_num);
 		float star5_per = Math.round((float)star5/starall*100);
 		
-		
+		 */
 		//페이지 처리
 		PagingUtil page = new PagingUtil(currentPage,count,5,3,null);
 		map.put("start", page.getStartRow());
@@ -382,9 +466,11 @@ public class CourseController {
 		Map<String,Object> mapJson = new HashMap<String,Object>();
 		mapJson.put("list", list);
 		mapJson.put("count", count);
+		/*
 		mapJson.put("star_auth", star_auth);
 		mapJson.put("star5_per", star5_per);
-		
+		mapJson.put("starall", starall);
+		*/
 		//===== 로그인 한 회원정보 셋팅 =====//
 		if(user!=null) {
 			mapJson.put("user_num", user.getMem_num());
@@ -465,8 +551,13 @@ public class CourseController {
 		if(user==null) {
 			mapJson.put("result", "logout");
 		}else {
-			courseService.deleteReplyPhoto(reply_num,photo_type);
-			
+			if(photo_type==1) {
+				courseService.deleteReplyPhoto1(reply_num);
+			}else if(photo_type==2) {
+				courseService.deleteReplyPhoto2(reply_num);
+			}else if(photo_type==3){
+				courseService.deleteReplyPhoto3(reply_num);
+			}
 			mapJson.put("result", "success");
 		}
 		return mapJson;

@@ -3,6 +3,9 @@ package kr.spring.course.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
+
 import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseReplyVO;
@@ -19,7 +22,11 @@ public interface CourseService {
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);
 	public void deleteCourse(Integer course_num);
-	public void deletePhoto(Integer course_num);
+	public void deleteCourseWithAll(Integer course_num);
+	public void deletePhoto1(Integer course_num);
+	public void deletePhoto2(Integer course_num);
+	public void deletePhoto3(Integer course_num);
+	public List<Integer> selectReplyNum(Integer course_num);
 	
 	
 	//좋아요
@@ -39,10 +46,12 @@ public interface CourseService {
 	public void updateReply(CourseReplyVO boardReply);
 	public void deleteReply(Integer reply_num);
 	public void deleteReplyByBoardNum(Integer board_num);
-	public float selectStar(Integer course_num);
+	public Float selectStar(Integer course_num);
 	public int select5star(Integer course_num);
 	public int selectallstar(Integer course_num);
-	public void deleteReplyPhoto(Integer reply_num,Integer photo_type);
+	public void deleteReplyPhoto1(Integer reply_num);
+	public void deleteReplyPhoto2(Integer reply_num);
+	public void deleteReplyPhoto3(Integer reply_num);
 	
 	//후기 좋아요
 	public CourseReplyFavVO selectReplyFavCheck();
@@ -51,6 +60,7 @@ public interface CourseService {
 	public void insertReplyFav(CourseReplyFavVO fav);
 	public void deleteReplyFav(Integer fav_num);
 	public void deleteReplyFavByReplyNum(Integer reply_num);
+	void deleteCourseCart(Integer course_num);
 
 
 }

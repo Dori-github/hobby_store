@@ -26,16 +26,16 @@ public class CourseReplyVO {
 	private byte[] mem_photo;
 	
 	//별점(1,2,3,4,5)
-	private int star_auth;
+	//private int star_auth;
 	//별점평균
-	private float starcount;
+	//private Float starcount;
 	//별점5점 %
-	private float star5_per;
+	//private float star5_per;
 	//전체에서 5점의 %
 	//5점의 개수
-	private int star5;
+	//private int star5;
 	//전체개수
-	private int starall;
+	//private int starall;
 	//후기 좋아요 개수
 	private int favcount;
 	//후기 좋아요 한사람 체크
@@ -158,6 +158,10 @@ public class CourseReplyVO {
 		public void setMem_photo(byte[] mem_photo) {
 			this.mem_photo = mem_photo;
 		}
+		
+		
+		
+		/*
 		public int getStar_auth() {
 			return star_auth;
 		}
@@ -189,6 +193,8 @@ public class CourseReplyVO {
 			this.starall = starall;
 		}
 		
+		
+		*/
 		public int getFavcount() {
 			return favcount;
 		}
@@ -202,13 +208,5 @@ public class CourseReplyVO {
 		public void setFav_Num(int fav_num) {
 			this.fav_num = fav_num;
 		}
-		@Override
-		public String toString() {
-			return "CourseReplyVO [reply_num=" + reply_num + ", reply_content=" + reply_content + ", reply_photo_name1="
-					+ reply_photo_name1 + ", reply_photo_name2=" + reply_photo_name2 + ", reply_photo_name3="
-					+ reply_photo_name3 + ", reply_date=" + reply_date + ", reply_mdate=" + reply_mdate
-					+ ", course_num=" + course_num + ", mem_num=" + mem_num + ", mem_id=" + mem_id + ", mem_nickname="
-					+ mem_nickname + ", star_auth=" + star_auth + ", starcount=" + starcount + ", star5_per="
-					+ star5_per + ", star5=" + star5 + ", starall=" + starall + ", favcount=" + favcount + "]";
-		}
+		
 }
