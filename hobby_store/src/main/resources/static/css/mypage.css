@@ -174,3 +174,54 @@ div#page_body{
 #align-center{
 	text-align:center;
 }
+
+/*내정보
+=============================*/
+.member-ul{
+	margin:0 auto;
+}
+.member-ul li{
+	margin:10px auto;
+	
+}
+.my-photo{
+	border-radius:50%;
+	margin-bottom:30px;
+}
+
+.mypage-btn{
+	text-align:right;
+	margin-top:20px;
+	background-color:#FF4E02;
+	color:white;
+}
+.mypage-btn #modify_btn{
+	width:90px;
+	height:35px;
+	color:white;
+	background-color:#FF4E02;
+	border:none;
+	border-radius:5px;
+	text-align:center;
+	font-size:10pt;
+}
+.mypage-btn #modify_btn:hover{
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+	background-color: #E84601;
+}
+.end-btn #delete_btn{
+	width:90px;
+	height:35px;
+	color:grey;
+	background-color:#FFF;
+	border:1px solid grey;
+	border-radius:5px;
+	text-align:center;
+	font-size:10pt;
+}
+.end-btn #delete_btn:hover{
+	background-color: #F2F2F2;
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+}

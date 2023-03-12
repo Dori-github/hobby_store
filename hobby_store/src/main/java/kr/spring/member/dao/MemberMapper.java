@@ -88,7 +88,7 @@ public interface MemberMapper {
 	
 	//======마이페이지======//
 	//회원 상세
-	@Select("SELECT * FROM member JOIN member_detail USING(mem_num) WHERE mem_num=#{mem_num}")
+	@Select("SELECT * FROM member m JOIN member_detail d ON m.mem_num=d.mem_num JOIN member_country c ON d.country_num=c.country_num JOIN member_like i ON d.like_num=i.like_num WHERE m.mem_num=#{mem_num}")
 	public MemberVO selectMember(Integer mem_num);
 	//회원정보 업데이트
 	@Update("UPDATE member SET mem_nickname=#{mem_nickname} WHERE mem_num=#{mem_num}")
