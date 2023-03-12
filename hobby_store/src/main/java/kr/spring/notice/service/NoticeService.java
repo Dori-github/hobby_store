@@ -23,7 +23,7 @@ public interface NoticeService {
 	//공지사항 삭제
 	public void deleteNotice(Integer noti_num);
 	//공지사항 사진 삭제
-	public void deleteFile(Integer noti_num);
+	public void deleteFile(Map<String,Integer> map);
 
 
 	//좋아요

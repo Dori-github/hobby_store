@@ -22,23 +22,32 @@ spring:
     encoding: UTF-8
     
   devtools: #View reload
-    livereload:      enabled: true
+    livereload:
+      enabled: true
     
-    restart: #컨트롤러, 모델단이 바뀌었을 때 프로젝트 재시작 설정 (정확히는 classpath에 있는 모든 파일)      enabled: true    
+    restart: #컨트롤러, 모델단이 바뀌었을 때 프로젝트 재시작 설정 (정확히는 classpath에 있는 모든 파일)
+      enabled: true    
   
-  servlet:    multipart:      max-file-size: 50MB #파일 한 개당 최대 사이즈
-      max-request-size: 200MB #요청당 최대 파일 크기(주의)max-request-size도 설정이 필요        mybatis: #mybatis 설정
+  servlet:
+    multipart:
+      max-file-size: 50MB #파일 한 개당 최대 사이즈
+      max-request-size: 200MB #요청당 최대 파일 크기(주의)max-request-size도 설정이 필요
+        
+mybatis: #mybatis 설정
   type-aliases-package: kr.spring.**.vo
   mapper-locations: kr/spring/**/dao/*.xml   
     
 logging: #로그 지정
   level:
-    root: error    '[kr.spring]': debug    
+    root: error
+    '[kr.spring]': debug    
     
-server:  port: 8001
+server:
+  port: 8001
   servlet:
     context-path: /
-    encoding:      enabled: true # http 인코딩 지원를 활성화할지 여부
+    encoding:
+      enabled: true # http 인코딩 지원를 활성화할지 여부
       charset: UTF-8
       force: true   
     

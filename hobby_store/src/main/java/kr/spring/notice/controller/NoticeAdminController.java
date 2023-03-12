@@ -37,7 +37,7 @@ public class NoticeAdminController {
 	@ModelAttribute
 	public NoticeVO initCommand() {
 		return new NoticeVO();
-	}
+	}   
 
 	//=======공지사항 목록====//
 	@RequestMapping("/notice/admin_list.do")
@@ -130,7 +130,7 @@ public class NoticeAdminController {
 		model.addAttribute("message", 
 				"공지사항 등록이 완료되었습니다.");
 		model.addAttribute("url", 
-				request.getContextPath()+"/notice/admin_list.do");
+				request.getContextPath()+"/notice/noticeList.do");
 
 
 		return "common/resultView";
@@ -170,7 +170,7 @@ public class NoticeAdminController {
 				"공지수정이 완료되었습니다.");
 		model.addAttribute("url", 
 				request.getContextPath() 
-				+ "/notice/admin_modify.do?noti_num="
+				+ "/notice/detail.do?noti_num="
 				+noticevo.getNoti_num());
 
 		return "common/resultView";
@@ -188,14 +188,14 @@ public class NoticeAdminController {
 		//글삭제
 		noticeService.deleteNotice(noti_num);
 
-		return "redirect:/notice/list.do";
+		return "redirect:/notice/noticeList.do";
 	}
 
 	//=====파일 삭제=======//
-	@RequestMapping("/notice/noticeFile.do")
+	@RequestMapping("/notice/deleteFile.do")
 	@ResponseBody
 	public Map<String,String> processFile(
-			int noti_num,
+			int noti_num, int noti_type,
 			HttpSession session){
 		Map<String,String> mapJson = 
 				new HashMap<String,String>();
@@ -205,11 +205,39 @@ public class NoticeAdminController {
 		if(user==null) {
 			mapJson.put("result", "logout");
 		}else {
-			noticeService.deleteFile(noti_num);
-
+			Map<String,Integer> map = new HashMap<String,Integer>();
+		    map.put("noti_num", noti_num);
+		    map.put("noti_type",noti_type);
+		    
+			noticeService.deleteFile(map);
 			mapJson.put("result", "success");
 		}
 
 		return mapJson;
 	}
+	/*
+	//=====이미지 출력=====//
+		@RequestMapping("/notice/imageView.do")
+		public ModelAndView viewImage(
+				        @RequestParam int noti_num,
+				        @RequestParam int noti_type) {
+			
+			NoticeVO notice = 
+					noticeService.selectNotice(noti_num);
+			
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("imageView");
+			
+			if(noti_type==2) {//프로필 사진
+				mav.addObject("imageFile",notice.getPhoto2());
+				mav.addObject("filename", notice.getPhoto_name2());
+			}
+			else if(noti_type==2) {//업로드된 이미지
+				mav.addObject("imageFile", notice.getPhoto2());
+				mav.addObject("filename", notice.getPhoto_name2());
+			}
+			
+			return mav;
+		}
+		*/
 }
