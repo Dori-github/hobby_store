@@ -9,7 +9,7 @@ import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
 public interface EventService { 
-		//이벤트 등록
+		//이벤트 등록 
 		public void insertEvent(EventVO eventVO);
 		//이벤트 목록
 		public List<EventVO> selectList(Map<String,Object> map);

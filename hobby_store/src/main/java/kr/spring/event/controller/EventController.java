@@ -176,6 +176,7 @@ public class EventController {
 		return "common/resultView";
 	}
 	
+	
 	//=====이벤트 글삭제=======// 
 	@RequestMapping("/event/delete.do")
 	public String submitDelete(@RequestParam int event_num,Model model,HttpServletRequest request) {

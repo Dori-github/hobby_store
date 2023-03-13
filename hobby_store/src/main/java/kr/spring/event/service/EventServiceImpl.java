@@ -22,7 +22,7 @@ public class EventServiceImpl implements EventService{
 	
 	@Override
 	public List<EventVO> selectList(Map<String, Object> map) {
-		return eventMapper.selectList(map);
+		return eventMapper.selectList(map); 
 	}
 
 	@Override

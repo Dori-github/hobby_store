@@ -4,6 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="kr.spring.event.dao.EventMapper">  
 
+
 	<sql id="eventSearch">
 	FROM event JOIN event_detail USING(event_num)
 		<if test="keyword!='' and keyword!=null">

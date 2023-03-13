@@ -25,7 +25,13 @@
 			${event.event_detail}
 		</div>
 		<c:if test="${event.course_num=='' && event.items_num==''}">
-		<input type="button" value="신청하기" onclick="location.href='user_regis.do?event_num=${event.event_num}'">
+		<input type="button" class="align-center" id="go_btn" value="신청하기" onclick="location.href='user_regis.do?event_num=${event.event_num}'">
+		</c:if>
+		<c:if test="${event.course_num!=''}">
+		<input type="button" class="align-center" id="go_btn" value="구경하러 하기" onclick="location.href='${pageContext.request.contextPath}/course/courseDetail.do?course_num=${event.course_num}'">
+		</c:if>
+		<c:if test="${event.items_num!=''}">
+		<input type="button" class="align-center" id="go_btn" value="구경하러 하기" onclick="location.href='${pageContext.request.contextPath}/items/itemsDetail.do?items_num=${event.items_num}'">		
 		</c:if>
 	</div>
 	<div class="end-btn">
