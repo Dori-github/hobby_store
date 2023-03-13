@@ -221,7 +221,8 @@ public class CartController {//메서드 생성, 데이터 처리
 		}
 		
 		String[] course_onoff = request.getParameterValues("course_onoff");
-		logger.debug("<<cㅇ>> : "+ course_onoff);
+		String[] course_num = request.getParameterValues("course_num");
+
 		
 		if(course_onoff != null) {
 			courseCart.setMem_num(user.getMem_num());
@@ -233,8 +234,8 @@ public class CartController {//메서드 생성, 데이터 처리
 				
 				cartService.insertCourseCart(courseCart);
 
-				logger.debug("<<!<FFFF:" + courseCart);
-				logger.debug("<<!@!@!@!@");
+				model.addAttribute("accessMsg", "장바구니에 성공적으로 담겼습니다.");
+				
 			}else {//등록된 동일 클래스 있음
 				
 				model.addAttribute("accessMsg", "장바구니에 이미 담긴 클래스입니다.");

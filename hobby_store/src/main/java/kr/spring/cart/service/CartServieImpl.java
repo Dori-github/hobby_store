@@ -32,7 +32,7 @@ public class CartServieImpl implements CartService{
 
 	@Override
 	public void insertCourseCart(CourseCartVO courseCart) {
-		return;
+		cartmapper.insertCourseCart(courseCart);
 	}
 
 	@Override
