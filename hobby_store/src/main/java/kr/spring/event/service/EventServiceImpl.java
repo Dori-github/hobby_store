@@ -74,4 +74,14 @@ public class EventServiceImpl implements EventService{
 		eventMapper.insertEventApply(eventApplyVO);
 	}
 
+	@Override
+	public EventApplyVO selectEventApplyByMem_num(Map<String, Object> map) {
+		return eventMapper.selectEventApplyByMem_num(map);
+	}
+
+	@Override
+	public EventApplyVO selectEventApply(int event_num) {
+		return eventMapper.selectEventApply(event_num);
+	}
+
 }
