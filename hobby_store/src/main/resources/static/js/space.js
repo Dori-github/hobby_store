@@ -145,7 +145,7 @@ $(function(){
 	
 	//이미지 미리 보기
 	let space_photo;//선택한 이미지 저장
-	//대표이미지
+/*	//대표이미지
 	$('.image #upload1').change(function(){
 		space_photo = this.files[0];
 		if(!space_photo){//취소한 경우
@@ -193,7 +193,7 @@ $(function(){
 			$('.l2').hide();
 			$('.d2').show();
 		};
-	});//end of change
+	});//end of change*/
 	
 	/*//추가이미지2
 	$('.image #upload3').change(function(){
@@ -244,8 +244,8 @@ $(function(){
 	
   //=================수정=================//
      let photo_path = $('#photo').attr('src');
-	 let photo_path2 = $('.my-photo').attr('src');
-     let photo_path3 = $('.my-photo').attr('src');
+	 let photo_path1 = $('.my-photo').attr('src');
+     let photo_path2 = $('.my-photo').attr('src');
 	let my_photo; //업로드하고자 선택한 이미지 저장
 	$('.image2 #upload').change(function(){
 		my_photo = this.files[0];
