@@ -8,10 +8,10 @@
 <!-- 회원정보 시작 -->
 	<div id="content" style="margin-left:200px;">
 		<img src="${pageContext.request.contextPath}/member/photoView.do" width="200" height="200" class="my-photo">
-		<h3><span><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
+		<h4><span><c:if test="${!empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
 			<span><c:if test="${empty member.mem_nickname}">${member.mem_nickname}</c:if></span>
 			 님 환영합니다!
-		</h3>
+		</h4>
 		 <div><input type="button" value="회원정보수정" class="modify-btn"
 		       onclick="location.href='update.do'"></div>
 		<table class="myPage-info">

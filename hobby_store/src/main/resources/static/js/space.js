@@ -31,54 +31,7 @@ $(function(){
 	});
 	
 
-	/*//좋아요 클릭 
-	$(document).on('click','.red-heart',function(){
-		let heart = $(this);
-		$.ajax({
-			url:'writeFav.do',
-			type:'post',
-			data:{space_num:$(this).attr('data-num')},
-			dataType:'json',
-			success:function(param){
-				if(param.result == 'logout'){
-					Swal.fire({
-				        icon: 'warning',
-				        title:'로그인 후 좋아요를 눌러주세요',
-				        showCancelButton: false,
-				        confirmButtonText: "확인",
-				        confirmButtonColor: "#FF4E02"
-				        });
-				}else if(param.result == 'success'){
-					if(param.status == 'yesFav'){
-						heart.find('.fa-heart').css('font-weight', 'bold');
-						heart.parent().find('.countFav').text(param.count);
-					}else{
-						heart.find('.fa-heart').css('font-weight', 'normal');
-						heart.parent().find('.countFav').text(param.count);
-					}
-				}else{
-					Swal.fire({
-				        icon: 'error',
-				        title:'등록시 오류 발생',
-				        showCancelButton: false,
-				        confirmButtonText: "확인",
-				        confirmButtonColor: "#FF4E02"
-				        });
-				}
-			},
-			error:function(){
-				Swal.fire({
-			        icon: 'error',
-			        title:'네트워크 오류',
-			        showCancelButton: false,
-			        confirmButtonText: "확인",
-			        confirmButtonColor: "#FF4E02"
-			        });
-			}
-		});
-	});
-*/
-
+	
 //===============요일,시간==================//
 	//요일 클릭시
 	$(document).on('click','#space_form #datetime input[type=checkbox]',function(){
