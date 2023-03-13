@@ -50,12 +50,7 @@
 					<li><a href="${pageContext.request.contextPath}/course/courseList.do?onoff=1&oneweek=1&cate=전체">클래스</a></li>
 					<li><a href="${pageContext.request.contextPath}/items/itemsList.do">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/space/list.do">장소대여</a></li>
-					<li id="community_btn"><a href="${pageContext.request.contextPath}/">커뮤니티</a>
-						<ul class="dropdown" id="dropdown">
-							<li><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a></li>
-							<li><a href="#">자유게시판</a></li>
-							<li><a href="${pageContext.request.contextPath}/qna/list.do">Q & A</a></li>
-						</ul>
+					<li id="community_btn"><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a>
 					</li>
 					<li><a href="${pageContext.request.contextPath}/event/list.do">이벤트</a></li>
 				</ul>
