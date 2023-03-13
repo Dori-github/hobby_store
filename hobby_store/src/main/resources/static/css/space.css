@@ -711,6 +711,9 @@ input[type='number']::-webkit-inner-spin-button {
 	line-height:18px;
 	float:right;
 }
+.zipc{
+	font-size:15px;
+}
 .right-class .buy{
 	display:block;
 	width:48%;

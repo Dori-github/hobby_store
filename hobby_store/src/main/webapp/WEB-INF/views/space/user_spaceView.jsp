@@ -90,12 +90,13 @@
 			<h3><b>${space.space_name}</b></h3>
 		</p>
 		
-		<div>
+		<div class="zipc">
 			<c:if test="${!empty space.space_zipcode}">
 			<p>
 				<span class="gray"><i class="fa-solid fa-location-dot"></i> &nbsp;${space.space_address1} ${space.space_address2}</span>
 			</p>
 			</c:if>
+			</div>
 			<%-- <p>
 				<span><i class="fa-regular fa-star" style="color:orange;"></i>${space.star_avg} (후기 ${space.replycount})</span>	
 			</p> --%>
