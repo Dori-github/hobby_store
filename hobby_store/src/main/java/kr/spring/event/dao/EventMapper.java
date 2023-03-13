@@ -15,7 +15,7 @@ import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
 @Mapper
-public interface EventMapper {
+public interface EventMapper { 
 	//이벤트 번호 생성
 	@Select("SELECT event_seq.nextval FROM dual")
 	public int selectEvent_num();

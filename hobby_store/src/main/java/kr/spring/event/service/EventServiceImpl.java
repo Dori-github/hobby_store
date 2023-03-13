@@ -15,7 +15,7 @@ import kr.spring.items.vo.ItemsVO;
 
 @Service
 @Transactional
-public class EventServiceImpl implements EventService{
+public class EventServiceImpl implements EventService{ 
 
 	@Autowired
 	private EventMapper eventMapper;
