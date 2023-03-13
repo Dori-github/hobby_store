@@ -43,6 +43,7 @@ public class ItemsVO {
 	private int fav_num;
 	private int fmem_num;
 	private int favcount;
+	private int favcount1;
 	//////////////////////////////////////////////
 	private int reply_num;
 	/////////////////////////////////////////////
@@ -287,6 +288,14 @@ public class ItemsVO {
 	
 	
 
+	public int getFavcount1() {
+		return favcount1;
+	}
+
+	public void setFavcount1(int favcount1) {
+		this.favcount1 = favcount1;
+	}
+
 	public int getFavcount() {
 		return favcount;
 	}
@@ -336,9 +345,10 @@ public class ItemsVO {
 				+ ", items_hit=" + items_hit + ", packaging=" + packaging + ", items_zipcode=" + items_zipcode
 				+ ", items_address1=" + items_address1 + ", items_address2=" + items_address2 + ", mem_num=" + mem_num
 				+ ", mem_nickname=" + mem_nickname + ", fav_num=" + fav_num + ", fmem_num=" + fmem_num + ", favcount="
-				+ favcount + ", reply_num=" + reply_num + ", starcount=" + starcount + ", replycount=" + replycount
-				+ "]";
+				+ favcount + ", favcount1=" + favcount1 + ", reply_num=" + reply_num + ", starcount=" + starcount
+				+ ", replycount=" + replycount + "]";
 	}
+
 
 	
 	
