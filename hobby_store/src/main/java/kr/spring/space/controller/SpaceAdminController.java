@@ -58,42 +58,36 @@ public class SpaceAdminController {
 			//상품 이미지 유효성 체크
 			//MultipartFile -> byte[]로 변환할 경우 파일을
 			//업로드하지 않으면 byte[]은 생성되고 length는 0
-			if(vo.getSpace_photo1().length==0) {
+			if(vo.getSpace_photo().length==0) {
 				//upload1은 자바빈(vo)에 필드가 없기때문에 명시
 				//할 수 없음
 				result.rejectValue("space_photo", "required");
 			}
-			if(vo.getSpace_photo2().length==0) {
+			if(vo.getSpace_photo1().length==0) {
 				result.rejectValue("space_photo1", "required");
 			}
-			if(vo.getSpace_photo1().length==0) {
+			if(vo.getSpace_photo2().length==0) {
 			
 				result.rejectValue("space_photo2", "required");
 			}
-			if(vo.getSpace_photo2().length==0) {
-				result.rejectValue("space_photo3", "required");
-			}
-			
+		
 			//이미지 용량 체크
-			if(vo.getSpace_photo1().length > 5*1024*1024) {//5MB
+			if(vo.getSpace_photo().length > 5*1024*1024) {//5MB
 				result.rejectValue("space_photo", 
 						"limitUploadSize",new Object[] {"5MB"},null);
 			}
-			if(vo.getSpace_photo2().length > 5*1024*1024) {
+			if(vo.getSpace_photo1().length > 5*1024*1024) {
 				result.rejectValue("space_photo1", 
 						"limitUploadSize",new Object[] {"5MB"},null);
 			}
-			if(vo.getSpace_photo1().length > 5*1024*1024) {//5MB
+			if(vo.getSpace_photo2().length > 5*1024*1024) {//5MB
 				result.rejectValue("space_photo2", 
 						"limitUploadSize",new Object[] {"5MB"},null);
 			}
-			if(vo.getSpace_photo2().length > 5*1024*1024) {
-				result.rejectValue("space_photo3", 
-						"limitUploadSize",new Object[] {"5MB"},null);
-			}
+		
 			//유효성 체크 결과 오류가 있으면 폼 호출
 			if(result.hasErrors()) {
-				return form();
+		        return form();
 			}
 			vo.setMem_num(((MemberVO)session.getAttribute("user")).getMem_num());
 			spaceService.insertspace(vo);
