@@ -194,7 +194,7 @@
   		WHERE mem_num = #{mem_num}
   		<if test="keyword !=null and keyword != ''">
   			<if test="keyfield == 1">
-  				AND order_num = #{keyword}
+  				AND order_num LIKE '%' || #{keyword} || '%'
   			</if>
   			<if test="keyfield == 2">
   				AND order_name LIKE '%' || #{keyword} || '%'
@@ -203,31 +203,30 @@
   	</sql>
   	
   	<sql id="orderSearch">
-  		<where>
-  			<if test="keyword != null">
-  				<if test="keyfield == 0">
-  					order_status = 0
-  				</if>
-  				<if test="keyfield == 1">
-  					order_status = 1
-  				</if>
-  				<if test="keyfield == 2">
-  					order_status = 2
-  				</if>
-  				<if test="keyfield == 3">
-  					order_status = 3
-  				</if>
-  				<if test="keyfield == 4">
-  					order_status = 4
-  				</if>
-  				<if test="keyfield == 5">
-  					refund_status = 0
-  				</if>
-  				<if test="keyfield == 6">
-  					refund_status = 1
-  				</if>
-  			</if>
-  		</where>
+  		WHERE c.mem_num=#{mem_num}
+  		<if test="keyword != null">
+			<if test="keyfield == 0">
+				AND order_status = 0
+			</if>
+			<if test="keyfield == 1">
+				AND order_status = 1
+			</if>
+			<if test="keyfield == 2">
+				AND order_status = 2
+			</if>
+			<if test="keyfield == 3">
+				AND order_status = 3
+			</if>
+			<if test="keyfield == 4">
+				AND order_status = 4
+			</if>
+			<if test="keyfield == 5">
+				AND refund_status = 0
+			</if>
+			<if test="keyfield == 6">
+				AND refund_status = 1
+			</if>
+		</if>
   	</sql>
   	
   	<select id="selectListOrderByMem_num" parameterType="map" resultType="orderVO">
@@ -281,7 +280,6 @@
   		              *
   		            FROM orders o JOIN orders_detail d ON o.order_num=d.order_num
   		            			  JOIN course c ON c.course_num=d.course_num
-  		          	WHERE c.mem_num=#{mem_num}
   		            <include refid="orderSearch"></include>
   		            ORDER BY o.order_num DESC)a)
   		<![CDATA[
@@ -294,7 +292,6 @@
   		  COUNT(*)
   		FROM orders o JOIN orders_detail d ON o.order_num=d.order_num
   		              JOIN course c ON c.course_num=d.course_num
-  		WHERE c.mem_num=#{mem_num}
   		<include refid="orderSearch"></include>	
   	</select>
   	
