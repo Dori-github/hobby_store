@@ -13,11 +13,24 @@
 	margin:0;
 	padding:0;
 }
+
 .course-img img{
 	position:absolute;
 	top:0;
 	width: calc(100% / 5);
 	height:100%;
+}
+.course-img span{
+	position: absolute;
+	top:-50px;
+	font-size: 30pt;
+	font-weight: bold;
+	color:#FFF;
+	text-shadow:2px 2px 2px gray;;
+}
+.course-img span:hover{
+	color:#FF4E02;
+	cursor: pointer;
 }
 .clear-flex::after{
 	content:"";
@@ -99,12 +112,77 @@ input::-webkit-search-results-decoration{
 
 .course-list h1{
 	font-size:30pt;
-	margin:50px;
+	margin:100px 0 50px 0;
+}	
+#carouselExampleIndicators{
+	margin:300px 0;
 }	
 	
 	
-	
-	
-	
-	
-	
+.online{
+	margin:100px 0;
+	display: flex;
+	align-items: center;
+}
+.online h1{
+	line-height: 1.5em;
+	margin-bottom:50px;
+}
+.online p{
+	line-height: 2em;
+}
+.online1{
+  max-height: 800px;
+  overflow: hidden;
+  margin:200px;
+}
+.online1 img{
+	display:block;
+	margin-right:-100px;
+	margin-top:50px;
+	width:1000px;
+	max-height: initial;
+    margin-top: -15%;
+}	
+
+/*카드 목록*/
+ .card{
+	cursor:pointer;
+}
+ .card-body{
+	color:#404040;
+	height:200px;
+}
+.course-list span{
+	font-size:10pt;
+}
+/*hover 이미지 확대*/
+.card-img-top{
+	height:350px;
+	overflow: hidden;
+}
+.card-img-top:hover img{
+	transform: scale(1.15);
+}
+.card-img-top img{
+	transition: all 0.2s linear;
+}
+
+ .card-hit{
+	float:right;
+	color:gray;
+}
+
+
+ .color-gray{
+	color:gray;
+	line-height: 20px;
+}
+ .card-title{
+	margin:5px 0;
+}
+
+#content .card-text{
+	margin-top:10px;
+}
+

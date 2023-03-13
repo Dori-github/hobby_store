@@ -25,6 +25,18 @@ public class CourseServiceImpl implements CourseService{
 	
 	//==========부모글==========//
 	@Override
+	public List<CourseVO> selectCourseMainList(Map<String, Object> map) {
+		return courseMapper.selectCourseMainList(map);
+	}
+	@Override
+	public List<CourseVO> selectCourseMainList2(Map<String, Object> map2) {
+		return courseMapper.selectCourseMainList2(map2);
+	}
+	@Override
+	public List<CourseVO> selectCourseMainList3(Map<String, Object> map3) {
+		return courseMapper.selectCourseMainList3(map3);
+	}
+	@Override
 	public List<CourseVO> selectCourseList(Map<String, Object> map) {
 		return courseMapper.selectCourseList(map);
 	}
@@ -281,6 +293,7 @@ public class CourseServiceImpl implements CourseService{
 	public List<Integer> selectReplyNum(Integer course_num) {
 		return courseMapper.selectReplyNum(course_num);
 	}
+
 
 
 	

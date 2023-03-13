@@ -18,6 +18,15 @@ import kr.spring.course.vo.CourseVO;
 @Mapper
 public interface CourseMapper {
 	//부모글
+	@Select("SELECT * FROM(SELECT a.*,rownum rnum FROM (SELECT * FROM course ORDER BY course_num DESC)a) WHERE rnum>=#{start} AND rnum<=#{end}")
+	public List<CourseVO> selectCourseMainList(Map<String,Object> map);
+	@Select("SELECT * FROM(SELECT a.*,rownum rnum FROM (SELECT * FROM course "
+			+ "LEFT JOIN (SELECT course_num,COUNT(fav_num) AS fav "
+			+ "FROM course_fav GROUP BY course_num) USING(course_num)"
+			+ "ORDER BY fav DESC)a) WHERE rnum>=#{start} AND rnum<=#{end}")
+	public List<CourseVO> selectCourseMainList2(Map<String,Object> map2);
+	@Select("SELECT * FROM(SELECT a.*,rownum rnum FROM (SELECT * FROM course WHERE course_price <= 10000 ORDER BY course_num DESC)a) WHERE rnum>=#{start} AND rnum<=#{end}")
+	public List<CourseVO> selectCourseMainList3(Map<String,Object> map3);
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
 	@Select("SELECT course_seq.nextval FROM dual")
 	public int selectCourse_num();

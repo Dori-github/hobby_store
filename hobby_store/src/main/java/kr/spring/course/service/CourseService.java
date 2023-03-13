@@ -13,6 +13,9 @@ import kr.spring.course.vo.CourseVO;
 
 public interface CourseService { 
 	//부모글
+	public List<CourseVO> selectCourseMainList(Map<String,Object> map);
+	public List<CourseVO> selectCourseMainList2(Map<String,Object> map2);
+	public List<CourseVO> selectCourseMainList3(Map<String,Object> map3);
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
 	public int selectCourseCount(Map<String,Object> map);
 	public void insertCourse(CourseVO course);
