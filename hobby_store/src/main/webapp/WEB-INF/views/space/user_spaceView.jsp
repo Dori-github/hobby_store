@@ -207,7 +207,7 @@
                <img class="space-photo1">
                <label for="upload1" class="label1 l2">
                   <i class="fa-solid fa-circle-plus"></i><br>
-               </label>
+               </label> 
                <i class="fa-solid fa-circle-xmark d2"></i>
                <input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
             </li>
