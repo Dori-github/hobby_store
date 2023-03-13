@@ -105,8 +105,8 @@ public class AppConfig implements WebMvcConfigurer{
     	javaMail.setHost("smtp.gmail.com");
     	javaMail.setPort(587);
     	javaMail.setDefaultEncoding("utf-8");
-    	javaMail.setUsername("imjoung4293@gmail.com");
-    	javaMail.setPassword("gbmewdabnkucgzos");
+    	javaMail.setUsername("rladlfgks422@gmail.com");
+    	javaMail.setPassword("nsysipxxaxrwlsmt");
     	javaMail.setJavaMailProperties(prop);
     	return javaMail;
     }
