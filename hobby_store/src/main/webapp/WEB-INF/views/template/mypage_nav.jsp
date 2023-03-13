@@ -13,18 +13,17 @@
         <a href="#" class="item"><div>나의 활동내역</div></a>
 	        <ul class="big-menu">
 		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/fav.do?cate_num=1">좋아요 조회</a></li>
-		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/board.do">작성 게시글 조회</a></li>
 		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/regisList.do?cate_num=1">등록 상품 조회</a></li>
 	        </ul>
         </li>
         <li><a href="${pageContext.request.contextPath}/member/order.do" class="item"><div>나의 구매내역</div></a></li>
         <li>
-        	<a href="${pageContext.request.contextPath}/member/event.do" class="item"><div>이벤트</div></a>
+        	<a href="#" class="item"><div>이벤트</div></a>
         	 <ul class="big-menu">
 		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/event.do">신청 이벤트 조회</a></li>
 		        <c:if test="${user.mem_auth > 2}">
 		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/lec_event.do">작성 이벤트 조회</a></li>
-		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/event_win.do">이벤트 신청자 조회</a></li>
+		        <li class="small-menu"><a href="${pageContext.request.contextPath}/member/eventWinList.do">이벤트 신청자 조회</a></li>
 	        	</c:if>
 	        </ul>	
         </li>

@@ -380,7 +380,7 @@
   				</if>
   			</if>
   		</where>
-		WHERE a.event_num=#{event_num}
+		WHERE e.mem_num=#{mem_num}
   	</select>
   	
   	<select id="selectListEventWin" resultType="eventVO">
@@ -406,7 +406,7 @@
 			  					e.event_title LIKE '%' || #{keyword} || '%' AND
 			  				</if>
 			  			</if>
-			  		a.event_num=#{event_num}
+			  		e.mem_num=#{mem_num}
 	  				ORDER BY event_rdate ASC)a)
 	  	<![CDATA[
   		WHERE rnum >= #{start} AND rnum <= #{end}
