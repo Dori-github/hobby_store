@@ -158,7 +158,7 @@ $(function(){
 			return;
 		}
 		
-		$(this).val(Number($(this).val().replace(/,/g,'')).toLocaleString());
+		//$(this).val(Number($(this).val().replace(/,/g,'')).toLocaleString());
 		$('#space_form #space_price').val(Number($(this).val().replace(/,/g,'')));
 		
 	});
