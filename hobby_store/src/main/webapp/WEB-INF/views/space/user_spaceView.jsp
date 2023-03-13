@@ -194,28 +194,30 @@
 		<c:if test="${!empty user}">
 		<div class="reply-photo">
 			<ul class="image">
-				<img class="space-photo1">
-               <label for="upload1" class="label1 l1">
+			<li>
+				<img class="space-photo">
+               <label for="upload" class="label1 l1">
                   <i class="fa-solid fa-circle-plus"></i><br>
                </label>
                <i class="fa-solid fa-circle-xmark d1"></i>
+               <input type="file" name="upload" id="upload" style="display:none;" accept="image/jpeg,image/png,image/gif">
+            </li>
+            
+            <li>
+               <img class="space-photo1">
+               <label for="upload1" class="label1 l2">
+                  <i class="fa-solid fa-circle-plus"></i><br>
+               </label>
+               <i class="fa-solid fa-circle-xmark d2"></i>
                <input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
             </li>
             <li>
                <img class="space-photo2">
-               <label for="upload2" class="label1 l2">
-                  <i class="fa-solid fa-circle-plus"></i><br>
-               </label>
-               <i class="fa-solid fa-circle-xmark d2"></i>
-               <input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
-            </li>
-            <li>
-               <img class="space-photo3">
-               <label for="upload3" class="label1 l3">
+               <label for="upload2" class="label1 l3">
                   <i class="fa-solid fa-circle-plus"></i><br>
                </label>
                <i class="fa-solid fa-circle-xmark d3"></i>
-               <input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
+               <input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
 			</ul>
 			<div class="reply-submit-btn">
 				<label for="submit" style="width:40px;height:40px;"><i class="fa-solid fa-paper-plane"></i></label>
