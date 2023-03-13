@@ -8,6 +8,7 @@
     <input type="checkbox" id="expand-menu" name="expand-menu">
     <ul class="main-menu">
         <li><a href="${pageContext.request.contextPath}/member/admin_list.do" class="item"><div>회원관리</div></a></li>
+        <li><a href="${pageContext.request.contextPath}/talk/talkList.do" class="item"><div>채팅</div></a></li>
 	</ul>
 </div>
 <!-- Admin 메뉴 끝 -->

@@ -47,7 +47,7 @@ $(function(){
 	<form action="admin_list.do" id="search_form" method="get">
 		<ul class="search">
 			<li>
-				<select name="keyfield">
+				<select name="keyfield" id="keyfield" style="width:100px;">
 					<option value="1" <c:if test="${param.keyfield == 1}">selected</c:if>>ID</option>
 					<option value="2" <c:if test="${param.keyfield == 2}">selected</c:if>>이름</option>
 					<option value="3" <c:if test="${param.keyfield == 3}">selected</c:if>>이메일</option>
@@ -59,8 +59,7 @@ $(function(){
 				       id="keyword" value="${param.keyword}">
 			</li>
 			<li>
-				<input type="submit" value="찾기">
-				<input type="button" value="목록" onclick="location.href='admin_list.do'">
+				<input type="submit" value="찾기" class="order-search-btn">
 			</li>
 		</ul>                                   
 	</form>
@@ -116,7 +115,9 @@ $(function(){
 		</tr>
 		</c:forEach>
 	</table>
+	<br>
 	<div class="align-center">${page}</div>
 	</c:if>
+	<input type="button" value="목록" onclick="location.href='admin_list.do'" class="order-list-btn">
 </div>
 <!-- 관리자 회원목록 끝 -->
