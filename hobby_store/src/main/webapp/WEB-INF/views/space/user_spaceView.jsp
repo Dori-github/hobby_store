@@ -125,7 +125,7 @@
 				</li>
 				
 				<li>
-					<input type="submit" value="공간예약하기">
+					<input type="submit" class="buy" style="width:100%;" value="예약하기"/>
 				</li>
 				</c:if>
 				<c:if test="${space.space_limit <= 0}">

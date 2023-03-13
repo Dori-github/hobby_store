@@ -195,7 +195,7 @@ $(function(){
 		};
 	});//end of change
 	
-	//추가이미지2
+	/*//추가이미지2
 	$('.image #upload3').change(function(){
 		space_photo = this.files[0];
 		
@@ -219,7 +219,7 @@ $(function(){
 			$('.l3').hide();
 			$('.d3').show();
 		};
-	});//end of change
+	});//end of change*/
 	
 	
 	//취소 버튼 처리
