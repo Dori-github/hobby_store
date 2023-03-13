@@ -244,8 +244,8 @@ $(function(){
 	
   //=================수정=================//
      let photo_path = $('#photo').attr('src');
-	 let photo_path2 = $('.my-photo').attr('src');
-     let photo_path3 = $('.my-photo').attr('src');
+	 let photo_path1 = $('.my-photo').attr('src');
+     let photo_path2 = $('.my-photo').attr('src');
 	let my_photo; //업로드하고자 선택한 이미지 저장
 	$('.image2 #upload').change(function(){
 		my_photo = this.files[0];
