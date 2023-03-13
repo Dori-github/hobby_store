@@ -28,7 +28,7 @@
 		<form:errors element="div" cssClass="error-color"/>
 		<form:hidden path="mem_num"/>
 		<form:hidden path="event_num"/>
-		<h2 class="title">이벤트 등록</h2>
+		<h2 class="title">이벤트 수정</h2>
 		<table class="regis-form">
 			<tr>
 				<td>
