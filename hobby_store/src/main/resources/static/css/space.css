@@ -723,6 +723,7 @@ input[type='number']::-webkit-inner-spin-button {
 	font-weight: bold;
 	line-height: 50px;
 	cursor: pointer;
+	margin-top:20px;
 }
 .right-class .buy:hover{
 	background-color: #E84601;
