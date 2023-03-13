@@ -364,6 +364,9 @@ public class OrderController {
 		String[] course_num = request.getParameterValues("course_num");
 		String[] course_name = request.getParameterValues("course_name");
 		String[] course_price = request.getParameterValues("course_price");
+		String[] space_num = request.getParameterValues("space_num");
+		String[] items_num = request.getParameterValues("items_num");
+		
 		
 		if(course_onoff != null && course_onoff[0] == "on") {//온라인 클래스
 			int courseNum = Integer.parseInt(course_num[0]);
@@ -383,22 +386,14 @@ public class OrderController {
 			pointsVO.setUsed_points(coursePrice);
 			pointsVO.setMem_num(user.getMem_num());
 		}
-		logger.debug("<<1d>> : " + course_num[0]);
-		logger.debug("<<1d>> : " + course_onoff);
-		logger.debug("<<1d>> : " + (course_onoff[0]));
-		logger.debug("<<1d>> : " + (course_onoff[0]="off"));
-		logger.debug("<<1d>> : " + (course_onoff != null));
-		logger.debug("<<11dddd>> : " + (course_onoff[0] == "off"));
-		
-		if(course_onoff != null) {//오프라인 클래스
+
+		logger.debug("<<4d>> : " + items_num[0]);
+		if(course_onoff != null  && Integer.parseInt(space_num[0]) < 0 && Integer.parseInt(items_num[0]) < 0 && course_onoff[0] == "off" ) {//오프라인 클래스
 			logger.debug("<<1d>> : " + course_num[0]);
 			String[] course_quan = request.getParameterValues("course_quan");
 			String[] course_total = request.getParameterValues("course_total");
 			
-			logger.debug("<<1d>> : " + course_num[0]);
-			logger.debug("<<2d>> : " + course_quan[0]);
-			logger.debug("<<3d>> : " + course_price[0]);
-			logger.debug("<<4d>> : " + course_total[0]);
+			
 			
 			int courseNum = Integer.parseInt(course_num[0]);
 			int courseQuan = Integer.parseInt(course_quan[0]);
@@ -426,34 +421,33 @@ public class OrderController {
 		}
 		
 		//스토어 바로구매
-		String[] items_num = request.getParameterValues("items_num");
 		
-		if((items_num[0]) != "" && Integer.parseInt(items_num[0]) > 0 ) {
-			String[] items_name = request.getParameterValues("items_name");
-			String[] items_quan = request.getParameterValues("items_quan");
-			String[] items_total = request.getParameterValues("items_total");
-			
-			int itemsNum = Integer.parseInt(items_num[0]);
-			int itemsQuan = Integer.parseInt(items_quan[0]);
-			int itemsTotal = Integer.parseInt(items_total[0]);
-			
-			orderDetail.setItems_num(itemsNum);
-			orderDetail.setDetail_name(items_name[0]);
-			orderDetail.setPrice(itemsTotal);
-			orderDetail.setQuantity(itemsQuan);
+				if((items_num[0]) != "" && Integer.parseInt(items_num[0]) > 0 ) {
+					String[] items_name = request.getParameterValues("items_name");
+					String[] items_quan = request.getParameterValues("items_quan");
+					String[] items_total = request.getParameterValues("items_total");
+					
+					int itemsNum = Integer.parseInt(items_num[0]);
+					int itemsQuan = Integer.parseInt(items_quan[0]);
+					int itemsTotal = Integer.parseInt(items_total[0]);
+					
+					orderDetail.setItems_num(itemsNum);
+					orderDetail.setDetail_name(items_name[0]);
+					orderDetail.setPrice(itemsTotal);
+					orderDetail.setQuantity(itemsQuan);
 
-			orderDetailList.add(orderDetail);
+					orderDetailList.add(orderDetail);
 
-			orderVO.setOrder_name(items_name[0]);// 대표 상품명
-			orderVO.setOrder_price(itemsTotal);// 총주문금액
-			orderVO.setMem_num(user.getMem_num());// 주문자
-			orderVO.setOrder_status(0);
-			pointsVO.setUsed_points(itemsTotal);
-			pointsVO.setMem_num(user.getMem_num());
-		}
-		
+					orderVO.setOrder_name(items_name[0]);// 대표 상품명
+					orderVO.setOrder_price(itemsTotal);// 총주문금액
+					orderVO.setMem_num(user.getMem_num());// 주문자
+					orderVO.setOrder_status(0);
+					pointsVO.setUsed_points(itemsTotal);
+					pointsVO.setMem_num(user.getMem_num());
+				}
+				
+				
 		//장소대여 바로구매
-		String[] space_num = request.getParameterValues("space_num");
 		if((space_num[0]) != "" && Integer.parseInt(space_num[0]) > 0 ) {
 			String[] space_name = request.getParameterValues("space_name");
 			String[] order_quantity = request.getParameterValues("order_quantity");

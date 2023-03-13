@@ -130,15 +130,7 @@
 				<input type="text" name="receive_name"
 				       id="receive_name" maxlength="10">       
 			</li>
-			<li>
-				<label for="zipcode">우편번호</label>
-				<input type="text" name="receive_post"
-				       id="zipcode" maxlength="5">
-				<input type="button" 
-				           onclick="execDaumPostcode()"
-				           value="우편번호 찾기"> 
-				                        
-			</li>
+			
 			<li>
 				<label for="address1">주소</label>
 				<input type="text" name="receive_address1"
