@@ -4,8 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- 중앙 컨텐츠 시작 -->
 <script src="${pageContext.request.contextPath}/js/videoAdapter.js"></script>
-<script src="${pageContext.request.contextPath}/js/board.fav.js"></script>
-<script src="${pageContext.request.contextPath}/js/board.reply.js"></script>
+<script src="${pageContext.request.contextPath}/js/notice.fav.js"></script>
 <div class="page-main">
 	<h1 class="align-center">공지사항</h1>
 	<br>

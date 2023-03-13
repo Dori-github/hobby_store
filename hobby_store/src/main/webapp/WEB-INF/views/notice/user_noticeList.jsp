@@ -39,11 +39,25 @@
 			<li>
 				<input type="submit" value="검색" class="order-search-btn"> 
 			</li>
+			<li>
+				<select class="form-select select" id="order" name="order">
+					<option value="1" <c:if test="${param.order == 1}">selected</c:if>>기본순</option>
+					<option value="2" <c:if test="${param.order == 2}">selected</c:if>>최신순</option>
+					<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요순</option>
+				</select>
+				<script>
+				$(function(){
+					$('#order').change(function(){
+						location.href='noticeList.do?keyfield='+$('#keyfield').val()+'&keyword='+$('#keyword').val()+'&order='+$('#order').val();
+					});
+				});
+				</script>
+			</li>
 		</ul>
 	</form>
 	<c:if test="${!empty user}">
 		<div class="align-right">
-			<input type="button" value="공지사항 작성"
+			<input type="button" value="Q&A 작성"
 				onclick="location.href='admin_write.do'"class="order-search-btn" style="width:200px;">
 		</div>
 	</c:if>
@@ -60,7 +74,6 @@
 				<th>내용</th>
 				<th>작성자</th>
 				<th>작성일</th>
-				<th>마감일</th>
 				<th>조회수</th>
 				<th>좋아요수</th>
 			</tr>
@@ -83,11 +96,11 @@
 					    <c:if test="${!empty notice.mem_nickname}">${notice.mem_nickname}</c:if>
 					</td>
 					<td>${notice.noti_date}</td>
-					<td>${notice.noti_end}</td>
 					<td>${notice.noti_hit}</td>
 					<!-- 공지사항 좋아요 테이블이면 $context ~ 이용해야하는지 ??  -->
 					<td>
 						<!-- 좋아요 개수 넣어야 -->
+						${notice.fav_cnt}
 					</td>
 				</tr>
 			</c:forEach>
