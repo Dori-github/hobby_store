@@ -258,7 +258,7 @@ $(function(){
 	$('#detail_form').submit(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
-		
+		action_submit();
 	});
 	
 	function action_submit(){
