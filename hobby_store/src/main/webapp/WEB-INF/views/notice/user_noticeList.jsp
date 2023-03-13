@@ -39,7 +39,8 @@
 			<li>
 				<input type="submit" value="검색" class="order-search-btn"> 
 			</li>
-			<li>
+		</ul>
+			<div style="float:right;margin-bottom:10px;">
 				<select class="form-select select" id="order" name="order">
 					<option value="1" <c:if test="${param.order == 1}">selected</c:if>>기본순</option>
 					<option value="2" <c:if test="${param.order == 2}">selected</c:if>>최신순</option>
@@ -52,8 +53,7 @@
 					});
 				});
 				</script>
-			</li>
-		</ul>
+			</div>
 	</form>
 	<c:if test="${!empty user}">
 		<div class="align-right">
@@ -66,10 +66,11 @@
 		<div class="result-display">공지사항이 없습니다.</div>
 	</c:if>
 	<c:if test="${count > 0}">
-		<table class="striped-table">
+		<table class="striped-table" style="width:100%";>
 			<tr>
 				<th>번호</th>
 				<th>필독</th>
+				<th>사진</th>
 				<th>제목</th>
 				<th>내용</th>
 				<th>작성자</th>
@@ -79,17 +80,17 @@
 			</tr>
 			<c:forEach var="notice" items="${list}">
 				<tr>
-					<td>${notice.noti_num}</td>
-					<td>
+					<td width="70">${notice.noti_num}</td>
+					<td width="70">
 						<c:if test="${notice.status==1}">일반</c:if> 
 					    <c:if test="${notice.status==2}">필독</c:if>
 					</td>
-					<td><img src="imageView.do?noti_num=${notice.noti_num}&noti_type=1" width="80" height="80"></td>
+					<td  width="70"><img src="imageView.do?noti_num=${notice.noti_num}&noti_type=1" width="80" height="80"></td>
 					<td>
 						<a href="detail.do?noti_num=${notice.noti_num}">${notice.noti_title}</a>
 					</td>
-					<td>
-						<a href="detail.do?noti_num=${notice.noti_content}">${notice.noti_content}</a>
+					<td class="noti-content">
+						<a  href="detail.do?noti_num=${notice.noti_content}">${notice.noti_content}</a>
 					</td>
 					<td>
 						<c:if test="${empty notice.mem_nickname}">${notice.mem_id}</c:if> 

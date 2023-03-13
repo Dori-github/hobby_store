@@ -3188,6 +3188,11 @@ input[type="button"].btn-block {
 	border:none;
 }
 
+.allTotal{
+	font-size:1.5rem;
+	font-weight:bold;
+}
+
 .quan {
 	display: flex;
     flex-direction: column;
@@ -3203,6 +3208,17 @@ input[type="button"].btn-block {
     width: revert;
     height: 1.5rem;
 }
+#quan.quantity {
+	border:none;
+	color:black;
+	background-color: #fff;
+    text-align: center;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;}
 
 .quan [type="button"]{
 	border: 1px solid #ebebeb;

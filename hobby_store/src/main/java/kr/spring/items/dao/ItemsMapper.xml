@@ -72,7 +72,7 @@
   	                   * 
   	                 FROM items JOIN member USING(mem_num) JOIN items_cate USING(cate_num)
                                 LEFT OUTER JOIN (SELECT * FROM items_fav WHERE fmem_num=#{mem_num}) USING(items_num)
-  	                            LEFT OUTER JOIN (SELECT items_num, COUNT(*) favcount FROM items_fav GROUP BY items_num) USING(items_num)
+  	                            LEFT OUTER JOIN (SELECT items_num, COUNT(*) favcount1 FROM items_fav GROUP BY items_num) USING(items_num)
                                 LEFT OUTER JOIN (SELECT items_num , COUNT(reply_num) AS replycount FROM items_reply GROUP BY items_num) USING(items_num)
                                 LEFT OUTER JOIN (SELECT items_num , COUNT(fav_num) AS favcount FROM items_fav GROUP BY items_num) USING(items_num)
                                 LEFT OUTER JOIN (SELECT items_num , ROUND(AVG(star_auth),2) AS starcount FROM items_reply GROUP BY items_num) USING(items_num)

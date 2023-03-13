@@ -14,6 +14,7 @@ import kr.spring.event.vo.EventApplyVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
+
 @Mapper
 public interface EventMapper { 
 	//이벤트 번호 생성

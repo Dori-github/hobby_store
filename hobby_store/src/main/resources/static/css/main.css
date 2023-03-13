@@ -1,1 +1,110 @@
 @charset "UTF-8";
+#main_body{
+	width:100%;
+	margin-top:110px;
+}
+.course-img{
+	position:relative;
+	width:100%;
+	height:600px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin:0;
+	padding:0;
+}
+.course-img img{
+	position:absolute;
+	top:0;
+	width: calc(100% / 5);
+	height:100%;
+}
+.clear-flex::after{
+	content:"";
+	display:block;
+	clear:both;
+}
+.img2{
+	left:200px;
+}
+.img3{
+	left:400px;
+}
+.img4{
+	left:600px;
+}
+.img5{
+	left:800px;
+}
+.course-img span{
+	top:400px;
+	left:100px;
+	z-index:990;
+}
+
+.course-search{
+	margin:70px auto;
+}
+
+.search-bar1{
+	position:relative;
+	width:50%;
+	min-width:400px;
+	margin:0 auto;
+	margin-bottom:50px;
+}
+.search-bar1 #search_bar{
+	width:600px;
+	margin:50px 0 50px 100px;
+	background-color: #FFF;
+	border:1px solid lightgray;
+	border-radius:5px;
+	outline:none;
+	padding:10px 20px;
+}
+.search-bar1 #search_bar:focus{
+	outline:5px solid #E0E0E0;
+	transition:.2s;
+	background-color: #FFF;
+}
+.search-bar1 #search_icon{
+	background: none;
+	border:none;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+    display:none;
+}
+#search_icon1 i{
+	position: absolute;
+	top:58px;
+	right:120px;
+}
+#search_bar{
+	border:none;
+}
+.cate{
+	float:right;
+	display: flex;
+}
+#location{
+	margin-right:10px;
+	width:150px;
+}
+#cate{
+	width:150px;
+}
+
+.course-list h1{
+	font-size:30pt;
+	margin:50px;
+}	
+	
+	
+	
+	
+	
+	
+	

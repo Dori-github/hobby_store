@@ -68,11 +68,22 @@ div#page_body{
 }
 .side-bar label::before{ content: '\e5d2'; }
 .side-bar li:nth-child(1) a::before{ content: '\f02e'; }
-.side-bar li:nth-child(2) a::before{ content: '\e8d6'; }
+.side-bar li:nth-child(2) a::before{ content: '\e566'; }
 .side-bar li:nth-child(3) a::before{ content: '\e88a'; }
-.side-bar li:nth-child(4) a::before{ content: '\e8cc'; }
+.side-bar li:nth-child(4) a::before{ content: '\ea65'; }
 .side-bar li:nth-child(5) a::before{ content: '\e87d'; }
 .side-bar li:nth-child(6) a::before{ content: '\e8b8'; }
+
+.side-bar #like::before{ content: '\e87d';}
+.side-bar #item::before{ content: '\e1a1';}
+.side-bar #shopping::before{ content: '\f1cc';}
+.side-bar #apply::before{ content: '\e614';}
+.side-bar #event-i::before{ content: '\ea3e';}
+.side-bar #event-a::before{ content: '\f233';}
+.side-bar #delivery::before{ content: '\e558';}
+.side-bar #delete::before{ content: '\e92b';}
+.side-bar #chat::before{ content: '\e0bf';}
+.side-bar #admin::before{ content: '\ea3d';}
 
  /* 체크박스 폼 요소 감춤 */
 #expand-menu {

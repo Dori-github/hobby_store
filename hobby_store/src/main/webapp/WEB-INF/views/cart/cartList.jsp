@@ -43,7 +43,7 @@
 							class="choice-btn" value="${cart.cart_num}">
 						</td>
 						<td style="text-align: left;"><img
-							src="${pageContext.request.contextPath}/images/${cart.course_photo1}"></td>
+							src="/course/imageView.do?course_num=${cart.course_num}&item_type=1" ></td>
 						<td style="text-align: left;">${cart.course_name}<br> <c:if
 								test="${cart.cate_parent!=0}">
 				${cart.cate_parent}/</c:if> ${cart.cate_name} <br>
@@ -57,7 +57,7 @@
 				<tr>
 					<td colspan="2"></td>
 					<td><span class="courseTotal"
-						data-courseTotal="${courseTotal}"> ₩<fmt:formatNumber
+						data-courseTotal="${courseTotal}" style="visibility:hidden;"> ₩<fmt:formatNumber
 								value="${courseTotal}" />
 					</span></td>
 				</tr>
@@ -99,7 +99,7 @@
 							class="choice-btn" value="${cart.cart_num}">
 						</td>
 						<td style="text-align: left;"><img
-							src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
+							src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
 						<td style="text-align: left;">${cart.items_name}<br> <c:if
 								test="${cart.cate_parent!=0}">
 				${cart.cate_parent}/</c:if> ${cart.cate_name}
@@ -107,16 +107,18 @@
 						<td>
 						<span class="item-price" data-price="${cart.items_price}">
 						₩<fmt:formatNumber value="${cart.items_price}"/></span>
-						<td><input class="item-quan" type="text"
+						<td><input class="item-quan" type="text" style="visibility:hidden;"
 							value="재고:${cart.items_quantity}" />
 						
 
-								<input class="cart_num" type="text" value="${quan.cart_num}" />
-
+								
 								<input class="quan_dec" type="button" value="-" />
 								<input type="number" id="quan" name="quantity" class="quantity"
 									value="${quan.quantity}" data-quantity="${quan.quantity}">
-								<input class="quan_inc" type="button" value="+" /></td>
+								<input class="quan_inc" type="button" value="+" />
+								<input class="cart_num" type="text" style="visibility:hidden;" value="${quan.cart_num}" />
+								
+								</td>
 						<td><span class="itemSum"
 							data-itemSum="${quan.items_total}"> ₩<fmt:formatNumber
 									value="${quan.items_total}"/>
@@ -125,7 +127,7 @@
 				</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="4"></td>
+					<td colspan="5"></td>
 					<!-- <div class="itemTotal"> -->
 					<td><span class="itemTotal" data-itemTotal="${itemTotal}">
 							₩<fmt:formatNumber value="${itemTotal}" />
@@ -136,8 +138,8 @@
 		<c:if test="${courseCount > 0 || itemCount > 0}">
 			<c:set var="allTotal" value="${courseTotal+itemTotal}" />
 			<span class="allTotal" data-allTotal="<c:out value="${allTotal}"/>">
-				₩<fmt:formatNumber value="${allTotal}" />
-			</span>
+			총 주문 금액 :	₩<fmt:formatNumber value="${allTotal}" />
+			</span><br><br>
 			<input type="submit" id="order_btn" value="구매하기">
 		</c:if>
 	</form>
