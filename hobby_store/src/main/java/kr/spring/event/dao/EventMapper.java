@@ -15,7 +15,7 @@ import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
 @Mapper
-public interface EventMapper {
+public interface EventMapper { 
 	//이벤트 번호 생성
 	@Select("SELECT event_seq.nextval FROM dual")
 	public int selectEvent_num();
@@ -54,4 +54,10 @@ public interface EventMapper {
 	//이벤트 신청
 	@Insert("INSERT INTO event_apply (event_a_num,event_num,mem_num) VALUES(event_apply_seq.nextval,#{event_num},#{mem_num})")
 	public void insertEventApply(EventApplyVO eventApplyVO);
+	//신청 이벤트 상세정보(중복 신청된 이벤트 여부 확인)
+	@Select("SELECT * FROM event_apply WHERE mem_num=#{mem_num} AND event_num=#{event_num}")
+	public EventApplyVO selectEventApplyByMem_num(Map<String,Object> map);
+	//등록한 이벤트 신청자 조회
+	@Select("SELECT * FROM event_apply WHERE event_num=${event_num}")
+	public EventApplyVO selectEventApply(int event_num);
 }

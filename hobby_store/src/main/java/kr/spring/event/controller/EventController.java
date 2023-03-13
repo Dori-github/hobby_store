@@ -153,8 +153,7 @@ public class EventController {
 	public String submitUpdate(@Valid EventVO eventVO, BindingResult result, HttpServletRequest request, Model model) {
 		
 		logger.debug("<<글수정>> : " + eventVO);
-		logger.debug("<<업로드 파일 용량>> : " 
-		           + eventVO.getEvent_photo().length);
+		logger.debug("<<업로드 파일 용량>> : " + eventVO.getEvent_photo().length);
 		
 		if(eventVO.getEvent_photo().length > 5*1024*1024) {//5MB
 			result.reject("limitUploadSize", new Object[] {"5MB"},null);
@@ -164,6 +163,7 @@ public class EventController {
 		if(result.hasErrors()) {
 			EventVO vo = eventService.selectEvent(eventVO.getEvent_num());
 			eventVO.setEvent_photo_name(vo.getEvent_photo_name());
+			return "eventModify";
 		}
 		
 		//이벤트 수정
@@ -176,11 +176,23 @@ public class EventController {
 		return "common/resultView";
 	}
 	
-	//=====이벤트 글삭제=======//
+	//=====이벤트 글삭제=======// 
 	@RequestMapping("/event/delete.do")
 	public String submitDelete(@RequestParam int event_num,Model model,HttpServletRequest request) {
-			
+		
 			logger.debug("<<이벤트 글삭제>> : " + event_num);
+			
+			EventApplyVO db_apply = null;
+			
+			db_apply = eventService.selectEventApply(event_num);
+			
+			if(db_apply!=null) {
+				//View에 메시지 표시
+				model.addAttribute("message","이벤트 신청자가 존재해 삭제가 불가합니다.");
+				model.addAttribute("url",request.getContextPath()+"/event/detail.do?event_num="+event_num);
+				
+				return "common/resultView";
+			}
 			
 			//이벤트 삭제
 			eventService.deleteEvent(event_num);
@@ -196,11 +208,32 @@ public class EventController {
 	@RequestMapping("/event/user_regis.do")
 	public String userRegisForm(@RequestParam int event_num, HttpSession session,HttpServletRequest request, Model model) {
 		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
 		logger.debug("<<이벤트 신청>> : " + event_num);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(user!=null && (user.getMem_auth() == 2 || user.getMem_auth() == 3)){
+		map.put("event_num", event_num);
+		map.put("mem_num", user.getMem_num());
+		
+		if(user!=null && user.getMem_auth() <= 3){
+			
+			EventApplyVO db_apply = eventService.selectEventApplyByMem_num(map);
+			EventVO db_event = eventService.selectEvent(event_num);
+
+			if(db_event.getMem_num()==user.getMem_num()) {
+				model.addAttribute("message","본인이 등록한 이벤트는 신청이 불가합니다.");
+				model.addAttribute("url",request.getContextPath()+"/event/detail.do?event_num="+event_num);
+				return "common/resultView";
+			}
+			
+			if(db_apply!=null) {
+				model.addAttribute("message","이미 신청된 이벤트가 존재합니다.");
+				model.addAttribute("url",request.getContextPath()+"/event/detail.do?event_num="+event_num);
+				return "common/resultView";
+			}
+			
 			EventApplyVO apply = new EventApplyVO();
 			apply.setEvent_num(event_num);
 			apply.setMem_num(user.getMem_num());
@@ -275,4 +308,6 @@ public class EventController {
 		
 		return mav;
 	}
+	
 }
+ 

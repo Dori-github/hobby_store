@@ -15,7 +15,7 @@ import kr.spring.items.vo.ItemsVO;
 
 @Service
 @Transactional
-public class EventServiceImpl implements EventService{
+public class EventServiceImpl implements EventService{ 
 
 	@Autowired
 	private EventMapper eventMapper;
@@ -72,6 +72,16 @@ public class EventServiceImpl implements EventService{
 	@Override
 	public void insertEventApply(EventApplyVO eventApplyVO) {
 		eventMapper.insertEventApply(eventApplyVO);
+	}
+
+	@Override
+	public EventApplyVO selectEventApplyByMem_num(Map<String, Object> map) {
+		return eventMapper.selectEventApplyByMem_num(map);
+	}
+
+	@Override
+	public EventApplyVO selectEventApply(int event_num) {
+		return eventMapper.selectEventApply(event_num);
 	}
 
 }

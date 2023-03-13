@@ -8,7 +8,7 @@ import kr.spring.event.vo.EventApplyVO;
 import kr.spring.event.vo.EventVO;
 import kr.spring.items.vo.ItemsVO;
 
-public interface EventService {
+public interface EventService { 
 		//이벤트 등록
 		public void insertEvent(EventVO eventVO);
 		//이벤트 목록
@@ -30,4 +30,9 @@ public interface EventService {
 		
 		//이벤트 신청
 		public void insertEventApply(EventApplyVO eventApplyVO);
+		
+		//이벤트 신청 여부 조회
+		public EventApplyVO selectEventApplyByMem_num(Map<String,Object> map);
+		//등록한 이벤트 신청자 조회
+		public EventApplyVO selectEventApply(int event_num);
 }
