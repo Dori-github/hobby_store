@@ -44,6 +44,8 @@ public class NoticeAdminController {
 	public ModelAndView process(
 			@RequestParam(value="pageNum",defaultValue="1") 
 			int currentPage,
+			@RequestParam(value="order",defaultValue="1") 
+			int order,
 			String keyfield,
 			String keyword) {
 
@@ -51,6 +53,7 @@ public class NoticeAdminController {
 				new HashMap<String,Object>();
 		map.put("keyfield",keyfield);
 		map.put("keyword", keyword);
+		map.put("order", order);
 		//status가 0이면 미표시(1),표시(2) 모두 체크
 		map.put("status", 0);
 
@@ -62,7 +65,7 @@ public class NoticeAdminController {
 		//페이지 처리
 		PagingUtil page = new PagingUtil(keyfield,
 				keyword,currentPage,count,20,10,
-				"list.do");
+				"list.do","&order="+order);
 
 		List<NoticeVO> list = null;
 		if(count > 0) {

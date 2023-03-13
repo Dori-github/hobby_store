@@ -21,6 +21,7 @@ public class NoticeVO {
 	private int mem_num;
 	private String mem_nickname;
 	private String mem_id;
+	private int fav_cnt;
 
 	//업로드 파일 처리
 	public void setUpload1(MultipartFile upload1) 
@@ -159,11 +160,20 @@ public class NoticeVO {
 		this.mem_id = mem_id;
 	}
 
+	public int getFav_cnt() {
+		return fav_cnt;
+	}
+
+	public void setFav_cnt(int fav_cnt) {
+		this.fav_cnt = fav_cnt;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeVO [noti_num=" + noti_num + ", status=" + status + ", noti_end=" + noti_end + ", noti_date="
 				+ noti_date + ", noti_mdate=" + noti_mdate + ", noti_title=" + noti_title + ", noti_content="
 				+ noti_content + ", photo_name1=" + photo_name1 + ", photo_name2=" + photo_name2 + ", noti_hit="
-				+ noti_hit + ", mem_num=" + mem_num + ", mem_nickname=" + mem_nickname + ", mem_id=" + mem_id + "]";
+				+ noti_hit + ", mem_num=" + mem_num + ", mem_nickname=" + mem_nickname + ", mem_id=" + mem_id
+				+ ", fav_cnt=" + fav_cnt + "]";
 	}
 }

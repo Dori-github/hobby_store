@@ -95,9 +95,10 @@
 			<td>카테고리 분류</td>
 			<td>
 				<form:input path="cate_parent" type="number" hidden="hidden"/>
+				
 				<c:forEach var="cate" items="${course_cate}">
-					<c:if test="${fn:substring(course.cate_nums,0,1)}.equals(${cate.cate_num})">
-						<div class="btn-select"><span class="whole">${course_cate.cate_name}</span>
+					<c:if test="${fn:substring(courseVO.cate_nums,0,1) == cate.cate_num}">
+						<div class="btn-select"><span class="whole">${cate.cate_name}</span>
 							<i class="fa-solid fa-chevron-down icon" style="float: right;font-size:15px;"></i>
 							<i class="fa-solid fa-chevron-up icon" style="float: right;font-size:15px;display:none;"></i>
 						</div>
@@ -123,13 +124,13 @@
 				<form:errors element="div" path="cate_parent" cssClass="error-color"/>
 			</td>
 		</tr>
-		<tr id="d_cate" style="display:none;">
+		<tr id="d_cate">
 			<td>카테고리 상세</td>
 			<td>
 				<form:input path="cate_name" type="text" hidden="hidden"/>
 				<c:forEach var="cate" items="${course_cate}">
-					<c:if test="${fn:substring(course.cate_nums,0,1).equals(cate.cate_num)}">
-						<div class="btn-select2"><span class="whole2">${course_cate.cate_name}</span>
+					<c:if test="${courseVO.cate_nums.substring(2)==cate.cate_num}">
+						<div class="btn-select2"><span class="whole2">${cate.cate_name}</span>
 							<i class="fa-solid fa-chevron-down icon2" style="float: right;font-size:15px;"></i>
 							<i class="fa-solid fa-chevron-up icon2" style="float: right;font-size:15px;display:none;"></i>
 						</div>

@@ -27,15 +27,34 @@
 			</select></li>
 			<li><input type="search" size="16" name="keyword" id="keyword"
 				value="${param.keyword}"></li>
-			<li><input type="submit" value="검색"></li>
+			<li>
+				<input type="submit" value="검색" class="order-search-btn"> 
+			</li>
+			<li>
+				<select class="form-select select" id="order" name="order">
+					<option value="1" <c:if test="${param.order == 1}">selected</c:if>>기본순</option>
+					<option value="2" <c:if test="${param.order == 2}">selected</c:if>>최신순</option>
+					<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요순</option>
+				</select>
+				<script>
+				$(function(){
+					$('#order').change(function(){
+						location.href='noticeList.do?keyfield='+$('#keyfield').val()+'&keyword='+$('#keyword').val()+'&order='+$('#order').val();
+					});
+				});
+				</script>
+			</li>
 		</ul>
 	</form>
-	<div class="align-right">
-		<input type="button" value="공지사항등록" onclick="location.href='admin_write.do'"> 
-		<input type="button" value="목록" onclick="location.href='admin_list.do'">
-	</div>
+	<c:if test="${!empty user}">
+		<div class="align-right">
+			<input type="button" value="Q&A 작성"
+				onclick="location.href='admin_write.do'"class="order-search-btn" style="width:200px;">
+		</div>
+	</c:if>
 	<c:if test="${count == 0}">
-		<div class="result-display">공지가 없습니다.</div>
+		<hr size="1" width="100%">
+		<div class="result-display">공지사항이 없습니다.</div>
 	</c:if>
 	<c:if test="${count > 0}">
 		<table class="striped-table">
@@ -43,9 +62,9 @@
 				<th>번호</th>
 				<th>필독</th>
 				<th>제목</th>
+				<th>내용</th>
 				<th>작성자</th>
 				<th>작성일</th>
-				<th>마감일</th>
 				<th>조회수</th>
 				<th>좋아요수</th>
 			</tr>
@@ -68,11 +87,11 @@
 					    <c:if test="${!empty notice.mem_nickname}">${notice.mem_nickname}</c:if>
 					</td>
 					<td>${notice.noti_date}</td>
-					<td>${notice.noti_end}</td>
 					<td>${notice.noti_hit}</td>
 					<!-- 공지사항 좋아요 테이블이면 $context ~ 이용해야하는지 ??  -->
 					<td>
 						<!-- 좋아요 개수 넣어야 -->
+						${notice.fav_cnt}
 					</td>
 				</tr>
 			</c:forEach>
@@ -82,5 +101,6 @@
 		<div class="align-center">${page}</div>
 		<hr size="1" width="100%">
 	</c:if>
+	<div><input type="button" value="목록" onclick="location.href='noticeList.do'" class="order-list-btn"></div>
 </div>
-<!-- 공지사항목록(관리자용) 끝 -->
+<!-- 중앙 컨텐츠 끝 -->

@@ -64,26 +64,7 @@
 		<div id="select" ><!-- class원래 없었음 -->
 			<span id="total">총 ${count}개</span>
 			<!-- form-select select -->
-			<select class="form-select select" id="location" name="location"><!-- style="width:100px;" -->
-				<option value="전체" <c:if test="${param.location == '전체'}">selected</c:if>>전체</option>
-				<option value="서울" <c:if test="${param.location == '서울'}">selected</c:if>>서울</option>
-				<option value="경기" <c:if test="${param.location == '경기'}">selected</c:if>>경기</option>
-				<option value="인천" <c:if test="${param.location == '인천'}">selected</c:if>>인천</option>
-				<option value="강원" <c:if test="${param.location =='강원'}">selected</c:if>>강원</option>
-				<option value="충북" <c:if test="${param.location =='충북'}">selected</c:if>>충북</option>
-				<option value="세종" <c:if test="${param.location == '세종'}">selected</c:if>>세종</option>
-				<option value="충남" <c:if test="${param.location == '충남'}">selected</c:if>>충남</option>
-				<option value="대전" <c:if test="${param.location == '대전'}">selected</c:if>>대전</option>
-				<option value="경북" <c:if test="${param.location == '경북'}">selected</c:if>>경북</option>
-				<option value="대구" <c:if test="${param.location == '대구'}">selected</c:if>>대구</option>
-				<option value="울산" <c:if test="${param.location == '울산'}">selected</c:if>>울산</option>
-				<option value="부산" <c:if test="${param.location == '부산'}">selected</c:if>>부산</option>
-				<option value="경남" <c:if test="${param.location == '경남'}">selected</c:if>>경남</option>
-				<option value="전북" <c:if test="${param.location == '전북'}">selected</c:if>>전북</option>
-				<option value="전남" <c:if test="${param.location == '전남'}">selected</c:if>>전남</option>
-				<option value="광주" <c:if test="${param.location == '광주'}">selected</c:if>>광주</option>
-				<option value="제주" <c:if test="${param.location == '제주'}">selected</c:if>>제주</option>
-			</select>
+			
 			<!-- class="form-select select"밑에 원래 -->
 			<select class="form-select select" id="order" name="order" style="width:100px;">
 				<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
