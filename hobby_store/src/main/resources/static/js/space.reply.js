@@ -183,6 +183,87 @@ $(function(){
 		});
 		
 	}
+	//이미지 미리 보기
+	let space_photo;//선택한 이미지 저장
+	//대표이미지
+	$('.image #upload1').change(function(){
+		space_photo = this.files[0];
+		if(!space_photo){//취소한 경우
+			$('.space-photo1').hide();	
+			$('.l1').show();
+			$('.d1').hide();
+		}
+		if(space_photo.size > 1024*1024){
+			alert(Math.round(space_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$(this).val('');
+			return;
+		}
+		
+		let reader = new FileReader();
+		reader.readAsDataURL(space_photo);
+		
+		reader.onload=function(){
+			$('.space-photo1').show().attr('src',reader.result);	
+			$('.l1').hide();
+			$('.d1').show();
+		};
+	});//end of change
+	
+	//추가이미지1
+	$('.image #upload2').change(function(){
+		space_photo = this.files[0];
+		
+		if(!space_photo){//취소한 경우
+			$('.space-photo2').hide();	
+			$('.l2').show();
+			$('.d2').hide();
+		}
+		
+		if(space_photo.size > 1024*1024){
+			alert(Math.round(space_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$(this).val('');
+			return;
+		}
+		
+		let reader = new FileReader();
+		reader.readAsDataURL(space_photo);
+		
+		reader.onload=function(){
+			$('.space-photo2').show().attr('src',reader.result);	
+			$('.l2').hide();
+			$('.d2').show();
+		};
+	});//end of change
+	
+	//추가이미지2
+	$('.image #upload3').change(function(){
+		space_photo = this.files[0];
+		
+		if(!space_photo){//취소한 경우
+			$('.space-photo3').hide();	
+			$('.l3').show();
+			$('.d3').hide();
+		}
+		
+		if(space_photo.size > 1024*1024){
+			alert(Math.round(space_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$(this).val('');
+			return;
+		}
+		
+		let reader = new FileReader();
+		reader.readAsDataURL(space_photo);
+		
+		reader.onload=function(){
+			$('.space-photo3').show().attr('src',reader.result);	
+			$('.l3').hide();
+			$('.d3').show();
+		};
+	});//end of change
+	
+	
+	
+	
 	
 	//후기 목록 사진 모달
 	document.addEventListener('click',function(e){
