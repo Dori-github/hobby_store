@@ -10,7 +10,7 @@ spring:
   datasource: #DB 접속
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
-    username: c##user001
+    username: c##group001
     password: 1234
     hikari: #커넥션풀
       connection-timeout: 30000 #클라이언트가 pool에 connection을 요청하는데 기다리는 최대시간을 설정 30초
