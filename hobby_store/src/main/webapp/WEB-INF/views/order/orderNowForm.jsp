@@ -53,7 +53,7 @@
 		<c:forEach var="cart" items="${courseCart}">
 		<tr style="border-bottom: 1px solid #ccc">
 			<td style="text-align:left;">
-			<img src="${pageContext.request.contextPath}/images/${cart.course_photo1}"></td>
+			<img src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
 			<td style="text-align:left;">${cart.course_name}
 			<br>
 				<c:if test="${cart.cate_parent!=0}">
@@ -91,7 +91,7 @@
 			
 		<td style="text-align:left;">
 			<!-- 이미지 경로 처리 -->
-			<img src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
+			<img src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
 			<td colspan="2" style="text-align:left;">
 			${course_name}
 			${items_name}
@@ -131,7 +131,6 @@
 				       id="receive_name" maxlength="10">       
 			</li>
 			
-			<li>
 				<label for="address1">주소</label>
 				<input type="text" name="receive_address1"
 				       id="address1" maxlength="30">       

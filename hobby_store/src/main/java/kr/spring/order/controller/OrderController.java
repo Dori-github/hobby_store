@@ -50,8 +50,7 @@ public class OrderController {
 	@PostMapping("/order/orderForm.do")
 	public String form(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request) {
 
-		logger.debug("<<주문 mem_num>> : " + orderVO.getMem_num());
-
+		
 		// 글의 총 개수
 		int courseCount = cartService.getCartCount();
 		int itemCount = cartService.getItemCount();
@@ -165,43 +164,32 @@ public class OrderController {
 		 */
 
 		for (int i = 0, size = 1; i <= size; i++) {
-			logger.debug("<<????~~~~~~~~~~~~i j k>> : " + i);
-			logger.debug("<<courseCart.size()>> : " + courseCart.size());
-			logger.debug("<<itemCart.size()>> : " + itemCart.size());
-
+			
 			for (int j = 0, sizej = 1; j < sizej; j++) {
 				if (courseCart.size() > 0) {
 					sizej = courseCart.size();
 				}
 				;
 
-				logger.debug("course = 0 i:" + i + "j:" + j + " sizej:" + sizej);
-
+				
 				for (int k = 0, sizek = 1; k < sizek; k++) {
 					if (itemCart.size() > 0) {
 						sizek = itemCart.size();
 					}
 					;
 
-					logger.debug("gggggitem = 0 i:" + i + "k:" + k + " sizek:" + sizek);
-
 					OrderDetailVO orderDetail = new OrderDetailVO();
-					logger.debug("<<zzz ssizej>> : " + sizej);
-					logger.debug("item = 0 i:" + i + "k:" + k + " sizek:" + sizek);
-
+					
 					if (i == 0) {
-						logger.debug("<<ffffffitemCart.size()>> : " + itemCart.size());
 					}
 					;
 
 					if (i == 0 && k == 0) {
-						logger.debug("<<ㅎㅎ~i j k>> : " + i);
-
+					
 						if (courseCart.size() == 0) {
 							break;
 						}
-						logger.debug("<<course i j k >> : " + i + j + k);
-
+						
 						CourseCartVO ccart = courseCart.get(j);
 						CourseVO course = courseService.selectCourse(ccart.getCourse_num());
 
@@ -209,29 +197,16 @@ public class OrderController {
 						orderDetail.setPrice(ccart.getCourse_price());
 
 						orderDetail.setCourse_num(ccart.getCourse_num());
-
-						logger.debug("<<orderDetail>> : " + orderDetail);
-						logger.debug("<<orderDetail>> : " + orderDetailList);
-						logger.debug("<<!!selectCourse iiii>> : " + i);
-						logger.debug("<<!!selectCourse size>> : " + size);
-						/*
-						 * logger.debug("<<!!selectCourse name>> : " + ccart.getCourse_name());
-						 * logger.debug("<<!!selectCourse price>> : " + ccart.getCourse_price());
-						 * logger.debug("<<!!selectCourse후>> : " + ccart);
-						 * logger.debug("<<!!selectCourse후>> : " + courseCart);
-						 */
 						orderDetailList.add(orderDetail);
 					} else if (i == 0 && k > 0) {
 						break;
 					}
-					logger.debug("<<~~~~~~~~~~~~~i j k>> : " + i + j + k);
-
+					
 					if (i == 1 && j == 0) {
 						if (itemCart.size() == 0) {
 							break;
 						}
-						logger.debug("<<item i j k >> : " + i + j + k);
-
+						
 						ItemCartVO icart = itemCart.get(k);
 						ItemCartVO iquan = itemQuan.get(k);
 						ItemsVO item = itemService.selectItems(icart.getItems_num());
@@ -248,48 +223,13 @@ public class OrderController {
 						logger.debug("<<!!selectItems j>> : " + j);
 						logger.debug("<<!!selectItems size>> : " + size);
 						logger.debug("<<!!selectItems후>> : " + order_count);
-						/*
-						 * logger.debug("<<!!selectItems후>> : " + icart.getItems_num());
-						 * logger.debug("<<!!selectItems후>> : " + itemCart);
-						 * logger.debug("<<!!selectItems후>> : " + itemQuan);
-						 */
-
-						/*
-						 * if(j==sizej) { break; }
-						 */
+						
 
 						orderDetailList.add(orderDetail);
 					} else if (i == 1 && j > 0) {
 						break;
 					}
-					/*
-					 * if(item.getItems_quantity() < cart.getQuantity()) {
-					 * model.addAttribute("message",
-					 * "["+item.getItems_name()+"] 재고가 부족하여 구매가 불가합니다"); model.addAttribute("url",
-					 * request.getContextPath()+"/cart/cartList.do"); return "common/resultView"; }
-					 */
-
-					/*
-					 * OrderDetailVO orderDetail = new OrderDetailVO();
-					 * 
-					 * if(icart!=null) { orderDetail.setDetail_name( icart.getItems_name());
-					 * orderDetail.setPrice( iquan.getItems_total()); orderDetail.setQuantity(
-					 * iquan.getQuantity()); orderDetail.setItems_total( iquan.getItems_total());
-					 * 
-					 * orderDetail.setItems_num( icart.getItems_num());
-					 */
-					/*
-					 * logger.debug("<<detail전>> : " + iquan.getQuantity());
-					 * logger.debug("<<detail전>> : " + iquan.getItems_total());
-					 * logger.debug("<<detail전>> : " + icart);
-					 */
-
-					/*
-					 * logger.debug("<<WWW>> : " + orderDetail); }
-					 */
-					/*
-					 * orderDetailList.add(orderDetail); }
-					 */
+					
 				}
 			}
 
@@ -300,8 +240,7 @@ public class OrderController {
 		orderVO.setOrder_status(0);
 		pointsVO.setUsed_points(allTotal);// 주문자
 		pointsVO.setMem_num(user.getMem_num());
-		logger.debug("<<insertOrder 전 order_name>> : " + order_name);
-
+		
 		orderService.insertOrder(orderVO, pointsVO, orderDetailList);
 
 		// refresh 정보를 응답 헤더에 추가
@@ -331,14 +270,12 @@ public class OrderController {
 
 		if(items_price != null) {
 			int itemsPrice = Integer.parseInt(items_price[0]);
-			logger.debug("<<i quan>>:"+Integer.parseInt(items_quan[0]));
 			int itemsQuantity = Integer.parseInt(items_quan[0]);
 			int itemsTotal = itemsPrice * itemsQuantity;
 			model.addAttribute("itemsTotal", itemsTotal);
 		}
 
 		if(space_price != null) {	
-			logger.debug("<<s quan>>:" + space_price[0]);
 			int spacePrice = Integer.parseInt(space_price[0]);
 			int orderQuantity = Integer.parseInt(order_quantity[0]);
 			int spaceTotal = spacePrice * orderQuantity;
@@ -386,10 +323,9 @@ public class OrderController {
 			pointsVO.setUsed_points(coursePrice);
 			pointsVO.setMem_num(user.getMem_num());
 		}
-
-		logger.debug("<<4d>> : " + items_num[0]);
-		if(course_onoff != null  && Integer.parseInt(space_num[0]) < 0 && Integer.parseInt(items_num[0]) < 0 && course_onoff[0] == "off" ) {//오프라인 클래스
-			logger.debug("<<1d>> : " + course_num[0]);
+	
+		
+		if(course_onoff != null  && space_num[0] == null && items_num[0] == null && course_onoff[0] == "off" ) {//오프라인 클래스
 			String[] course_quan = request.getParameterValues("course_quan");
 			String[] course_total = request.getParameterValues("course_total");
 			
@@ -405,10 +341,6 @@ public class OrderController {
 			orderDetail.setPrice(courseTotal);
 			orderDetail.setQuantity(courseQuan);
 
-			logger.debug("<<1d>> : " + courseNum);
-			logger.debug("<<2d>> : " + coursePrice);
-			logger.debug("<<3d>> : " + courseQuan);
-			logger.debug("<<4d>> : " + courseTotal);
 			
 			orderDetailList.add(orderDetail);
 
@@ -422,21 +354,21 @@ public class OrderController {
 		
 		//스토어 바로구매
 		
-				if((items_num[0]) != "" && Integer.parseInt(items_num[0]) > 0 ) {
-					String[] items_name = request.getParameterValues("items_name");
-					String[] items_quan = request.getParameterValues("items_quan");
-					String[] items_total = request.getParameterValues("items_total");
-					
-					int itemsNum = Integer.parseInt(items_num[0]);
-					int itemsQuan = Integer.parseInt(items_quan[0]);
-					int itemsTotal = Integer.parseInt(items_total[0]);
-					
-					orderDetail.setItems_num(itemsNum);
-					orderDetail.setDetail_name(items_name[0]);
-					orderDetail.setPrice(itemsTotal);
-					orderDetail.setQuantity(itemsQuan);
+		if((items_num[0]) != "" && Integer.parseInt(items_num[0]) > 0 ) {
+			String[] items_name = request.getParameterValues("items_name");
+			String[] items_quan = request.getParameterValues("items_quan");
+			String[] items_total = request.getParameterValues("items_total");
+			
+			int itemsNum = Integer.parseInt(items_num[0]);
+			int itemsQuan = Integer.parseInt(items_quan[0]);
+			int itemsTotal = Integer.parseInt(items_total[0]);
+			
+			orderDetail.setItems_num(itemsNum);
+			orderDetail.setDetail_name(items_name[0]);
+			orderDetail.setPrice(itemsTotal);
+			orderDetail.setQuantity(itemsQuan);
 
-					orderDetailList.add(orderDetail);
+			orderDetailList.add(orderDetail);
 
 					orderVO.setOrder_name(items_name[0]);// 대표 상품명
 					orderVO.setOrder_price(itemsTotal);// 총주문금액
