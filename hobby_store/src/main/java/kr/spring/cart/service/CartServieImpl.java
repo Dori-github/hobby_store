@@ -26,8 +26,8 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public int getCartCount() {
-		return cartmapper.getCartCount();
+	public int getCartCount(int num) {
+		return cartmapper.getCartCount(num);
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class CartServieImpl implements CartService{
 	}
 
 	@Override
-	public int getItemCount() {
-		return cartmapper.getItemCount();
+	public int getItemCount(int num) {
+		return cartmapper.getItemCount(num);
 	}
 
 	@Override

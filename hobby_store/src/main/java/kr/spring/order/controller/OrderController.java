@@ -50,12 +50,11 @@ public class OrderController {
 	@PostMapping("/order/orderForm.do")
 	public String form(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request) {
 
+		MemberVO user = (MemberVO) session.getAttribute("user");
 		
 		// 글의 총 개수
-		int courseCount = cartService.getCartCount();
-		int itemCount = cartService.getItemCount();
-
-		MemberVO user = (MemberVO) session.getAttribute("user");
+		int courseCount = cartService.getCartCount(user.getMem_num());
+		int itemCount = cartService.getItemCount(user.getMem_num());
 
 		// 장바구니 상품 정보 호출
 		List<CourseCartVO> courseCart = cartService.getCourseCart(user.getMem_num());

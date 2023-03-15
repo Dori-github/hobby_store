@@ -10,12 +10,13 @@ import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.items.vo.ItemsVO;
+import kr.spring.member.vo.MemberVO;
 
 public interface CartService {
 	//클래스 장바구니 목록
 	public List<CourseCartVO> getCourseCart(int num);
 	//총 레코드 수
-	public int getCartCount();
+	public int getCartCount(int num);
 	//클래스 장바구니 정보
 	public CourseCartVO selectCourseCart(CourseCartVO courseCart);
 	//클래스 장바구니 등록
@@ -31,7 +32,7 @@ public interface CartService {
 	public List<ItemCartVO> getItemQuan(int num);
 	public ItemCartVO getStoredQuan(int mem_num, int items_num);
 	//총 레코드 수
-	public int getItemCount();
+	public int getItemCount(int num);
 	//상품 장바구니 정보
 	public ItemCartVO selectItemCart(ItemCartVO itemCart);
 	//상품 장바구니 등록

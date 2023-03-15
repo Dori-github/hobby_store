@@ -48,16 +48,15 @@ public class CartController {//메서드 생성, 데이터 처리
 	//=====장바구니 목록=====//
 	@RequestMapping("/cart/cartList.do")
 	public ModelAndView getList(HttpSession session) {	
-		
-			//글의 총 개수
-			int courseCount = cartService.getCartCount();
-			int itemCount = cartService.getItemCount();
-			logger.debug("클래스수" + courseCount);
-			logger.debug("상품수" + itemCount);
-			
-			
+
 			MemberVO user = 
 					 (MemberVO)session.getAttribute("user");
+			
+			//글의 총 개수
+			int courseCount = cartService.getCartCount(user.getMem_num());
+			int itemCount = cartService.getItemCount(user.getMem_num());
+			logger.debug("클래스수" + courseCount);
+			logger.debug("상품수" + itemCount);
 				
 			//목록 호출(장바구니 비었을 때 처리 추가)
 			List<CourseCartVO> courseList = null;

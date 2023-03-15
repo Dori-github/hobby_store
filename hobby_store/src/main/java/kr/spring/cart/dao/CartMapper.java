@@ -33,8 +33,8 @@ public interface CartMapper {
 	 
 	public List<CourseCartVO> getCourseCart(int num);
 	//총 레코드 수
-	@Select("SELECT COUNT(*) FROM course_cart")
-	public int getCartCount();
+	@Select("SELECT COUNT(*) FROM course_cart WHERE mem_num=#{mem_num}")
+	public int getCartCount(int num);
 	//클래스 장바구니 정보
 	@Select("SELECT * FROM course_cart WHERE "
 			+ "course_num=#{course_num} AND "
@@ -58,8 +58,8 @@ public interface CartMapper {
 	public ItemCartVO getStoredQuan(int mem_num, int items_num);
 	
 	//총 레코드 수
-	@Select("SELECT COUNT(*) FROM item_cart")
-	public int getItemCount();
+	@Select("SELECT COUNT(*) FROM item_cart WHERE mem_num=#{mem_num}")
+	public int getItemCount(int num);
 	//상품 장바구니 정보
 	@Select("SELECT * FROM item_cart WHERE "
 			+ "items_num=#{items_num} AND "
