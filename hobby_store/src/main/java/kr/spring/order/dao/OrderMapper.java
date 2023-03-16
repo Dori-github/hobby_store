@@ -26,7 +26,7 @@ public interface OrderMapper {
 	public void deleteCartCourse(
 			@Param(value="course_num") Integer course_num,
 			@Param(value="mem_num") Integer mem_num);
-	@Delete("DELETE FROM item_cart WHERE "
+	@Delete("DELETE FROM items_cart WHERE "
 			+ "items_num=#{items_num} AND mem_num=#{mem_num}")
 	public void deleteCartItem(
 			@Param(value="items_num") Integer items_num,

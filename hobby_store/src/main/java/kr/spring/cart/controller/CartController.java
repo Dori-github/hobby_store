@@ -96,6 +96,57 @@ public class CartController {//메서드 생성, 데이터 처리
 			return mav;
 	}
 	
+	//=====(수정중)장바구니 목록=====//
+	@RequestMapping("/cart/listCart.do")
+	public ModelAndView getCartList(HttpSession session) {	
+		
+		MemberVO user = 
+				(MemberVO)session.getAttribute("user");
+		
+		//글의 총 개수
+		int courseCount = cartService.getCartCount(user.getMem_num());
+		int itemCount = cartService.getItemCount(user.getMem_num());
+		logger.debug("클래스수" + courseCount);
+		logger.debug("상품수" + itemCount);
+		
+		//목록 호출(장바구니 비었을 때 처리 추가)
+		List<CourseCartVO> courseList = null;
+		if(courseCount > 0) {
+			courseList = cartService.getCourseCart(user.getMem_num());
+		}
+		
+		List<ItemCartVO> itemList = null;
+		if(itemCount > 0) {
+			itemList = cartService.getItemCart(user.getMem_num());
+		}
+		
+		//회원번호(mem_num)별 총 구입액	
+		Integer courseTotal = cartService.courseTotal(user.getMem_num());
+		Integer itemTotal = cartService.itemTotal(user.getMem_num());
+//			Integer allTotal = courseTotal + itemTotal;
+		
+		//
+		List<ItemCartVO> itemQuan = null;
+		itemQuan = cartService.getItemQuan(user.getMem_num());
+		
+		ModelAndView mav = new ModelAndView();
+		//뷰 이름 설정(tiles-definition name)
+		mav.setViewName("listCart");
+		//데이터 저장
+		mav.addObject("courseCount", courseCount);
+		mav.addObject("courseList", courseList);
+		mav.addObject("courseTotal", courseTotal);
+		
+		mav.addObject("itemCount", itemCount);
+		mav.addObject("itemList", itemList);
+		mav.addObject("itemTotal", itemTotal);
+		
+//			mav.addObject("allTotal", allTotal);
+		mav.addObject("itemQuan", itemQuan);
+		
+		return mav;
+	}
+	
 	@RequestMapping("/cart/getQuan.do")
 	@ResponseBody
 	public Map<String,Object> getQuan(ItemCartVO cart,

@@ -10,10 +10,20 @@
     	<put-attribute name="body"
     	  value="/WEB-INF/views/cart/cartList.jsp"/>        
     </definition>
+   <definition name="listCart" extends="main">
+    	<put-attribute name="title" value="장바구니"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/cart/listCart.jsp"/>        
+    </definition>
    <definition name="orderForm" extends="main">
     	<put-attribute name="title" value="주문폼"/>
     	<put-attribute name="body"
     	  value="/WEB-INF/views/order/orderForm.jsp"/>        
+    </definition>
+   <definition name="formOrder" extends="main">
+    	<put-attribute name="title" value="주문폼"/>
+    	<put-attribute name="body"
+    	  value="/WEB-INF/views/order/formOrder.jsp"/>        
     </definition>
    <definition name="orderNowForm" extends="main">
     	<put-attribute name="title" value="바로주문폼"/>

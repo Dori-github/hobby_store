@@ -15,7 +15,7 @@
 	
 	SELECT t.cate_parent, t.cate_name, i.items_num, i.items_photo_name1, i.items_name, 
 	i.items_price, i.items_quantity
-	FROM item_cart ic 
+	FROM items_cart ic 
 	JOIN items i ON ic.items_num=i.items_num 
 	JOIN items_cate t ON i.cate_num=t.cate_num 
 	WHERE ic.mem_num=#{mem_num}
@@ -28,7 +28,7 @@
 	<![CDATA[
 	ic.quantity * i.items_price as items_total
 	]]>
-	FROM item_cart ic 
+	FROM items_cart ic 
 	JOIN items i ON ic.items_num=i.items_num
 	WHERE ic.mem_num=#{mem_num}
     ORDER BY ic.cart_num DESC
@@ -40,7 +40,7 @@
 	<![CDATA[
 	SUM(ic.quantity*i.items_price)
     ]]>
-    FROM item_cart ic JOIN items i
+    FROM items_cart ic JOIN items i
     ON ic.items_num=i.items_num
     WHERE ic.mem_num=#{mem_num}
 	</select>

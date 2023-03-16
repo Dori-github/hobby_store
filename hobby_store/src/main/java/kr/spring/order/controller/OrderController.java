@@ -80,6 +80,44 @@ public class OrderController {
 		return "orderForm";
 	}
 
+	
+	// =====(수정중)주문하기=====//
+	// 주문등록 폼 호출
+	@PostMapping("/order/formOrder.do")
+	public String orderForm(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request) {
+		
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		// 글의 총 개수
+		int courseCount = cartService.getCartCount(user.getMem_num());
+		int itemCount = cartService.getItemCount(user.getMem_num());
+		
+		// 장바구니 상품 정보 호출
+		/*
+		 * List<CourseCartVO> courseCart = cartService.getCourseCart(user.getMem_num());
+		 * List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
+		 * List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
+		 */		
+		
+		Integer courseTotal = cartService.courseTotal(user.getMem_num());
+		if (courseTotal == null)
+			courseTotal = 0;
+		Integer itemTotal = cartService.itemTotal(user.getMem_num());
+		if (itemTotal == null)
+			itemTotal = 0;
+		
+		Integer allTotal = courseTotal + itemTotal;
+		
+		model.addAttribute("courseCount", courseCount);
+//		model.addAttribute("courseCart", courseCart);
+		model.addAttribute("itemCount", itemCount);
+//		model.addAttribute("itemCart", itemCart);
+//		model.addAttribute("itemQuan", itemQuan);
+		model.addAttribute("allTotal", allTotal);
+		
+		return "orderForm";
+	}
+
 	// 폼에서 전송된 데이터 처리
 	@PostMapping("/order/order.do")
 	public String submit(OrderVO orderVO, PointsVO pointsVO, HttpSession session, Model model,

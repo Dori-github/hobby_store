@@ -151,6 +151,6 @@ public interface ItemsMapper {
 	public void deleteReplyItems(Integer items_num);
 	@Delete("DELETE FROM items_reply_fav WHERE reply_num = #{reply_num}")
 	public void deleteReplytoFav(Integer reply_num);
-	@Delete("DELETE FROM item_cart WHERE items_num = #{items_num}")
+	@Delete("DELETE FROM items_cart WHERE items_num = #{items_num}")
 	public void deleteItemsCart(Integer items_num);
 }

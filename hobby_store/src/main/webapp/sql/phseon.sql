@@ -14,19 +14,19 @@ CREATE TABLE course_cart (
 create sequence course_cart_seq;
 
 --상품 장바구니
-CREATE TABLE item_cart (
+CREATE TABLE items_cart (
     cart_num number not null,
     quantity number(3) not null,
     mem_num number not null,
     items_num number not null,
-    constraint item_cart_pk primary key (cart_num),
-    constraint item_cart_fk1 foreign key (mem_num) 
+    constraint items_cart_pk primary key (cart_num),
+    constraint items_cart_fk1 foreign key (mem_num) 
                     references member (mem_num),
-    constraint item_cart_fk2 foreign key (items_num) 
+    constraint items_cart_fk2 foreign key (items_num) 
                     references items (items_num)
 );
 
-create sequence item_cart_seq;
+create sequence items_cart_seq;
 
 --주문
 CREATE TABLE orders (
