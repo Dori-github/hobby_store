@@ -11,6 +11,18 @@
 		<c:set var="space_name" value='<%=request.getParameter("space_name") %>'/>
 		<c:out value="g${course_name}g"/>
 		<c:out value="aa${items_num}"/>
+		
+		<c:set var="c_chkNum" value='<%=request.getParameter("c_chk") %>'/>
+		<c:set var="i_chkNum" value='<%=request.getParameter("i_chk") %>'/>
+		<c:out value="ㅎㅎㅎ${c_chkNum}"/>
+		<c:out value="ㅋㅋㅋ${i_chkNum}"/>
+		fgfgf
+		<c:forEach var="chk" items="${c_chkArr}" >
+		<h4>zzzz</h4>
+		<h4>${chk}</h4>
+		<h4>zzzz</h4>
+		</c:forEach>
+		
 		<%--  <c:out value="bb${space_name}"/>
 		 --%>
 		<!-- course_name, course_onoff 넣고난 후 확인하기
@@ -22,9 +34,9 @@
 		$(".zaz").hide();
 		</script>
 		</c:if> --%>
-		<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
-		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
-			
+		<%-- <input type="number" name="course_name" value="${course.course_name}" id="course_name">
+		<input type="number" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
+		 --%>	
 		<c:if test="${courseCount > 0}">
 		<h5 class="zaz">Course Cart [ ${courseCount} items ]</h5>	
 		<table class="table table-borderless">
@@ -37,10 +49,10 @@
 			<th colspan="2" style="text-align:left;border-bottom: 1px solid #ccc;">Course</th>
 			<th style="border-bottom: 1px solid #ccc;">Price</th>
 		</tr>
-		<c:forEach var="cart" items="${courseCart}">
+		<c:forEach var="cart" items="${courseCart}" >
 		<tr style="border-bottom: 1px solid #ccc">
 			<td style="text-align:left;">
-			<img src="${pageContext.request.contextPath}/images/${cart.course_photo1}"></td>
+			<img src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
 			<td style="text-align:left;">${cart.course_name}
 			<br>
 				<c:if test="${cart.cate_parent!=0}">
@@ -81,7 +93,7 @@
   		<tr style="border-bottom: 1px solid #ccc;">
 			
 		<td style="text-align:left;">
-			<img src="${pageContext.request.contextPath}/images/${cart.items_photo1}"></td>
+			<img src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
 			<td style="text-align:left;">${cart.items_name}
 			<br>
 				<c:if test="${cart.cate_parent!=0}">
@@ -112,7 +124,7 @@
 		</c:if>
 		<h5><%=request.getParameter("course_price") %></h5>
 		<h5>----</h5>
-		<h5>${course_price} zzzz oooo</h5>
+		<h5>${course_price} zzo</h5>
 		<h5>----</h5>
 		<%String password = request.getParameter("course_price");
 		%>

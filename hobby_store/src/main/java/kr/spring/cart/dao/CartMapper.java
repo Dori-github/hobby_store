@@ -30,8 +30,15 @@ public interface CartMapper {
 	 + "JOIN course c ON cc.course_num=c.course_num "
 	 + "WHERE cc.mem_num=#{mem_num}" 
 	 + "ORDER BY cc.cart_num DESC")
-	 
 	public List<CourseCartVO> getCourseCart(int num);
+	 //클래스 장바구니 목록(클래스 번호)
+	 @Select("SELECT cc.cart_num, c.course_num, c.course_photo_name1, "
+			 + "c.course_name, c.course_onoff, c.course_price " 
+			 + "FROM course_cart cc " 
+			 + "JOIN course c ON cc.course_num=c.course_num "
+			 + "WHERE cc.mem_num=#{mem_num} AND cc.course_num=#{course_num}" 
+			 + "ORDER BY cc.cart_num DESC")
+	 public List<CourseCartVO> getCourseCartNum(int mem_num, int course_num);
 	//총 레코드 수
 	@Select("SELECT COUNT(*) FROM course_cart WHERE mem_num=#{mem_num}")
 	public int getCartCount(int num);
@@ -51,6 +58,16 @@ public interface CartMapper {
 	//=====상품 장바구니=====//
 	//상품 장바구니 목록
 	public List<ItemCartVO> getItemCart(int num);
+	@Select("SELECT t.cate_parent, t.cate_name, i.items_num, "
+			+ " i.items_photo_name1, i.items_name, "
+			+ "	i.items_price, i.items_quantity "
+			+ "	FROM items_cart ic "
+			+ "	JOIN items i ON ic.items_num=i.items_num "
+			+ "	JOIN items_cate t ON i.cate_num=t.cate_num "
+			+ "	WHERE ic.mem_num=#{mem_num} AND ic.items_num=#{items_num} "
+			+ " ORDER BY ic.cart_num DESC")
+	//상품 장바구니 목록(상품 번호)
+	public List<ItemCartVO> getItemCartNum(int mem_num, int items_num);
 	//상품 수량, 구입액
 	public List<ItemCartVO> getItemQuan(int num);
 	

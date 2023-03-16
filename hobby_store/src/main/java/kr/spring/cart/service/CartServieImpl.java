@@ -90,4 +90,14 @@ public class CartServieImpl implements CartService{
 		cartmapper.updateCartByItems_num(itemCart);
 	}
 
+	@Override
+	public List<CourseCartVO> getCourseCartNum(int mem_num, int course_num) {
+		return cartmapper.getCourseCartNum(mem_num, course_num);
+	}
+
+	@Override
+	public List<ItemCartVO> getItemCartNum(int mem_num, int items_num) {
+		return cartmapper.getItemCartNum(mem_num, items_num);
+	}
+
 }

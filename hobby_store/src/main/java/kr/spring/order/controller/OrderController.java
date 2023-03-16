@@ -17,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.spring.cart.dao.CartMapper;
 import kr.spring.cart.service.CartService;
 import kr.spring.cart.vo.CourseCartVO;
 import kr.spring.cart.vo.ItemCartVO;
@@ -48,72 +50,92 @@ public class OrderController {
 	// =====주문하기=====//
 	// 주문등록 폼 호출
 	@PostMapping("/order/orderForm.do")
-	public String form(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request) {
-
+	public String orderForm(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request,
+			 @RequestParam(value = "c_chk") List<String> c_Arr,
+			 @RequestParam(value = "i_chk") List<String> i_Arr) {
+		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
 		// 글의 총 개수
 		int courseCount = cartService.getCartCount(user.getMem_num());
 		int itemCount = cartService.getItemCount(user.getMem_num());
+		
 
+		
+		String[] c_chkNum = request.getParameterValues("c_chk");
+		String[] i_chkNum = request.getParameterValues("i_chk");
+		
+		ArrayList<Integer> c_chkArr = new ArrayList<Integer>();
+		ArrayList<CourseCartVO> courseCart = new ArrayList<CourseCartVO>();
+		
+		ArrayList<Integer> i_chkArr = new ArrayList<Integer>();
+		ArrayList<ItemCartVO> itemCart = new ArrayList<ItemCartVO>();
+		
+		for(String i:c_Arr) {
+			c_chkArr.add(Integer.parseInt(i));
+			courseCart.addAll(cartService.getCourseCartNum(
+					user.getMem_num(),Integer.parseInt(i)));
+			}
+		
+		for(String i:i_Arr) {
+			i_chkArr.add(Integer.parseInt(i));
+			itemCart.addAll(cartService.getItemCartNum(
+					user.getMem_num(),Integer.parseInt(i)));
+		}
+		
+
+		
+		
+		logger.debug("c_Arr : " + c_Arr);
+		logger.debug("i_Arr : " + i_Arr);
+		logger.debug("c_chkNum : " + c_chkNum);
+		logger.debug("c_chkNum : " + c_chkNum[0]);
+		logger.debug("i_chkNum : " + i_chkNum);
+		/*
+		 * List<CourseCartVO> c_chkArr = null;
+		 * for(String i:c_Arr) { =
+		 * Integer.parseInt(i); }
+		 */
+//		for(String i:c_Arr) {
+//		int[] j;
+//		j[j.indexOf(i)] = Integer.parseInt(i);
+//		}
+		
 		// 장바구니 상품 정보 호출
-		List<CourseCartVO> courseCart = cartService.getCourseCart(user.getMem_num());
-		List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
+//		for(String i:c_Arr) {
+//			int j = Integer.parseInt(i);
+//			logger.debug("dmdmdmd(" + i + "): " + j);
+//			courseCart = cartService.getCourseCartNum(user.getMem_num(), j);
+//
+//			logger.debug("dddddd : " + cartService.getCourseCartNum(user.getMem_num(),j));
+//		}
+		logger.debug("dddddd : " + courseCart);
+		
+//		List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
 		List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
-
+				
+		logger.debug("itemCart : " + itemCart);
+		logger.debug("courseCart : " + courseCart);
+		
+//		List<CourseCartVO> courseOrder = cartService.getItemCart(체크된 course_num);
+		List<ItemCartVO> itemOrder = cartService.getItemCart(user.getMem_num());
+		
 		Integer courseTotal = cartService.courseTotal(user.getMem_num());
 		if (courseTotal == null)
 			courseTotal = 0;
 		Integer itemTotal = cartService.itemTotal(user.getMem_num());
 		if (itemTotal == null)
 			itemTotal = 0;
-
+		
 		Integer allTotal = courseTotal + itemTotal;
-
+		
 		model.addAttribute("courseCount", courseCount);
 		model.addAttribute("courseCart", courseCart);
 		model.addAttribute("itemCount", itemCount);
 		model.addAttribute("itemCart", itemCart);
 		model.addAttribute("itemQuan", itemQuan);
 		model.addAttribute("allTotal", allTotal);
-
-		return "orderForm";
-	}
-
-	
-	// =====(수정중)주문하기=====//
-	// 주문등록 폼 호출
-	@PostMapping("/order/formOrder.do")
-	public String orderForm(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request) {
-		
-		MemberVO user = (MemberVO) session.getAttribute("user");
-		
-		// 글의 총 개수
-		int courseCount = cartService.getCartCount(user.getMem_num());
-		int itemCount = cartService.getItemCount(user.getMem_num());
-		
-		// 장바구니 상품 정보 호출
-		/*
-		 * List<CourseCartVO> courseCart = cartService.getCourseCart(user.getMem_num());
-		 * List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
-		 * List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
-		 */		
-		
-		Integer courseTotal = cartService.courseTotal(user.getMem_num());
-		if (courseTotal == null)
-			courseTotal = 0;
-		Integer itemTotal = cartService.itemTotal(user.getMem_num());
-		if (itemTotal == null)
-			itemTotal = 0;
-		
-		Integer allTotal = courseTotal + itemTotal;
-		
-		model.addAttribute("courseCount", courseCount);
-//		model.addAttribute("courseCart", courseCart);
-		model.addAttribute("itemCount", itemCount);
-//		model.addAttribute("itemCart", itemCart);
-//		model.addAttribute("itemQuan", itemQuan);
-		model.addAttribute("allTotal", allTotal);
+		model.addAttribute("c_chkArr", c_chkArr);
 		
 		return "orderForm";
 	}

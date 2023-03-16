@@ -40,7 +40,7 @@
 					<tr style="border-bottom: 1px solid #ccc">
 						<td>
 						<input type="checkbox" name="course_numbers" checked="checked"
-							class="choice-btn" value="${cart.cart_num}">
+							class="choice-btn" data-c-cart-num="${cart.course_num}">
 						</td>
 						<td style="text-align: left;"><img
 							src="/course/imageView.do?course_num=${cart.course_num}&item_type=1" ></td>
@@ -96,7 +96,7 @@
 					<tr style="border-bottom: 1px solid #ccc;">
 						<td>
 						<input type="checkbox" name="item_numbers" checked="checked"
-							class="choice-btn" value="${cart.cart_num}">
+							class="choice-btn" data-i-cart-num="${cart.items_num}">
 						</td>
 						<td style="text-align: left;"><img
 							src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
@@ -126,13 +126,6 @@
 				</c:forEach>
 				</tr>
 				</c:forEach>
-				<tr>
-					<td colspan="5"></td>
-					<!-- <div class="itemTotal"> -->
-					<td><span class="itemTotal" data-itemTotal="${itemTotal}">
-							₩<fmt:formatNumber value="${itemTotal}" />
-					</span></td>
-				</tr>
 			</table>
 		</c:if>
 		<c:if test="${courseCount > 0 || itemCount > 0}">
@@ -140,7 +133,10 @@
 			<span class="allTotal" data-allTotal="<c:out value="${allTotal}"/>">
 			총 주문 금액 :	₩<fmt:formatNumber value="${allTotal}" />
 			</span><br><br>
+			<input type="hidden" id="c_chk" name="c_chk">
+			<input type="hidden" id="i_chk" name="i_chk">
 			<input type="submit" id="order_btn" value="구매하기">
+			
 		</c:if>
 	</form>
 

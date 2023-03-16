@@ -1,5 +1,6 @@
 package kr.spring.cart.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ import kr.spring.member.vo.MemberVO;
 public interface CartService {
 	//클래스 장바구니 목록
 	public List<CourseCartVO> getCourseCart(int num);
+	//클래스 장바구니 목록(클래스 번호)
+	public List<CourseCartVO> getCourseCartNum(int mem_num, int course_num);
 	//총 레코드 수
 	public int getCartCount(int num);
 	//클래스 장바구니 정보
@@ -28,7 +31,8 @@ public interface CartService {
 	//=====상품 장바구니=====//
 	//상품 장바구니 목록
 	public List<ItemCartVO> getItemCart(int num);
-	//상품 수량, 구입액
+	//상품 장바구니 목록(상품 번호)
+	public List<ItemCartVO> getItemCartNum(int mem_num, int items_num);
 	public List<ItemCartVO> getItemQuan(int num);
 	public ItemCartVO getStoredQuan(int mem_num, int items_num);
 	//총 레코드 수

@@ -12,6 +12,7 @@ public class CourseCartVO {
 	private String course_name;
 	private String course_onoff;
 	private int course_price;
+//	private int[] c_chkArr;
 	
 	public int getCate_parent() {
 		return cate_parent;
@@ -81,4 +82,8 @@ public class CourseCartVO {
 				+ ", course_photo1=" + course_photo1 + ", course_name=" + course_name + ", course_onoff=" + course_onoff + ", course_price="
 				+ course_price + "]";
 	}
+	/*
+	 * public String[] getC_chkArr() { return c_chkArr; } public void
+	 * setC_chkArr(String[] c_chkArr) { this.c_chkArr = c_chkArr; }
+	 */
 }

@@ -102,6 +102,28 @@ $(function(){
 	}*/
 		
 		
+		$("#order_btn").click(
+			function() {
+				var c_chk = new Array();
+				var i_chk = new Array();
+				
+				$('input[class=choice-btn][name=course_numbers]:checked').each(function(){
+					console.log("><<cc<>> : " + $(this).attr('data-c-cart-num'));
+					c_chk.push($(this).attr('data-c-cart-num'));
+				})
+				
+				$('input[class=choice-btn][name=item_numbers]:checked').each(function(){
+					console.log("><<ii<>> : " + $(this).attr('data-i-cart-num'));
+					i_chk.push($(this).attr('data-i-cart-num'));
+				})
+				
+				console.log("><<g<>> : " + c_chk);
+				console.log("><<h<>> : " + i_chk);
+				
+				$('#c_chk').val(c_chk);
+				$('#i_chk').val(i_chk);
+				});
+		
 		
 		let course_cart_sum = $('.courseTotal').attr('data-courseTotal');
 	 	let item_cart_sum = $('.itemTotal').attr('data-itemTotal');
@@ -178,7 +200,7 @@ $(function(){
 	
 		//개별 선택/해제
 		$('.choice-btn').on('click',function(){
-		console.log($('input[class=choice-btn]:checked').length);
+		console.log("아ㅏㅏㅇ" + $('input[class=choice-btn]:checked').length);
 		console.log($('.choice-btn').length);
 		if($('input[class=choice-btn]:checked').length
 		                   == $('.choice-btn').length){
@@ -363,29 +385,11 @@ $(function(){
 			Number($('.itemTotal').attr('data-itemTotal'))
 			                      .toLocaleString());
 		}
-		
-		$('.allTotal').css("color","red");
-		$('.allTotal').text(
-			Number($('.allTotal').attr('data-allTotal'))
-			                      .toLocaleString()+'원');
-		/*$('.allTotal').attr('data-allTotal',
-			   Number($('.allTotal').attr('data-allTotal')) + 
-               Number($(this).parents('table')
-                      .find('.courseTotal')
-                      .attr('data-courseTotal')) +
-               Number($(this).parents('table')
-                      .find('.itemTotal')
-                      .attr('data-itemTotal'))	
-);*/
 
-	console.log("qq:"+$('.allTotal').attr('data-allTotal'));
-	console.log("ㅎ:" + (Number($('.allTotal').attr('data-allTotal'))) + 
-               Number($(this).parents('table')
-                      .find('.courseTotal')
-                      .attr('data-courseTotal')) +
-               Number($(this).parents('table')
-                      .find('.itemTotal')
-                      .attr('data-itemTotal')));
+		$('.allTotal').css("color","red");
+		$('.allTotal').text('총 주문 금액 : ₩'+
+			Number($('.allTotal').attr('data-allTotal'))
+			                      .toLocaleString());
 	
 		
 	}
@@ -403,7 +407,6 @@ $('.itemTotal').text(
 $('.allTotal').text(
 			Number($('.allTotal').attr('data-allTotal'))
 			                      .toLocaleString()+'fff원');
-console.log("금ㅇㄹㅇㄹ:" + $('.allTotal').attr('data-allTotal'));
 	}
 });
 		
