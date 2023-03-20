@@ -75,6 +75,12 @@ public class OrderController {
 			c_chkArr.add(Integer.parseInt(i));
 			courseCart.addAll(cartService.getCourseCartNum(
 					user.getMem_num(),Integer.parseInt(i)));
+			/*courseCart.addAll(courseService.);
+			 *orderForm에 상품 가격, 개수(상품 개수 어떻게 넘어온건지?), 클래스 총 가격,
+			 *상품 총 가격, 장바구니 총 가격 출력
+			 *그대로 구매에 정보 넘기기 
+			 * */
+			 
 			}
 		
 		for(String i:i_Arr) {
@@ -134,6 +140,8 @@ public class OrderController {
 		model.addAttribute("itemCount", itemCount);
 		model.addAttribute("itemCart", itemCart);
 		model.addAttribute("itemQuan", itemQuan);
+		model.addAttribute("courseTotal", courseTotal);
+		model.addAttribute("itemTotal", itemTotal);
 		model.addAttribute("allTotal", allTotal);
 		model.addAttribute("c_chkArr", c_chkArr);
 		

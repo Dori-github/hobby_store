@@ -73,7 +73,9 @@ public class CartController {//메서드 생성, 데이터 처리
 		Integer courseTotal = cartService.courseTotal(user.getMem_num());
 		Integer itemTotal = cartService.itemTotal(user.getMem_num());
 //			Integer allTotal = courseTotal + itemTotal;
-		
+		/*
+		 * Integer itemSum = 0; itemSum = itemSum + itemTotal;
+		 */
 		//
 		List<ItemCartVO> itemQuan = null;
 		itemQuan = cartService.getItemQuan(user.getMem_num());

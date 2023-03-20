@@ -52,7 +52,7 @@
 		<c:forEach var="cart" items="${courseCart}" >
 		<tr style="border-bottom: 1px solid #ccc">
 			<td style="text-align:left;">
-			<img src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
+			<img style="height:500px; width:500px;" src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
 			<td style="text-align:left;">${cart.course_name}
 			<br>
 				<c:if test="${cart.cate_parent!=0}">
@@ -66,7 +66,7 @@
 		</c:forEach>
 		<tr>
 			<td colspan="2"></td>
-			<td>${courseTotal}</td>
+			<td>jijijiji${courseTotal}</td>
 		</tr>
 		</table>
 		
@@ -93,7 +93,7 @@
   		<tr style="border-bottom: 1px solid #ccc;">
 			
 		<td style="text-align:left;">
-			<img src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
+			<img style="height:500px; width:500px;" src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
 			<td style="text-align:left;">${cart.items_name}
 			<br>
 				<c:if test="${cart.cate_parent!=0}">
@@ -108,7 +108,7 @@
 			</td>
 			
 			<!-- <div class="items_total"> -->
-			<td>${quan.items_total}</td>
+			<td>DRDDRDR${itemTotal}</td>
 			
 			</c:forEach>
 		</tr>

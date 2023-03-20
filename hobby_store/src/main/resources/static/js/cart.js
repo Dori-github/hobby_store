@@ -124,13 +124,16 @@ $(function(){
 				$('#i_chk').val(i_chk);
 				});
 		
-		
+		/*let item_cart_sum = 0;
+		*/
 		let course_cart_sum = $('.courseTotal').attr('data-courseTotal');
 	 	let item_cart_sum = $('.itemTotal').attr('data-itemTotal');
-	 	let item_sum = $('.itemSum').attr('data-itemSum');
-		let cart_sum = $('.allTotal').attr('data-allTotal');
+	 	/*let item_sum = $('.itemSum').attr('data-itemSum');*/
+		/*item_cart_sum = item_cart_sum + Number(item_sum);
+		*/let cart_sum = $('.allTotal').attr('data-allTotal');
 	console.log(course_cart_sum);
 	console.log(item_cart_sum);
+	//console.log(item_sum);
 	console.log(course_cart_sum + item_cart_sum);
 	console.log(cart_sum);
 		//전체 선택/해제
@@ -146,20 +149,28 @@ $(function(){
 			});
 			$('.item-price').text(function(){
 				let price = Number($(this).attr('data-price'));
+				console.log("??price?"+price);
 				return '₩'+price.toLocaleString();
 			});
 			$('.itemSum').text(function(){
 				let price = Number($(this).attr('data-itemSum'));
+				console.log("??price?"+price);
 				return '₩'+price.toLocaleString();
 			});
+				
+			console.log("??item-price?"+Number($(this).attr('data-price')));
+			console.log("??itemSum?"+Number($(this).attr('data-itemSum')));
 			$('.courseTotal').attr('data-courseTotal', course_cart_sum);			
 			$('.itemTotal').attr('data-itemTotal', item_cart_sum);			
 			$('.allTotal').attr('data-allTotal', cart_sum);
+			//$('.itemSum').attr('data-itemSum', item_sum);
 			
 			console.log("courseTotal전체선택:" 
 			+ $('.courseTotal').attr('data-courseTotal') + " / " + course_cart_sum);
 			console.log("itemTotal전체선택:" 
 			+ $('.itemTotal').attr('data-itemTotal') + " / " + item_cart_sum);
+			/*console.log("itemSum전체선택:" 
+			+ $('.itemSum').attr('data-itemSum') + " / " + item_sum);*/
 			console.log("allTotal전체선택:" 
 			+ $('.allTotal').attr('data-allTotal') + " / " + cart_sum);
 	
@@ -228,14 +239,14 @@ $(function(){
 						.find('.course-price')
 						.attr('data-coursePrice')));
 	
-			$('.allTotal').attr('data-allTotal',
+		$('.allTotal').attr('data-allTotal',
 			   Number($('.allTotal').attr('data-allTotal')) + 
                Number($(this).closest('tr')
                       .find('.course-price')
                       .attr('data-coursePrice'))
 				);
-		
-			}
+	console.log("sdsdsdsdsd");
+			};
 			
 			if($(this).attr("name") == 'item_numbers'){
 			$(this).parents('tr').find('.item-price')
@@ -252,12 +263,14 @@ $(function(){
 							.find('.itemSum')
 							.attr('data-itemSum')));
 			
+			
+	console.log("ggsdsdsdsd");
 			$('.allTotal').attr('data-allTotal',
 				   Number($('.allTotal').attr('data-allTotal')) + 
 	               Number($(this).closest('tr')
 	                      .find('.itemSum')
 	                      .attr('data-itemSum'))
-					);				
+					);			
 							
 		}
 	
@@ -285,9 +298,10 @@ $(function(){
                Number($(this).closest('tr')
                       .find('.course-price')
                       .attr('data-coursePrice'))
-
-
 				);
+		console.log("클래스 해제: " + Number($('.allTotal').attr('data-allTotal')) -Number($(this).closest('tr')
+                      .find('.course-price')
+                      .attr('data-coursePrice')));
 		console.log("클래스 해제 후 : " + $('.allTotal').attr('data-allTotal'));
 				
 }
@@ -302,6 +316,8 @@ $(function(){
                       .find('.itemSum')
                       .attr('data-itemSum')));
 
+			console.log("aaaaaaa" + Number($('.itemTotal').attr('data-itemTotal')));
+
 			$('.allTotal').attr('data-allTotal',
 			   Number($('.allTotal').attr('data-allTotal')) - 
                Number($(this).closest('tr')
@@ -309,6 +325,13 @@ $(function(){
                       .attr('data-itemSum'))
 				);
 				console.log("상품 해제");
+				
+				console.log("yy클래스 해제: " + Number($(this).closest('tr')
+                      .find('.itemSum')
+                      .attr('data-itemSum')));
+		console.log("yy클래스 해제 후 : " + $('.allTotal').attr('data-allTotal'));
+				
+				
 			/*$(this).closest('tr')
                       .find('.itemSum').css("color","green");*/
 
@@ -320,7 +343,7 @@ $(function(){
 			//구매 가능
 			$('#order_btn').prop('disabled',false);
 			//총구매금액을 선택과 미선택에 따라 다시 산출
-			console.log("총 금액:" + $('.allTotal').attr('data-allTotal'));
+			console.log("dd총 금액:" + $('.allTotal').attr('data-allTotal'));
 			
 			if($(this).is(':checked')){//선택					
 			/*console.log("nnn"+Number($('.courseTotal').attr('data-courseTotal')));
@@ -354,13 +377,18 @@ $(function(){
 			   Number($('.courseTotal').attr('data-courseTotal')) - 
                Number($(this).parents('tr')
                       .find('.course-price')
-                      .attr('data-coursePrice')));*/
-
-			$('.allTotal').attr('data-allTotal',
+                      .attr('data-coursePrice')));
+*/
+			console.log("kkk"+Number($('.courseTotal').attr('data-courseTotal')));
+			console.log("ii"+Number($('.allTotal').attr('data-allTotal')));
+			console.log("kkk"+Number($(this).parents('tr')
+			                      .find('.course-price').attr('data-coursePrice')));
+			
+			/*$('.allTotal').attr('data-allTotal',
 			   Number($('.allTotal').attr('data-allTotal')) + 
                Number($(this).parents('table')
                       .find('.courseTotal')
-                      .attr('data-courseTotal')))
+                      .attr('data-courseTotal')))*/
 			
 			}
 
@@ -371,6 +399,7 @@ $(function(){
                       .find('.itemSum')
                       .attr('data-itemSum')));*/
 			}
+			console.log("jjjjhj:");
 			
 			}
 			//총구매금액 표시
@@ -381,12 +410,14 @@ $(function(){
 		}
 		if($(this).attr("name") == 'item_numbers'){
 			
+			console.log("ssrsrjhj:");
 		$('.itemTotal').text('₩'+
 			Number($('.itemTotal').attr('data-itemTotal'))
 			                      .toLocaleString());
 		}
 
 		$('.allTotal').css("color","red");
+		console.log("hhh" + Number($('.allTotal').attr('data-allTotal')));
 		$('.allTotal').text('총 주문 금액 : ₩'+
 			Number($('.allTotal').attr('data-allTotal'))
 			                      .toLocaleString());

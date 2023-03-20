@@ -13,6 +13,7 @@ public class ItemCartVO {
 	private String items_name;
 	private int items_price;
 	private int items_quantity;
+	private int item_summ;
 	
 	public int getCart_num() {
 		return cart_num;
@@ -87,5 +88,11 @@ public class ItemCartVO {
 				+ items_num + ", items_total=" + items_total + ", cate_parent=" + cate_parent + ", cate_name="
 				+ cate_name + ", items_photo1=" + items_photo1 + ", items_name=" + items_name + ", items_price="
 				+ items_price + ", items_quantity=" + items_quantity + "]";
+	}
+	public int getItem_summ() {
+		return item_summ;
+	}
+	public void setItem_summ(int item_summ) {
+		this.item_summ = item_summ;
 	}
 }

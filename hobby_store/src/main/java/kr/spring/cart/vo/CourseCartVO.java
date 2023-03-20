@@ -14,6 +14,10 @@ public class CourseCartVO {
 	private int course_price;
 //	private int[] c_chkArr;
 	
+	private int course_total;
+	private int item_total;
+	private int all_total;
+	
 	public int getCate_parent() {
 		return cate_parent;
 	}
@@ -86,4 +90,22 @@ public class CourseCartVO {
 	 * public String[] getC_chkArr() { return c_chkArr; } public void
 	 * setC_chkArr(String[] c_chkArr) { this.c_chkArr = c_chkArr; }
 	 */
+	public int getCourse_total() {
+		return course_total;
+	}
+	public void setCourse_total(int course_total) {
+		this.course_total = course_total;
+	}
+	public int getItem_total() {
+		return item_total;
+	}
+	public void setItem_total(int item_total) {
+		this.item_total = item_total;
+	}
+	public int getAll_total() {
+		return all_total;
+	}
+	public void setAll_total(int all_total) {
+		this.all_total = all_total;
+	}
 }

@@ -7,6 +7,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 
 <div style="padding: 7rem 7rem;">
+			주문하기 누를 시,<br>
+			- 선택 안 한 제품 삭제하는 코드 지우기<br>
+			- 구매 폼까지 구현함 -> OrderController 179~ 장바구니에서 안 가져오고<br>
+			현재 구매 폼에 있는 제품 내용 넘기기<br>
+			<br>
+			장바구니 구매 시,<br>
+			- 유효성 검사
 	<!-- 클래스 장바구니 -->
 	<c:if test="${courseCount < 1 && itemCount < 1}">
 	<h4>장바구니가 비어있습니다</h4>
@@ -57,7 +64,7 @@
 				<tr>
 					<td colspan="2"></td>
 					<td><span class="courseTotal"
-						data-courseTotal="${courseTotal}" style="visibility:hidden;"> ₩<fmt:formatNumber
+						data-courseTotal="${courseTotal}" > ₩<fmt:formatNumber
 								value="${courseTotal}" />
 					</span></td>
 				</tr>
@@ -107,6 +114,7 @@
 						<td>
 						<span class="item-price" data-price="${cart.items_price}">
 						₩<fmt:formatNumber value="${cart.items_price}"/></span>
+						</td>
 						<td><input class="item-quan" type="text" style="visibility:hidden;"
 							value="재고:${cart.items_quantity}" />
 						
@@ -119,10 +127,14 @@
 								<input class="cart_num" type="text" style="visibility:hidden;" value="${quan.cart_num}" />
 								
 								</td>
-						<td><span class="itemSum"
-							data-itemSum="${quan.items_total}"> ₩<fmt:formatNumber
-									value="${quan.items_total}"/>
-						</span></td>
+							<td><span class="itemSum" data-itemSum="${quan.items_total}">
+									₩<fmt:formatNumber value="${quan.items_total}" />
+							</span></td>
+							<td colspan="2">
+					<td><span class="itemTotal"
+						data-itemTotal="${itemTotal}" > ₩<fmt:formatNumber
+								value="${itemTotal}" />
+					</span></td>
 				</c:forEach>
 				</tr>
 				</c:forEach>
@@ -136,8 +148,7 @@
 			<input type="hidden" id="c_chk" name="c_chk">
 			<input type="hidden" id="i_chk" name="i_chk">
 			<input type="submit" id="order_btn" value="구매하기">
-			
-		</c:if>
+			</c:if>
 	</form>
 
 </div>
