@@ -60,10 +60,16 @@ public class OrderController {
 		int courseCount = cartService.getCartCount(user.getMem_num());
 		int itemCount = cartService.getItemCount(user.getMem_num());
 		
-
+		List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
 		
-		String[] c_chkNum = request.getParameterValues("c_chk");
-		String[] i_chkNum = request.getParameterValues("i_chk");
+		int courseTotal = 0;
+		int itemSum = 0;
+		int itemTotal = 0;
+		
+		/*
+		 * String[] c_chkNum = request.getParameterValues("c_chk"); 
+		 * String[] i_chkNum = request.getParameterValues("i_chk");
+		 */
 		
 		ArrayList<Integer> c_chkArr = new ArrayList<Integer>();
 		ArrayList<CourseCartVO> courseCart = new ArrayList<CourseCartVO>();
@@ -71,32 +77,30 @@ public class OrderController {
 		ArrayList<Integer> i_chkArr = new ArrayList<Integer>();
 		ArrayList<ItemCartVO> itemCart = new ArrayList<ItemCartVO>();
 		
-		for(String i:c_Arr) {
-			c_chkArr.add(Integer.parseInt(i));
+		int i = 0;
+		for(String num:c_Arr) {
+			int n = Integer.parseInt(num);
+			c_chkArr.add(n);
 			courseCart.addAll(cartService.getCourseCartNum(
-					user.getMem_num(),Integer.parseInt(i)));
-			/*courseCart.addAll(courseService.);
-			 *orderForm에 상품 가격, 개수(상품 개수 어떻게 넘어온건지?), 클래스 총 가격,
-			 *상품 총 가격, 장바구니 총 가격 출력
-			 *그대로 구매에 정보 넘기기 
-			 * */
-			 
-			}
-		
-		for(String i:i_Arr) {
-			i_chkArr.add(Integer.parseInt(i));
+					user.getMem_num(),n));
+
+			courseTotal += courseCart.get(i).getCourse_price();
+			i++;
+		}
+
+		int j = 0;
+		for(String num:i_Arr) {
+			int n = Integer.parseInt(num);
+			i_chkArr.add(n);
 			itemCart.addAll(cartService.getItemCartNum(
-					user.getMem_num(),Integer.parseInt(i)));
+					user.getMem_num(),n));
+
+			itemSum += itemCart.get(j).getItems_price()
+					* itemQuan.get(j).getQuantity();
+			itemTotal += itemSum;
+			j++;
 		}
 		
-
-		
-		
-		logger.debug("c_Arr : " + c_Arr);
-		logger.debug("i_Arr : " + i_Arr);
-		logger.debug("c_chkNum : " + c_chkNum);
-		logger.debug("c_chkNum : " + c_chkNum[0]);
-		logger.debug("i_chkNum : " + i_chkNum);
 		/*
 		 * List<CourseCartVO> c_chkArr = null;
 		 * for(String i:c_Arr) { =
@@ -115,33 +119,29 @@ public class OrderController {
 //
 //			logger.debug("dddddd : " + cartService.getCourseCartNum(user.getMem_num(),j));
 //		}
-		logger.debug("dddddd : " + courseCart);
 		
 //		List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
-		List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
 				
-		logger.debug("itemCart : " + itemCart);
-		logger.debug("courseCart : " + courseCart);
 		
 //		List<CourseCartVO> courseOrder = cartService.getItemCart(체크된 course_num);
-		List<ItemCartVO> itemOrder = cartService.getItemCart(user.getMem_num());
-		
-		Integer courseTotal = cartService.courseTotal(user.getMem_num());
-		if (courseTotal == null)
-			courseTotal = 0;
-		Integer itemTotal = cartService.itemTotal(user.getMem_num());
-		if (itemTotal == null)
-			itemTotal = 0;
-		
+	
+		/*
+		 * Integer courseTotal = cartService.courseTotal(user.getMem_num()); if
+		 * (courseTotal == null) courseTotal = 0; Integer itemTotal =
+		 * cartService.itemTotal(user.getMem_num()); if (itemTotal == null) itemTotal =
+		 * 0;
+		 * 
+		 */
 		Integer allTotal = courseTotal + itemTotal;
-		
+		 
 		model.addAttribute("courseCount", courseCount);
 		model.addAttribute("courseCart", courseCart);
 		model.addAttribute("itemCount", itemCount);
 		model.addAttribute("itemCart", itemCart);
 		model.addAttribute("itemQuan", itemQuan);
 		model.addAttribute("courseTotal", courseTotal);
-		model.addAttribute("itemTotal", itemTotal);
+		model.addAttribute("itemSum", itemSum); 
+		model.addAttribute("itemTotal", itemTotal); 
 		model.addAttribute("allTotal", allTotal);
 		model.addAttribute("c_chkArr", c_chkArr);
 		
@@ -153,6 +153,12 @@ public class OrderController {
 	public String submit(OrderVO orderVO, PointsVO pointsVO, HttpSession session, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
 
+		/*
+		 * orderForm처럼 @RequestParam 사용해서 데이터 가져오고 
+		 * 주문 내역에 저장하기 -> for문은 그대로?
+		 */
+		
+		
 		/*
 		 * 장바구니 상품 개별 선택 추가 후 수정하기 if(orderVO.getCart_numbers()==null ||
 		 * orderVO.getCart_numbers().length==0) { model.addAttribute("message",

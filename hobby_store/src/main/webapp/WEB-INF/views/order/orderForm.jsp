@@ -61,13 +61,9 @@
 			<br>
 				${cart.course_onoff}
 			</td>
-			<td></td>
+			<td>${cart.course_price}</td>
 		</tr>
 		</c:forEach>
-		<tr>
-			<td colspan="2"></td>
-			<td>jijijiji${courseTotal}</td>
-		</tr>
 		</table>
 		
 	</c:if>
@@ -88,7 +84,7 @@
 			<th style="border-bottom: 1px solid #ccc;">Quantity</th>
 			<th style="border-bottom: 1px solid #ccc;">TotalPrice</th>
 		</tr>
-		<c:forEach var="cart" items="${itemCart}" varStatus="statusQuan">
+		<c:forEach var="cart" items="${itemCart}" varStatus="status">
 
   		<tr style="border-bottom: 1px solid #ccc;">
 			
@@ -108,7 +104,7 @@
 			</td>
 			
 			<!-- <div class="items_total"> -->
-			<td>DRDDRDR${itemTotal}</td>
+			<td>${itemTotal}</td>
 			
 			</c:forEach>
 		</tr>
@@ -116,18 +112,12 @@
 		
 			<tr>
 			<td colspan="4"></td>
-			<!-- <div class="itemTotal"> -->
 			<td>${allTotal}</td>
 		</tr>
 		
 		</table>
 		</c:if>
-		<h5><%=request.getParameter("course_price") %></h5>
-		<h5>----</h5>
-		<h5>${course_price} zzo</h5>
-		<h5>----</h5>
-		<%String password = request.getParameter("course_price");
-		%>
+		
 		<c:if test="${itemCount > 0}">
 		<ul>			
 			<li>
@@ -168,7 +158,9 @@
 			</li> -->
 		</ul>
 		</c:if>
-		
+		<input type="hidden" id="c_chk" name="c_chk">
+		<input type="hidden" id="i_chk" name="i_chk">
+			
 		<div class="align-center">
 			<input type="submit" value="결제하기" id="general_btn">
 			<input type="button" value="홈으로"

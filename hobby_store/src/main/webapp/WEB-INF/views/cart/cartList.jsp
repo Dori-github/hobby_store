@@ -7,8 +7,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 
 <div style="padding: 7rem 7rem;">
-			주문하기 누를 시,<br>
-			- 선택 안 한 제품 삭제하는 코드 지우기<br>
 			- 구매 폼까지 구현함 -> OrderController 179~ 장바구니에서 안 가져오고<br>
 			현재 구매 폼에 있는 제품 내용 넘기기<br>
 			<br>
