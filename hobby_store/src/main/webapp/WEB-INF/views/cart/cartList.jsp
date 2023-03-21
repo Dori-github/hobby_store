@@ -7,11 +7,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 
 <div style="padding: 7rem 7rem;">
-			- 구매 폼까지 구현함 -> OrderController 179~ 장바구니에서 안 가져오고<br>
-			현재 구매 폼에 있는 제품 내용 넘기기<br>
-			<br>
-			장바구니 구매 시,<br>
-			- 유효성 검사
 	<!-- 클래스 장바구니 -->
 	<c:if test="${courseCount < 1 && itemCount < 1}">
 	<h4>장바구니가 비어있습니다</h4>

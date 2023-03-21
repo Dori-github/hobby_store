@@ -9,12 +9,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,13 +50,17 @@ public class OrderController {
 	private ItemsService itemService;
 	@Autowired
 	private OrderService orderService;
-
+	@ModelAttribute // 컨트롤러 접근 후 VO 초기화
+	public OrderVO initCommend() {
+		return new OrderVO();
+	}
 	// =====주문하기=====//
 	// 주문등록 폼 호출
-	@PostMapping("/order/orderForm.do")
-	public String orderForm(OrderVO orderVO, HttpSession session, Model model, HttpServletRequest request,
-			 @RequestParam(value = "c_chk") List<String> c_Arr,
-			 @RequestParam(value = "i_chk") List<String> i_Arr) {
+	@RequestMapping("/order/orderForm.do")
+	public String orderForm(OrderVO orderVO, HttpSession session, Model model,
+			HttpServletResponse response, HttpServletRequest request,
+			@RequestParam(value = "c_chk") List<String> c_Arr,
+			@RequestParam(value = "i_chk") List<String> i_Arr) {
 		
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		
@@ -65,11 +73,6 @@ public class OrderController {
 		int courseTotal = 0;
 		int itemSum = 0;
 		int itemTotal = 0;
-		
-		/*
-		 * String[] c_chkNum = request.getParameterValues("c_chk"); 
-		 * String[] i_chkNum = request.getParameterValues("i_chk");
-		 */
 		
 		ArrayList<Integer> c_chkArr = new ArrayList<Integer>();
 		ArrayList<CourseCartVO> courseCart = new ArrayList<CourseCartVO>();
@@ -91,7 +94,7 @@ public class OrderController {
 		int j = 0;
 		for(String num:i_Arr) {
 			int n = Integer.parseInt(num);
-			i_chkArr.add(n);
+			i_chkArr.add(n);//잇어ㅑ하나?
 			itemCart.addAll(cartService.getItemCartNum(
 					user.getMem_num(),n));
 
@@ -101,37 +104,6 @@ public class OrderController {
 			j++;
 		}
 		
-		/*
-		 * List<CourseCartVO> c_chkArr = null;
-		 * for(String i:c_Arr) { =
-		 * Integer.parseInt(i); }
-		 */
-//		for(String i:c_Arr) {
-//		int[] j;
-//		j[j.indexOf(i)] = Integer.parseInt(i);
-//		}
-		
-		// 장바구니 상품 정보 호출
-//		for(String i:c_Arr) {
-//			int j = Integer.parseInt(i);
-//			logger.debug("dmdmdmd(" + i + "): " + j);
-//			courseCart = cartService.getCourseCartNum(user.getMem_num(), j);
-//
-//			logger.debug("dddddd : " + cartService.getCourseCartNum(user.getMem_num(),j));
-//		}
-		
-//		List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
-				
-		
-//		List<CourseCartVO> courseOrder = cartService.getItemCart(체크된 course_num);
-	
-		/*
-		 * Integer courseTotal = cartService.courseTotal(user.getMem_num()); if
-		 * (courseTotal == null) courseTotal = 0; Integer itemTotal =
-		 * cartService.itemTotal(user.getMem_num()); if (itemTotal == null) itemTotal =
-		 * 0;
-		 * 
-		 */
 		Integer allTotal = courseTotal + itemTotal;
 		 
 		model.addAttribute("courseCount", courseCount);
@@ -143,7 +115,11 @@ public class OrderController {
 		model.addAttribute("itemSum", itemSum); 
 		model.addAttribute("itemTotal", itemTotal); 
 		model.addAttribute("allTotal", allTotal);
+		model.addAttribute("c_Arr", c_Arr);
+		model.addAttribute("i_Arr", i_Arr);
 		model.addAttribute("c_chkArr", c_chkArr);
+		model.addAttribute("i_chkArr", i_chkArr);
+		
 		
 		return "orderForm";
 	}
@@ -151,13 +127,36 @@ public class OrderController {
 	// 폼에서 전송된 데이터 처리
 	@PostMapping("/order/order.do")
 	public String submit(OrderVO orderVO, PointsVO pointsVO, HttpSession session, Model model,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletResponse response, HttpServletRequest request,
+			@RequestParam(value = "c_chkNum[]") List<String> c_Arr,
+			@RequestParam(value = "i_chkNum[]") List<String> i_Arr) {
 
-		/*
-		 * orderForm처럼 @RequestParam 사용해서 데이터 가져오고 
-		 * 주문 내역에 저장하기 -> for문은 그대로?
-		 */
+		logger.debug("cccccc : " + c_Arr);
+		logger.debug("iiiiii : " + i_Arr);
 		
+		/*
+		 @RequestMapping("/alarmCustomerList.do") 
+		 public String alarmCustomerList(){
+		 //프로세스 생략 
+		 commonMethod(...); 
+		 
+		 return "alarmCustomerList"; 
+		 }
+		 
+		 
+		 @RequestMapping("/customerList.do") 
+		 public String customerList(){ 
+		 //프로세스 생략
+		 commonMethod(...); 
+		 
+		 return "customerList"; 
+		 } 
+		 
+		 private ... commonMethod(...) {
+		 //todo 
+		 }
+		 */
+		 
 		
 		/*
 		 * 장바구니 상품 개별 선택 추가 후 수정하기 if(orderVO.getCart_numbers()==null ||
@@ -166,7 +165,62 @@ public class OrderController {
 		 * request.getContextPath()+"/cart/list.do"); return "common/resultView"; }
 		 */
 
-		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		
+		
+		
+		
+		 MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		 // 글의 총 개수
+		 int courseCount = cartService.getCartCount(user.getMem_num()); 
+		 int itemCount = cartService.getItemCount(user.getMem_num());
+		 
+		 List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
+		 
+		 int courseTotal = 0; int itemSum = 0; int itemTotal = 0;
+		 
+		 ArrayList<Integer> c_chkArr = new ArrayList<Integer>();
+		 ArrayList<CourseCartVO> courseCart = new ArrayList<CourseCartVO>();
+		 
+		 ArrayList<Integer> i_chkArr = new ArrayList<Integer>(); ArrayList<ItemCartVO>
+		 itemCart = new ArrayList<ItemCartVO>();
+		 
+		 int i = 0; 
+		 for(String num:c_Arr) { 
+			 int n = Integer.parseInt(num);
+			 c_chkArr.add(n); 
+			 courseCart.addAll(cartService.
+					 getCourseCartNum(user.getMem_num(),n));
+		 
+		 courseTotal += courseCart.get(i).getCourse_price();
+		 i++; 
+		 }
+		 
+		 int j = 0; 
+		 for(String num:i_Arr) { 
+			 int n = Integer.parseInt(num);
+		 i_chkArr.add(n); 
+		 itemCart.addAll(cartService.
+				 getItemCartNum(user.getMem_num(),n));
+		 
+		 itemSum += itemCart.get(j).getItems_price() 
+				 * itemQuan.get(j).getQuantity();
+		 itemTotal += itemSum; 
+		 j++; 
+		 }
+		
+		 Integer allTotal = courseTotal + itemTotal;
+		  	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		/*
 		 * Map<String,Object> map = new HashMap<String,Object>(); map.put("mem_num",
 		 * user.getMem_num());
@@ -175,13 +229,13 @@ public class OrderController {
 		 * map.put("cart_numbers", orderVO.getCart_numbers());
 		 */
 
-		Integer courseTotal = cartService.courseTotal(user.getMem_num());
-		if (courseTotal == null)
-			courseTotal = 0;
-		Integer itemTotal = cartService.itemTotal(user.getMem_num());
-		if (itemTotal == null)
-			itemTotal = 0;
-		Integer allTotal = courseTotal + itemTotal;
+		
+		/*
+		 * Integer courseTotal = cartService.courseTotal(user.getMem_num()); if
+		 * (courseTotal == null) courseTotal = 0; Integer itemTotal =
+		 * cartService.itemTotal(user.getMem_num()); if (itemTotal == null) itemTotal =
+		 * 0; Integer allTotal = courseTotal + itemTotal;
+		 */
 
 		/*
 		 * if (allTotal <= 0) { model.addAttribute("message",
@@ -190,31 +244,29 @@ public class OrderController {
 		 * }
 		 */
 
-		List<CourseCartVO> courseCart = cartService.getCourseCart(user.getMem_num());
-		List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
-		List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
-
+		/*
+		 * List<CourseCartVO> courseCart = cartService.getCourseCart(user.getMem_num());
+		 * 
+		 * List<ItemCartVO> itemCart = cartService.getItemCart(user.getMem_num());
+		 * List<ItemCartVO> itemQuan = cartService.getItemQuan(user.getMem_num());
+		 */
 		// 주문 상품의 대표 상품명 생성
+		
 		String order_name = "";
 		int order_count = courseCart.size() + itemCart.size();
-
 		if (courseCart.size() > 0) {
 			if (order_count == 1) {
 				order_name = courseCart.get(0).getCourse_name();
 			} else {
 				order_name = courseCart.get(0).getCourse_name() + "외 " + (order_count - 1) + "건";
 			}
-		} else if (itemCart.size() == 1) {
+		}else if (itemCart.size() == 1) {
 			order_name = itemCart.get(0).getItems_name();
-		}
-		if (itemCart.size() > 1) {
+		}else if (itemCart.size() > 1) {
 			order_name = itemCart.get(0).getItems_name() + "외 " + (itemCart.size() - 1) + "건";
 		}
-		/*
-		 * 오프/공간대여는 바로 주문. List X else if(courseCart.get(0).getCourse_onoff() == "off")
-		 * { order_name = courseCart.get(0).getCourse_name(); }
-		 */
 
+		
 		// 개별 주문 상품 저장
 		List<OrderDetailVO> orderDetailList = new ArrayList<OrderDetailVO>();
 
@@ -236,34 +288,35 @@ public class OrderController {
 		 * orderDetailList.add(orderDetail);
 		 */
 
-		for (int i = 0, size = 1; i <= size; i++) {
+		
+		for (int k = 0, size = 1; k <= size; k++) {
 			
-			for (int j = 0, sizej = 1; j < sizej; j++) {
+			for (int l = 0, sizel = 1; l < sizel; l++) {
 				if (courseCart.size() > 0) {
-					sizej = courseCart.size();
+					sizel = courseCart.size();
 				}
 				;
 
 				
-				for (int k = 0, sizek = 1; k < sizek; k++) {
+				for (int m = 0, sizem = 1; m < sizem; m++) {
 					if (itemCart.size() > 0) {
-						sizek = itemCart.size();
+						sizem = itemCart.size();
 					}
 					;
 
 					OrderDetailVO orderDetail = new OrderDetailVO();
 					
-					if (i == 0) {
+					if (k == 0) {
 					}
 					;
 
-					if (i == 0 && k == 0) {
+					if (k == 0 && m == 0) {
 					
 						if (courseCart.size() == 0) {
 							break;
 						}
 						
-						CourseCartVO ccart = courseCart.get(j);
+						CourseCartVO ccart = courseCart.get(l);
 						CourseVO course = courseService.selectCourse(ccart.getCourse_num());
 
 						orderDetail.setDetail_name(ccart.getCourse_name());
@@ -271,17 +324,17 @@ public class OrderController {
 
 						orderDetail.setCourse_num(ccart.getCourse_num());
 						orderDetailList.add(orderDetail);
-					} else if (i == 0 && k > 0) {
+					} else if (k == 0 && m > 0) {
 						break;
 					}
 					
-					if (i == 1 && j == 0) {
+					if (k == 1 && l == 0) {
 						if (itemCart.size() == 0) {
 							break;
 						}
 						
-						ItemCartVO icart = itemCart.get(k);
-						ItemCartVO iquan = itemQuan.get(k);
+						ItemCartVO icart = itemCart.get(m);
+						ItemCartVO iquan = itemQuan.get(m);
 						ItemsVO item = itemService.selectItems(icart.getItems_num());
 
 						orderDetail.setDetail_name(icart.getItems_name());
@@ -293,13 +346,13 @@ public class OrderController {
 
 						logger.debug("<<iiorderDetail>> : " + orderDetail);
 						logger.debug("<<iiorderDetail>> : " + orderDetailList);
-						logger.debug("<<!!selectItems j>> : " + j);
+						logger.debug("<<!!selectItems l>> : " + l);
 						logger.debug("<<!!selectItems size>> : " + size);
 						logger.debug("<<!!selectItems후>> : " + order_count);
 						
 
 						orderDetailList.add(orderDetail);
-					} else if (i == 1 && j > 0) {
+					} else if (k == 1 && l > 0) {
 						break;
 					}
 					
@@ -307,6 +360,8 @@ public class OrderController {
 			}
 
 		}
+		
+		
 		orderVO.setOrder_name(order_name);// 대표 상품명
 		orderVO.setOrder_price(allTotal);// 총주문금액
 		orderVO.setMem_num(user.getMem_num());// 주문자
@@ -321,6 +376,7 @@ public class OrderController {
 		model.addAttribute("accessMsg", "주문이 완료되었습니다.");
 		return "common/notice";
 	}
+		
 
 	// =====바로주문하기=====//
 	// 주문등록 폼 호출

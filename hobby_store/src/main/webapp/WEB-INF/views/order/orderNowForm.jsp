@@ -161,7 +161,7 @@
 		</c:if>
 		
 		<div class="align-center">
-			<input type="submit" value="결제하기" id="general_btn">
+			<input type="submit" value="결제하기" id="order_btn">
 			<input type="button" value="홈으로"
 			       onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
 		</div>

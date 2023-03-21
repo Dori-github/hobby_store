@@ -46,12 +46,11 @@ public class OrderServiceImpl implements OrderService{
 			logger.debug("<<업뎃후>> : " + vo); 
 			logger.debug("<<업뎃후>> : " + vo.getItems_num());
 			//장바구니에서 주문 상품 삭제
-			/*
-			 * orderMapper.deleteCartCourse( vo.getCourse_num(), order.getMem_num());
-			 * orderMapper.deleteCartItem( vo.getItems_num(), order.getMem_num());
-			 * logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num());
-			 * logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num());
-			 */
+			orderMapper.deleteCartCourse( vo.getCourse_num(), order.getMem_num());
+			orderMapper.deleteCartItem( vo.getItems_num(), order.getMem_num());
+			logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num());
+			logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num());
+			
 			//포인트 차감
 			logger.debug("<<포인트 차감>> : " + points.getUsed_points());
 			pointsMapper.usePoints(points);
@@ -80,12 +79,11 @@ public class OrderServiceImpl implements OrderService{
 					logger.debug("<<now업뎃후>> : " + vo); 
 					logger.debug("<<now업뎃후>> : " + vo.getItems_num());
 					//장바구니에서 주문 상품 삭제
-					/*
-					 * orderMapper.deleteCartCourse( vo.getCourse_num(), order.getMem_num());
-					 * orderMapper.deleteCartItem( vo.getItems_num(), order.getMem_num());
-					 * logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num());
-					 * logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num());
-					 */
+					orderMapper.deleteCartCourse( vo.getCourse_num(), order.getMem_num());
+					orderMapper.deleteCartItem( vo.getItems_num(), order.getMem_num());
+					logger.debug("<<상품 삭제>> : " + vo.getCourse_num(), order.getMem_num());
+					logger.debug("<<상품 삭제>> : " + vo.getItems_num(), order.getMem_num());
+					
 					//포인트 차감
 					logger.debug("<<포인트 차감>> : " + points.getUsed_points());
 					pointsMapper.usePoints(points);

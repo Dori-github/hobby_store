@@ -1,5 +1,8 @@
 package kr.spring.order.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component("orderList")
 public class OrderDetailVO {
 	private int detail_num;
 	private String detail_name;

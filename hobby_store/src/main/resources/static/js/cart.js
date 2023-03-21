@@ -1,5 +1,4 @@
 $(function(){
-	$(document).ready(function(){
 
 		/* 수량 감소 */
 		$(".quan_dec").click(
@@ -70,38 +69,8 @@ $(function(){
 			$(this).parent().find("#quan").val(quantity);
 			location.reload();
 		});
-		
-		//장바구니 클래스-상품 선택/해제
-		/*
-		$.ajax({
-			url : "/updateCart",
-			type : "get",
-			data : {
-				quantity : "quantity"
-			},
-			dataType:"text" //json으로도 해봄
-		,
-		error: function(error){
-			console.log("noooo");
-		},
-		success: function(response, status, request){
-					alert("success")
-					alert("response : "+response);
-					alert("status : "+status);
-					alert("request : "+request);
-					}
-	});
-		
-	function out(resp){
-		var result = "";
-		result +='<h2>ssssooooddddd</h2>'
-		$.each(JSON.parse(resp),function(index,item){
-			result +='<h4>'+item["cartVO"]+'</h4>'
-		})
-		$('#ss').append(result);
-	}*/
-		
-		
+
+		//결제하기 버튼 클릭 시
 		$("#order_btn").click(
 			function() {
 				var c_chk = new Array();
@@ -441,6 +410,5 @@ $('.allTotal').text(
 	}
 });
 		
-	});
 });
 
