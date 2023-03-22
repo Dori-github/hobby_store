@@ -73,11 +73,16 @@ ul{
 
 /*헤더
 =============================*/
+#header_icon img{
+	margin:10px 0 -10px 13px;
+	width:80px;
+	
+}
 #main #main_header{
 	position:fixed;
 	top:0;left:0;
 	width:100%;
-	height:115px;
+	height:170px;
 	box-shadow: 0 1px 5px 0 lightgrey;
 	background-color:#FFF;
 	z-index:999;
@@ -93,7 +98,6 @@ ul{
 #navbar_top{
 	display: flex;
 	align-items: center;
-	padding-top:20px;
 	height:60px;
 }
 #navbar_brand{
@@ -145,7 +149,7 @@ ul{
 }
 #main_header #menu_bar > ul > li{
 	padding:0 10px;
-	line-height: 60px;
+	line-height: 55px;
 	background-image: linear-gradient(#FF4E02, #FF4E02);
 	background-size: 0% 0.2em;
 	background-position-y: 100%;
@@ -175,7 +179,7 @@ ul{
 #main_header .dropdown{
 	position:absolute;
 	left:-25px;
-	top:60px;
+	top:55px;
 	width:100px;
 	background-color: #FFF;
 	border:1px solid lightgray;
@@ -283,7 +287,7 @@ ul{
 =============================*/
 #main_body{
 	width:80%;
-	margin:150px auto;
+	margin:170px auto;
 	min-height:500px;
 }
 
@@ -295,11 +299,14 @@ ul{
 	#navbar_btn{
 		display:none;
 	}
+	#header_icon{
+		margin-left:43px;
+	}
 	#main #main_header, #main_header .size{
-		height:80px;
+		height:130px;
 	}
 	#main #main_body{
-		margin:110px auto;
+		margin:130px auto;
 	}
 	#main_header #menu_bar{
 		height:100%;
@@ -309,7 +316,7 @@ ul{
 		margin-left:30px;
 	}
 	#main_header #menu_bar .dropdown{
-		left:80px;
+		left:100px;
 		top:8px;
 		border-radius:0 10px 10px 10px; 
 	}

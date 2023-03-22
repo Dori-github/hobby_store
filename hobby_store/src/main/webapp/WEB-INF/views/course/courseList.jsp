@@ -50,16 +50,13 @@
 	<!-- 오른쪽 컨텐츠 시작 -->
 	<div id="content">
 		<!-- 검색 시작 -->
-		<div id="onoff">
-			<label for="off" class="off <c:if test="${param.onoff==1}">click1</c:if>"><b>오프라인</b></label>
-			<input type="radio" id="off" name="onoff" value="1" <c:if test="${param.onoff==1}">checked="checked"</c:if>
-					onclick="location.href='courseList.do?onoff=1&oneweek=1&cate=전체'">
-			<label for="on" class="on  <c:if test="${param.onoff==2}">click1</c:if>"><b>온라인</b></label>
-			<input type="radio" id="on" name="onoff" value="2" <c:if test="${param.onoff==2}">checked="checked"</c:if>
-					onclick="location.href='courseList.do?onoff=2&cate=전체'">
-		</div>
 		<div id="course_search">
-			<form action="/course/courseList.do?onoff=${param.onoff}<c:if test="${param.onoff==1}">&oneweek=${param.oneweek}</c:if>&cate=${param.cate}" method="post" class="navbar-expand search-form d-flex" id="search_form">
+			<form action="/course/courseList.do?cate=${param.cate}
+						<c:if test="${!empty param.onoff}">&onoff=${param.onoff}</c:if>
+						<c:if test="${!empty param.oneweek}">&oneweek=${param.oneweek}</c:if>
+						<c:if test="${!empty param.location}">&location=${param.location}</c:if>
+						<c:if test="${!empty param.order}">&order=${param.order}</c:if>
+						" method="post" class="navbar-expand search-form d-flex" id="search_form">
 				<select class="form-select" name="keyfield">
 					<option value="1" <c:if test="${param.keyfield==1}">selected</c:if>>전체</option>
 					<option value="2" <c:if test="${param.keyfield==2}">selected</c:if>>제목</option>
@@ -71,15 +68,20 @@
 			</form>
 		</div>
 		<div id="select">
-			<!-- 원데이,정기와 지역은 오프라인 선택시에만 보임 -->
-			<c:if test="${param.onoff==1}">
+			<!-- 원데이/정기와 지역은 온라인 선택시 사라짐 -->
 			<span id="total">총 ${count}개</span>
-			<select class="form-select select" id="oneweek" name="oneweek">
+			<select class="form-select select" id="onoff" name="onoff">
+				<option value="" hidden="hidden">온라인/오프라인</option>
+				<option value="2" <c:if test="${param.onoff == 2}">selected</c:if>>온라인</option>
+				<option value="1" <c:if test="${param.onoff == 1||!empty param.oneweek||!empty param.location}">selected</c:if>>오프라인</option>
+			</select>
+			<select class="form-select select" id="oneweek" name="oneweek" <c:if test="${param.onoff==2}">hidden="hidden"</c:if>>
+				<option value="" hidden="hidden">원데이/정기</option>
 				<option value="1" <c:if test="${param.oneweek == 1}">selected</c:if>>원데이</option>
 				<option value="2" <c:if test="${param.oneweek == 2}">selected</c:if>>정기</option>
 			</select>
 			
-			<select class="form-select select" id="location" name="location">
+			<select class="form-select select" id="location" name="location" <c:if test="${param.onoff==2}">hidden="hidden"</c:if>>
 				<option value="전체" <c:if test="${param.location == '전체'}">selected</c:if>>지역 전체</option>
 				<option value="서울" <c:if test="${param.location == '서울'}">selected</c:if>>서울</option>
 				<option value="경기" <c:if test="${param.location == '경기'}">selected</c:if>>경기</option>
@@ -99,7 +101,6 @@
 				<option value="광주" <c:if test="${param.location == '광주'}">selected</c:if>>광주</option>
 				<option value="제주" <c:if test="${param.location == '제주'}">selected</c:if>>제주</option>
 			</select>
-			</c:if>
 			
 			<select class="form-select select" id="order" name="order">
 				<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
@@ -112,14 +113,14 @@
 		
 		<!-- 클래스 목록 시작 -->
 		<c:if test="${count==0}">
-		<table class="table table-group-divider align-center">
+		<table class="table align-center">
 			<tr>
 				<td>표시할 게시물이 없습니다</td>
 			</tr>
 		</table>
 		</c:if>
 		<c:if test="${count>0}">
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+		<div class="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-4">
 			<c:forEach var="course" items="${list}">
 			<div class="col">
 				<div class="card h-100" style="position:relative;">

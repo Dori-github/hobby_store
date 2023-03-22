@@ -9,9 +9,9 @@ $(function(){
 		let item = $(this);//대분류
 		
 		if($('input[name=onoff]:checked').val()==1){//오프라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+'&cate='+item.text();
+			location.href='courseList.do?cate='+item.text();
 		}else{//온라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&cate='+item.text();
+			location.href='courseList.do?cate='+item.text();
 		}
 	});
 	cate.each(function(){
@@ -25,9 +25,9 @@ $(function(){
 		let item = $(this);//대분류
 		
 		if($('input[name=onoff]:checked').val()==1){//오프라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+'&cate='+item.text();
+			location.href='courseList.do?cate='+item.text();
 		}else{//온라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&cate='+item.text();
+			location.href='courseList.do?cate='+item.text();
 		}
 	});
 	d_cate.each(function(){
@@ -37,27 +37,34 @@ $(function(){
 	});
 		
 	//==============클래스 목록==================//
+	//온라인,오프라인 선택
+	$('#select #onoff').on('change',function(){
+		location.href='courseList.do?onoff='+$(this).val()+'&cate='+$('#sidebar').data('param')+
+									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val()+'&order='+$('#order').val();
+	});
+	
 	//원데이,정기 선택
 	$('#select #oneweek').on('change',function(){
-		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$(this).val()+'&cate='+$('#sidebar').data('param');
+		location.href='courseList.do?cate='+$('#sidebar').data('param')+
+									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val()+
+									'&location='+$('#location').val()+'&oneweek='+$(this).val()+'&order='+$('#order').val();
 	});
 	
 	//지역 선택
 	$('#select #location').on('change',function(){
-		location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
-									'&cate='+$('#sidebar').data('param')+'&location='+$(this).val()+'&order='+$('#order').val()+
-									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
-
+		location.href='courseList.do?cate='+$('#sidebar').data('param')+
+									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val()+
+									'&location='+$(this).val()+'&oneweek='+$('#oneweek').val()+'&order='+$('#order').val();
 	});
 	
 	//최신순 선택
 	$('#select #order').on('change',function(){
 		if($('input[name=onoff]:checked').val()==1){//오프라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&oneweek='+$('#oneweek').val()+
+			location.href='courseList.do?onoff='+$('#onoff').val()+'&oneweek='+$('#oneweek').val()+
 									'&cate='+$('#sidebar').data('param')+'&location='+$('#location').val()+'&order='+$(this).val()+
 									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 		}else{//온라인
-			location.href='courseList.do?onoff='+$('input[name=onoff]:checked').val()+'&cate='+$('#sidebar').data('param')+'&order='+$(this).val()+
+			location.href='courseList.do?onoff='+$('#onoff').val()+'&cate='+$('#sidebar').data('param')+'&order='+$(this).val()+
 			'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val();
 		}
 

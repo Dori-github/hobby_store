@@ -10,7 +10,7 @@
 }
 #sidebar{
 	width:20%;
-	margin-top:70px;
+	margin-top:100px;
 }
 #content{
 	width:80%;
@@ -59,53 +59,18 @@
 /*강의-목록
 =============================*/
 #content{
-	padding-top:10px;
+	margin-top:100px;
+	min-width:780px;
 }
 #select{
  	margin-bottom:10px;
 }
- 
-#onoff{
-	display:flex;
-	align-items:center;
- 	width:200px;
- 	height:40px;
- 	margin:0 auto;
- 	margin-bottom:20px;
- 	border:2px solid #FF4E02;
- 	border-radius: 5px;
- 	box-shadow:3px 3px 3px 0px lightgray;
- 	text-align: center;
-}
-#onoff label{
-	width:50%;
- 	line-height:40px;
-	text-align: center;
-	color:lightgray;
- 	cursor:pointer;
-}
-#onoff input[name=onoff]{
- 	display:none;
-}
-#onoff .off{
-	border-radius:5px 0 0 5px; 
-}
-#onoff .on{
-	border-radius:0 5px 5px 0;
-}
-#onoff .click1{
- 	background-color:#FF4E02;
- 	color:#FFF;
-}
-#onoff .click2{
- 	background-color:#FF4E02;
- 	color:#FFF;
-} 
+
 #course_search{
 	width:50%;
 	min-width:400px;
 	margin:0 auto;
-	margin-bottom:50px;
+	margin-bottom:100px;
 }
 #course_search #search_bar{
 	background-color: #FFF;
@@ -142,7 +107,7 @@ input::-webkit-search-results-decoration{
 	margin-right:10px;
 }
 #select .select{
-	width:130px;
+	width:170px;
 	margin-left:10px;
 }
 #select{
@@ -220,12 +185,11 @@ input::-webkit-search-results-decoration{
 
 
 
-
-
-
-
 /*강의-등록폼,수정폼
 =============================*/
+#course_form{
+	padding-top:100px;
+}
 #course_form .title{
 	width:80%;
 	margin:0 auto;

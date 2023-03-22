@@ -31,10 +31,10 @@ public interface CourseMapper {
 	@Select("SELECT course_seq.nextval FROM dual")
 	public int selectCourse_num();
 	public int selectCourseCount(Map<String,Object> map);
-	@Insert("INSERT INTO course (course_num,mem_num,course_name,course_onoff,course_oneweek,cate_nums,course_zipcode,course_address1,course_address2,"
+	@Insert("INSERT INTO course (course_num,mem_num,course_name,status,course_onoff,course_oneweek,cate_nums,course_zipcode,course_address1,course_address2,"
 			+ "course_photo1,course_photo_name1,course_photo2,course_photo_name2,course_photo3,course_photo_name3,"
 			+ "course_startdate,course_month,course_count,course_limit,course_price,course_content) VALUES "
-			+ "(#{course_num},#{mem_num},#{course_name},#{course_onoff},#{course_oneweek, jdbcType=VARCHAR},#{cate_nums},#{course_zipcode},"
+			+ "(#{course_num},#{mem_num},#{course_name},#{status},#{course_onoff},#{course_oneweek, jdbcType=VARCHAR},#{cate_nums},#{course_zipcode},"
 			+ "#{course_address1},#{course_address2},#{course_photo1},#{course_photo_name1},#{course_photo2},#{course_photo_name2},#{course_photo3},#{course_photo_name3},"
 			+ "#{course_startdate},#{course_month},#{course_count},#{course_limit},#{course_price},#{course_content})")
 	public void insertCourse(CourseVO course);

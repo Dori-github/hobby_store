@@ -6,23 +6,23 @@
 	<div class="course-img clear-flex">
 		<div class="img1">
 			<img src="${pageContext.request.contextPath}/image_bundle/공예.jpeg">
-			<a href="/course/courseList.do?onoff=1&oneweek=1&cate=공예"><span style="left:150px;">공예 <i class="fa-solid fa-chevron-right"></i></span></a>
+			<a href="/course/courseList.do?cate=공예"><span style="left:150px;">공예 <i class="fa-solid fa-chevron-right"></i></span></a>
 		</div>
 		<div class="img2">
 			<img src="${pageContext.request.contextPath}/image_bundle/쿠킹.jpeg">
-			<a href="/course/courseList.do?onoff=1&oneweek=1&cate=쿠킹"><span style="left:550px;">쿠킹 <i class="fa-solid fa-chevron-right"></i></span></a>
+			<a href="/course/courseList.do?cate=쿠킹"><span style="left:550px;">쿠킹 <i class="fa-solid fa-chevron-right"></i></span></a>
 		</div>
 		<div class="img3">
 			<img src="${pageContext.request.contextPath}/image_bundle/드로잉.jpeg">
-			<a href="/course/courseList.do?onoff=1&oneweek=1&cate=드로잉"><span style="left:950px;">드로잉 <i class="fa-solid fa-chevron-right"></i></span></a>
+			<a href="/course/courseList.do?cate=드로잉"><span style="left:950px;">드로잉 <i class="fa-solid fa-chevron-right"></i></span></a>
 		</div>
 		<div class="img4">
 			<img src="${pageContext.request.contextPath}/image_bundle/운동.jpeg">
-			<a href="/course/courseList.do?onoff=1&oneweek=1&cate=운동"><span style="left:1350px;">운동 <i class="fa-solid fa-chevron-right"></i></span></a>
+			<a href="/course/courseList.do?cate=운동"><span style="left:1350px;">운동 <i class="fa-solid fa-chevron-right"></i></span></a>
 		</div>
 		<div class="img5">
 			<img src="${pageContext.request.contextPath}/image_bundle/뷰티.jpeg">
-			<a href="/course/courseList.do?onoff=1&oneweek=1&cate=뷰티"><span style="left:1750px;">뷰티 <i class="fa-solid fa-chevron-right"></i></span></a>
+			<a href="/course/courseList.do?cate=뷰티"><span style="left:1750px;">뷰티 <i class="fa-solid fa-chevron-right"></i></span></a>
 		</div>
 	</div>
 	

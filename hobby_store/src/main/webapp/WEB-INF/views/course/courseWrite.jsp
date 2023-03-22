@@ -68,6 +68,17 @@
 	<div class="title">클래스 등록</div>
 	<table class="reg-form">
 		<tr>
+			<td>표시 여부</td>
+			<td class="radio">
+				<label>
+					<form:radiobutton path="status" value="1" />표시 <!-- 기본값 checked="checked" -->
+				</label>
+				<label>
+					<form:radiobutton path="status" value="2"/>미표시
+				</label>
+			</td>
+		</tr>
+		<tr>
 			<td>온라인 / 오프라인</td>
 			<td class="radio">
 				<label>

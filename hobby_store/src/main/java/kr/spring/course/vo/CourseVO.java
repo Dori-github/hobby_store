@@ -39,6 +39,7 @@ public class CourseVO {
 	private int course_hit;
 	private Date course_date;
 	private Date course_mdate;
+	private int status;
 
 	private int cate_parent;
 	@NotEmpty
@@ -312,6 +313,13 @@ public class CourseVO {
 	public void setCourse_startdate(String course_startdate) {
 		this.course_startdate = course_startdate;
 	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	@Override
 	public String toString() {
 		return "CourseVO [course_num=" + course_num + ", mem_num=" + mem_num + ", cate_nums=" + cate_nums

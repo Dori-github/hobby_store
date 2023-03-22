@@ -1,6 +1,5 @@
 package kr.spring.course.controller;
 
-import java.net.http.HttpRequest;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -123,31 +122,29 @@ public class CourseController {
 	@RequestMapping("/course/courseList.do")
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
 								@RequestParam(value="order",defaultValue="1") String order,
-								String oneweek,
-								String onoff,String cate,
+								String cate,
+								String onoff,String oneweek,
 								String keyfield,String keyword, String location,HttpSession session) {
 		
-		logger.debug("<<onoff>> :" + onoff);
-		
 		//카테고리 고유번호 저장
-		int cate_num = courseService.selectCate_num(cate);
-		
+		int cate_num;
+		if(cate.equals("전체")) {
+			cate_num = 0;
+		}else {
+			cate_num = courseService.selectCate_num(cate);
+		}
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("keyfield", keyfield);
 		map.put("keyword", keyword);
+		//클래스 표시 여부
+		map.put("status", 1);
 		map.put("onoff", onoff);
 		map.put("oneweek", oneweek);
 		map.put("cate", cate);
 		map.put("cate_num", cate_num);
 		map.put("location", location);
 		map.put("order", order);
-		
-		//로그인한 회원정보
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		//로그인한 회원이 누른 하트 체크
-		List<CourseVO> favCheck = courseService.selectFavCheck();
 		
 		//글의 총개수 또는 검색된 글의 개수
 		int count = courseService.selectCourseCount(map);
@@ -166,10 +163,16 @@ public class CourseController {
 			
 			logger.debug("<<리스트>> : " + list);
 		}
-
+		
 		//카테고리 목록
 		List<CourseVO> course_cate = null;
 		course_cate = courseService.selectCate();
+		
+		//로그인한 회원정보
+		MemberVO user = (MemberVO)session.getAttribute("user");
+				
+		//로그인한 회원이 누른 하트 체크
+		List<CourseVO> favCheck = courseService.selectFavCheck();
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("courseList");
@@ -182,6 +185,7 @@ public class CourseController {
 		
 		return mav;
 	}
+	
 	
 	//이미지 출력
 	@RequestMapping("/course/imageView.do")

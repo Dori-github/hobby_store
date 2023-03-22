@@ -5,6 +5,9 @@
 <!-- 네비게이션바 시작 -->
 <nav class="navbar-expand-lg size">
 	<div class="container-fluid">
+		<div id="header_icon">
+			<img src="${pageContext.request.contextPath}/image_bundle/icon.png">
+		</div>
 		<div id="navbar_top">
 			<!-- 토글버튼 시작 -->  
 			<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
@@ -38,7 +41,7 @@
 		    </div>
 		    <div id="menu_bar">
 				<ul class="navbar-nav me-auto my-2 my-lg-0">
-					<%--<c:if test="${!empty user && user.mem_auth == 3}"></c:if>--%>
+					<c:if test="${!empty user && user.mem_auth == 3}">
 					<li id="register_btn"><a>등록</a>
 						<ul class="dropdown">
 							<li><a href="${pageContext.request.contextPath}/course/courseWrite.do">클래스</a></li>
@@ -46,8 +49,8 @@
 							<li><a href="${pageContext.request.contextPath}/space/admin_write.do">장소대여</a></li>
 						</ul>
 					</li>
-					
-					<li><a href="${pageContext.request.contextPath}/course/courseList.do?onoff=1&oneweek=1&cate=전체">클래스</a></li>
+					</c:if>
+					<li><a href="${pageContext.request.contextPath}/course/courseList.do?cate=전체">클래스</a></li>
 					<li><a href="${pageContext.request.contextPath}/items/itemsList.do">스토어</a></li>
 					<li><a href="${pageContext.request.contextPath}/space/list.do">장소대여</a></li>
 					<li id="community_btn"><a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a>

@@ -4,14 +4,30 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.spring.course.dao.CourseMapper">
 	<!-- sql 태그와 include 태그를 이용해 SQL문 재사용 -->
+	
+	<!-- ====================카테고리====================== -->
+	<sql id="courseCate">
+		<if test="cate!=null and cate!=''">
+			<if test="cate_num!=0"> <!-- 전체가 아닐 때 -->
+				<if test="cate_num lte 6">
+				AND cate_nums LIKE #{cate_num} || '%'
+			</if>
+			 	<if test="cate_num gte 7">
+				AND cate_nums LIKE '%' || #{cate_num}
+			</if>
+			
+			</if>
+		</if>
+	</sql>
+	
 	<!-- ====================온라인,오프라인====================== -->
 	<sql id="courseOnoff">
 			<if test="onoff!=null and onoff!=''">
 				<if test="onoff==1"> <!-- 오프라인 -->
-					course_onoff='off'
+					AND course_onoff='off'
 				</if>
 				<if test="onoff==2"> <!-- 온라인 -->
-					course_onoff='on'
+					AND course_onoff='on'
 				</if>
 			</if>
 	</sql>
@@ -44,21 +60,6 @@
 					AND mem_nickname LIKE '%' || #{keyword} || '%'
 				</if>
 			</if>
-	</sql>
-	
-	<!-- ====================카테고리====================== -->
-	<sql id="courseCate">
-		<if test="cate!=null and cate!=''">
-			<if test="cate_num!=0"> <!-- 전체가 아닐 때 -->
-				<if test="cate_num lte 6">
-				AND cate_nums LIKE #{cate_num} || '%'
-			</if>
-			 	<if test="cate_num gte 7">
-				AND cate_nums LIKE '%' || #{cate_num}
-			</if>
-			
-			</if>
-		</if>
 	</sql>
 	
 	<!-- ====================지역====================== -->
@@ -96,8 +97,12 @@
 		FROM course_fav GROUP BY course_num) USING(course_num)
 		LEFT JOIN (SELECT course_num , ROUND(AVG(star_auth),1) AS staravg 
 		FROM course_reply GROUP BY course_num) USING(course_num)
-		WHERE <include refid="courseOnoff"></include> <include refid="courseOneweek"></include> <include refid="courseSearch"></include>
-		<include refid="courseCate"> </include> <include refid="courseLoc"> </include>
+		WHERE status = #{status}
+			<include refid="courseCate"></include>
+			<include refid="courseOnoff"></include>
+			<include refid="courseOneweek"></include>
+			<include refid="courseSearch"></include>
+			<include refid="courseLoc"></include>
 		ORDER BY <include refid="courseOrder"></include>
 	</select>
 	 
@@ -112,8 +117,12 @@
 		FROM course_fav GROUP BY course_num) USING(course_num)
 		LEFT JOIN (SELECT course_num , ROUND(AVG(star_auth),1) AS staravg 
 		FROM course_reply GROUP BY course_num) USING(course_num)
-			WHERE <include refid="courseOnoff"></include> <include refid="courseOneweek"> </include> <include refid="courseSearch"></include>
-			<include refid="courseCate"> </include> <include refid="courseLoc"> </include>
+		WHERE status = #{status}
+			<include refid="courseCate"></include>
+			<include refid="courseOnoff"></include>
+			<include refid="courseOneweek"></include>
+			<include refid="courseSearch"></include>
+			<include refid="courseLoc"></include>
 			ORDER BY <include refid="courseOrder"></include>)a)
 			<![CDATA[
 			WHERE rnum>=#{start} AND rnum<=#{end}
