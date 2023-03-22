@@ -43,7 +43,6 @@ public class ItemsController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemsController.class);
 
-	// 1. 상품 등록//
 	// 1-1 등록 폼 호출//
 	@GetMapping("/items/itemsRegister.do")
 	public ModelAndView form() {
@@ -58,30 +57,8 @@ public class ItemsController {
 		mav.setViewName("itemsRegister");
 		mav.addObject("items_cate", items_cate);
 
-		return mav; 
+		return mav;
 	}
-	// 2-1 상품 수정 폼 호출
-		@GetMapping("/items/modify.do")
-		public ModelAndView formUpdate(@RequestParam int items_num) {
-			ModelAndView mav = new ModelAndView();
-			
-			//카테고리 이름 찾기
-			int cate_num = itemsService.searchCateName(items_num);
-			//부모 카테고리 찾기 
-			ItemsVO cateSearch = itemsService.searchCateParent(cate_num);
-	
-			//select option 1개만 입력된 부모 카테고리를 넣고 나머지는 foreach로 뿌려야 되나 .. 
-			List<ItemsVO> parent_list = itemsService.selectCate1();
-			
-			logger.debug("카테고리 번호, 이름 ="+cateSearch);
-			logger.debug("부모 카테고리  ="+parent_list);
-			
-			mav.addObject("cateSearch",cateSearch);
-			mav.addObject("parent_list", parent_list);
-			mav.setViewName("itemsModify");
-			
-			return mav;
-		}
 
 	// 1-2 상세 카테고리 및 아이템 등록 폼
 	@ResponseBody
@@ -101,45 +78,6 @@ public class ItemsController {
 
 		return mapJson;
 
-	}
-	
-	// 2-2 상품 수정 폼 호출
-	@ResponseBody
-	@GetMapping("/items/modify2.do")
-	public Map<String, Object> formUpdate2(@RequestParam int cate_num) {
-		// ModelAndView mav = new ModelAndView();
-		/*List<ItemsVO> items_child = null;
-
-		items_child = itemsService.selectCate2(cate_num);
-		logger.debug("<<items_child>> :" + items_child);
-
-		Map<String, Object> mapJson = new HashMap<String, Object>();
-
-		mapJson.put("items_child", items_child);-------------------------------------
-		logger.debug("<<Map_items_child>> : " + mapJson);
-
-		return mapJson;
-		*/
-		
-		ItemsVO items_child = null;
-		items_child = itemsService.selectChildCate2(cate_num);
-		
-		Map<String, Object> mapJson = new HashMap<String, Object>();
-		mapJson.put("items_child", items_child);
-		//HashMap 형태로 보내면 
-		return mapJson;
-
-	}
-	//2-3 상품 수정 폼 폼 호출
-	@GetMapping("/items/modify3.do")
-	public ModelAndView formUpdate3(int items_num) {
-		ModelAndView mav = new ModelAndView();
-		ItemsVO itemsVO = itemsService.selectItems(items_num);
-		logger.debug("수정폼에 출력할 아이템 정보 "+itemsVO);
-		
-		mav.addObject("itemsVO",itemsVO);
-		mav.setViewName("Modifyitems");
-		return mav;
 	}
 
 	// 1-3 아이템 등록 데이터 처리
@@ -178,6 +116,42 @@ public class ItemsController {
 		mav.setViewName("itemsList");
 		mav.addObject("itemsVO", vo);
 		mav.addObject("url", request.getContextPath() + "/items/itemsList.do");
+		return mav;
+	}
+	
+	// 1-4 상품 수정 폼 호출
+	@GetMapping("/items/modify.do")
+	public ModelAndView formUpdate(@RequestParam int items_num) {
+		ModelAndView mav = new ModelAndView();
+
+		// 카테고리 이름 찾기
+		int cate_num = itemsService.searchCateName(items_num);
+		// 부모 카테고리 찾기
+		ItemsVO cateSearch = itemsService.searchCateParent(cate_num);
+		// 자식 카테고리 찾기 
+		ItemsVO items_child = itemsService.selectChildCate2(cate_num);
+
+		// select option 1개만 입력된 부모 카테고리를 넣고 나머지는 foreach로 뿌려야 되나 ..
+		List<ItemsVO> parent_list = itemsService.selectCate1();
+		
+		ItemsVO itemsVO = itemsService.selectItems(items_num);
+		
+
+		logger.debug("카테고리 번호, 이름 =" + cateSearch);
+		logger.debug("부모 카테고리  =" + parent_list);
+
+		// 1.선택된 부모 카테고리 정보를 넘김
+		mav.addObject("cateSearch", cateSearch);
+		// 2.선택할 수 있는 부모 카테고리 정보를 넘김
+		mav.addObject("parent_list", parent_list);
+		// 3.선택된 자식 카테고리 정보를 넘김
+		// 상품 등록시 사용한 부모 카테고리에 따른 자식 카테고리 가져오는 기능은 재활용 
+		mav.addObject("items_child", items_child);
+		// 선택된 아이템의 각종 정보를 넘김
+		mav.addObject("itemsVO", itemsVO);
+
+		mav.setViewName("itemsModify");
+
 		return mav;
 	}
 
@@ -253,9 +227,6 @@ public class ItemsController {
 		return mav;
 	}
 
-	
-	
-	
 	// 2-2 상품 삭제
 	@RequestMapping("/items/delete.do")
 	public Map<String, String> deleteItem(@RequestParam int items_num, HttpSession session) {
@@ -271,10 +242,9 @@ public class ItemsController {
 
 		// 접속한 사람 = 상품 등록자 일 때
 		else if (user != null && user.getMem_num() == mem_num) {
-			//몽땅 삭제 	
+			// 몽땅 삭제
 			itemsService.deleteReplyNum(items_num);
-			
-	
+
 			mapJson.put("result", "success");
 		}
 
@@ -547,16 +517,16 @@ public class ItemsController {
 			// 1.reply_num을 사용하여 삭제해야 할 모든 좋아요를 검색 -> VO에 저장
 			// 2.검색된 VO를 가지고 검색된 fav_num을 모두 삭제
 			// 3.reply_num을 사용하여 후기 삭제
-		/*
-			ItemsReplyVO vo = itemsService.deleteFav(reply);
-			logger.debug("삭제해야 할 모든 좋아요 "+vo); //2 itemsService.deleteAllFav(vo);
-			 
-			itemsService.deleteReply(reply.getReply_num());
-		*/	 
-			
-			//후기의 좋아요 삭제
+			/*
+			 * ItemsReplyVO vo = itemsService.deleteFav(reply);
+			 * logger.debug("삭제해야 할 모든 좋아요 "+vo); //2 itemsService.deleteAllFav(vo);
+			 * 
+			 * itemsService.deleteReply(reply.getReply_num());
+			 */
+
+			// 후기의 좋아요 삭제
 			itemsService.deleteFavByReplyNum(reply);
-			//후기 삭제 
+			// 후기 삭제
 			itemsService.deleteReply(reply);
 
 			mapJson.put("result", "success");
@@ -623,7 +593,6 @@ public class ItemsController {
 		} else {
 			// 로그인된 아이디 셋팅
 			rfav.setFmem_num(user.getMem_num());
-
 
 			ItemsReplyFavVO replyFav = itemsService.selectReplyFav(rfav);
 			if (replyFav != null) {

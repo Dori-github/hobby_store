@@ -43,12 +43,12 @@ public interface ItemsMapper {
 	
 	@Select("SELECT cate_num FROM items WHERE items_num = #{items_num}")
 	public int searchCateName(Integer items_num);
-	@Select("SELECT cate_parent, cate_name FROM items_cate WHERE cate_num = #{cate_num} ")
+	@Select("select cate_name, cate_num FROM items_cate WHERE cate_num = (select cate_parent FROM items_cate WHERE cate_num = #{cate_num}) ")
 	public ItemsVO searchCateParent(Integer cate_num);
 	
 	@Select("SELECT cate_name, cate_num FROM items_cate WHERE cate_parent = #{cate_num}")
 	public List<ItemsVO> selectCate2(Integer cate_num);
-	@Select("SELECT cate_name, cate_num FROM items_cate WHERE cate_parent = #{cate_num}")
+	@Select("SELECT cate_name, cate_num FROM items_cate WHERE cate_num = #{cate_num}")
 	public ItemsVO selectChildCate2(Integer cate_num);
 	
 	@Select("SELECT * FROM items_cate")
