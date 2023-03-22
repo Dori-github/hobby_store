@@ -111,7 +111,7 @@ public class CourseController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("common/resultView");
 		mav.addObject("message","클래스 등록이 완료되었습니다.");
-		mav.addObject("url",request.getContextPath()+"/course/courseList.do?onoff=1&oneweek=1&cate=전체");
+		mav.addObject("url",request.getContextPath()+"/course/courseList.do?cate=전체");
 		
 		return mav;
 	}
@@ -325,12 +325,10 @@ public class CourseController {
 		
 		//몽땅 삭제 	
 		courseService.deleteCourseWithAll(course_num);
-			
-		
 		
 		//View에 표시할 메시지
-		model.addAttribute("message", "글삭제을 완료했습니다");
-		model.addAttribute("url", request.getContextPath()+"/course/courseList.do?onoff=1&oneweek=1&cate=전체");
+		model.addAttribute("message", "글삭제를 완료했습니다");
+		model.addAttribute("url", request.getContextPath()+"/course/courseList.do?cate=전체");
 		
 		return "common/resultView";
 	}

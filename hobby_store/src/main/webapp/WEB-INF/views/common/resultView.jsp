@@ -6,7 +6,9 @@
 
 window.addEventListener("load", function() {
 	Swal.fire({
-        icon: 'success',
+        imageUrl:'/image_bundle/icon.png',
+        imageWidth:200,
+        imageHeight:130,
         title:'${message}',
         showCancelButton: false,
         confirmButtonText: "확인",
