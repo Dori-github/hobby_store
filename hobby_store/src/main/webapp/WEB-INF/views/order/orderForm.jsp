@@ -1,183 +1,137 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  
-<!DOCTYPE html>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/order.js"></script>
-<form:form method="post" action="order.do" id="order_form" modelAttribute="orderVO">
-		<h5>구매하기</h5>	
-		<c:set var="course_name" value='<%=request.getParameter("course_name") %>'/>
-		<c:set var="items_num" value='<%=request.getParameter("items_num") %>'/>
-		<c:set var="space_name" value='<%=request.getParameter("space_name") %>'/>
-		<c:out value="g${course_name}g"/>
-		<c:out value="aa${items_num}"/>
-		
-		<c:set var="c_chkNum" value='<%=request.getParameter("c_chk") %>'/>
-		<c:set var="i_chkNum" value='<%=request.getParameter("i_chk") %>'/>
-		<c:out value="${c_chkNum}"/>
-		<c:out value="${i_chkNum}"/>
-		fgfgf
-		<c:forEach var="chk" items="${i_chkArr}" >
-		<h4>zzzz</h4>
-		<h4>${chk}</h4>
-		<h4>zzzz</h4>
-		</c:forEach>
-		
-		<%--  <c:out value="bb${space_name}"/>
-		 --%>
-		<!-- course_name, course_onoff 넣고난 후 확인하기
-		course.js에 jsp 125~126 확인 --> 
-		<%-- <c:if test="${course_name == null || items_num == null || space_name == null)}">
-		<h2>ss</h2>
-		
-		<script>
-		$(".zaz").hide();
-		</script>
-		</c:if> --%>
-		<%-- <input type="number" name="course_name" value="${course.course_name}" id="course_name">
-		<input type="number" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
-		 --%>	
+
+<div class="form-wrap">
+	<h5 class="form-title">구매하기</h5>
+	<form:form method="post" action="order.do" id="order_form"
+		modelAttribute="orderVO">
+		<c:set var="course_name"
+			value='<%=request.getParameter("course_name")%>' />
+		<c:set var="items_num" value='<%=request.getParameter("items_num")%>' />
+		<c:set var="space_name"
+			value='<%=request.getParameter("space_name")%>' />
+		<c:set var="c_chkNum" value='<%=request.getParameter("c_chk")%>' />
+		<c:set var="i_chkNum" value='<%=request.getParameter("i_chk")%>' />
+
 		<c:if test="${courseCount > 0}">
-		<h5 class="zaz">Course Cart [ ${courseCount} items ]</h5>	
-		<table class="table table-borderless">
-		<colgroup>
-			<col style="width: 1rem">
-			<col style="width: 45rem">
-			<col style="width: 15rem">
-		</colgroup>
-		<tr>
-			<th colspan="2" style="text-align:left;border-bottom: 1px solid #ccc;">Course</th>
-			<th style="border-bottom: 1px solid #ccc;">Price</th>
-		</tr>
-		<c:forEach var="cart" items="${courseCart}" >
-		<tr style="border-bottom: 1px solid #ccc">
-			<td style="text-align:left;">
-			<img style="height:500px; width:500px;" src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
-			<td style="text-align:left;">${cart.course_name}
-			<br>
-				<c:if test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if>
-				${cart.cate_name}
-			<br>
-				${cart.course_onoff}
-			</td>
-			<td>${cart.course_price}</td>
-		</tr>
-		</c:forEach>
-		</table>
-		
-	</c:if>
-		
-		<c:if test="${itemCount > 0}">	
-		<h5>Item Cart List [ ${itemCount} items ]</h5>
-		<table class="table table-borderless">
-		<colgroup>
-			<col style="width: 1rem">
-			<col style="width: 25rem">
-			<col style="width: 10rem">
-			<col style="width: 10rem">
-			<col style="width: 15rem">
-		</colgroup>
-		<tr>
-			<th colspan="2" style="text-align:left;border-bottom: 1px solid #ccc;">Item</th>
-			<th style="border-bottom: 1px solid #ccc;">Price</th>
-			<th style="border-bottom: 1px solid #ccc;">Quantity</th>
-			<th style="border-bottom: 1px solid #ccc;">TotalPrice</th>
-		</tr>
-		<c:forEach var="cart" items="${itemCart}" varStatus="status">
-
-  		<tr style="border-bottom: 1px solid #ccc;">
-			
-		<td style="text-align:left;">
-			<img style="height:500px; width:500px;" src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
-			<td style="text-align:left;">${cart.items_name}
-			<br>
-				<c:if test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if>
-				${cart.cate_name}
-			</td>
-			<td>${cart.items_price}
-			<td>			
-			<c:forEach var="quan" items="${itemQuan}" begin="${statusQuan.index}" end="${statusQuan.index}">
-			<div id="quan"></div>
-			<input type="number" class="quantity" value="${quan.quantity}">
-			</td>
-			
-			<!-- <div class="items_total"> -->
-			<td>${itemTotal}</td>
-			
-			</c:forEach>
-		</tr>
-		</c:forEach>
-		
-			<tr>
-			<td colspan="4"></td>
-			<td>${allTotal}</td>
-		</tr>
-		
-		</table>
+			<h6 class="form-name">${courseCount}개의 클래스</h6>
+			<table class="table table-borderless">
+				<colgroup>
+					<col width="20%" />
+					<col width="54%" />
+					<col width="15%" />
+				</colgroup>
+				<tr class="table-tr-title">
+					<th colspan="2">클래스</th>
+					<th>가격</th>
+				</tr>
+				<c:forEach var="cart" items="${courseCart}">
+					<tr class="table-tr-content">
+						<td><img
+							src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
+						<td>${cart.course_name}</td>
+						<td><span>₩<fmt:formatNumber
+									value="${cart.course_price}" /></span>
+					</tr>
+				</c:forEach>
+			</table>
 		</c:if>
-		
+		<br>
+
 		<c:if test="${itemCount > 0}">
-		<ul>			
-			<li>
-				<h4>배송지 정보</h4>       
-			</li>
-			<li>
-				<label for="receive_name">이름</label>
-				<form:input type="text" path="receive_name" name="receive_name"	class="order_form" id="receive_name"/>                         
-			</li>
-			<li>
-				<label for="receive_post">우편번호</label>
-				<form:input type="text" path="receive_post" name="receive_post" class="order_form" readonly="true"/>
-				<form:input type="button" path="receive_post" style="height:20px;" 
-				onclick="execDaumPostcode()" value="우편번호찾기"/>
-			</li>
-			<li>
-				<label for="receive_address1">주소</label>
-				<form:input type="text" path="receive_address1" name="receive_address1" class="order_form" readonly="true"/>       
-			</li>
-			<li>
-				<label for="receive_address2">상세주소</label>
-				<form:input type="text" path="receive_address2" name="receive_address2" class="order_form"/>       
-				<form:errors element="div" cssClass="error-color" />                       
-			</li>
-			<li>
-				<label for="receive_phone">휴대전화</label>
-				<form:input type="text" path="receive_phone" name="receive_phone" class="order_form"/>       
-				<form:errors element="div" cssClass="error-color" />                       
-			</li>
-			<li>
-				<label for="notice">배송 메시지</label>
-				<form:input type="text" path="notice" name="notice" class="order_form" />  
-				<form:errors element="div" cssClass="error-color" />
-                                             
-			</li>
-		</ul>
+			<h6 class="form-name">${itemCount}개의 상품</h6>
+			<table class="table table-borderless">
+				<colgroup>
+					<col width="24%" />
+					<col width="40%" />
+					<col width="15%" />
+					<col width="5%" />
+					<col width="15%" />
+				</colgroup>
+				<tr class="table-tr-title">
+					<th colspan="2">상품</th>
+					<th>가격</th>
+					<th>수량</th>
+					<th>합계</th>
+				</tr>
+				<c:forEach var="cart" items="${itemCart}" varStatus="status">
+					<tr class="table-tr-content">
+						<td><img
+							src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
+						<td>${cart.items_name}<br>[${cart.cate_name}]
+						</td>
+						<td><span> ₩<fmt:formatNumber
+									value="${cart.items_price}" /></span></td>
+						<c:forEach var="quan" items="${itemQuan}"
+							begin="${statusQuan.index}" end="${statusQuan.index}">
+							<td><input type="number" id="quan" class="quantity"
+								value="${quan.quantity}"></td>
+							<td><span>₩<fmt:formatNumber
+										value="${quan.items_total}" />
+							</span></td>
+						</c:forEach>
+					</tr>
+				</c:forEach>
+			</table>
+			<span class="allTotal">
+			총 주문 금액 :	₩<fmt:formatNumber value="${allTotal}" />
+			</span><br><br>
 		</c:if>
-		<input type="text" id="c_chkNum" name="c_chkNum[]" value="${c_chkNum}">
-		<input type="text" id="i_chkNum" name="i_chkNum[]" value="${i_chkNum}">
-			
-		<div class="align-center">
-			<input type="button" value="test" id="test_btn">
-			<form:button value="결제하기" id="order_btn"/>
-			<input type="button" value="홈으로"
-			       onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
-		</div>
-	</form:form> 
-	
-<!-- 우편번호 검색 시작 -->
-						<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-						<div id="layer"
-							style="display: none; position: fixed; overflow: hidden; z-index: 998; -webkit-overflow-scrolling: touch;">
-							<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
-								id="btnCloseLayer"
-								style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
-								onclick="closeDaumPostcode()" alt="닫기 버튼">
-						</div>
 
-						<script
+		<c:if test="${itemCount > 0}">
+			<hr style="width: 50%; margin: 0.5rem 0 2rem 25%; border: 2px solid #bbb;">
+			<ul class="info-form">
+				<li>
+					<h5 class="form-title" style="text-align:center;">배송지 정보</h5>
+					<p>* 필수항목을 모두 입력해주세요</p>
+				</li>
+				<li><label for="receive_name" class="form-label">* 이름</label> <form:input
+						type="text" path="receive_name" name="receive_name"
+						class="order_form" id="receive_name" /></li>
+				<li><label for="receive_post" class="form-label">* 우편번호</label> <form:input
+						type="text" path="receive_post" name="receive_post" readonly="true"
+						 style="width:12rem"/> <form:input type="button" path="receive_post"
+						class="receive-post" onclick="execDaumPostcode()" value="우편번호 검색" /></li>
+				<li><label for="receive_address1" class="form-label">* 주소</label>
+					<form:input type="text" path="receive_address1"
+						name="receive_address1" class="order_form" readonly="true"/></li>
+				<li><label for="receive_address2" class="form-label">* 상세주소</label>
+					<form:input type="text" path="receive_address2"
+						name="receive_address2" class="order_form" />
+				<li><label for="receive_phone" class="form-label">* 휴대전화</label>
+					<form:input type="text" path="receive_phone" name="receive_phone"
+						class="order_form" /></li>
+				<li><label for="notice" class="form-label">* 배송 메시지</label> <form:input
+						type="text" path="notice" id="form_notice" name="notice" class="order_form" 
+						Placeholder=" 1~20자 내로 입력해주세요"/>
+			</ul>
+		</c:if>
+		<input type="hidden" id="c_chkNum" name="c_chkNum[]" value="${c_chkNum}">
+		<input type="hidden" id="i_chkNum" name="i_chkNum[]" value="${i_chkNum}">
+
+		<div class="order-wrap">
+			<input type="submit" value="결제하기" id="order_btn"/>
+			<input type="button" value="주문취소"
+				onclick="location.href='${pageContext.request.contextPath}/main/main.do'">
+		</div>
+	</form:form>
+
+	<!-- 우편번호 검색 시작 -->
+	<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+	<div id="layer"
+		style="display: none; position: fixed; overflow: hidden; z-index: 998; -webkit-overflow-scrolling: touch;">
+		<img src="//t1.daumcdn.net/postcode/resource/images/close.png"
+			id="btnCloseLayer"
+			style="cursor: pointer; position: absolute; right: -3px; top: -3px; z-index: 1"
+			onclick="closeDaumPostcode()" alt="닫기 버튼">
+	</div>
+</div>
+<script
 							src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 						<script>
 

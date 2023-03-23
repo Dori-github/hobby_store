@@ -5,63 +5,46 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
 
-<div style="padding: 7rem 7rem;">
+<div class="form-wrap">
+	<h5 class="form-title">장바구니</h5>
 	<!-- 클래스 장바구니 -->
 	<c:if test="${courseCount < 1 && itemCount < 1}">
 	<h4>장바구니가 비어있습니다</h4>
 	</c:if>
-	<form id="cart_order"
-		action="${pageContext.request.contextPath}/order/orderForm.do"
+	<form id="cart_order" action="${pageContext.request.contextPath}/order/orderForm.do"
 		method="post">
-		
-			
 		<c:if test="${courseCount > 0}">
-			<h5>Course Cart [ ${courseCount} items ]</h5>
+			<h6 class="form-name">${courseCount}개의 클래스</h6>
 			<table class="table table-borderless">
 				<colgroup>
-					<col style="width: 1rem">
-					<col style="width: 1rem">
-					<col style="width: 45rem">
-					<col style="width: 15rem">
+					<col width="1%"/>
+					<col width="20%"/>
+					<col width="54%"/>
+					<col width="15%"/>
 				</colgroup>
-				<tr>
-					<th style="border-bottom: 1px solid #ccc;">
+				<tr class="table-tr-title">
+					<th class="table-chk">
 					<input type="checkbox" checked="checked" id="chk_all">
 					</th>
-					<th colspan="2"
-						style="text-align: left; border-bottom: 1px solid #ccc;">Course</th>
-					<th style="border-bottom: 1px solid #ccc;">Price</th>
+					<th colspan="2">클래스</th>
+					<th>가격</th>
 				</tr>
 				<c:forEach var="cart" items="${courseList}">
-					<c:if test="${courseCount == 0}">
-						<div>장바구니가 비어있습니다</div>
-					</c:if>
-					<tr style="border-bottom: 1px solid #ccc">
+					<tr class="table-tr-content">
 						<td>
 						<input type="checkbox" name="course_numbers" checked="checked"
 							class="choice-btn" data-c-cart-num="${cart.course_num}">
 						</td>
-						<td style="text-align: left;"><img
-							src="/course/imageView.do?course_num=${cart.course_num}&item_type=1" ></td>
-						<td style="text-align: left;">${cart.course_name}<br> <c:if
-								test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if> ${cart.cate_name} <br>
-							${cart.course_onoff}
-						</td>
+						<td><img 
+						src="/course/imageView.do?course_num=${cart.course_num}&item_type=1"></td>
+						<td>${cart.course_name}</td>
 						<td>
 						<span class="course-price" data-coursePrice="${cart.course_price}">
 						₩<fmt:formatNumber value="${cart.course_price}"/></span>
 						</td>
-					</tr>
-				<tr>
-					<td colspan="2"></td>
-					<td><span class="courseTotal"
-						data-courseTotal="${courseTotal}" > ₩<fmt:formatNumber
-								value="${courseTotal}" />
-					</span></td>
-				</tr>
-				
+					</tr>	
 				</c:forEach>
 			</table>
 		</c:if>
@@ -69,67 +52,49 @@
 
 		<!-- 상품 장바구니 -->
 		<c:if test="${itemCount > 0}">
-			<h5>Item Cart List [ ${itemCount} items ]</h5>
+			<h6 class="form-name">${itemCount}개의 상품</h6>
 			<table class="table table-borderless">
 				<colgroup>
-					<col style="width: 1rem">
-					<col style="width: 1rem">
-					<col style="width: 25rem">
-					<col style="width: 10rem">
-					<col style="width: 10rem">
-					<col style="width: 15rem">
+					<col width="1%" />
+					<col width="24%" />
+					<col width="40%" />
+					<col width="15%" />
+					<col width="5%" />
+					<col width="15%" />
 				</colgroup>
-				<tr>
-					<th style="border-bottom: 1px solid #ccc;"></th>
-					<th colspan="2"
-						style="text-align: left; border-bottom: 1px solid #ccc;">Item</th>
-					<th style="border-bottom: 1px solid #ccc;">Price</th>
-					<th style="border-bottom: 1px solid #ccc;">Quantity</th>
-					<th style="border-bottom: 1px solid #ccc;">TotalPrice</th>
+				<tr class="table-tr-title">
+					<th></th>
+					<th colspan="2">상품</th>
+					<th>가격</th>
+					<th>수량</th>
+					<th>합계</th>
 				</tr>
 				<c:forEach var="cart" items="${itemList}" varStatus="statusQuan">
 					<c:forEach var="quan" items="${itemQuan}"
-							begin="${statusQuan.index}" end="${statusQuan.index}">
-					<c:if test="${itemCount == 0}">
-						<div>장바구니가 비어있습니다</div>
-					</c:if>
-					<tr style="border-bottom: 1px solid #ccc;">
-						<td>
-						<input type="checkbox" name="item_numbers" checked="checked"
-							class="choice-btn" data-i-cart-num="${cart.items_num}">
-						</td>
-						<td style="text-align: left;"><img
-							src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
-						<td style="text-align: left;">${cart.items_name}<br> <c:if
-								test="${cart.cate_parent!=0}">
-				${cart.cate_parent}/</c:if> ${cart.cate_name}
-						</td>
-						<td>
-						<span class="item-price" data-price="${cart.items_price}">
-						₩<fmt:formatNumber value="${cart.items_price}"/></span>
-						</td>
-						<td><input class="item-quan" type="text" style="visibility:hidden;"
-							value="재고:${cart.items_quantity}" />
-						
-
-								
+						begin="${statusQuan.index}" end="${statusQuan.index}">
+						<tr class="table-tr-content">
+							<td><input type="checkbox" name="item_numbers"
+								checked="checked" class="choice-btn"
+								data-i-cart-num="${cart.items_num}"></td>
+							<td><img
+								src="/items/imageView.do?items_num=${cart.items_num}&items_type=1"></td>
+							<td>${cart.items_name}<br>[${cart.cate_name}]
+							</td>
+							<td><span class="item-price"
+								data-price="${cart.items_price}"> ₩<fmt:formatNumber
+										value="${cart.items_price}" /></span></td>
+							<td><input class="item-quan" type="text"
+								style="visibility: hidden;" value="재고:${cart.items_quantity}"/>
 								<input class="quan_dec" type="button" value="-" />
-								<input type="number" id="quan" name="quantity" class="quantity"
-									value="${quan.quantity}" data-quantity="${quan.quantity}">
-								<input class="quan_inc" type="button" value="+" />
-								<input class="cart_num" type="text" style="visibility:hidden;" value="${quan.cart_num}" />
-								
-								</td>
+								<input type="number" id="quan" name="quantity" readonly
+								class="quantity" value="${quan.quantity}" data-quantity="${quan.quantity}">
+								<input class="quan_inc" type="button" value="+" /> <input
+								class="cart_num" type="text" style="visibility: hidden;"
+								value="${quan.cart_num}" /></td>
 							<td><span class="itemSum" data-itemSum="${quan.items_total}">
 									₩<fmt:formatNumber value="${quan.items_total}" />
 							</span></td>
-							<td colspan="2">
-					<td><span class="itemTotal"
-						data-itemTotal="${itemTotal}" > ₩<fmt:formatNumber
-								value="${itemTotal}" />
-					</span></td>
-				</c:forEach>
-				</tr>
+					</c:forEach>
 				</c:forEach>
 			</table>
 		</c:if>
@@ -145,5 +110,3 @@
 	</form>
 
 </div>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/cart.js"></script>
