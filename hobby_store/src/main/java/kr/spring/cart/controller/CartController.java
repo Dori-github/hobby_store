@@ -221,35 +221,29 @@ public class CartController {//메서드 생성, 데이터 처리
 			  
 		}
 		
-		String[] course_onoff = request.getParameterValues("course_onoff");
-		String[] course_num = request.getParameterValues("course_num");
+		//클래스==================================================//
 
+		//CourseCartVO에 mem_num 저장
+		courseCart.setMem_num(user.getMem_num());
 		
-		if(course_onoff != null) {
-			courseCart.setMem_num(user.getMem_num());
+		CourseCartVO db_cart = 
+				cartService.selectCourseCart(courseCart);
+		if(db_cart==null) {//등록된 동일 클래스 없음
+			logger.debug("<<##@@@ㅇ>> : "+ courseCart);
 			
-			CourseCartVO db_cart = 
-					cartService.selectCourseCart(courseCart);
-			if(db_cart==null) {//등록된 동일 클래스 없음
-				logger.debug("<<##@@@ㅇ>> : "+ courseCart);
-				
-				cartService.insertCourseCart(courseCart);
-
-				model.addAttribute("accessMsg", "장바구니에 성공적으로 담겼습니다.");
-				
-			}else {//등록된 동일 클래스 있음
-				
-				model.addAttribute("accessMsg", "장바구니에 이미 담긴 클래스입니다.");
-				  
-			}
-		 
+			cartService.insertCourseCart(courseCart);
+			model.addAttribute("accessText", "장바구니에 성공적으로 담겼습니다.");
+			
+		}else {//등록된 동일 클래스 있음
+			model.addAttribute("accessText", "장바구니에 이미 담긴 클래스입니다.");
+		}
+		model.addAttribute("accessBtn", "장바구니 이동");
+			model.addAttribute("accessDeny", "계속 쇼핑");
+			model.addAttribute("accessUrl", "cartList.do");
+			model.addAttribute("accessUrl2", "/course/courseDetail.do?course_num="+courseCart.getCourse_num());
+			
+		  return "common/notice"; 
 	}
-		// refresh 정보를 응답 헤더에 추가
-		response.addHeader("Refresh",
-				"2;url=../cart/cartList.do");
-		//장바구니로 이동할 지 알림?
-		
-		  return "common/notice"; }
 	
 	
 	/*
