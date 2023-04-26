@@ -7,7 +7,7 @@ public class CourseTimeVO {
 	private int mem_num;  
 	private String course_reg_date;
 	private List<String> course_reg_times;
-	private String course_reg_time;
+	private String course_reg_time; //,로 연결된 시간들
 
 	public String getCourse_reg_date() {
 		return course_reg_date;

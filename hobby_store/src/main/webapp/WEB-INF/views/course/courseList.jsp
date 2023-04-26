@@ -15,7 +15,7 @@
                     showCancelButton: false,
                     confirmButtonText: "확인",
                     confirmButtonColor: "#FF4E02"
-                });
+                })
 				$('#search_bar').val('').focus();
 				return false;
 			}

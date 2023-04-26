@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Update;
 import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseReplyVO;
+import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 
 public interface CourseService { 
@@ -22,11 +23,11 @@ public interface CourseService {
 	public List<CourseVO> selectCate();
 	public int selectCate_num(String cate_name);
 	public CourseVO selectCourse(Integer course_num);
+	public List<CourseTimeVO> selectCourseTime(Integer course_num);
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);
 	public void deleteCourse(Integer course_num);
 	public void deleteCourseWithAll(Integer course_num);
-	public void deletePhoto1(Integer course_num);
 	public void deletePhoto2(Integer course_num);
 	public void deletePhoto3(Integer course_num);
 	public List<Integer> selectReplyNum(Integer course_num);
@@ -47,8 +48,9 @@ public interface CourseService {
 	public CourseReplyVO selectReply(Integer reply_num);
 	public void insertReply(CourseReplyVO courseReply);
 	public void updateReply(CourseReplyVO boardReply);
+	public void deleteReplyByCourseNum(Integer board_num);
 	public void deleteReply(Integer reply_num);
-	public void deleteReplyByBoardNum(Integer board_num);
+	public void deleteReplyWithAll(Integer reply_num);
 	public Float selectStar(Integer course_num);
 	public int select5star(Integer course_num);
 	public int selectallstar(Integer course_num);

@@ -26,6 +26,7 @@ $(function(){
 	            let count = param.count;
 	            $('.reply b').text(count);
 	            $('.reply-avg .count').text(count);
+	            $('.reply-count').text(count);
 	            $('.reply-badge').text(count);
 	            
 	            //별점 5점 %
@@ -33,8 +34,8 @@ $(function(){
 	            $('.reply-avg .star5_per').text(star5_per);
 	            
 	            //별점 평균
-	            let star_auth = param.star_auth;
-	            $('.reply-avg li:first-child').append(star_auth);
+	            let star_avg = param.star_avg;
+	            $('.star-avg').text(star_avg);
 	            
 	            //호출시 해당 ID의 div의 내부 내용물 제거
 	            $('#output').empty();
@@ -56,7 +57,7 @@ $(function(){
 					if (item.fav_num == 0) {
 					output += '<i class="fa-regular fa-thumbs-up style ="color :#000;"></i>';
 					}					
-					output += '<span class="favcount">'+item.favcount+'</span>';
+					output += '<span class="favcount">'+item.fav_cnt+'</span>';
 					output += '</span>';
 					output += '</div>';
 					
@@ -104,20 +105,18 @@ $(function(){
 					output += '<hr size="1" noshade style="width:70%;margin:16px auto;color:gray;">';
 					
 					//모달창
-						output += '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-						output += '<div class="modal-dialog modal-dialog-centered">';
-						output += '<div class="modal-content">';
-						output += '<div class="modal-header">';
-						output += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
-						output += '</div>';
-						output += '<div class="modal-body">';
-						output += '<img src="" class="modal-img">';
-						output += '</div>';
-						output += '</div>';
-						output += '</div>';
-						output += '</div>';
-					
-					
+					output += '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+					output += '<div class="modal-dialog modal-dialog-centered">';
+					output += '<div class="modal-content">';
+					output += '<div class="modal-header">';
+					output += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+					output += '</div>';
+					output += '<div class="modal-body">';
+					output += '<img src="" class="modal-img">';
+					output += '</div>';
+					output += '</div>';
+					output += '</div>';
+					output += '</div>';
 					
 					//문서 객체에 추가
 					$('#output').append(output);
@@ -165,10 +164,8 @@ $(function(){
                 }
                 //ul 태그에 생성한 li를 추가
                 $('.paging-btn').append(add);
-			
-					
 			},
-			errror:function(){
+			error:function(){
 				//로딩 이미지 감추기
 				$('#loading').hide();
 				Swal.fire({
@@ -184,21 +181,19 @@ $(function(){
 	}
 	
 	
-	//후기 등록폼 이미지
-	//===============이미지===================//
+	
+	//=========================================후기 등록================================================//
+	
 	//이미지 미리 보기
-	let course_photo;//선택한 이미지 저장
-	//대표이미지
-	$('.image #upload1').change(function(){
-		course_photo = this.files[0];
+	function preview(course_photo,num){
 		if(!course_photo){//취소한 경우
-			$('.course-photo1').hide();	
-			$('.l1').show();
-			$('.d1').hide();
+			$('.image .course-photo'+num).hide();	
+			$('.image .l'+num).show();
+			$('.image .d'+num).hide();
 		}
 		if(course_photo.size > 1024*1024){
 			alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
-			$(this).val('');
+			$('.image #upload'+num).val('');
 			return;
 		}
 		
@@ -206,62 +201,28 @@ $(function(){
 		reader.readAsDataURL(course_photo);
 		
 		reader.onload=function(){
-			$('.course-photo1').show().attr('src',reader.result);	
-			$('.l1').hide();
-			$('.d1').show();
+			$('.image .course-photo'+num).show().attr('src',reader.result);	
+			$('.image .l'+num).hide();
+			$('.image .d'+num).show();
 		};
+	}
+	
+	//대표이미지
+	$('.image #upload1').change(function(){
+		course_photo = this.files[0];
+		preview(course_photo,1);
 	});//end of change
 	
 	//추가이미지1
 	$('.image #upload2').change(function(){
 		course_photo = this.files[0];
-		
-		if(!course_photo){//취소한 경우
-			$('.course-photo2').hide();	
-			$('.l2').show();
-			$('.d2').hide();
-		}
-		
-		if(course_photo.size > 1024*1024){
-			alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
-			$(this).val('');
-			return;
-		}
-		
-		let reader = new FileReader();
-		reader.readAsDataURL(course_photo);
-		
-		reader.onload=function(){
-			$('.course-photo2').show().attr('src',reader.result);	
-			$('.l2').hide();
-			$('.d2').show();
-		};
+		preview(course_photo,2);
 	});//end of change
 	
 	//추가이미지2
 	$('.image #upload3').change(function(){
 		course_photo = this.files[0];
-		
-		if(!course_photo){//취소한 경우
-			$('.course-photo3').hide();	
-			$('.l3').show();
-			$('.d3').hide();
-		}
-		
-		if(course_photo.size > 1024*1024){
-			alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
-			$(this).val('');
-			return;
-		}
-		
-		let reader = new FileReader();
-		reader.readAsDataURL(course_photo);
-		
-		reader.onload=function(){
-			$('.course-photo3').show().attr('src',reader.result);	
-			$('.l3').hide();
-			$('.d3').show();
-		};
+		preview(course_photo,3);
 	});//end of change
 	
 	
@@ -276,21 +237,19 @@ $(function(){
 	});
 	
 	
-	
-	
 	//후기 목록 사진보기 클릭
 	$(document).on('click','.look-photo',function(){
-		$('.list-photos').show();
+		$(this).next().show();
 		$(this).hide();
 	});
 	
 	
 	
-	//=========================================후기 등록================================================//
+	//후기 등록
 	$('#reply_form').submit(function(event){
 		//기본 이벤트 제거
 		event.preventDefault();
-		
+		//별점 입력 필수
 		if(!$('.reply_star input[type=radio]').is(':checked')){
 			Swal.fire({
                     icon: 'warning',
@@ -302,7 +261,7 @@ $(function(){
 			return false;
 		}
 		
-		
+		//내용 입력 필수
 		if($('#reply_content').val().trim()==''){
 			Swal.fire({
                     icon: 'warning',
@@ -314,7 +273,6 @@ $(function(){
 			$('#reply_content').val('').focus();
 			return false;
 		}
-		
 		
 		$.ajax({
 			url:'writeReply.do',
@@ -348,13 +306,13 @@ $(function(){
 		
 		
 	});
-	
-	//후기 작성 폼 초기화
+
+	//후기 등록 폼 초기화
 	function initForm(){
 		$('textarea').val('');
 		$('#reply_form .letter-count').text('300/300');
 		
-		$('.reply_star label').css('text-shadow','0 0 0 #f0f0f0');
+		$('.reply_star input[name=star_auth]').prop("checked",false);
 		$('#upload1').val('');
 		$('#upload2').val('');
 		$('#upload3').val('');
@@ -362,9 +320,7 @@ $(function(){
 		$('.image .fa-circle-xmark').hide();
 		$('.image .label1').show();
 	}
-	
-	
-	
+
 	//textarea에 내용 입력시 글자수 체크
 	$(document).on('keyup','textarea',function(){
 		//입력한 글자수 구하기
@@ -387,116 +343,88 @@ $(function(){
 		
 	});
 	
-	//후기 수정
+	
+	
+						
+	
+	//====================================후기 수정===========================================//
 	//후기 수정 버튼 클릭시 수정폼 노출
 	$(document).on('click','.modify-btn',function(){
 		//댓글 글번호 
 		let reply_num = $(this).attr('data-num');
 		//댓글 내용
 		let content = $(this).parents('.item').find('p').html().replace(/<br>/g,'\r\n');
-		/*
+		
 		let photos_src={
 			photo1:$(this).parents('.item').find('.photo1').attr('src'),
 			photo2:$(this).parents('.item').find('.photo2').attr('src'),
 			photo3:$(this).parents('.item').find('.photo3').attr('src')
 		}
-		*/
+		let photos_name={
+			photoName1:$(this).parents('.item').find('.photo1').attr('data-photoName'),
+			photoName2:$(this).parents('.item').find('.photo2').attr('data-photoName'),
+			photoName3:$(this).parents('.item').find('.photo3').attr('data-photoName')
+		}
 		
 		//댓글수정 폼 UI
 		let modifyUI = '<form id="mreply_form">';
 		modifyUI += '<input type="hidden" name="reply_num" id="mreply_num" value="'+reply_num+'">';
 		modifyUI += '<span class="letter-count mletter-count">300 / 300</span>';
 		modifyUI += '<textarea rows="3" cols="50" name="reply_content" id="mreply_content" class="reply-content">'+content+'</textarea>';
-		modifyUI += '<div style="position:relative;margin-top:10px;">';
-		/*
+		modifyUI += '<div class="m-image" style="position:relative;margin-top:10px;">';
+		
 			if(photos_src["photo1"]!=null){
 				modifyUI += '<img src="'+photos_src["photo1"]+'" class="course-photo1" style="display:inline-block;">';
-				modifyUI += '<label for="upload1" class="label1 l1" style="display:none;">';
+				modifyUI += '<label for="m_upload1" class="label1 l1" style="display:none;">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d1" style="display:inline-block;"></i>';
-				modifyUI += '<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d1" data-num="'+reply_num+'" data-type="1" data-photoName="'+photos_name["photoName1"]+'" style="display:inline-block;"></i>';
+				modifyUI += '<input type="file" name="upload1" id="m_upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}else{
 				modifyUI += '<img class="course-photo1">';
-				modifyUI += '<label for="upload1" class="label1 l1">';
+				modifyUI += '<label for="m_upload1" class="label1 l1">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
 				modifyUI += '<i class="fa-solid fa-circle-xmark d1"></i>';
-				modifyUI += '<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+				modifyUI += '<input type="file" name="upload1" id="m_upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}
 			if(photos_src["photo2"]!=null){
 				modifyUI += '<img src="'+photos_src["photo2"]+'" class="course-photo2" style="display:inline-block;">';
-				modifyUI += '<label for="upload2" class="label1 l2" style="display:none;">';
+				modifyUI += '<label for="m_upload2" class="label1 l2" style="display:none;">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d2" style="display:inline-block;"></i>';
-				modifyUI += '<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d2" data-num="'+reply_num+'" data-type="2" data-photoName="'+photos_name["photoName2"]+'" style="display:inline-block;"></i>';
+				modifyUI += '<input type="file" name="upload2" id="m_upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}else{
 				modifyUI += '<img class="course-photo2">';
-				modifyUI += '<label for="upload2" class="label1 l2">';
+				modifyUI += '<label for="m_upload2" class="label1 l2">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
 				modifyUI += '<i class="fa-solid fa-circle-xmark d2"></i>';
-				modifyUI += '<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+				modifyUI += '<input type="file" name="upload2" id="m_upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}
 			if(photos_src["photo3"]!=null){
 				modifyUI += '<img src="'+photos_src["photo3"]+'" class="course-photo3" style="display:inline-block;">';
-				modifyUI += '<label for="upload1" class="label1 l3" style="display:none;">';
+				modifyUI += '<label for="m_upload3" class="label1 l3" style="display:none;">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d3" style="display:inline-block;"></i>';
-				modifyUI += '<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+				modifyUI += '<i class="fa-solid fa-circle-xmark d3" data-num="'+reply_num+'" data-type="3" data-photoName="'+photos_name["photoName3"]+'" style="display:inline-block;"></i>';
+				modifyUI += '<input type="file" name="upload3" id="m_upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}else{
 				modifyUI += '<img class="course-photo3">';
-				modifyUI += '<label for="upload3" class="label1 l3">';
+				modifyUI += '<label for="m_upload3" class="label1 l3">';
 				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
 				modifyUI += '</label>';
 				modifyUI += '<i class="fa-solid fa-circle-xmark d3"></i>';
-				modifyUI += '<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+				modifyUI += '<input type="file" name="upload3" id="m_upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">';
 			}
 			modifyUI += '</li>';
-			*/
-
-		
-		modifyUI += '<div class="mreply-photos">';
-		modifyUI += '<div>';
-		//modifyUI += '<label for="upload1" class="mreply-photo">사진업로드</label>';
-		modifyUI += '<input type="file" name="upload1" id="upload1" accept="image/jpeg,image/png,image/gif">';
-		modifyUI += '<span class="reply-photo-name"></span>';
-		
-		if($('.photo1').attr('data-photoName')!=null){
-			modifyUI += '<span class="saved">['+$('.photo1').attr('data-photoName')+'] 파일이 저장되어 있음</span>';
-			modifyUI += '<span class="del"><i class="fa-solid fa-circle-xmark del1" data_num="'+reply_num+'" photo_type="1"></i></span>';
-		}
-		modifyUI += '</div>';
-		
-		modifyUI += '<div>';
-		//modifyUI += '<label for="upload2" class="mreply-photo">사진업로드</label>';
-		modifyUI += '<input type="file" name="upload2" id="upload2" accept="image/jpeg,image/png,image/gif">';
-		modifyUI += '<span class="reply-photo-name"></span>';
-		/*
-		if($('.photo2').attr('data-photoName')!=null){
-			modifyUI += '<span class="saved">['+$('.photo2').attr('data-photoName')+'] 파일이 저장되어 있음</span>';
-			modifyUI += '<span class="del"><i class="fa-solid fa-circle-xmark del2" data_num="'+reply_num+'" photo_type="2"></i></span>';
-		}
-		modifyUI += '</div>';
-		*/
-		modifyUI += '<div>';
-		//modifyUI += '<label for="upload3" class="mreply-photo">사진업로드</label>';
-		modifyUI += '<input type="file" name="upload3" id="upload3" accept="image/jpeg,image/png,image/gif">';
-		modifyUI += '<span class="reply-photo-name"></span>';
-		/*
-		if($('.photo3').attr('data-photoName')!=null){
-			modifyUI += '<span class="saved">['+$('.photo3').attr('data-photoName')+'] 파일이 저장되어 있음</span>';
-			modifyUI += '<span class="del"><i class="fa-solid fa-circle-xmark del3" data_num="'+reply_num+'" photo_type="3"></i></span>';
-		}
-		modifyUI += '</div>';
-		*/
+			
 		modifyUI += '<div style="position:absolute;top:0;right:0;">';
 		modifyUI += ' <input type="button" value="취소" class="reply-reset">';
 		modifyUI += '<input type="submit" value="수정" class="submit-btn">';
 		modifyUI += '</div>';
-
+		
 		modifyUI += '</div>';
 		modifyUI += '</form>';
 		
@@ -511,6 +439,10 @@ $(function(){
 		
 		//수정폼을 수정하고자 하는 데이터가 있는 div에 노출
 		$(this).parents('.item').append(modifyUI);
+		
+		if(photos_src["photo1"]!=null){
+			$(this).parents('.item').find('label').css('top','-60px');
+		}
 		
 		//입력한 글자수 셋팅
 		let inputLength = $('#mreply_content').val().length;
@@ -529,48 +461,89 @@ $(function(){
 	}
 	
 	
-	/*
-	//선택한 이미지이름 보기
+	//선택한 이미지 미리보기
+	function mPreview(course_photo,num){
+		if(!course_photo){//취소한 경우
+			$('.m-image .course-photo'+num).hide();	
+			$('.m-image .l'+num).show();
+			$('.m-image .d'+num).hide();
+		}
+		if(course_photo.size > 1024*1024){
+			alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
+			$('.m-image #m_upload'+num).val('');
+			return;
+		}
+		
+		let reader = new FileReader();
+		reader.readAsDataURL(course_photo);
+		
+		reader.onload=function(){
+			$('.m-image .course-photo'+num).show().attr('src',reader.result);	
+			$('.m-image .l'+num).hide();
+			$('.m-image .d'+num).show();
+			$('.m-image label').css('top','-60px');
+		};
+	}
+		
 	//대표이미지
-	$(document).on('change','#r_upload1',function(){
-		let reply_photo_name1;//선택한 이미지 이름 저장
-		reply_photo_name1 = this.files[0].name;
-		
-		$(this).parent().prev().text(reply_photo_name1);
-		
+	$(document).on('change','#m_upload1',function(){
+		//선택한 이미지 이름 저장
+		let course_photo = this.files[0];
+		mPreview(course_photo,1);
 	});//end of change
-	$(document).on('change','#r_upload2',function(){
-		let reply_photo_name2;//선택한 이미지 이름 저장
-		reply_photo_name2 = this.files[0].name;
-		
-		$(this).parent().prev().text(reply_photo_name2);
-		
+	
+	$(document).on('change','#m_upload2',function(){
+		let course_photo = this.files[0];
+		mPreview(course_photo,2);
 	});//end of change
-	$(document).on('change','#r_upload1',function(){
-		let reply_photo_name3;//선택한 이미지 이름 저장
-		reply_photo_name3 = this.files[0].name;
-		
-		$(this).parent().prev().text(reply_photo_name3);
-		
+	
+	$(document).on('change','#m_upload3',function(){
+		let course_photo = this.files[0];
+		mPreview(course_photo,3);
 	});//end of change
-	*/
+	
 	
 	//수정폼에서 사진 삭제
 	$(document).on('click','.fa-circle-xmark',function(){
 		let xmark = $(this);
-		let choice = confirm('삭제하시겠습니까?');
-		if(choice){
-				$.ajax({
+		Swal.fire({
+            imageUrl:'/image_bundle/icon.png',
+			imageWidth:200,
+			imageHeight:130,
+            title:'삭제하시겠습니까?',
+            showCancelButton: true,
+			cancelButtonText: "취소",
+            cancelButtonColor: "lightgray",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#FF4E02"
+        }).then((result) => {
+			  if (result.isConfirmed) {
+				if(!xmark.attr('data-photoName')){//미리보기만 삭제
+					xmark.prev().show();
+					xmark.prev().prev().removeAttr('src');
+					xmark.prev().prev().hide();
+					xmark.next().val('');
+					xmark.hide();
+				}else{//데이터+미리보기 삭제
+					$.ajax({
 					url:'deleteReplyPhoto.do',
-					data:{reply_num:xmark.attr('data_num'),photo_type:xmark.attr('photo_type')},
+					data:{reply_num:xmark.attr('data-num'),photo_type:xmark.attr('data-type')},
 					type:'post',
 					dataType:'json',
 					success:function(param){
 						if(param.result == 'logout'){
 							alert('로그인 후 사용하세요');
 						}else if(param.result == 'success'){
-							xmark.parents().find('.saved').text('');
+							xmark.prev().show();
+							xmark.prev().prev().removeAttr('src');
+							xmark.prev().prev().hide();
 							xmark.hide();
+							
+							if(!xmark.parent().find('img').attr('src')){
+								xmark.parent().find('label').css('top','0');
+							}else{
+								xmark.parent().find('label').css('top','-60px');
+							}
 						}else{
 							alert('파일 삭제 오류 발생');
 						}
@@ -579,7 +552,10 @@ $(function(){
 						alert('네트워크 오류 발생');
 					}
 				});
-		}
+				}
+				
+			}
+		})
 	});
 	
 	
@@ -587,12 +563,9 @@ $(function(){
 	//수정폼에서 취소 버튼 클릭시 수정폼 초기화
 	$(document).on('click','.reply-reset',function(){
 		initModifyForm();
+		selectList(1);
 	});
 	
-	
-	
-	
-
 	
 	//댓글 수정 처리
 	$(document).on('submit','#mreply_form',function(event){
@@ -634,20 +607,35 @@ $(function(){
 	                });
 				}else if(param.result == 'success'){
 					//수정 데이터 표시
-					$('#mreply_form').parent().find('p').html($('#mreply_content').val()
+					$('#mreply_form').parent().find('p').first().html($('#mreply_content').val()
 		                   .replace(/</g,'&lt;')
                            .replace(/>/g,'&gt;')
                            .replace(/\r\n/g,'<br>')
                            .replace(/\r/g,'<br>')
                            .replace(/\n/g,'<br>'));
-					$('#mreply_form').parent().find('p')
+					//수정 이미지 표시
+					$('#mreply_form').parent().find('.list-photos').empty();
+					let src1 = $('#mreply_form .course-photo1').attr('src');
+					let src2 = $('#mreply_form .course-photo2').attr('src');
+					let src3 = $('#mreply_form .course-photo3').attr('src');
+					let output = '';
+					
+					if(src1!=null){
+						output += '<img src="'+src1+'" width="100" height="100" class="photo1 modal-p">';
+					}
+					if(src2!=null){
+						output += '<img src="'+src2+'" width="100" height="100" class="photo2 modal-p">';
+					}
+					if(src3!=null){
+						output += '<img src="'+src3+'" width="100" height="100" class="photo3 modal-p">';
+					}
+					$('#mreply_form').parent().find('.list-photos').append(output);
+					
 					//최근 수정일 표시
 					$('#mreply_form').parent().find('.modify-date').text('최근 수정일 : 5초미만');
+					
 					//수정 폼 초기화
 					initModifyForm();
-					//selectList(1);
-				
-					
 				}else if(param.result == 'wrongAccess'){
 					Swal.fire({
 	                    icon: 'warning',
@@ -679,45 +667,19 @@ $(function(){
 		
 	});
 	
-	
-	
-	
-		//후기 등록폼 이미지
-		//===============이미지===================//
-		//이미지 미리 보기
-		//대표이미지
-		$('#mreply_form #upload1').change(function(){
-			//선택한 이미지 저장
-			let m_course_photo = this.files[0];
-			
-			if(m_course_photo.size > 1024*1024){
-				alert(Math.round(course_photo/1024) + 'kbytes(1024kbytes까지만 업로드 가능)');
-				$(this).val('');
-				return;
-			}
-			
-			let reader = new FileReader();
-			reader.readAsDataURL(m_course_photo);
-			
-			reader.onload=function(){
-				$('#mreply_form').parent().find('.photo1').attr('src',reader.result);	
-			};
-		});//end of change
-						
-	
-	
-	
+
 	
 	//댓글 삭제
 	$(document).on('click','.delete-btn',function(){
 		//댓글 번호
-		let re_num = $(this).attr('data-num');
+		let reply_num = $(this).attr('data-num');
+		alert(reply_num);
 		
 		//서버와 통신
 		$.ajax({
 			url:'deleteReply.do',
 			type:'post',
-			data:{re_num:re_num},
+			data:{reply_num:reply_num},
 			dataTpye:'json',
 			success:function(param){
 				if(param.result == 'logout'){
@@ -768,17 +730,15 @@ $(function(){
 	});
 	
 	
-	
-	
-	
+	//후기 정렬
+	$('#order').on('change',function(){
+		selectList(1);
+	});
 	
 	//페이지 버튼 이벤트 연결
 	$(document).on('click','.paging-btn li',function(){
 	   //페이지 번호를 읽어들임
 	   currentPage = $(this).attr('data-page');
-
-	   //클릭한 번호 저장(색강조)
-	   
 
 	   //목록 호출
 	   selectList(currentPage);

@@ -2,10 +2,10 @@ package kr.spring.course.vo;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
+import kr.spring.util.DurationFromNow;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import kr.spring.util.DurationFromNow;
 
 public class CourseReplyVO { 
 	private int reply_num;
@@ -26,45 +26,36 @@ public class CourseReplyVO {
 	private byte[] mem_photo;
 	
 	//별점(1,2,3,4,5)
-	//private int star_auth;
-	//별점평균
-	//private Float starcount;
-	//별점5점 %
-	//private float star5_per;
-	//전체에서 5점의 %
-	//5점의 개수
-	//private int star5;
-	//전체개수
-	//private int starall;
+	private int star_auth;
 	//후기 좋아요 개수
-	private int favcount;
+	private int fav_cnt;
 	//후기 좋아요 한사람 체크
 	private int fav_num;
 	
 	
-		//파일 업로드 처리
-		//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
-		public void setUpload1(MultipartFile upload1)
-				throws IOException{
-			//MultipartFile -> byte[] 변환
-			setReply_photo1(upload1.getBytes());
-			//파일명 구하기
-			setReply_photo_name1(upload1.getOriginalFilename());
-		}
-		public void setUpload2(MultipartFile upload2)
-				throws IOException{
-			//MultipartFile -> byte[] 변환
-			setReply_photo2(upload2.getBytes());
-			//파일명 구하기
-			setReply_photo_name2(upload2.getOriginalFilename());
-		}
-		public void setUpload3(MultipartFile upload3)
-				throws IOException{
-			//MultipartFile -> byte[] 변환
-			setReply_photo3(upload3.getBytes());
-			//파일명 구하기
-			setReply_photo_name3(upload3.getOriginalFilename());
-		}
+	//파일 업로드 처리
+	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
+	public void setUpload1(MultipartFile upload1)
+			throws IOException{
+		//MultipartFile -> byte[] 변환
+		setReply_photo1(upload1.getBytes());
+		//파일명 구하기
+		setReply_photo_name1(upload1.getOriginalFilename());
+	}
+	public void setUpload2(MultipartFile upload2)
+			throws IOException{
+		//MultipartFile -> byte[] 변환
+		setReply_photo2(upload2.getBytes());
+		//파일명 구하기
+		setReply_photo_name2(upload2.getOriginalFilename());
+	}
+	public void setUpload3(MultipartFile upload3)
+			throws IOException{
+		//MultipartFile -> byte[] 변환
+		setReply_photo3(upload3.getBytes());
+		//파일명 구하기
+		setReply_photo_name3(upload3.getOriginalFilename());
+	}
 		
 		
 		
@@ -120,13 +111,13 @@ public class CourseReplyVO {
 			return reply_date;
 		}
 		public void setReply_date(String reply_date) {
-			this.reply_date = reply_date;
+			this.reply_date = DurationFromNow.getTimeDiffLabel(reply_date);
 		}
 		public String getReply_mdate() {
 			return reply_mdate;
 		}
 		public void setReply_mdate(String reply_mdate) {
-			this.reply_mdate = reply_mdate;
+			this.reply_mdate = DurationFromNow.getTimeDiffLabel(reply_mdate);
 		}
 		public int getCourse_num() {
 			return course_num;
@@ -158,48 +149,17 @@ public class CourseReplyVO {
 		public void setMem_photo(byte[] mem_photo) {
 			this.mem_photo = mem_photo;
 		}
-		
-		
-		
-		/*
 		public int getStar_auth() {
 			return star_auth;
 		}
 		public void setStar_auth(int star_auth) {
 			this.star_auth = star_auth;
 		}
-		public float getStarcount() {
-			return starcount;
+		public int getFav_cnt() {
+			return fav_cnt;
 		}
-		public void setStarcount(float starcount) {
-			this.starcount = starcount;
-		}
-		public float getStar5_per() {
-			return star5_per;
-		}
-		public void setStar5_per(float star5_per) {
-			this.star5_per = star5_per;
-		}
-		public int getStar5() {
-			return star5;
-		}
-		public void setStar5(int star5) {
-			this.star5 = star5;
-		}
-		public int getStarall() {
-			return starall;
-		}
-		public void setStarall(int starall) {
-			this.starall = starall;
-		}
-		
-		
-		*/
-		public int getFavcount() {
-			return favcount;
-		}
-		public void setFavcount(int favcount) {
-			this.favcount = favcount;
+		public void setFav_cnt(int fav_cnt) {
+			this.fav_cnt = fav_cnt;
 		}
 		
 		public int getFav_num() {

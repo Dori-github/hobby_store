@@ -18,6 +18,7 @@
 <script src="${pageContext.request.contextPath}/js/course.js"></script>
 <script type="text/javascript">
 	$(function(){
+		
 		//카테고리 상세
 		let cate_parent = new Array();
 		let cate_name = new Array();
@@ -26,11 +27,9 @@
 		cate_parent.push("${cate.cate_parent}");
 		cate_name.push("${cate.cate_name}");
 		</c:forEach>
-		 
-		let list = $('#course_form .list-cate li');
-
-		list.on('click',function(){
-			$('#course_form .list-cate2').empty();
+		
+		//카테고리의 세부카테고리 표시
+		function displayDetailCate(){
 			let output='';
 			for(let i=0;i<cate_parent.length;i++){
 				if(cate_parent[i]==$('#course_form #cate_parent').val()){
@@ -38,6 +37,21 @@
 				}
 			}
 			$('#course_form .list-cate2').append(output);
+		}
+		
+		
+		//첫페이지에 로딩되는 카테고리의 세부카테고리 표시
+		displayDetailCate();
+			
+		let list = $('#course_form .list-cate li');
+		//카테고리 클릭시 상세카테고리 표시
+		list.on('click',function(){
+			$('#course_form .list-cate2').empty();
+			displayDetailCate();
+			
+			//상세카테고리 값 초기화
+			$('.whole2').text('전체');
+			$('#cate_name').val('');
 		});
 		
 		
@@ -60,14 +74,26 @@
 	});		
 </script>
 <!-- 중앙 컨텐츠 시작 -->
-<form:form action="/course/courseWrite.do" id="course_form" class="course-mform" modelAttribute="courseVO" enctype="multipart/form-data">
+<form:form action="/course/courseUpdate.do" id="course_form" class="course-mform" modelAttribute="courseVO" enctype="multipart/form-data">
 	<form:hidden path="course_num"/>
+	<form:hidden path="mem_num"/>
     <div id="course_mc" style="display:none;">
     	<input type="hidden" id="course_month" name="course_month" value="0">
 		<input type="hidden" id="course_count" name="course_count" value="0"/>
     </div>
 	<div class="title">클래스 등록</div>
 	<table class="reg-form">
+		<tr>
+			<td>표시 여부</td>
+			<td class="radio">
+				<label>
+					<form:radiobutton path="status" value="1" />표시 <!-- 기본값 checked="checked" -->
+				</label>
+				<label>
+					<form:radiobutton path="status" value="2"/>미표시
+				</label>
+			</td>
+		</tr>
 		<tr>
 			<td>온라인 / 오프라인</td>
 			<td class="radio">
@@ -94,7 +120,7 @@
 		<tr>
 			<td>카테고리 분류</td>
 			<td>
-				<form:input path="cate_parent" type="number" hidden="hidden"/>
+				<form:input path="cate_parent" value="${fn:substring(courseVO.cate_nums,0,1)}" type="number" hidden="hidden"/>
 				
 				<c:forEach var="cate" items="${course_cate}">
 					<c:if test="${fn:substring(courseVO.cate_nums,0,1) == cate.cate_num}">
@@ -104,13 +130,6 @@
 						</div>
 					</c:if>
 				</c:forEach>
-				<!-- 				
-				<div class="btn-select"><span class="whole">전체</span>
-					<i class="fa-solid fa-chevron-down icon" style="float: right;padding-bottom:5px;font-size:15px;"></i>
-					<i class="fa-solid fa-chevron-up icon" style="float: right;font-size:15px;display:none;"></i>
-				</div>
-				 -->
-				
 				<div class="list-box">
 			        <ul class="list-cate">
 			            <li data-value="1">공예</li>
@@ -127,9 +146,9 @@
 		<tr id="d_cate">
 			<td>카테고리 상세</td>
 			<td>
-				<form:input path="cate_name" type="text" hidden="hidden"/>
 				<c:forEach var="cate" items="${course_cate}">
 					<c:if test="${courseVO.cate_nums.substring(2)==cate.cate_num}">
+						<form:input path="cate_name" value="${cate.cate_name}" type="text" hidden="hidden"/>
 						<div class="btn-select2"><span class="whole2">${cate.cate_name}</span>
 							<i class="fa-solid fa-chevron-down icon2" style="float: right;font-size:15px;"></i>
 							<i class="fa-solid fa-chevron-up icon2" style="float: right;font-size:15px;display:none;"></i>
@@ -152,80 +171,192 @@
 			<td>
 				<i class="fa-regular fa-calendar-check" style="margin-top:7px;margin-bottom:10px;font-size:15pt;"></i> 요일 선택
 				<table>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[0].course_reg_date" id="mon" value="월"/>
-							<label for="mon"><i class="fa-solid fa-check"></i> 월</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[0].course_reg_times" class="time-choice time1" placeholder="시간 선택" autocomplete="off">
-							<span>추가</span>
-						</td>					
-					</tr>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[1].course_reg_date" data-num="2" id="tues" value="화"/>
-							<label for="tues"><i class="fa-solid fa-check"></i> 화</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[1].course_reg_times" class="time-choice time2" placeholder="시간 선택">
-							<span>추가</span>
-						</td>					
-					</tr>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[2].course_reg_date" id="wed" value="수"/>
-							<label for="wed"><i class="fa-solid fa-check"></i> 수</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[2].course_reg_times" class="time-choice time3"  placeholder="시간 선택">
-							<span>추가</span>
-						</td>					
-					</tr>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[3].course_reg_date" id="thur" value="목"/>
-							<label for="thur"><i class="fa-solid fa-check"></i> 목</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[3].course_reg_times" class="time-choice time4" placeholder="시간 선택">
-							<span>추가</span>
-						</td>					
-					</tr>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[4].course_reg_date" id="fri" value="금"/>
-							<label for="fri"><i class="fa-solid fa-check"></i> 금</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[4].course_reg_times" class="time-choice time5" placeholder="시간 선택">
-							<span>추가</span>
-						</td>					
-					</tr>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[5].course_reg_date" id="sat" value="토"/>
-							<label for="sat"><i class="fa-solid fa-check"></i> 토</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[5].course_reg_times" class="time-choice time6" placeholder="시간 선택">
-							<span>추가</span>
-						</td>					
-					</tr>
-					<tr>
-						<th>
-							<input type="checkbox" name="courseTimeVO[6].course_reg_date" id="sun" value="일"/>
-							<label for="sun"><i class="fa-solid fa-check"></i> 일</label>
-						</th>
-						<td>
-							<input type="text" name="courseTimeVO[6].course_reg_times" class="time-choice time7 t1" placeholder="시간 선택">
-							<span>추가</span>
-						</td>					
-					</tr>
+					<c:set var="mon" value="true"/>
+					<c:set var="tues" value="true"/>
+					<c:set var="weds" value="true"/>
+					<c:set var="thur" value="true"/>
+					<c:set var="fri" value="true"/>
+					<c:set var="sat" value="true"/>
+					<c:set var="sun" value="true"/>
+					
+					<c:forEach var="time" items="${course_time}" varStatus="status">
+						<c:set var="check" value="true"/>
+						<c:if test="${mon}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[0].course_reg_date" id="mon" value="월"
+									<c:if test="${time.course_reg_date=='월'}">checked</c:if>>
+								<label for="mon"><i class="fa-solid fa-check"></i> 월</label>
+							</th>
+							<c:if test="${time.course_reg_date=='월'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[0].course_reg_times" class="time-choice time1" placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='월'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='월'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='월'}">style="display:inline;"</c:if>>추가</span>
+							</td>
+							<c:if test="${time.course_reg_date=='월'}"><c:set var="mon" value="false"/></c:if>	
+						</tr>
+						</c:if>
+						
+						<c:if test="${tues&&check}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[1].course_reg_date" id="tues" value="화" 
+									<c:if test="${time.course_reg_date=='화'}">checked</c:if>>
+								<label for="tues"><i class="fa-solid fa-check"></i> 화</label>
+							</th>
+							<c:if test="${time.course_reg_date=='화'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[1].course_reg_times" class="time-choice time2" placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='화'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='화'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='화'}">style="display:inline;"</c:if>>추가</span>
+							</td>
+							<c:if test="${time.course_reg_date=='화'}">
+								<c:set var="mon" value="false"/>
+								<c:set var="tues" value="false"/>
+							</c:if>				
+						</tr>
+						</c:if>
+						
+						<c:if test="${weds&&check}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[2].course_reg_date" id="wed" value="수" 
+									<c:if test="${time.course_reg_date=='수'}">checked</c:if>>
+								<label for="wed"><i class="fa-solid fa-check"></i> 수</label>
+							</th>
+							<c:if test="${time.course_reg_date=='수'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[2].course_reg_times" class="time-choice time3"  placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='수'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='수'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='수'}">style="display:inline;"</c:if>>추가</span>
+							</td>	
+							<c:if test="${time.course_reg_date=='수'}">
+								<c:set var="mon" value="false"/>
+								<c:set var="tues" value="false"/>
+								<c:set var="weds" value="false"/>
+							</c:if>						
+						</tr>
+						</c:if>
+						
+						<c:if test="${thur&&check}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[3].course_reg_date" id="thur" value="목" 
+									<c:if test="${time.course_reg_date=='목'}">checked</c:if>>
+								<label for="thur"><i class="fa-solid fa-check"></i> 목</label>
+							</th>
+							<c:if test="${time.course_reg_date=='목'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[3].course_reg_times" class="time-choice time4" placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='목'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='목'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='목'}">style="display:inline;"</c:if>>추가</span>
+							</td>
+							<c:if test="${time.course_reg_date=='목'}">
+								<c:set var="mon" value="false"/>
+								<c:set var="tues" value="false"/>
+								<c:set var="weds" value="false"/>
+								<c:set var="thur" value="false"/>
+							</c:if>							
+						</tr>
+						</c:if>
+						
+						<c:if test="${fri&&check}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[4].course_reg_date" id="fri" value="금" 
+									<c:if test="${time.course_reg_date=='금'}">checked</c:if>>
+								<label for="fri"><i class="fa-solid fa-check"></i> 금</label>
+							</th>
+							<c:if test="${time.course_reg_date=='금'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[4].course_reg_times" class="time-choice time5" placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='금'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='금'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='금'}">style="display:inline;"</c:if>>추가</span>
+							</td>	
+							<c:if test="${time.course_reg_date=='금'}">
+								<c:set var="mon" value="false"/>
+								<c:set var="tues" value="false"/>
+								<c:set var="weds" value="false"/>
+								<c:set var="thur" value="false"/>
+								<c:set var="fri" value="false"/>
+							</c:if>						
+						</tr>
+						</c:if>
+						
+						<c:if test="${sat&&check}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[5].course_reg_date" id="sat" value="토" 
+									<c:if test="${time.course_reg_date=='토'}">checked</c:if>>
+								<label for="sat"><i class="fa-solid fa-check"></i> 토</label>
+							</th>
+							<c:if test="${time.course_reg_date=='토'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[5].course_reg_times" class="time-choice time6" placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='토'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='토'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='토'}">style="display:inline;"</c:if>>추가</span>
+							</td>
+							<c:if test="${time.course_reg_date=='토'}">
+								<c:set var="mon" value="false"/>
+								<c:set var="tues" value="false"/>
+								<c:set var="weds" value="false"/>
+								<c:set var="thur" value="false"/>
+								<c:set var="fri" value="false"/>
+								<c:set var="sat" value="false"/>
+							</c:if>				
+						</tr>
+						</c:if>
+						
+						<c:if test="${sun&&check}">
+						<tr>
+							<th>
+								<input type="checkbox" name="courseTimeVO[6].course_reg_date" id="sun" value="일" 
+									<c:if test="${time.course_reg_date=='일'}">checked</c:if>>
+								<label for="sun"><i class="fa-solid fa-check"></i> 일</label>
+							</th>
+							<c:if test="${time.course_reg_date=='일'&&!status.last}"><c:set var="check" value="false"/></c:if>
+							<td>
+								<c:forEach var="course_reg_time" items="${time.course_reg_times}" varStatus="statusA">
+								<input type="text" name="courseTimeVO[6].course_reg_times" class="time-choice time7 t1" placeholder="시간 선택" 
+									<c:if test="${time.course_reg_date=='일'}">value="${course_reg_time}" style="display:inline-block;"</c:if>>
+									<c:if test="${time.course_reg_date=='일'&&!statusA.first}"><i class="fa-solid fa-circle-xmark d1" style="display:inline;"></i></c:if>
+								</c:forEach>
+								<span <c:if test="${time.course_reg_date=='일'}">style="display:inline;"</c:if>>추가</span>
+							</td>
+							<c:if test="${time.course_reg_date=='일'}">
+								<c:set var="mon" value="false"/>
+								<c:set var="tues" value="false"/>
+								<c:set var="weds" value="false"/>
+								<c:set var="thur" value="false"/>
+								<c:set var="fri" value="false"/>
+								<c:set var="sat" value="false"/>
+								<c:set var="sun" value="false"/>
+							</c:if>						
+						</tr>
+						</c:if>
+					</c:forEach>
 				</table>
 			</td>
-			<form:errors element="div" path="course_reg_date" cssClass="error-color"/>
-			<form:errors element="div" path="course_reg_time" cssClass="error-color"/>
+			<form:errors element="div" path="courseTimeVO" cssClass="error-color"/>
 		</tr>
 		
 		<tr class="startDate" style="display:none;">
@@ -300,7 +431,6 @@
 							<span>이미지를 추가하세요</span><br>
 						</label>
 						<label for="upload1" class="label2 c1">파일 선택</label>
-						<i class="fa-solid fa-circle-xmark d1" <c:if test="${!empty courseVO.course_photo_name1}">style="display:inline-block;"</c:if>></i>
 						<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
 						
 						<form:errors element="div" path="course_photo1" cssClass="error-color"/>
@@ -319,7 +449,7 @@
 							<span>이미지를 추가하세요</span><br>
 						</label>
 						<label for="upload2" class="label2 c2">파일 선택</label>
-						<i class="fa-solid fa-circle-xmark d2" <c:if test="${!empty courseVO.course_photo_name2}">style="display:inline-block;"</c:if>></i>
+						<i class="fa-solid fa-circle-xmark m-xmark" data-num="2" <c:if test="${!empty courseVO.course_photo_name2}">style="display:inline-block;"</c:if>></i>
 						<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
 					</li>
 					<li>
@@ -329,7 +459,7 @@
 							<span>이미지를 추가하세요</span><br>
 						</label>
 						<label for="upload3" class="label2 c3">파일 선택</label>
-						<i class="fa-solid fa-circle-xmark d3" <c:if test="${!empty courseVO.course_photo_name3}">style="display:inline-block;"</c:if>></i>
+						<i class="fa-solid fa-circle-xmark m-xmark" data-num="3" <c:if test="${!empty courseVO.course_photo_name3}">style="display:inline-block;"</c:if>></i>
 						<input type="file" name="upload3" id="upload3" style="display:none;" accept="image/jpeg,image/png,image/gif">
 					</li>
 				</ul>

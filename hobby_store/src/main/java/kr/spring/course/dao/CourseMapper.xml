@@ -78,10 +78,10 @@
 			course_num DESC
 		</if>
 		<if test="order==2">
-			replycount DESC
+			replycount DESC NULLS LAST
 		</if>
 		<if test="order==3">
-			fav DESC
+			fav DESC NULLS LAST
 		</if>
 		<if test="order==4">
 			course_price ASC
@@ -131,32 +131,69 @@
 	
 	
 	
-	<!-- 댓글 목록 -->
+	<!-- 클래스 수정 -->
+	<update id="updateCourse" parameterType="courseVO">
+  		UPDATE course SET
+  		  <if test="course_photo_name1 !=''">
+  		  	course_photo1=#{course_photo1},
+  		  	course_photo_name1=#{course_photo_name1},
+  		  </if>  		
+  		  <if test="course_photo_name2 !=''">
+  		  	course_photo2=#{course_photo2},
+  		  	course_photo_name2=#{course_photo_name2},
+  		  </if>
+  		  <if test="course_photo_name3 !=''">
+  		  	course_photo3=#{course_photo3},
+  		  	course_photo_name3=#{course_photo_name3},
+  		  </if>
+  		  course_name=#{course_name},
+  		  status=#{status},
+  		  course_onoff=#{course_onoff},
+  		  course_oneweek=#{course_oneweek, jdbcType=VARCHAR},
+  		  cate_nums=#{cate_nums},
+  		  course_zipcode=#{course_zipcode},
+  		  course_address1=#{course_address1},
+  		  course_address2=#{course_address2},
+  		  course_startdate=#{course_startdate},
+  		  course_month=#{course_month},
+  		  course_count=#{course_count},
+  		  course_limit=#{course_limit},
+  		  course_price=#{course_price},
+  		  course_content=#{course_content},
+  		  course_mdate=SYSDATE
+
+  		WHERE course_num=#{course_num}    
+  	</update>
+	
+
+
+	
+	
+	<!-- 후기 목록 -->
 	<sql id="replyOrder">
 		<if test="order==1"><!-- 최신순 -->
 			reply_num DESC
 		</if>
 		<if test="order==2"><!-- 별점순 -->
-			star DESC
+			star_auth DESC,reply_num DESC
 		</if>
-		<if test="order==3"><!-- 추천순 -->
-			fav_cnt DESC
+		<if test="order==3"><!-- 좋아요순 -->
+			fav_cnt DESC NULLS LAST,reply_num DESC
 		</if>
 	</sql>
 
 	<select id="selectReplyCount" parameterType="map" resultType="integer">
-		SELECT COUNT(*) FROM course_reply JOIN member USING(mem_num) JOIN member_detail USING(mem_num) WHERE course_num=#{course_num}
-			 ORDER BY <include refid="replyOrder"></include> 
+		SELECT COUNT(*) FROM course_reply JOIN member USING(mem_num) JOIN member_detail USING(mem_num) WHERE course_num=#{course_num} 
 	</select>
 	
   	<select id="selectListReply" parameterType="map" resultType="courseReplyVO">
   		SELECT
           *
-       FROM (SELECT 
+        FROM (SELECT 
                m.*, 
                rownum rnum 
              FROM (SELECT 
-                      *
+                     *
                     FROM (SELECT 
                             *
                           FROM course_reply where course_num = #{course_num}) r 
@@ -164,23 +201,43 @@
                                JOIN member_detail d USING(mem_num)
                                LEFT OUTER JOIN 
                                <if test="mem_num!=null">
-                               (SELECT *  FROM (SELECT reply_num, COUNT(reply_num) AS favcount 
+                               (SELECT *  FROM (SELECT reply_num, COUNT(reply_num) AS fav_cnt
                                                 FROM course_reply_fav group by reply_num)a 
                                                      LEFT OUTER JOIN 
                                                      (SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num})b 
                                                      USING(reply_num))f 
-                              </if>
-                              <if test="mem_num==null">
-                               (SELECT reply_num, COUNT(reply_num) AS favcount 
-                                FROM course_reply_fav group by reply_num)f
-                              </if>                       
-                              USING(reply_num) 
-                              ORDER BY <include refid="replyOrder"></include>)m) 
+                               </if>
+                               <if test="mem_num==null">
+                               (SELECT reply_num, COUNT(reply_num) AS fav_cnt 
+                               FROM course_reply_fav group by reply_num)f
+                               </if>                       
+                               USING(reply_num) 
+                               ORDER BY <include refid="replyOrder"></include>)m) 
   		    <![CDATA[
   		    WHERE rnum >= #{start} AND rnum <= #{end}
   		    ]]>          
   	</select>
 	
 	
+	<!-- 후기 수정 -->
+	<update id="updateReply" parameterType="courseReplyVO">
+  		UPDATE course_reply SET
+  		  <if test="reply_photo_name1 !=''">
+  		  	reply_photo1=#{reply_photo1},
+  		  	reply_photo_name1=#{reply_photo_name1},
+  		  </if>  		
+  		  <if test="reply_photo_name2 !=''">
+  		  	reply_photo2=#{reply_photo2},
+  		  	reply_photo_name2=#{reply_photo_name2},
+  		  </if>
+  		  <if test="reply_photo_name3 !=''">
+  		  	reply_photo3=#{reply_photo3},
+  		  	reply_photo_name3=#{reply_photo_name3},
+  		  </if>
+  		  reply_content=#{reply_content},
+  		  reply_mdate=SYSDATE
+
+  		WHERE reply_num=#{reply_num}    
+  	</update>
 	
 </mapper> 

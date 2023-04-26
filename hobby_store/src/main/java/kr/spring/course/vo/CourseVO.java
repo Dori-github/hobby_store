@@ -58,8 +58,8 @@ public class CourseVO {
 	private int fav_num;
 	
 	private List<CourseTimeVO> courseTimeVO;
-	private String course_reg_date;
-	private String course_reg_time;
+	//private String course_reg_date;
+	//private String course_reg_time;
 
 	//파일 업로드 처리
 	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정
@@ -276,18 +276,6 @@ public class CourseVO {
 	public void setCourse_count(int course_count) {
 		this.course_count = course_count;
 	}
-	public String getCourse_reg_date() {
-		return course_reg_date;
-	}
-	public void setCourse_reg_date(String course_reg_date) {
-		this.course_reg_date = course_reg_date;
-	}
-	public String getCourse_reg_time() {
-		return course_reg_time;
-	}
-	public void setCourse_reg_time(String course_reg_time) {
-		this.course_reg_time = course_reg_time;
-	}
 	public List<CourseTimeVO> getCourseTimeVO() {
 		return courseTimeVO;
 	}
@@ -332,8 +320,7 @@ public class CourseVO {
 				+ ", course_hit=" + course_hit + ", course_date=" + course_date + ", course_mdate=" + course_mdate
 				+ ", cate_parent=" + cate_parent + ", cate_name=" + cate_name + ", cate_num=" + cate_num
 				+ ", mem_nickname=" + mem_nickname + ", staravg=" + staravg + ", replycount=" + replycount + ", fav="
-				+ fav + ", fmem_num=" + fmem_num + ", fav_num=" + fav_num + ", courseTimeVO=" + courseTimeVO
-				+ ", course_reg_date=" + course_reg_date + ", course_reg_time=" + course_reg_time + "]";
+				+ fav + ", fmem_num=" + fmem_num + ", fav_num=" + fav_num + ", courseTimeVO=" + courseTimeVO;
 	}
 	
 }

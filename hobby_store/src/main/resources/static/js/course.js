@@ -124,13 +124,7 @@ $(function(){
 	//==============클래스 등록폼==================//
 	//등록폼에서 유효성 체크시 폼을 다시 호출할 때 또는 수정폼 호출시 기본값 셋팅
 	$('input[name=course_onoff]').on('click',function(){
-		if($('#course_onoff2').is(':checked')){//오프라인 선택
-			$('#course_form .oneweek').show();
-			$('#course_form .limit').show();
-			$('#course_form .zipcode').show();
-			$('#course_form .address1').show();
-			$('#course_form .address2').show();
-		 }
+		checkOff();
 		
 		if($('#course_onoff1').is(':checked')){//온라인 선택
 			$('#course_form .oneweek').hide();
@@ -145,24 +139,41 @@ $(function(){
 		 }
 	});
 	
+	//오프라인 선택시
+	function checkOff(){
+		if($('#course_onoff2').is(':checked')){
+			$('#course_form .oneweek').show();
+			$('#course_form .limit').show();
+			$('#course_form .zipcode').show();
+			$('#course_form .address1').show();
+			$('#course_form .address2').show();
+		 }
+	}
+	
 	
 	$('input[name=course_oneweek]').click(function(){
-
-		if($('#course_form #course_oneweek1').is(':checked')){//원데이 선택
+		checkOne();
+		checkWeek();
+	});
+	
+	//원데이 선택시
+	function checkOne(){
+		if($('#course_form #course_oneweek1').is(':checked')){
 			$('#course_form .monthCount').hide();
+			$('#course_form .startDate').hide();
 			$('#course_form #datetime').show();
 		}
-		if($('#course_form #course_oneweek2').is(':checked')){//정기 선택
+	}
+	
+	//정기 선택시
+	function checkWeek(){
+		if($('#course_form #course_oneweek2').is(':checked')){
 			$('#course_form .startDate').show();
 			$('#course_form .monthCount').show();
 			$('#course_form #course_mc').hide();
 			$('#course_form #datetime').hide();
 		}
-	});
-	
-	
-	
-	
+	}
 	
 	
 	//===============카테고리 분류===================//
@@ -254,7 +265,7 @@ $(function(){
 		
 	});
 
-	
+	//세부카테고리 클릭시 value값 저장
 	$(document).on('click','#course_form .list-cate2 li',function(){//미래의 태그는 무조건 documentㅠㅠㅠ
 		let value = $(this).html();
 		whole2.html(value);
@@ -302,13 +313,11 @@ $(function(){
 		//시간 클릭시 input 추가
 		
 		$(document).on('click','#course_form #datetime span',function(){
-				let $input = $(this).parent().find('.time-choice');
-			    let tnum = $input.attr('name').charAt($input.attr('name').indexOf(']')-1)
-			
-				let addTime=''; 
-				addTime += '<input type="text" name="courseTimeVO['+tnum+'].course_reg_times" class="time-choice" placeholder="시간 선택">';
-			
-			
+			let $input = $(this).parent().find('.time-choice');
+		    let tnum = $input.attr('name').charAt($input.attr('name').indexOf(']')-1)
+		
+			let addTime=''; 
+			addTime += '<input type="text" name="courseTimeVO['+tnum+'].course_reg_times" class="time-choice" placeholder="시간 선택">';
 			addTime += '<i class="fa-solid fa-circle-xmark d1"></i>';
 			$(this).prev().after(addTime);
 			$(this).prev().show();
@@ -336,8 +345,18 @@ $(function(){
 
 	
 	//===============가격===================//
+	//초기값 0을 ''로 바꿈
+	function changePrice0(){
+		if($('#course_vprice').val()==0){
+			$('#course_vprice').val('');
+		}
+	}
+	
+	changePrice0();
+	
 	//콤마 표시
 	$('#course_form #course_vprice').on('keyup',function(){
+		//숫자가 아닌값을 입력한 경우
 		if(isNaN($(this).val().replace(/,/g,''))){
 			alert('숫자만 입력 가능');
 			$('#course_form #course_price').val(0);
@@ -345,7 +364,9 @@ $(function(){
 			return;
 		}
 		
+		//3자리마다 , 표시
 		$(this).val(Number($(this).val().replace(/,/g,'')).toLocaleString());
+		changePrice0();
 		$('#course_form #course_price').val(Number($(this).val().replace(/,/g,'')));
 		
 	});
@@ -500,10 +521,59 @@ $(function(){
 	});	
 	
 	//===============클래스 수정폼================//
+	//오프라인 체크되어있을 경우 정기/원데이 폼 노출
+	checkOff();
 	
-
-
+	//정기 체크되어있을 경우
+	checkWeek();
+	
+	//원데이 체크되어있을 경우
+	checkOne();
+	
+	//가격에 ,(콤마) 표시
+	let price = $('.course-mform #course_price').val();
+	$('.course-mform #course_vprice').val(price.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 	
 	
 	
+	
+	//이미지 삭제 버튼
+	$('.m-xmark').click(function(){
+		let xmark = $(this);
+		Swal.fire({
+            imageUrl:'/image_bundle/icon.png',
+			imageWidth:200,
+			imageHeight:130,
+            title:'삭제하시겠습니까?',
+            showCancelButton: true,
+			cancelButtonText: "취소",
+            cancelButtonColor: "lightgray",
+            confirmButtonText: "확인",
+            confirmButtonColor: "#FF4E02"
+        }).then((result) => {
+			  if (result.isConfirmed) {
+			  		$.ajax({
+						url:'deletePhoto.do',
+						data:{course_num:$('#course_num').val(),photo_type:xmark.attr('data-num')},
+						type:'post',
+						dataType:'json',
+						success:function(param){
+							if(param.result == 'logout'){
+								alert('로그인 후 사용하세요');
+							}else if(param.result == 'success'){
+								xmark.parent().find('img').hide();
+								xmark.parent().find('label').show();
+								xmark.hide();
+							}else{
+								alert('파일 삭제 오류 발생');
+							}
+						},
+						error:function(){
+							alert('네트워크 오류 발생');
+						}
+					});
+			  }
+		})
+		
+	});
 });

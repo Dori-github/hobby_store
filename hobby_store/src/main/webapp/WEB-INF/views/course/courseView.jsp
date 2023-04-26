@@ -89,7 +89,7 @@
 			</p>
 			</c:if>
 			<p>
-				<i class="fa-regular fa-star" style="color:orange;"></i>${starall}<span class="gray">(후기 <span class="reply-count"></span>)</span>	
+				<span class="star">★</span> <span class="star-avg"></span> <span class="gray">(후기 <span class="reply-count"></span>)</span>	
 			</p>
 		</div>
 		<%-- 오프라인 결제정보 전송 폼(클래스이름,가격,인원,클래스번호) --%>
@@ -138,7 +138,6 @@
 				<hr size="2" noshade width="100%" style="color:gray;">
 				<div style="display:flex;justify-content:space-between;">
 					<input type="submit" class="buy" value="장바구니" formaction="/cart/insert.do">
-					<i class="fa-solid fa-cart-plus"></i>
 					<input type="submit" class="buy" value="구매하기" formaction="/order/orderNowForm.do">
 				</div>
 			</div>
@@ -152,7 +151,6 @@
 	<ul class="title">
 		<li class="active">소개</li>
 		<li>후기 <span class="badge reply-badge"></span></li>
-		<li>문의</li>
 	</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
 	<!-- 소개 시작 -->
@@ -166,13 +164,14 @@
 		<h5>후기 <b></b>개</h5>
 		<hr size="2" noshade width="100%" style="color:gray;">
 		<ul class="reply-avg">
-			<li><span>★</span> <li>
+			<li><span>★ </span><span class="star-avg"></span><li>
 			<li><span class="count"></span> 건의 후기 중<br><span class="star5_per"></span> % 의 고객이 5점을 주었어요!</li>
 		</ul>
 	</div>
 	<hr size="2" noshade width="100%" style="color:gray;">
 	
 	<form id="reply_form"<c:if test="${empty user}">style="height:370px;"</c:if>>
+		<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
 		<c:if test="${!empty user}">
 		<div class="reply_star">별점
 		<fieldset>
@@ -190,13 +189,15 @@
 		</fieldset>
 		</div>
 		</c:if>
-		<input type="hidden" name="course_num" value="${course.course_num}" id="course_num">
+		<!-- 
 		<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
 		<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
+		 -->
 		<textarea rows="3" cols="50" name="reply_content" id="reply_content" class="reply-content" 
 				<c:if test="${empty user}">disabled="disabled"</c:if>
 				><c:if test="${empty user}">로그인해야 작성할 수 있습니다.</c:if></textarea>
+				
 		<c:if test="${!empty user}">
 		<div class="reply-photo">
 			<ul class="image">
@@ -235,7 +236,7 @@
 
 	<%-- 정렬 --%>
 	<div class="reply-search">
-		<select class="form-select select" id="order" name="order" style="width:100px;">
+		<select class="form-select select" id="order" name="order" data-num="${course.course_num}" style="width:100px;">
 			<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
 			<option value="2" <c:if test="${param.order == 2}">selected</c:if>>별점순</option>
 			<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요순</option>
@@ -253,13 +254,6 @@
 	</div>
 	<!-- 후기 목록 출력 끝 -->
 	<!-- 후기 끝 -->
-	
-	<!-- 문의 시작 -->
-	<div class="qna">
-		<h5>문의</h5>
-		<hr size="2" noshade width="100%" style="color:gray;">
-	</div>
-	<!-- 문의 끝 -->
 </div>
 
 <!-- 중앙 컨텐츠 끝 -->

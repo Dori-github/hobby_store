@@ -1,5 +1,6 @@
 package kr.spring.course.controller;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
+import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
@@ -66,7 +68,7 @@ public class CourseController {
 	@PostMapping("/course/courseWrite.do")
 	public ModelAndView submit(@Valid CourseVO courseVO,BindingResult result,
 							HttpServletRequest request,HttpSession session) {
-		logger.debug("<<courseVO>> : " + courseVO);
+		logger.debug("<<등록courseVO>> : " + courseVO);
 		
 		//클래스 이미지 유효성 체크
 		//MultipartFile -> byte[]로 변환할 경우 파일을
@@ -193,7 +195,7 @@ public class CourseController {
 		
 		CourseVO courseVO = courseService.selectCourse(course_num);
 		
-		logger.debug("<<courseVO>> :" + courseVO);
+		logger.debug("<<이미지courseVO>> :" + courseVO);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("imageView");
@@ -241,17 +243,30 @@ public class CourseController {
 	@GetMapping("/course/update.do")
 	public String formUpdate(@RequestParam int course_num,Model model) {
 		CourseVO courseVO = courseService.selectCourse(course_num);
+		logger.debug("<<수정courseVO>> : " + courseVO);
+		
+		//요일,시간
+		List<CourseTimeVO> course_time = courseService.selectCourseTime(course_num);
+		for(int i=0;i<course_time.size();i++) {
+			//콤마 기준으로 쪼개서 배열에 저장
+			String[] array_times = course_time.get(i).getCourse_reg_time().split(",");
+			//배열에 담긴 데이터를 리스트에 저장
+			List<String> course_reg_times = Arrays.asList(array_times);
+			course_time.get(i).setCourse_reg_times(course_reg_times);
+		}
+		logger.debug("<<수정course_time>> : " + course_time);
 		
 		List<CourseVO> course_cate = null;
 		course_cate = courseService.selectCate();
 		
 		model.addAttribute("courseVO",courseVO);
+		model.addAttribute("course_time",course_time);
 		model.addAttribute("course_cate",course_cate);
 		
 		return "courseModify";
 	}
 	//수정 폼에서 전송된 데이터 처리
-	@PostMapping("/course/update.do")
+	@PostMapping("/course/courseUpdate.do")
 	public String submitUpdate(@Valid CourseVO courseVO,
 			                   BindingResult result,
 			                   HttpServletRequest request,
@@ -277,19 +292,30 @@ public class CourseController {
 			//title 또는 content가 입력되지 않아서 유효성
 			//체크에 걸리면 파일 정보를 잃어버리기 때문에
 			//폼을 호출할 때 파일 정보를 다시 셋팅
-			CourseVO vo = courseService.selectCourse(courseVO.getCourse_num());
-			courseVO.setCourse_photo_name1(vo.getCourse_photo_name1());
-			courseVO.setCourse_photo_name2(vo.getCourse_photo_name2());
-			courseVO.setCourse_photo_name3(vo.getCourse_photo_name3());
-			return "courseModify";
+			/*
+			 * CourseVO vo = courseService.selectCourse(courseVO.getCourse_num());
+			 * courseVO.setCourse_photo_name1(vo.getCourse_photo_name1());
+			 * courseVO.setCourse_photo_name2(vo.getCourse_photo_name2());
+			 * courseVO.setCourse_photo_name3(vo.getCourse_photo_name3());
+			 */
+			return formUpdate(courseVO.getCourse_num(),model);
 		}
+		
+		//카테고리
+		//대분류 카테고리 번호
+		int cate_parent = courseVO.getCate_parent();
+		//상세 카테고리 번호
+		int cate_num = courseService.selectCate_num(courseVO.getCate_name());
+		
+		courseVO.setCate_nums(cate_parent+"" + "," + cate_num+"");
+		logger.debug("<<cate_nums>> :" + cate_parent + "," + cate_num);
 		
 		//글수정
 		courseService.updateCourse(courseVO);
 		
 		//View에 표시할 메시지
 		model.addAttribute("message", "글수정을 완료했습니다");
-		model.addAttribute("url", request.getContextPath()+"/course/detail.do?course_num="+courseVO.getCourse_num());
+		model.addAttribute("url", request.getContextPath()+"/course/courseDetail.do?course_num="+courseVO.getCourse_num());
 		
 		return "common/resultView";
 	}
@@ -302,13 +328,13 @@ public class CourseController {
 	public Map<String,String> deletePhoto(int course_num,int photo_type,HttpSession session){
 		Map<String,String> mapJson = new HashMap<String,String>();
 		
+		logger.debug("<<수정폼 course_num>> : " + course_num);
+		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		if(user==null) {
 			mapJson.put("result", "logout");
 		}else {
-			if(photo_type==1) {
-				courseService.deletePhoto1(course_num);
-			}else if(photo_type==2) {
+			if(photo_type==2) {
 				courseService.deletePhoto2(course_num);
 			}else if(photo_type==3){
 				courseService.deletePhoto3(course_num);
@@ -433,6 +459,7 @@ public class CourseController {
 		
 		logger.debug("<<currentPage>> : " + currentPage);
 		logger.debug("<<course_num>> : " + course_num);
+		logger.debug("<<order>> : " + order);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
@@ -442,15 +469,14 @@ public class CourseController {
 		map.put("mem_num",user.getMem_num());
 		//후기 개수
 		int count = courseService.selectReplyCount(map);
-		/*
 		//별점 평균
-		Float star_auth = courseService.selectStar(course_num);
+		Float star_avg = courseService.selectStar(course_num);
+		logger.debug("<<star_avg>> : " + star_avg);
 		//별점 5점 %
 		int star5 = courseService.select5star(course_num);
 		int starall = courseService.selectallstar(course_num);
 		float star5_per = Math.round((float)star5/starall*100);
 		
-		 */
 		//페이지 처리
 		PagingUtil page = new PagingUtil(currentPage,count,5,3,null);
 		map.put("start", page.getStartRow());
@@ -468,11 +494,9 @@ public class CourseController {
 		Map<String,Object> mapJson = new HashMap<String,Object>();
 		mapJson.put("list", list);
 		mapJson.put("count", count);
-		/*
-		mapJson.put("star_auth", star_auth);
+		mapJson.put("star_avg", star_avg);
 		mapJson.put("star5_per", star5_per);
-		mapJson.put("starall", starall);
-		*/
+		
 		//===== 로그인 한 회원정보 셋팅 =====//
 		if(user!=null) {
 			mapJson.put("user_num", user.getMem_num());
@@ -489,7 +513,7 @@ public class CourseController {
 		
 		CourseReplyVO vo = courseService.selectReply(reply_num);
 		
-		logger.debug("<<courseReplyVO>> :" + vo);
+		logger.debug("<<==============================courseReplyVO>> :" + vo);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("imageView");
@@ -515,23 +539,21 @@ public class CourseController {
 	
 	
 	
+	
 	//==========후기수정==========//
 	@RequestMapping("/course/updateReply.do")
 	@ResponseBody
 	public Map<String,String> modifyReply(CourseReplyVO courseReplyVO,HttpSession session,HttpServletRequest request){
 		
-		logger.debug("<<댓글수정>> : " + courseReplyVO);
+		logger.debug("<<후기수정>> : " + courseReplyVO);
 		
 		Map<String,String> mapJson = new HashMap<String,String>();
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		CourseReplyVO db_reply = courseService.selectReply(courseReplyVO.getReply_num());
-		if(user==null) {
-			//로그인이 안 되어있는 경우
+		if(user==null) {//로그인이 안 되어있는 경우
 			mapJson.put("result", "logout");
-		}else if(user!=null && user.getMem_num()==db_reply.getMem_num()) {
-			//로그인 회원번호와 작성자 회원번호 일치
-			
+		}else if(user!=null && user.getMem_num()==db_reply.getMem_num()) {//로그인 회원번호와 작성자 회원번호 일치
 			//댓글 수정
 			courseService.updateReply(courseReplyVO);
 			mapJson.put("result", "success");			
@@ -582,7 +604,7 @@ public class CourseController {
 			mapJson.put("result", "logout");
 		}else if(user!=null && user.getMem_num()==db_reply.getMem_num()) {
 			//로그인한 회원번호와 작성자 회원번호 일치
-			courseService.deleteReply(reply_num);
+			courseService.deleteReplyWithAll(reply_num);
 			mapJson.put("result", "success");
 		}else {
 			//로그인한 회원번호와 작성자 회원번호 불일치

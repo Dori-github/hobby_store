@@ -41,7 +41,7 @@
 			<td>
 			<img src="${pageContext.request.contextPath}/course/imageView.do?course_num=${course.course_num}&item_type=1" width="50" height="50">
 			${course.course_name}
-			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/modify.do?course_num=${course.course_num}'">
+			<input type="button" value="수정" onclick="location.href='${pageContext.request.contextPath}/course/update.do?course_num=${course.course_num}'">
 			<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/course/delete.do?course_num=${course.course_num}'">
 			</td>
 			<td>${course.course_date}</td>

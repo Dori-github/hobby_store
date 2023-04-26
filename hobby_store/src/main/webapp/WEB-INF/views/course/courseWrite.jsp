@@ -218,8 +218,7 @@
 					</tr>
 				</table>
 			</td>
-			<form:errors element="div" path="course_reg_date" cssClass="error-color"/>
-			<form:errors element="div" path="course_reg_time" cssClass="error-color"/>
+			<form:errors element="div" path="courseTimeVO" cssClass="error-color"/>
 		</tr>
 		
 		<tr class="startDate" style="display:none;">

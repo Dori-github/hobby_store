@@ -46,10 +46,8 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.selectCourseCount(map);
 	}
 
-	@Override
-	public void insertCourse(CourseVO course) {
-		course.setCourse_num(courseMapper.selectCourse_num());
-		courseMapper.insertCourse(course);
+	//요일,시간 course_time 테이블에 입력
+	public void insertCourse_time(CourseVO course) {
 		for(CourseTimeVO vo : course.getCourseTimeVO()) {
 			if(vo.getCourse_reg_date()!=null) {
 				vo.setCourse_num(course.getCourse_num());
@@ -68,7 +66,19 @@ public class CourseServiceImpl implements CourseService{
 			}
 		}
 	}
+	
+	@Override
+	public void insertCourse(CourseVO course) {
+		course.setCourse_num(courseMapper.selectCourse_num());
+		courseMapper.insertCourse(course);
+		insertCourse_time(course);
+	}
 
+	@Override
+	public List<CourseTimeVO> selectCourseTime(Integer course_num) {
+		return courseMapper.selectCourseTime(course_num);
+	}
+	
 	@Override
 	public CourseVO selectCourse(Integer course_num) {
 		return courseMapper.selectCourse(course_num);
@@ -81,7 +91,9 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public void updateCourse(CourseVO course) {
+		courseMapper.deleteCourse_time(course.getCourse_num());
 		courseMapper.updateCourse(course);
+		insertCourse_time(course);
 	}
 	
 	@Override
@@ -159,8 +171,13 @@ public class CourseServiceImpl implements CourseService{
 		courseMapper.deleteReply(re_num);
 	}
 	@Override
-	public void deleteReplyByBoardNum(Integer course_num) {
+	public void deleteReplyByCourseNum(Integer course_num) {
 		courseMapper.deleteReplyByCourseNum(course_num);
+	}
+	@Override
+	public void deleteReplyWithAll(Integer reply_num) {
+		courseMapper.deleteReplyFavByReplyNum(reply_num);
+		courseMapper.deleteReply(reply_num);
 	}
 	@Override
 	public Float selectStar(Integer course_num) {
@@ -208,11 +225,6 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public CourseReplyFavVO selectReplyFavCheck() {
 		return courseMapper.selectReplyFavCheck();
-	}
-
-	@Override
-	public void deletePhoto1(Integer course_num) {
-		courseMapper.deletePhoto1(course_num);
 	}
 
 	@Override
@@ -264,38 +276,13 @@ public class CourseServiceImpl implements CourseService{
 			courseMapper.deleteCourseTime(course_num);
 			//아이템 삭제
 			courseMapper.deleteCourse(course_num);
-			
-			
-			/*
-			for(Iterator<Integer> reply = course_num1.iterator(); reply.hasNext();) {
-				while(reply.hasNext()) {
-					Integer rep =  reply.next();
-					if(rep != null) {
-						//댓글 번호가 있을때 댓글 번호를 통한 댓글의 좋아요 삭제	
-						courseMapper.deleteReplyFavByReplyNum(rep);
-						//댓글 번호가 있을때 댓글 삭제 
-						courseMapper.deleteReplyByCourseNum(course_num);
-						//아이템의 좋아요 삭제 
-						courseMapper.deleteFavByCourseNum(course_num);
-						//아이템 카트 삭제
-						courseMapper.deleteCourseCart(course_num);
-						//아이템 삭제
-						courseMapper.deleteCourse(course_num);
-						
-					}
-				}
-			}
-			*/
-		
 		}
 
 	@Override
 	public List<Integer> selectReplyNum(Integer course_num) {
 		return courseMapper.selectReplyNum(course_num);
 	}
-
-
-
+	
 	
 }
 	
