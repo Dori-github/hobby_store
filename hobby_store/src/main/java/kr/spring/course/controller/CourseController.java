@@ -31,6 +31,7 @@ import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
 import kr.spring.member.vo.MemberVO;
+import kr.spring.order.service.OrderService;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -41,6 +42,8 @@ public class CourseController {
 	
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private OrderService orderService;
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute
@@ -215,27 +218,84 @@ public class CourseController {
 	}
 	
 	
+	//클래스 요일,시간 List에 저장
+	public List<CourseTimeVO> getCourseTime(int course_num) {
+		List<CourseTimeVO> course_time = courseService.selectCourseTime(course_num);
+		for(int i=0;i<course_time.size();i++) {
+			//콤마 기준으로 쪼개서 배열에 저장
+			String[] array_times = course_time.get(i).getCourse_reg_time().split(",");
+			//배열에 담긴 데이터를 리스트에 저장
+			List<String> course_reg_times = Arrays.asList(array_times);
+			course_time.get(i).setCourse_reg_times(course_reg_times);
+		}
+		return course_time;
+	}
 	
-	
-	//==========게시판 글상세============//
+	//==========클래스 글상세============//
 	@RequestMapping("/course/courseDetail.do")
-	public String detail(@RequestParam int course_num,
-			                  Model model) {
+	public String detail(@RequestParam int course_num,Model model) {
 		logger.debug("<<클래스상세>> : " + course_num);
 		
 		//조회수 증가
 		courseService.updateHit(course_num);
 		
+		//클래스 정보 저장
 		CourseVO course = courseService.selectCourse(course_num);
 		model.addAttribute("course", course);
+		
+		//클래스 요일,시간 저장
+		List<CourseTimeVO> course_time = getCourseTime(course_num);
+		model.addAttribute("course_time",course_time);
+		
+		//매진된 날짜 리스트
+		//List<String> soldOut = orderService.selectSoldOut(course_num,);
+		//model.addAttribute("reserved",reserved);
+		//logger.debug("<<현재 예약한 사람수>> : " + reserved);
 		
 		return "courseView";
 	}
 	
+	//===============상세 클래스시간 호출=============//
+	@RequestMapping("/course/getCourseTime.do")
+	@ResponseBody
+	public Map<String,Object> getTime(@RequestParam int course_num,String course_reg_date,String c_date) {
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		logger.debug("<<============course_reg_date============>> : "+course_num+","+course_reg_date+","+c_date);
+		
+		//선택한 요일에 해당하는 시간 배열에 저장
+		CourseTimeVO time = courseService.selectCourseTimes(course_num,course_reg_date);
+		//콤마 기준으로 쪼개서 배열에 저장
+		String[] array_times = time.getCourse_reg_time().split(",");
+		//배열에 담긴 데이터를 리스트에 저장
+		List<String> course_reg_times = Arrays.asList(array_times);
+		//매진된 시간
+		List<String> soldout_times = orderService.selectSoldOutTimes(course_num,c_date);
+		
+		for(int i=0;i<course_reg_times.size()-soldout_times.size();i++) {
+			soldout_times.add("a");
+		}
+		logger.debug("<<soldout_times>> : "+soldout_times);
+		
+		mapJson.put("course_reg_times", course_reg_times);
+		mapJson.put("soldout_times", soldout_times);
+		return mapJson;
+	}
 	
-	
-	
-	
+		
+	//===============현재 예약한 인원수체크=============//
+	@RequestMapping("/course/getReserved.do")
+	@ResponseBody
+	public Map<String,Object> getReservedNum(@RequestParam int course_num,String c_date,String c_time) {
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		logger.debug("<<============c_date,c_time============>> : "+c_date+","+c_time);
+		//현재 예약한 인원수
+		int reserved = orderService.selectReservedNum(course_num,c_date,c_time);
+		
+		mapJson.put("reserved",reserved);
+		return mapJson;
+	}
 	
 	
 	//=========클래스 글 수정===========//
@@ -245,15 +305,8 @@ public class CourseController {
 		CourseVO courseVO = courseService.selectCourse(course_num);
 		logger.debug("<<수정courseVO>> : " + courseVO);
 		
-		//요일,시간
-		List<CourseTimeVO> course_time = courseService.selectCourseTime(course_num);
-		for(int i=0;i<course_time.size();i++) {
-			//콤마 기준으로 쪼개서 배열에 저장
-			String[] array_times = course_time.get(i).getCourse_reg_time().split(",");
-			//배열에 담긴 데이터를 리스트에 저장
-			List<String> course_reg_times = Arrays.asList(array_times);
-			course_time.get(i).setCourse_reg_times(course_reg_times);
-		}
+		//클래스 요일,시간 저장
+		List<CourseTimeVO> course_time = getCourseTime(course_num);
 		logger.debug("<<수정course_time>> : " + course_time);
 		
 		List<CourseVO> course_cate = null;

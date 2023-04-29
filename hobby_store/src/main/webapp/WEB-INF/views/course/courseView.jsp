@@ -7,6 +7,10 @@
 <script src="${pageContext.request.contextPath}/js/course.fav.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.reply.js"></script>
 <script src="${pageContext.request.contextPath}/js/course.reply.fav.js"></script>
+<!-- datepicker 사용 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
@@ -47,11 +51,15 @@
 			<li>
 				<label for="img1"><img src="/course/imageView.do?course_num=${course.course_num}&item_type=1" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></label>
 			</li>
+			
+			<!-- photo2가 있는 경우 -->
 			<c:if test="${!empty course.course_photo_name2}">
 			<li>
 				<label for="img2"><img src="/course/imageView.do?course_num=${course.course_num}&item_type=2"></label>
 			</li>
 			</c:if>
+			
+			<!-- photo3이 있는 경우 -->
 			<c:if test="${!empty course.course_photo_name3}">
 			<li>
 				<label for="img3"><img src="/course/imageView.do?course_num=${course.course_num}&item_type=3"></label>
@@ -84,13 +92,11 @@
 		</p>
 		<div>
 			<c:if test="${!empty course.course_zipcode}">
-			<p>
-				<span class="gray"><i class="fa-solid fa-location-dot"></i> &nbsp;${course.course_address1} ${course.course_address2}</span>
-			</p>
-			</c:if>
-			<p>
-				<span class="star">★</span> <span class="star-avg"></span> <span class="gray">(후기 <span class="reply-count"></span>)</span>	
-			</p>
+			<span class="gray"><i class="fa-solid fa-location-dot"></i> &nbsp;${course.course_address1} ${course.course_address2}</span>
+			</c:if><br>
+			<span class="star">★</span> 
+			<span class="star-avg"></span> 
+			<span class="gray">(후기 <span class="reply-count"></span>)</span>	
 		</div>
 		<%-- 오프라인 결제정보 전송 폼(클래스이름,가격,인원,클래스번호) --%>
 		<c:if test="${course.course_onoff.equals('off')}">
@@ -99,25 +105,57 @@
 			<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
+			<input type="hidden" name="course_limit" value="${course.course_limit}" id="course_limit">
 
 			<div class="reservation">
 				<%-- 원데이 클래스 --%>
 				<c:if test="${course.course_oneweek.equals('one')}">
-				<p>날짜선택<input type="date" name></p>
-				<p>시간선택 &nbsp;
-				<input type="radio" value="09 : 00">
-				<input type="radio" value="10 : 00">
-				<input type="radio" value="11 : 00">
-				</p>
+				<p>날짜선택<input type="text" id="datePicker" name="course_date" 
+					<c:forEach var="date" items="${course_time}">
+						<c:if test="${date.course_reg_date=='월'}">
+							data-mon="1"
+						</c:if>
+						<c:if test="${date.course_reg_date=='화'}">
+							data-tues="2"
+						</c:if>
+						<c:if test="${date.course_reg_date=='수'}">
+							data-wed="3"
+						</c:if>
+						<c:if test="${date.course_reg_date=='목'}">
+							data-thur="4"
+						</c:if>
+						<c:if test="${date.course_reg_date=='금'}">
+							data-fri="5"
+						</c:if>
+						<c:if test="${date.course_reg_date=='토'}">
+							data-sat="6"
+						</c:if>
+						<c:if test="${date.course_reg_date=='일'}">
+							data-sun="0"
+						</c:if>
+					</c:forEach>
+				></p>
+				<p>시간선택<select name="course_time" class="time" data-ctime="${course_time}" disabled></select></p>
 				</c:if>
+				
 				<%-- 정기 클래스 --%>
 				<c:if test="${course.course_oneweek.equals('week')}">
 				<p>시작날짜 </p>
 				<p>기간/횟수 </p>
 				</c:if>
 				
-				<p>수업인원 &nbsp; / ${course.course_limit}</p>
-				<span>구매수량<input type="number" value="1" name="course_quan"></span>
+				<p class="reserved" style="height: 30px;display: none;">
+					<span class="cnt">현재인원</span><span class="course-limit"><b></b> / ${course.course_limit}</span>
+					<span class="sold-out">매진임박</span>
+				</p>
+				<div class="limit">
+					<span>예약인원 </span>
+					<ul>
+						<li id="minus"><i class="fa-solid fa-minus" style="line-height:30px;"></i></li>
+						<li><input type="number" name="course_quan" id="course_quan" value="1" min="1" max="${course.course_limit}" disabled></li>
+						<li id="plus"><i class="fa-solid fa-plus" style="line-height:30px;"></i></li>
+					</ul>
+				</div>
 				<span class="price"><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</span>
 				<hr size="2" noshade width="100%" style="color:gray;">
 				<input type="submit" class="buy" style="width:100%;" value="예약하기"/>

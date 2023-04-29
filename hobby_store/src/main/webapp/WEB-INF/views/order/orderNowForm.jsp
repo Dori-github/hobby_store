@@ -13,12 +13,17 @@
 		<c:set var="course_price" value='<%=request.getParameter("course_price") %>'/>
 		<c:set var="course_quan" value='<%=request.getParameter("course_quan") %>'/>
 		<c:set var="course_onoff" value='<%=request.getParameter("course_onoff") %>'/>
+		<c:set var="course_onoff" value='<%=request.getParameter("course_onoff") %>'/>
+		<c:set var="course_date" value='<%=request.getParameter("course_date") %>'/>
+		<c:set var="course_time" value='<%=request.getParameter("course_time") %>'/>
 		
 		<input type="hidden" name="course_num" value="<c:out value="${course_num}"/>" id="course_num">
 		<input type="hidden" name="course_name" value="<c:out value="${course_name}"/>" id="course_name">
 		<input type="hidden" name="course_price" value="<c:out value="${course_price}"/>" id="course_price">
 		<input type="hidden" name="course_quan" value="<c:out value="${course_quan}"/>" id="course_quan">
 		<input type="hidden" name="course_onoff" value="<c:out value="${course_onoff}"/>" id="course_onoff">
+		<input type="hidden" name="course_date" value="<c:out value="${course_date}"/>" id="course_date">
+		<input type="hidden" name="course_time" value="<c:out value="${course_time}"/>" id="course_time">
 		<input type="hidden" name="course_total" value="${courseTotal}" id="course_total">
 		
 		<!-- 상품 -->

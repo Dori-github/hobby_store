@@ -433,8 +433,7 @@ public class OrderController {
 		String[] space_num = request.getParameterValues("space_num");
 		String[] items_num = request.getParameterValues("items_num");
 		
-		
-		if(course_onoff != null && course_onoff[0] == "on") {//온라인 클래스
+		if(course_onoff[0].equals("on")) {//온라인 클래스
 			int courseNum = Integer.parseInt(course_num[0]);
 			int coursePrice = Integer.parseInt(course_price[0]);
 			
@@ -454,23 +453,25 @@ public class OrderController {
 		}
 	
 		
-		if(course_onoff != null  && space_num[0] == null && items_num[0] == null && course_onoff[0] == "off" ) {//오프라인 클래스
+		if(course_onoff[0].equals("off")) {//오프라인 클래스
+			logger.debug("<<course_onoff>> : "+course_onoff[0]);
 			String[] course_quan = request.getParameterValues("course_quan");
 			String[] course_total = request.getParameterValues("course_total");
-			
+			String[] course_date = request.getParameterValues("course_date");
+			String[] course_time = request.getParameterValues("course_time");
 			
 			
 			int courseNum = Integer.parseInt(course_num[0]);
 			int courseQuan = Integer.parseInt(course_quan[0]);
-			int coursePrice = Integer.parseInt(course_price[0]);
 			int courseTotal = Integer.parseInt(course_total[0]);
 			
 			orderDetail.setCourse_num(courseNum);
 			orderDetail.setDetail_name(course_name[0]);
 			orderDetail.setPrice(courseTotal);
 			orderDetail.setQuantity(courseQuan);
+			orderDetail.setC_date(course_date[0]);
+			orderDetail.setC_time(course_time[0]);
 
-			
 			orderDetailList.add(orderDetail);
 
 			orderVO.setOrder_name(course_name[0]);// 대표 상품명
@@ -479,6 +480,7 @@ public class OrderController {
 			orderVO.setOrder_status(1);
 			pointsVO.setUsed_points(courseTotal);
 			pointsVO.setMem_num(user.getMem_num());
+			logger.debug("<<orderVO : >>" + orderVO);
 		}
 		
 		//스토어 바로구매

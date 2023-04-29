@@ -24,6 +24,7 @@ public interface CourseService {
 	public int selectCate_num(String cate_name);
 	public CourseVO selectCourse(Integer course_num);
 	public List<CourseTimeVO> selectCourseTime(Integer course_num);
+	public CourseTimeVO selectCourseTimes(Integer course_num,String course_reg_date);
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);
 	public void deleteCourse(Integer course_num);

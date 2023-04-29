@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.spring.course.dao.CourseMapper;
 import kr.spring.order.controller.OrderController;
 import kr.spring.order.dao.OrderMapper;
 import kr.spring.order.vo.OrderDetailVO;
@@ -88,6 +89,16 @@ public class OrderServiceImpl implements OrderService{
 					logger.debug("<<포인트 차감>> : " + points.getUsed_points());
 					pointsMapper.usePoints(points);
 				}
+	}
+
+	@Override
+	public int selectReservedNum(int course_num,String c_date,String c_time) {
+		return orderMapper.selectReservedNum(course_num,c_date,c_time);
+	}
+
+	@Override
+	public List<String> selectSoldOutTimes(int course_num, String c_date) {
+		return orderMapper.selectSoldOutTimes(course_num,c_date);
 	}
 
 

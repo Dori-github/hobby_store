@@ -80,6 +80,11 @@ public class CourseServiceImpl implements CourseService{
 	}
 	
 	@Override
+	public CourseTimeVO selectCourseTimes(Integer course_num, String course_reg_date) {
+		return courseMapper.selectCourseTimes(course_num,course_reg_date);
+	}
+	
+	@Override
 	public CourseVO selectCourse(Integer course_num) {
 		return courseMapper.selectCourse(course_num);
 	}
@@ -282,7 +287,6 @@ public class CourseServiceImpl implements CourseService{
 	public List<Integer> selectReplyNum(Integer course_num) {
 		return courseMapper.selectReplyNum(course_num);
 	}
-	
 	
 }
 	

@@ -50,8 +50,12 @@ public interface CourseMapper {
 	public int selectCate_num(String cate_name);
 	@Select("SELECT * FROM course JOIN member USING (mem_num) WHERE course_num = #{course_num}")
 	public CourseVO selectCourse(Integer course_num);
+	//해당 클래스의 요일,시간 리스트 호출
 	@Select("SELECT * FROM course_time WHERE course_num = #{course_num}")
 	public List<CourseTimeVO> selectCourseTime(Integer course_num);
+	//선택한 요일에 해당하는 시간 호출
+	@Select("SELECT * FROM course_time WHERE course_num = #{course_num} AND course_reg_date = #{course_reg_date}")
+	public CourseTimeVO selectCourseTimes(Integer course_num,String course_reg_date);
 	@Update("UPDATE course SET course_hit=course_hit+1 WHERE course_num=#{course_num}")
 	public void updateHit(Integer course_num);
 	@Select("SELECT reply_num FROM course_reply WHERE course_num = #{course_num}")

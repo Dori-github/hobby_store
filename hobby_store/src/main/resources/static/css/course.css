@@ -436,26 +436,26 @@ li.ui-timepicker-selected, .ui-timepicker-list li:hover{
 	width:200px;
 	text-align: right;
 }
-#course_form .limit ul{
+.limit ul{
 	width:200px;
 	height:30px;
 	outline: 1px solid lightgray;
 	border-radius: 5px;
 }
-#course_form .limit li:not(:nth-child(2)){
+.limit li:not(:nth-child(2)){
 	padding:0 20px;
 	width:50px;
 	height:100%;
 	color:gray;
 }
-#course_form .limit li:not(:nth-child(2)):hover{
+.limit li:not(:nth-child(2)):hover{
 	background-color:#F2F2F2;
 	cursor: pointer;
 }
-#course_form .limit li:first-child:hover{
+.limit li:first-child:hover{
 	border-radius: 5px 0 0 5px;
 }
-#course_form .limit li:last-child:hover{
+.limit li:last-child:hover{
 	border-radius: 0 5px 5px 0;
 }
 #course_form i{
@@ -466,15 +466,15 @@ input[type='number']::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
-#course_form .limit input[type='number']{
+.limit input[type='number']{
 	text-align: center;
 	width:100px;
 	height:28.400px;
 	border: none;
 	outline: none;
 }
-#course_form .limit input[type='number']:hover,
-#course_form .limit input[type='number']:focus{
+.limit input[type='number']:hover,
+.limit input[type='number']:focus{
 	outline:3px solid gray;
 	position:relative;
 }
@@ -675,16 +675,50 @@ input[type='number']::-webkit-inner-spin-button {
 .right-class .heart:hover{
 	cursor: pointer;
 }
+/*날짜선택,시간선택*/
+#datePicker,.reservation .time,.course-limit{
+	margin-left:20px;
+	width:200px;
+	height:30px;
+	outline: 1px solid lightgray;
+	border:none;
+	border-radius: 5px;
+	text-align: center;
+}
+.cnt{
+	float:left;
+}
+.course-limit{
+	display: inline-block;
+}
 .right-class .reservation{
 	position: absolute;
 	bottom:70px;
 	width:100%;
 	padding-right:140px;
 }
-.right-class .price{
+/*수업인원*/
+.reservation .limit{
+	float:left;
+}
+.reservation .limit ul{
+	display:flex;
+	float:right;
+	margin-left:20px;
+	padding:0;
+}
+.sold-out{
+	color:red;
+	float:right;
+	margin-left:20px;
+	font-weight: bold;
+	display:none;
+}
+/*가격*/
+.reservation .price{
 	font-size: 20pt;
 	font-weight: bold;
-	line-height:18px;
+	line-height:25px;
 	float:right;
 }
 .right-class .buy{
@@ -703,9 +737,6 @@ input[type='number']::-webkit-inner-spin-button {
 .right-class .buy:hover{
 	background-color: #E84601;
 }
-
-
-
 .course-d-info{
 	margin-top:150px;
 }

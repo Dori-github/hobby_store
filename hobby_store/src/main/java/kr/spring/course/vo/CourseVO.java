@@ -58,8 +58,6 @@ public class CourseVO {
 	private int fav_num;
 	
 	private List<CourseTimeVO> courseTimeVO;
-	//private String course_reg_date;
-	//private String course_reg_time;
 
 	//파일 업로드 처리
 	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정

@@ -9,7 +9,8 @@ import kr.spring.points.vo.PointsVO;
 public interface OrderService {
 	public void insertOrder(OrderVO order, PointsVO points,
             List<OrderDetailVO> list);
-
+	public int selectReservedNum(int course_num,String c_date,String c_time);
+	public List<String> selectSoldOutTimes(int course_num,String c_date);
 	public void insertOrderNow(OrderVO order, PointsVO points, 
 			List<OrderDetailVO> list);
 
