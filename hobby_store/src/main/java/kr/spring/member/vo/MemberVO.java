@@ -15,6 +15,7 @@ public class MemberVO {
 	@Pattern(regexp="^[A-Za-z0-9]{4,12}$")
 	private String mem_id;
 	private String mem_nickname;
+	private String mem_store;
 	private int mem_auth;
 	private String auto;
 	private String mem_au_id;
@@ -79,6 +80,12 @@ public class MemberVO {
 	}
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
+	}
+	public String getMem_store() {
+		return mem_store;
+	}
+	public void setMem_store(String mem_store) {
+		this.mem_store = mem_store;
 	}
 	public int getMem_auth() {
 		return mem_auth;

@@ -27,9 +27,9 @@ public interface MemberMapper {
 	public void insertMember(MemberVO member);
 	@Insert("INSERT INTO member_detail (mem_num,"
 			  + "mem_name,mem_pw,mem_cell,mem_email,mem_zipcode,mem_address1,"
-			  + "mem_address2,country_num,like_num) VALUES (#{mem_num},"
+			  + "mem_address2,country_num,like_num,mem_store) VALUES (#{mem_num},"
 			  + "#{mem_name},#{mem_pw},#{mem_cell},#{mem_email},"
-			  + "#{mem_zipcode},#{mem_address1},#{mem_address2},#{country_num},#{like_num})")
+			  + "#{mem_zipcode},#{mem_address1},#{mem_address2},#{country_num},#{like_num},#{mem_store})")
 	public void insertMember_detail(MemberVO member);
 	@Select("SELECT m.mem_num,m.mem_id,m.mem_auth,m.mem_au_id,"
 			  + "d.mem_pw,m.mem_nickname,d.mem_email,d.mem_cell FROM "

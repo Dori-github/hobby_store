@@ -287,6 +287,10 @@ public class CourseServiceImpl implements CourseService{
 	public List<Integer> selectReplyNum(Integer course_num) {
 		return courseMapper.selectReplyNum(course_num);
 	}
+	@Override
+	public List<String> selectCourseAddress() {
+		return courseMapper.selectCourseAddress();
+	}
 	
 }
 	

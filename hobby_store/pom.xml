@@ -97,6 +97,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+		<!-- 주소를 위도,경도로 변환 -->
+		<dependency>
+		  <groupId>com.google.code.geocoder-java</groupId>
+		  <artifactId>geocoder-java</artifactId>
+		  <version>0.16</version>
+		</dependency>
 		<!-- 라이브러리 추가 끝 -->
 	</dependencies>
 

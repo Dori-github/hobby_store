@@ -111,6 +111,7 @@
 		(SELECT a.*,rownum rnum FROM 
 		(SELECT * 
 		FROM course c JOIN member m USING(mem_num) 
+		JOIN member_detail USING(mem_num) 
 		LEFT JOIN (SELECT course_num , COUNT(reply_num) AS replycount 
 		FROM course_reply GROUP BY course_num) USING(course_num)
 		LEFT JOIN (SELECT course_num,COUNT(fav_num) AS fav 

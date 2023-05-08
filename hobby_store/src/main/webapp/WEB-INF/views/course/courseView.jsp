@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fefd68452eb1631196f5d667fac06edf&libraries=services"></script>
+	
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -70,7 +71,7 @@
 	<!-- 오른쪽 클래스 설명 -->
 	<div class="right-class" <c:if test="${course.course_onoff.equals('on')}">style="height:480px;"</c:if>>
 		<p>
-			${course.mem_nickname} 
+			${course.mem_store} 
 			<span class="heart" data-num="${course.course_num}"><i class="fa-regular fa-heart" style="color:red;"></i> 찜하기</span>
 		</p>
 		<p style="font-size:12pt;">
@@ -92,8 +93,11 @@
 		</p>
 		<div>
 			<c:if test="${!empty course.course_zipcode}">
-			<span class="gray"><i class="fa-solid fa-location-dot"></i> &nbsp;${course.course_address1} ${course.course_address2}</span>
-			</c:if><br>
+			<span class="gray" data-ad="${course.course_address1}">
+				<i class="fa-solid fa-location-dot"></i> &nbsp;${course.course_address1} ${course.course_address2}
+			</span>
+			<br>
+			</c:if>
 			<span class="star">★</span> 
 			<span class="star-avg"></span> 
 			<span class="gray">(후기 <span class="reply-count"></span>)</span>	
@@ -105,8 +109,15 @@
 			<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
 			<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
 			<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
+			<input type="hidden" name="course_oneweek" value="${course.course_oneweek}" id="course_oneweek">
 			<input type="hidden" name="course_limit" value="${course.course_limit}" id="course_limit">
-
+			
+			<ul class="day" style="display:none;">
+				<c:forEach var="day" items="${days}">
+					<li>${day}</li>
+				</c:forEach>
+			</ul>
+			
 			<div class="reservation">
 				<%-- 원데이 클래스 --%>
 				<c:if test="${course.course_oneweek.equals('one')}">
@@ -136,23 +147,38 @@
 					</c:forEach>
 				></p>
 				<p>시간선택<select name="course_time" class="time" data-ctime="${course_time}" disabled></select></p>
-				</c:if>
-				
-				<%-- 정기 클래스 --%>
-				<c:if test="${course.course_oneweek.equals('week')}">
-				<p>시작날짜 </p>
-				<p>기간/횟수 </p>
-				</c:if>
-				
 				<p class="reserved" style="height: 30px;display: none;">
 					<span class="cnt">현재인원</span><span class="course-limit"><b></b> / ${course.course_limit}</span>
 					<span class="sold-out">매진임박</span>
 				</p>
+				</c:if>
+				
+				<%-- 정기클래스 --%>
+				<c:if test="${course.course_oneweek.equals('week')}">
+				<p style="height: 30px;">
+					<span style="float:left;">시작날짜</span>
+					<span class="start">${course.course_startdate}</span>
+				</p>
+				<p style="height: 30px;">
+					<span style="float:left;">기간/횟수</span>
+					<span class="period">${course.course_month}개월 / ${course.course_count}회</span>
+				</p>
+				<p class="reserved" style="line-height: 30px;">
+					<span class="cnt">현재인원</span>
+					<span class="course-limit"><b>${reserved}</b> / ${course.course_limit}</span>
+					<span class="sold-out">매진임박</span>
+				</p>
+				</c:if>
+				<%-- 정기클래스 끝 --%>
+				
 				<div class="limit">
 					<span>예약인원 </span>
 					<ul>
 						<li id="minus"><i class="fa-solid fa-minus" style="line-height:30px;"></i></li>
-						<li><input type="number" name="course_quan" id="course_quan" value="1" min="1" max="${course.course_limit}" disabled></li>
+						<li>
+							<input type="number" name="course_quan" id="course_quan" value="1" min="1" max="${course.course_limit}" 
+									<c:if test="${course.course_oneweek.equals('one')}">disabled</c:if>>
+						</li>
 						<li id="plus"><i class="fa-solid fa-plus" style="line-height:30px;"></i></li>
 					</ul>
 				</div>
@@ -162,6 +188,7 @@
 			</div>
 		</form>
 		</c:if>
+		<%-- 오프라인 끝 --%>
 		
 		<%-- 온라인 장바구니정보 전송 폼(클래스번호,회원번호) --%>
 		<c:if test="${course.course_onoff.equals('on')}">
@@ -181,19 +208,29 @@
 			</div>
 		</form>
 		</c:if>
-		
+		<%-- 온라인 끝 --%>
 	</div>
 </div>
 
 <div class="course-d-info">
-	<ul class="title">
-		<li class="active">소개</li>
-		<li>후기 <span class="badge reply-badge"></span></li>
-	</ul>
+	<div class="scroll">
+		<ul class="title">
+			<li class="intro">소개</li>
+			<li class="rev">후기 <span class="badge reply-badge"></span></li>
+		</ul>
 	<hr size="2" noshade width="100%" style="color:gray;margin:0;">
+	</div>
 	<!-- 소개 시작 -->
 	<div class="c-content">
-		${course.course_content}
+		<!-- 왼쪽 소개 -->
+		<div class="left-intro">${course.course_content}</div>
+		
+		<!-- 오른쪽 지도 -->
+		<c:if test="${course.course_onoff=='off'}">
+		<div class="right-map">
+			<div id="map"></div>
+		</div>
+		</c:if>
 	</div>
 	<!-- 소개 끝 -->
 	
@@ -227,11 +264,7 @@
 		</fieldset>
 		</div>
 		</c:if>
-		<!-- 
-		<input type="hidden" name="course_name" value="${course.course_name}" id="course_name">
-		<input type="hidden" name="course_price" value="${course.course_price}" id="course_price">
-		<input type="hidden" name="course_onoff" value="${course.course_onoff}" id="course_onoff">
-		 -->
+		
 		<textarea rows="3" cols="50" name="reply_content" id="reply_content" class="reply-content" 
 				<c:if test="${empty user}">disabled="disabled"</c:if>
 				><c:if test="${empty user}">로그인해야 작성할 수 있습니다.</c:if></textarea>
@@ -293,5 +326,44 @@
 	<!-- 후기 목록 출력 끝 -->
 	<!-- 후기 끝 -->
 </div>
+
+
+<!-- ============================= kakao map ========================== -->
+<script>
+		var container = document.getElementById('map');
+		
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3 // 지도의 확대 레벨
+		};
+		
+		var map = new kakao.maps.Map(container, options); // 지도를 생성합니다
+		
+		
+		//주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		//DB에 저장된 주소값
+		var address = $('.gray').attr('data-ad');
+		
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(address, function(result, status) {
+
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		        
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
+</script>
 
 <!-- 중앙 컨텐츠 끝 -->

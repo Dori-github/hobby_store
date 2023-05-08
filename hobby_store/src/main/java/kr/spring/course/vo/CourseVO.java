@@ -46,6 +46,7 @@ public class CourseVO {
 	private String cate_name;
 	private int cate_num;
 	private String mem_nickname;
+	private String mem_store;
 	private byte[] mem_photo;
 	//별점평균
 	private Float staravg;
@@ -84,9 +85,7 @@ public class CourseVO {
 	}
 	
 	
-	public void setPrice(String price) throws Exception{
-		
-	}
+	
 	public int getCourse_num() {
 		return course_num;
 	}
@@ -237,6 +236,12 @@ public class CourseVO {
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
 	}
+	public String getMem_store() {
+		return mem_store;
+	}
+	public void setMem_store(String mem_store) {
+		this.mem_store = mem_store;
+	}
 	public byte[] getMem_photo() {
 		return mem_photo;
 	}
@@ -317,7 +322,7 @@ public class CourseVO {
 				+ course_address2 + ", course_onoff=" + course_onoff + ", course_oneweek=" + course_oneweek
 				+ ", course_hit=" + course_hit + ", course_date=" + course_date + ", course_mdate=" + course_mdate
 				+ ", cate_parent=" + cate_parent + ", cate_name=" + cate_name + ", cate_num=" + cate_num
-				+ ", mem_nickname=" + mem_nickname + ", staravg=" + staravg + ", replycount=" + replycount + ", fav="
+				+ ", mem_store=" + mem_store + ", staravg=" + staravg + ", replycount=" + replycount + ", fav="
 				+ fav + ", fmem_num=" + fmem_num + ", fav_num=" + fav_num + ", courseTimeVO=" + courseTimeVO;
 	}
 	

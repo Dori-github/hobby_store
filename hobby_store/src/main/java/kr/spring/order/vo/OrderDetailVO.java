@@ -15,6 +15,8 @@ public class OrderDetailVO {
 	private int items_num;
 	private int items_total;
 	private int space_num;
+	
+	private String course_reg_date;
 	private int res_sum;
 	
 	public int getDetail_num() {
@@ -60,19 +62,19 @@ public class OrderDetailVO {
 		this.c_time = c_time;
 	}
 	
+	public String getCourse_reg_date() {
+		return course_reg_date;
+	}
+	public void setCourse_reg_date(String course_reg_date) {
+		this.course_reg_date = course_reg_date;
+	}
 	public int getRes_sum() {
 		return res_sum;
 	}
 	public void setRes_sum(int res_sum) {
 		this.res_sum = res_sum;
 	}
-	@Override
-	public String toString() {
-		return "OrderDetailVO [detail_num=" + detail_num + ", detail_name=" + detail_name + ", price=" + price
-				+ ", quantity=" + quantity + ", order_num=" + order_num + ", course_num=" + course_num + ", c_date="
-				+ c_date + ", c_time=" + c_time + ", items_num=" + items_num + ", items_total=" + items_total
-				+ ", space_num=" + space_num + "]";
-	}
+	
 	public int getItems_total() {
 		return items_total;
 	}
@@ -97,4 +99,13 @@ public class OrderDetailVO {
 	public void setSpace_num(int space_num) {
 		this.space_num = space_num;
 	}
+	@Override
+	public String toString() {
+		return "OrderDetailVO [detail_num=" + detail_num + ", detail_name=" + detail_name + ", price=" + price
+				+ ", quantity=" + quantity + ", order_num=" + order_num + ", course_num=" + course_num + ", c_date="
+				+ c_date + ", c_time=" + c_time + ", items_num=" + items_num + ", items_total=" + items_total
+				+ ", space_num=" + space_num + ", course_reg_date=" + course_reg_date + ", res_sum=" + res_sum + "]";
+	}
+	
+	
 }

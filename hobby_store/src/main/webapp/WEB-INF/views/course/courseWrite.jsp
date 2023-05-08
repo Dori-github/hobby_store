@@ -138,8 +138,7 @@
 		</tr>
 		<tr>
 			<td>클래스명</td>
-			<td><form:input path="course_name"/></td>
-			<form:errors element="div" path="course_name" cssClass="error-color"/>
+			<td><form:input path="course_name"/><form:errors element="div" path="course_name" cssClass="error-color"/></td>
 		</tr>
 		<tr id="datetime" style="display:none;">
 			<td>클래스 요일/시간</td>
@@ -233,8 +232,11 @@
 			<td>기간 / 횟수</td>
 			<td>
 				<div>
-				<input type="number" id="course_month" name="course_month" value="${fn:replace(courseVO.course_month,'0','')}"> 개월 
-				<input type="number" id="course_count" name="course_count" value="${fn:replace(courseVO.course_count,'0','')}"/> 회</div>
+					<input id="course_vmonth"> 개월 
+					<form:hidden path="course_month"/>
+					<input id="course_vcount"> 회
+					<form:hidden path="course_count"/>
+				</div>
 				<form:errors element="div" path="course_month" cssClass="error-color"/>
 				<form:errors element="div" path="course_count" cssClass="error-color"/>
 			</td>
@@ -256,7 +258,7 @@
 			<!-- 자바빈에 데이터가 없으면 int값은 자동으로 0값을 가짐 -->
 			<td>
 			<form:hidden path="course_price"/>
-			<input id="course_vprice"/>
+			<input id="course_vprice">
 			 원</td>
 			<form:errors element="div" path="course_price" cssClass="error-color"/>
 		</tr>
@@ -295,10 +297,9 @@
 						<label for="upload1" class="label2 c1">파일 선택</label>
 						<i class="fa-solid fa-circle-xmark d1"></i>
 						<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
-						
-						<form:errors element="div" path="course_photo1" cssClass="error-color"/>
 					</li>
 				</ul>
+				<form:errors element="div" path="course_photo1" cssClass="error-color"/>
 			</td>
 		</tr>
 		<tr>
@@ -330,8 +331,11 @@
 		</tr>
 		<tr>
 			<td>상세설명</td>
-			<td><form:textarea path="course_content"/></td>
-			<form:errors element="div" path="course_content" cssClass="error-color"/>
+			<td>
+				<form:textarea path="course_content"/>
+				<form:errors element="div" path="course_content" cssClass="error-color"/>
+			</td>
+			
 			<script>
 				 function MyCustomUploadAdapterPlugin(editor) {
 					    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {

@@ -95,13 +95,21 @@ public class OrderServiceImpl implements OrderService{
 	public int selectReservedNum(int course_num,String c_date,String c_time) {
 		return orderMapper.selectReservedNum(course_num,c_date,c_time);
 	}
+	
+	@Override
+	public int selectReservedNum2(int course_num) {
+		return orderMapper.selectReservedNum2(course_num);
+	}
 
 	@Override
 	public List<String> selectSoldOutTimes(int course_num, String c_date) {
 		return orderMapper.selectSoldOutTimes(course_num,c_date);
 	}
 
+	@Override
+	public List<OrderDetailVO> selectSoldOutDates(int course_num) {
+		return orderMapper.selectSoldOutDates(course_num);
+	}
 
-	
 	
 }

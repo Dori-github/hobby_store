@@ -17,8 +17,10 @@
 	  	  notice,
 	  	  order_date,
 	  	  refund_status,
+	  	  <!-- 
 	  	  reserve_date,
 	  	  reserve_time,
+	  	  -->
 	  	  mem_num,
 	  	  order_price)
 	  	VALUES (
@@ -33,8 +35,10 @@
 	  	  #{notice, jdbcType=VARCHAR},
 	  	  SYSDATE,
 	  	  #{refund_status},
+	  	  <!-- 
 	  	  #{reserve_date},
 	  	  #{reserve_time},
+	  	  -->
 	  	  #{mem_num},
 	  	  #{order_price})  
   	</insert>
@@ -52,8 +56,10 @@
 	  	  notice,
 	  	  order_date,
 	  	  refund_status,
+	  	  <!-- 
 	  	  reserve_date,
 	  	  reserve_time,
+	  	  -->
 	  	  mem_num,
 	  	  order_price)
 	  	VALUES (
@@ -68,14 +74,15 @@
 	  	  #{notice, jdbcType=VARCHAR},
 	  	  SYSDATE,
 	  	  #{refund_status},
+	  	  <!-- 
 	  	  #{reserve_date},
 	  	  #{reserve_time},
+	  	  -->
 	  	  #{mem_num},
 	  	  #{order_price})  
   	</insert>
 
-  	<insert id="insertOrderDetail" 
-  	                  parameterType="orderDetailVO">
+  	<insert id="insertOrderDetail" parameterType="orderDetailVO">
   		INSERT INTO orders_detail(
   		  detail_num,
   		  detail_name,
@@ -100,10 +107,6 @@
   		  #{space_num})  
   	</insert>
   	
-<!-- 
-  	<delete id="deleteCartItem"
-  					parameterType="cartVO">
-  					
-  	</delete>
- -->
+  	
+  	
 </mapper>

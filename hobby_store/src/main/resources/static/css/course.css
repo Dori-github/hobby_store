@@ -11,6 +11,7 @@
 #sidebar{
 	width:20%;
 	margin-top:100px;
+	position: relative;
 }
 #content{
 	width:80%;
@@ -20,23 +21,37 @@
 	padding:0;
 	margin-right:20px;
 }
-#sidebar a{
+#sidebar .cate, .d_cate a{
 	display:block;
 	text-decoration: none;
 	color:#404040;
 	cursor: pointer;
 }
-#sidebar .cate{
+#sidebar .cate, #sidebar .my-town{
 	padding:10px;
 	font-size: 16pt;
 	font-weight: bold;
 	transition:.2s;
+	color:#404040;
+}
+#sidebar .my-town{
+	margin-bottom:20px;
+}
+#sidebar .town{
+	font-size:20pt;
+	padding-top:0;
+	min-width: 300px;
+}
+#sidebar .my-town a:hover{
+	color:#FF4E02;
+	cursor: pointer;
 }
 #sidebar .cate:hover, #sidebar .active-color0{
 	color:#FF4E02;
 	background-color:#F2F2F2;
 	border-radius: 5px;
 	font-size:18pt;
+	cursor: pointer;
 }
 #sidebar .d_cate{
 	line-height:3em;
@@ -184,6 +199,90 @@ input::-webkit-search-results-decoration{
 
 
 
+/*클래스 지도 검색
+=============================*/
+#sel,#sidebar #keyword{
+	border:3px solid #404040;
+	border-radius:10px;
+	margin:10px;
+	padding:0 10px;
+}
+#sidebar #keyword{
+	width:93%;
+	height:40px;
+}
+#map_search{
+	border:none;
+	background-color: #FFF;
+	font-size:1.2em;
+	margin-left:-55px;
+	position: absolute;
+	top:13px;
+	right:16px;
+}
+#sel .loc{
+	border:none;
+	width:45%;
+	height:40px;
+	border-radius: 10px;
+}
+#sel .loc option{
+	padding:10px 0;
+}
+#gugun{
+	float:right;
+}
+.loc:focus{
+    outline: none;
+}
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 15px;
+}
+::-webkit-scrollbar-track{
+	background-color: #F2F2F2;
+}
+::-webkit-scrollbar-thumb {
+	border:5px solid #F2F2F2;
+	height:20px;
+    border-radius: 10px;
+    background-color:gray;
+}
+
+
+
+
+#list_back{
+	width:170px;
+	border-radius: 10px;
+	position: absolute;
+	bottom:0;
+}
+#content #map{
+	width:1080px;
+	height:620px;
+}
+.course-map{
+	margin-left:100px;
+	position:relative;
+}
+.here{
+	position: absolute;
+	top:10px;
+	right:140px;
+	z-index:998;
+	width:110px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#FFF;
+	background-color:#FF4E02;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.here:hover{
+	transform:scale(1.1);
+}
 
 /*강의-등록폼,수정폼
 =============================*/
@@ -227,7 +326,9 @@ input::-webkit-search-results-decoration{
 
 #course_form input[type=date],
 #course_form input[type=text],
-#course_form input[type=number],#course_vprice{
+#course_form input[type=number],
+#course_vprice,
+#course_vmonth,#course_vcount{
 	width:100%;
 	outline:1px solid lightgray;
 	border:none;
@@ -676,7 +777,7 @@ input[type='number']::-webkit-inner-spin-button {
 	cursor: pointer;
 }
 /*날짜선택,시간선택*/
-#datePicker,.reservation .time,.course-limit{
+#datePicker,.reservation .time,.course-limit,.start,.period{
 	margin-left:20px;
 	width:200px;
 	height:30px;
@@ -685,10 +786,13 @@ input[type='number']::-webkit-inner-spin-button {
 	border-radius: 5px;
 	text-align: center;
 }
+#datePicker{
+	cursor: pointer;
+}
 .cnt{
 	float:left;
 }
-.course-limit{
+.course-limit,.start,.period{
 	display: inline-block;
 }
 .right-class .reservation{
@@ -755,14 +859,50 @@ input[type='number']::-webkit-inner-spin-button {
 .course-d-info .title li:hover{
 	background-color:#F2F2F2;
 }
-.course-d-info .title .active{
+.course-d-info .title .intro{
 	border-bottom:5px solid #FF4E02;
 }
 .badge{
 	background-color: gray;
 }
-.course-d-info .c-content,.course-d-info .reply,.course-d-info .qna{
+.course-d-info .c-content{
+	margin-top:100px;
+	display: flex;
+	justify-content: flex-start;
+}
+.c-content .left-intro{
+	width:50%;
+}
+.course-d-info .right-map{
+	width:50%;
+}
+.course-d-info #map, #map{
+	width:800px;
+	height:600px;
+	border-radius: 10px;
+	border:2px solid #C2C2C2;
+}
+.course-d-info .reply,.course-d-info .qna{
 	margin-top:150px;
+}
+
+/*스크롤시 소개,후기바 고정*/
+.fixed{
+	position: fixed;
+	top: 170px;
+	background-color: #FFF;
+	z-index:998;
+	width:80%;
+}
+/*kakao map 고정*/
+.fixedMap{
+	position: fixed;
+	top: 320px;
+	right:0;
+	z-index:997;
+}
+.title{
+	background-color: #FFF;
 }
 
 /*클래스 후기*/

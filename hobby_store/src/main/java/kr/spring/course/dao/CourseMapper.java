@@ -33,6 +33,10 @@ public interface CourseMapper {
 	@Select("SELECT course_seq.nextval FROM dual")
 	public int selectCourse_num();
 	public int selectCourseCount(Map<String,Object> map);
+	//지도에 검색할 클래스 주소 가져오기
+	@Select("SELECT course_address1 FROM course WHERE NOT course_address1 is NULL")
+	public List<String> selectCourseAddress();
+	//클래스 등록
 	@Insert("INSERT INTO course (course_num,mem_num,course_name,status,course_onoff,course_oneweek,cate_nums,course_zipcode,course_address1,course_address2,"
 			+ "course_photo1,course_photo_name1,course_photo2,course_photo_name2,course_photo3,course_photo_name3,"
 			+ "course_startdate,course_month,course_count,course_limit,course_price,course_content) VALUES "
@@ -40,7 +44,7 @@ public interface CourseMapper {
 			+ "#{course_address1},#{course_address2},#{course_photo1},#{course_photo_name1},#{course_photo2},#{course_photo_name2},#{course_photo3},#{course_photo_name3},"
 			+ "#{course_startdate},#{course_month},#{course_count},#{course_limit},#{course_price},#{course_content})")
 	public void insertCourse(CourseVO course);
-	
+	//클래스 시간 등록
 	@Insert("INSERT INTO course_time (ctime_num,course_num,mem_num,course_reg_date,course_reg_time) VALUES "
 			+ "(course_time_seq.nextval,#{course_num},#{mem_num},#{course_reg_date},#{course_reg_time})")
 	public void insertCourse_time(CourseTimeVO vo);
@@ -48,7 +52,7 @@ public interface CourseMapper {
 	public List<CourseVO> selectCate();
 	@Select("SELECT cate_num FROM course_cate WHERE cate_name=#{cate_name}")
 	public int selectCate_num(String cate_name);
-	@Select("SELECT * FROM course JOIN member USING (mem_num) WHERE course_num = #{course_num}")
+	@Select("SELECT * FROM course JOIN member USING (mem_num) JOIN member_detail USING (mem_num) WHERE course_num = #{course_num}")
 	public CourseVO selectCourse(Integer course_num);
 	//해당 클래스의 요일,시간 리스트 호출
 	@Select("SELECT * FROM course_time WHERE course_num = #{course_num}")

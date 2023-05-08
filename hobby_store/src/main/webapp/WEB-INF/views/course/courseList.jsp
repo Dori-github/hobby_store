@@ -26,6 +26,7 @@
 	<!-- 사이즈바 시작 -->
 	<div id="sidebar" data-param="${param.cate}">
 		<ul>
+			<li class="my-town"><a href="/course/courseMap.do"><i class="fa-solid fa-person-shelter"></i> 우리 동네 공방 찾기</a></li>
 			<li>
 				<a class="cate <c:if test="${param.cate=='전체'}">active active-color0</c:if>">전체</a>
 			</li>
@@ -136,11 +137,11 @@
 						</div>
 						<div class="card-body">
 						  	<div class="color-gray">
-						  		<span>${course.mem_nickname}</span>
+						  		<span>${course.mem_store}</span>
 						  		<span class="card-hit"><i class="fa-solid fa-eye"></i> ${course.course_hit} <i class="fa-solid fa-heart"></i> <span class="countFav">${course.fav}</span></span>
 						  	</div>
 						  	<h5 class="card-title"><b>${course.course_name}</b></h5>
-						  	<span><i class="fa-regular fa-star"></i> ${course.staravg} (후기 ${course.replycount})</span>
+						  	<span>${course.replycount}개의 후기 · <i class="fa-regular fa-star"></i> ${course.staravg}<c:if test="${empty course.staravg}">0.0</c:if></span>
 						  	<p class="card-text">
 						  		<span>${course.course_address1}</span>
 						  		<br><b><fmt:formatNumber>${course.course_price}</fmt:formatNumber>원</b><span style="color:gray;"> / 1인</span>

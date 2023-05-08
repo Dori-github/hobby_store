@@ -114,6 +114,14 @@ $(function(){
 					
 					<br>
 
+					<label for="mem_store">공방명</label>
+					<div class="input-group mb-3">
+						<form:input path="mem_store" type="text" id="mem_store" placeholder="공방이 있는 경우만 작성해 주세요"
+							class="form-control" style="border: none;background: #F2F2F2;" autocomplete="off" />
+					</div>
+					
+					<br>
+
 					<label for="mem_pw">비밀번호</label>
 					<div class="input-group mb-3">
 						<form:input path="mem_pw" type="password" id="mem_pw"

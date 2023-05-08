@@ -17,13 +17,22 @@ public interface CourseService {
 	public List<CourseVO> selectCourseMainList(Map<String,Object> map);
 	public List<CourseVO> selectCourseMainList2(Map<String,Object> map2);
 	public List<CourseVO> selectCourseMainList3(Map<String,Object> map3);
+	//클래스 목록
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
+	//지도에 검색할 주소 가져오기
+	public List<String> selectCourseAddress();
+	//클래스 목록 개수
 	public int selectCourseCount(Map<String,Object> map);
+	//클래스 등록
 	public void insertCourse(CourseVO course);
+	//카테고리 목록 가져오기
 	public List<CourseVO> selectCate();
 	public int selectCate_num(String cate_name);
+	//클래스 상세정보 가져오기
 	public CourseVO selectCourse(Integer course_num);
+	//클래스 요일,시간 가져오기
 	public List<CourseTimeVO> selectCourseTime(Integer course_num);
+	//클래스 
 	public CourseTimeVO selectCourseTimes(Integer course_num,String course_reg_date);
 	public void updateHit(Integer course_num);
 	public void updateCourse(CourseVO course);

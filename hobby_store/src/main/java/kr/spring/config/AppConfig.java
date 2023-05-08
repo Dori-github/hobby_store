@@ -59,7 +59,9 @@ public class AppConfig implements WebMvcConfigurer{
 			        .addPathPatterns("/order/orderNowForm.do")
 			        .addPathPatterns("/order/order.do")
 			        .addPathPatterns("/order/nowOrder.do")
-					.addPathPatterns("/mypage/pointsList.do");
+					.addPathPatterns("/mypage/pointsList.do")
+					.addPathPatterns("/course/courseWrite.do")
+					.addPathPatterns("/course/courseMap.do");
 			//AdminCheckInterceptor 설정
 			registry.addInterceptor(adminCheck)
 				    .addPathPatterns("/notice/admin_list.do")

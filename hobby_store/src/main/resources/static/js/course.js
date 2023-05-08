@@ -53,7 +53,7 @@ $(function(){
 	//지역 선택
 	$('#select #location').on('change',function(){
 		location.href='courseList.do?cate='+$('#sidebar').data('param')+
-									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val()+
+									'&keyfield='+$('.form-select').val()+'&keyword='+$('#search_bar').val()+'&onoff='+$('#onoff').val()+
 									'&location='+$(this).val()+'&oneweek='+$('#oneweek').val()+'&order='+$('#order').val();
 	});
 	
@@ -387,6 +387,28 @@ $(function(){
 	
 	
 	
+	//===============기간/횟수===================//
+	$('#course_form #course_vmonth').on('keyup',function(){
+		let num = Number($(this).val().replace(/[^0-9]/g,''));
+		$(this).val(num);
+		$('#course_form #course_month').val(num);
+			
+		if($(this).val()==0){
+			$(this).val("");
+		}
+	});
+	
+	$('#course_form #course_vcount').on('keyup',function(){
+		let num = Number($(this).val().replace(/[^0-9]/g,''));
+		$(this).val(num);
+		$('#course_form #course_count').val(num);
+			
+		if($(this).val()==0){
+			$(this).val("");
+		}
+	});
+	
+	
 	//===============이미지===================//
 	
 	//이미지 미리 보기
@@ -512,12 +534,6 @@ $(function(){
 			}
 			
 		}
-		if($('#course_month').val().trim()==''){
-			$('#course_month').val(0);
-		}
-		if($('#course_count').val().trim()==''){
-			$('#course_count').val(0);
-		}
 	});	
 	
 	//===============클래스 수정폼================//
@@ -531,10 +547,11 @@ $(function(){
 	checkOne();
 	
 	//가격에 ,(콤마) 표시
-	let price = $('.course-mform #course_price').val();
-	$('.course-mform #course_vprice').val(price.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-	
-	
+	if($('#course_form #course_price').val()!=0){
+		let price = $('#course_price').val();
+		$('#course_vprice').val(price.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+	}
+
 	
 	
 	//이미지 삭제 버튼

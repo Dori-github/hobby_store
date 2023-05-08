@@ -27,7 +27,7 @@ $(function(){
         });
 	}
 
-	
+
 	//후기 목록
 	function selectList(pageNum){
 		currentPage = pageNum;
@@ -711,37 +711,10 @@ $(function(){
 	
 	
 	
-	//------------------------전체매진------------------------//
-	/*
-	//매진일 경우 입력창 비활성화
-	function soldOut(){
-		$('#datePicker').attr('disabled','disabled');
-		$('#course_quan').attr('disabled','disabled');
-		$('.price').css('color','lightgray');
-		$('.buy').attr('disabled','disabled');
-		$('.buy').css('background-color','lightgray');
-		$('.sold-out:nth-child(3)').show();
-		$('.sold-out:last-child').hide();
-	}
 	
-	//입력창 활성화
-	function notSoldOut(){
-		$('#datePicker').attr('disabled',false);
-		$('#course_quan').attr('disabled',false);
-		$('.price').css('color','#000');
-		$('.buy').attr('disabled',false);
-		$('.buy').css('background-color','#FF4E02');
-		$('.sold-out:nth-child(3)').hide();
-		$('.sold-out:last-child').hide();
-	}*/
 	
 	//남은 인원수(수강인원수-예약인원수)
 	let rest;
-	
-	if(rest==0){
-		//입력창 비활성화
-		soldOut();
-	}
 	
 	//========================날짜========================//
 	//클래스 요일 가져오기
@@ -757,11 +730,14 @@ $(function(){
         maxDate: "+1M", //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 		//특정요일만 선택
 		beforeShowDay: function(date){
-			let day = date.getDay();
-			/*
-			//매진된 날짜 리스트
-			let disabledDays = ["2023-05-03"];
 			
+			let day = date.getDay();
+			let disabledDays = [];
+			
+			$('.day li').each(function(){
+				disabledDays.push($(this).text());
+			});
+					
 			//월,일을 2자리로 변경(1->01)
 			let m = date.getMonth()+1;
 			m = m < 10 ? 0+String(m) : String(m);
@@ -774,7 +750,7 @@ $(function(){
 		            return [false];
 		        }
 		    }
-			*/
+				//alert(disabledDays);
 			return [!(day!=$('#datePicker').attr('data-mon')
 					&&day!=$('#datePicker').attr('data-tues')
 					&&day!=$('#datePicker').attr('data-wed')
@@ -782,7 +758,7 @@ $(function(){
 					&&day!=$('#datePicker').attr('data-fri')
 					&&day!=$('#datePicker').attr('data-sat')
 					&&day!=$('#datePicker').attr('data-sun'))]; 
-		
+			
 		}  
 	});
 	
@@ -795,14 +771,18 @@ $(function(){
 			data:{course_num:$('#course_num').val(),c_date:$('#datePicker').val(),c_time:timeVal},
 			dataType:'json',
 			success:function(param){
+				//남은 인원수(수강인원수-예약인원수)
 				rest = $('#course_limit').val()-param.reserved;
 				
+				//현재 예약한 인원수 표시
 				$('.course-limit b').text(param.reserved);
+				
 				//현재 남은 인원수가 1~2명
 				if(0 < rest && rest <3){
+					//매진임박 표시
 					$('.sold-out').show();
-				}else if(rest==0){
-					
+				}else{
+					$('.sold-out').hide();
 				}
 			},
 			error:function(){
@@ -811,7 +791,7 @@ $(function(){
 		});
 	}
 	
-	
+	//날짜를 바꿀 경우
 	$(document).on('change','#datePicker',function(){
 		//현재인원,예약인원,시간 입력창 활성화
 		$('.reserved').show();
@@ -835,46 +815,32 @@ $(function(){
 			success:function(param){
 				//select 태그 안에 시간 표시
 				$(param.course_reg_times).each(function(index,item){
-					let put = '<option value="'+item+'">'+item+'</option>';
-					
-					$(param.soldout_times).each(function(index2,item2){
-						if(index==index2){
-							if(item==item2){//매진일 경우 시간 비활성화
+					//매진된 시간이 있을 경우
+					if(param.soldout_times.length!=0){
+						$(param.soldout_times).each(function(index2,item2){
+							if(item==item2){//값이 같으면 매진 -> 시간 비활성화
 								output += '<option value="'+item+'" disabled>'+item+'</option>';
 								return false;
-							}else{
-								output += '<option value="'+item+'">'+item+'</option>';
-								return false;
 							}
-						}else if(index>index2){//인덱스 번호가 다르면 건너뛰기
-							return true;
-						}
-						
-					});
+							if(index2+1==$(param.soldout_times).length){
+								output += '<option value="'+item+'">'+item+'</option>';
+							}
+						});
+					}else{
+						//매진된 시간이 없을 경우
+						output += '<option value="'+item+'">'+item+'</option>';		
+					}
+					
 				});
 				$('.time').html(output);
+			
 				
+				//현재 예약 인원수 표시
+				getReserved($('.time option:selected').text());
 				
-				/*
-				$(param.course_reg_times).each(function(index,item){
-					output += '<option value="'+item+'">'+item+'</option>';
-				});
-				$('.time').html(output);
+				$('.time').css('cursor','pointer');
+				$('#course_quan').css('cursor','pointer');
 				
-				//
-				$('.time option').each(function(){
-					let option = $(this);
-					$(param.soldout_times).each(function(index2,item2){
-						if(option.val()==item2){
-							option.attr('disabled',true);
-						}
-					});
-				});
-				*/
-				
-				
-				//현재 예약 인원수 표시(시간 첫번째 값)
-				getReserved(param.course_reg_times[0]);
 			},
 			error:function(){
 				alertIcon('error','네트워크 오류 발생!');
@@ -907,19 +873,32 @@ $(function(){
 	
 	//최댓값 체크(수업인원수까지)
 	function checkMax(){
-		if($('#course_quan').val()>rest){
-			alertIcon('warning','최대 '+ rest +'까지 입력하세요!');
-			$('#course_quan').val(rest);
+		//원데이 클래스
+		if($('#course_oneweek').val()=='one'){
+			if($('#course_quan').val()>rest){
+				alertIcon('warning','최대 '+ rest +'까지 입력하세요!');
+				$('#course_quan').val(rest);
+			}
 		}
+		
+		//정기클래스
+		if($('#course_oneweek').val()=='week'){
+			//						수강인원수 - 현재 예약한 사람수
+			rest = $('#course_limit').val() - $('.course-limit b').text();
+			
+			if($('#course_quan').val()>rest){
+				alertIcon('warning','최대 '+ rest +'까지 입력하세요!');
+				$('#course_quan').val(rest);
+			}
+		}
+		
+		
 		//가격 갱신(예약인원*초기가격)
 		$('.price').text((parseInt($('#course_quan').val())*price).toLocaleString()+"원");
 	}
 	
 	//예약인원 입력창 비활성화
 	function inactive(e){
-		if(rest==0)//매진인 경우
-			e.preventDefault()
-		
 		if($('#datePicker').val()==null || $('.time').val()==null){//날짜,시간을 선택하지 않은 경우
 			alertIcon('warning','날짜를 먼저 선택하세요!');
 			//기본이벤트 제거
@@ -929,18 +908,23 @@ $(function(){
 	
 	//-버튼 클릭시 최소값 체크
 	$('#minus').on('click',function(){
+		if($('#course_oneweek').val()=='one'){
+			inactive();
+		}
+		
 		let quan = parseInt($('#course_quan').val());
 		$('#course_quan').val(--quan);
 		
 		checkMin();
-		inactive();
 	});
 	
 	
 	//+버튼 클릭시 최댓값 체크
 	$('#plus').on('click',function(){
-		inactive();
-
+		if($('#course_oneweek').val()=='one'){
+			inactive();
+		}
+		
 		let quan = parseInt($('#course_quan').val());
 		$('#course_quan').val(++quan);
 		
@@ -949,6 +933,7 @@ $(function(){
 
 	//입력창에 직접 입력시 최소값,최댓값 체크
 	$('#course_quan').on('keyup',function(){
+		//지웠을 떈 작동 x
 		if($(this).val()!=''){
 			checkMin();
 			checkMax();
@@ -963,7 +948,88 @@ $(function(){
 			alertIcon('warning','날짜를 선택하세요!');
 			return false;
 		}
+		
+		//예약인원 유효성 체크
+		if($('#course_quan').val()==''){
+			alertIcon('warning','예약인원을 선택하세요!');
+			return false;
+		}
+
 	});
+	
+	
+	//----------------------스크롤 시 소개,후기바/kakao map 고정----------------------//
+	let origin = $('.scroll').offset().top;
+	$(window).scroll(function(){
+		//현재위치
+		let cur = $(document).scrollTop();
+		//특정 엘리먼트의 위치값
+		let loc = $('.scroll').offset().top;
+		//왼쪽 소개 bottom 위치값
+		let bottom = $('.left-intro').offset().top+$('.left-intro').outerHeight();
+
+		//소개,후기 바 고정x
+		if(!$('.scroll').hasClass("fixed")){
+			if(cur > loc - 170){
+				$('.scroll').addClass("fixed");
+				$('.c-content').css('margin-top','340px');
+				
+				//kakao map 고정
+				$('.right-map').addClass("fixedMap");
+			}
+			
+		//소개,후기 바 고정ㅇ
+		}else{
+			if(cur < origin - 170){
+				$('.scroll').removeClass("fixed");
+				$('.c-content').css('margin-top','100px');
+				
+				//kakao map 고정 해제
+				$('.right-map').removeClass("fixedMap");
+			}
+
+			if(cur > bottom-850){
+				$('.right-map').removeClass("fixedMap");
+				$('#map').css('margin-top',$('.left-intro').height()-600);
+			}else if(cur < bottom-850 && cur > origin-170){
+				$('.right-map').addClass("fixedMap");
+				$('#map').css('margin-top','0');
+			}
+		}
+		
+		/*
+		let map =  $('#map').offset().top;
+		//kakao map 고정
+		if(!$('#map').hasClass("fixedMap")){
+			if(cur > map - 290){
+				alert(0);
+				
+			}
+		}else{
+			if(cur < map - 210){
+				$('#map').removeClass("fixedMap");
+			}
+		}
+		*/
+				
+	});
+	
+	
+	
+	//-----------------소개,후기 클릭시 위치로 이동-----------------//
+	//소개
+	$('.intro').on('click',function(){
+		window.scrollTo({ top: 900, behavior: "smooth" });
+	});
+	//후기
+	$('.rev').on('click',function(){
+		window.scrollTo({ top: 3800, behavior: "smooth" });
+	});
+	
+	
+	
+	
+	
 });
 
 

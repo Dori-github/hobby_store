@@ -1,5 +1,7 @@
 package kr.spring.course.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,14 +26,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
+
 import kr.spring.course.service.CourseService;
 import kr.spring.course.vo.CourseFavVO;
 import kr.spring.course.vo.CourseReplyFavVO;
 import kr.spring.course.vo.CourseReplyVO;
 import kr.spring.course.vo.CourseTimeVO;
 import kr.spring.course.vo.CourseVO;
+import kr.spring.member.service.MemberService;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.order.service.OrderService;
+import kr.spring.order.vo.OrderDetailVO;
 import kr.spring.util.PagingUtil;
 
 @Controller
@@ -44,6 +56,8 @@ public class CourseController {
 	private CourseService courseService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private MemberService memberService;
 	
 	//자바빈(VO) 초기화
 	@ModelAttribute
@@ -128,8 +142,10 @@ public class CourseController {
 	public ModelAndView process(@RequestParam(value="pageNum",defaultValue="1") int currentPage,
 								@RequestParam(value="order",defaultValue="1") String order,
 								String cate,
-								String onoff,String oneweek,
-								String keyfield,String keyword, String location,HttpSession session) {
+								@RequestParam(value="onoff",defaultValue="0") String onoff,
+								@RequestParam(value="oneweek",defaultValue="0") String oneweek,
+								@RequestParam(value="location",defaultValue="전체") String location,
+								String keyfield,String keyword,HttpSession session) {
 		
 		//카테고리 고유번호 저장
 		int cate_num;
@@ -157,8 +173,9 @@ public class CourseController {
 		logger.debug("<<클래스 목록 개수>> : " + count);
 		
 		//페이지 처리
-		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, "courseList.do");
-		
+		PagingUtil page = new PagingUtil(keyfield,keyword,currentPage, count, 12, 3, 
+				"courseList.do","&cate="+cate+"&onoff="+onoff+"&oneweek="+oneweek+"&location="+location+"&order="+order);
+
 		List<CourseVO> list = null;
 		if(count>0) {
 			map.put("start", page.getStartRow());
@@ -192,6 +209,46 @@ public class CourseController {
 	}
 	
 	
+	
+	//==========클래스 kakao map 검색============//
+	@RequestMapping("/course/courseMap.do")
+	public ModelAndView courseMap(HttpSession session) {
+		
+		//session에 저장된 회원번호 가져오기 
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		/*
+		MemberVO member = memberService.selectMember(user.getMem_num());
+		String address = member.getMem_address1();
+		*/
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("courseMap");
+		//mav.addObject("address",address);
+		
+		return mav;
+	}
+		
+	//==========클래스 kakao map 주소 가져오기============//
+	@RequestMapping("/course/getAddress.do")
+	@ResponseBody
+	public Map<String,Object> getAddress() {
+		
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		List<String> address = courseService.selectCourseAddress();
+		mapJson.put("address", address);
+		
+		for(String i : address) {
+			logger.debug("<<================================address>> :" + i);
+		}
+		
+		
+		return mapJson;
+	}	
+		
+	
+	
+	
+	
 	//이미지 출력
 	@RequestMapping("/course/imageView.do")
 	public ModelAndView viewImage(@RequestParam int course_num,@RequestParam int item_type) {
@@ -218,7 +275,13 @@ public class CourseController {
 	}
 	
 	
-	//클래스 요일,시간 List에 저장
+
+	
+
+	
+	
+	
+	//클래스 요일,시간 List에 저장하는 함수
 	public List<CourseTimeVO> getCourseTime(int course_num) {
 		List<CourseTimeVO> course_time = courseService.selectCourseTime(course_num);
 		for(int i=0;i<course_time.size();i++) {
@@ -231,6 +294,7 @@ public class CourseController {
 		return course_time;
 	}
 	
+	
 	//==========클래스 글상세============//
 	@RequestMapping("/course/courseDetail.do")
 	public String detail(@RequestParam int course_num,Model model) {
@@ -241,6 +305,7 @@ public class CourseController {
 		
 		//클래스 정보 저장
 		CourseVO course = courseService.selectCourse(course_num);
+		logger.debug("<<==========================course>> : " + course);
 		model.addAttribute("course", course);
 		
 		//클래스 요일,시간 저장
@@ -248,12 +313,36 @@ public class CourseController {
 		model.addAttribute("course_time",course_time);
 		
 		//매진된 날짜 리스트
-		//List<String> soldOut = orderService.selectSoldOut(course_num,);
-		//model.addAttribute("reserved",reserved);
-		//logger.debug("<<현재 예약한 사람수>> : " + reserved);
+		List<OrderDetailVO> soldOut = orderService.selectSoldOutDates(course_num);
+		
+		List<String> days = new ArrayList<String>();
+		
+		for(OrderDetailVO item : soldOut) {
+			for(CourseTimeVO item2 : course_time) {
+				if(item.getCourse_reg_date().equals(item2.getCourse_reg_date())){//같은 요일에 해당하는 시간 수 구하기
+					int time_cnt = item2.getCourse_reg_times().size();
+					//               수강인원*시간수
+					if(item.getRes_sum()==course.getCourse_limit()*time_cnt){//해당 날짜 매진
+						
+						days.add(item.getC_date());
+						
+					}
+				}	
+			}
+		}
+		model.addAttribute("days",days);
+		
+		//정기클래스 총 예약인원수
+		int reserved = orderService.selectReservedNum2(course_num);
+		model.addAttribute("reserved",reserved);
 		
 		return "courseView";
 	}
+	
+	
+	
+	
+	
 	
 	//===============상세 클래스시간 호출=============//
 	@RequestMapping("/course/getCourseTime.do")
@@ -269,16 +358,16 @@ public class CourseController {
 		String[] array_times = time.getCourse_reg_time().split(",");
 		//배열에 담긴 데이터를 리스트에 저장
 		List<String> course_reg_times = Arrays.asList(array_times);
+		
+		
 		//매진된 시간
 		List<String> soldout_times = orderService.selectSoldOutTimes(course_num,c_date);
 		
-		for(int i=0;i<course_reg_times.size()-soldout_times.size();i++) {
-			soldout_times.add("a");
-		}
-		logger.debug("<<soldout_times>> : "+soldout_times);
 		
 		mapJson.put("course_reg_times", course_reg_times);
 		mapJson.put("soldout_times", soldout_times);
+		logger.debug("<<course_reg_times>> :" + course_reg_times);
+		logger.debug("<<soldout_times>> :" + soldout_times);
 		return mapJson;
 	}
 	
@@ -515,11 +604,17 @@ public class CourseController {
 		logger.debug("<<order>> : " + order);
 		
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		logger.debug("<<---------user>> : " + user);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("course_num", course_num);
 		map.put("order", order);
-		map.put("mem_num",user.getMem_num());
+		//로그인 한 경우
+		if(user!=null) { 
+			map.put("mem_num",user.getMem_num());
+		}
+
+		
 		//후기 개수
 		int count = courseService.selectReplyCount(map);
 		//별점 평균

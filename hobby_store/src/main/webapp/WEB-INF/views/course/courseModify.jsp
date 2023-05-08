@@ -371,8 +371,8 @@
 			<td>기간 / 횟수</td>
 			<td>
 				<div>
-				<input type="number" id="course_month" name="course_month" value="${fn:replace(courseVO.course_month,'0','')}"> 개월 
-				<input type="number" id="course_count" name="course_count" value="${fn:replace(courseVO.course_count,'0','')}"/> 회</div>
+				<form:input type="number" id="course_month" path="course_month" value="${fn:replace(courseVO.course_month,'0','')}"/> 개월 
+				<form:input type="number" id="course_count" path="course_count" value="${fn:replace(courseVO.course_count,'0','')}"/> 회</div>
 				<form:errors element="div" path="course_month" cssClass="error-color"/>
 				<form:errors element="div" path="course_count" cssClass="error-color"/>
 			</td>
