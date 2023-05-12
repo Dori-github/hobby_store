@@ -34,8 +34,7 @@ public interface CourseMapper {
 	public int selectCourse_num();
 	public int selectCourseCount(Map<String,Object> map);
 	//지도에 검색할 클래스 주소 가져오기
-	@Select("SELECT course_address1 FROM course WHERE NOT course_address1 is NULL")
-	public List<String> selectCourseAddress();
+	public List<CourseVO> selectCourseAddress(Map<String,Object> map);
 	//클래스 등록
 	@Insert("INSERT INTO course (course_num,mem_num,course_name,status,course_onoff,course_oneweek,cate_nums,course_zipcode,course_address1,course_address2,"
 			+ "course_photo1,course_photo_name1,course_photo2,course_photo_name2,course_photo3,course_photo_name3,"

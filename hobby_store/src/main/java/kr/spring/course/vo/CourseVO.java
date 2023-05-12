@@ -46,6 +46,7 @@ public class CourseVO {
 	private String cate_name;
 	private int cate_num;
 	private String mem_nickname;
+	//공방 이름
 	private String mem_store;
 	private byte[] mem_photo;
 	//별점평균
@@ -59,6 +60,9 @@ public class CourseVO {
 	private int fav_num;
 	
 	private List<CourseTimeVO> courseTimeVO;
+	
+	
+	
 
 	//파일 업로드 처리
 	//폼에서 파일업로드 파라미터 네임은 반드시 upload1,2,3로 지정

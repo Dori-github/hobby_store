@@ -217,13 +217,12 @@ public class CourseController {
 		//session에 저장된 회원번호 가져오기 
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		/*
 		MemberVO member = memberService.selectMember(user.getMem_num());
 		String address = member.getMem_address1();
-		*/
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("courseMap");
-		//mav.addObject("address",address);
+		mav.addObject("address",address);
 		
 		return mav;
 	}
@@ -231,16 +230,19 @@ public class CourseController {
 	//==========클래스 kakao map 주소 가져오기============//
 	@RequestMapping("/course/getAddress.do")
 	@ResponseBody
-	public Map<String,Object> getAddress() {
+	public Map<String,Object> getAddress(String sido,String gugun,String keyword) {
+		
+		logger.debug("<<sido,gugun,keyword>> :" + sido + "," + gugun + "," + keyword);
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("sido", sido);
+		map.put("gugun", gugun);
+		map.put("keyword",keyword);
+		List<CourseVO> list = courseService.selectCourseAddress(map);
+		logger.debug("<<====================리스트>> : " + list);
 		
 		Map<String,Object> mapJson = new HashMap<String,Object>();
-		List<String> address = courseService.selectCourseAddress();
-		mapJson.put("address", address);
-		
-		for(String i : address) {
-			logger.debug("<<================================address>> :" + i);
-		}
-		
+		mapJson.put("list", list);
 		
 		return mapJson;
 	}	

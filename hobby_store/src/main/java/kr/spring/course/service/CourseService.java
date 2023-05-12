@@ -20,7 +20,7 @@ public interface CourseService {
 	//클래스 목록
 	public List<CourseVO> selectCourseList(Map<String,Object> map);
 	//지도에 검색할 주소 가져오기
-	public List<String> selectCourseAddress();
+	public List<CourseVO> selectCourseAddress(Map<String,Object> map);
 	//클래스 목록 개수
 	public int selectCourseCount(Map<String,Object> map);
 	//클래스 등록

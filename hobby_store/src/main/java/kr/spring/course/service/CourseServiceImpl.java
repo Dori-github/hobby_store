@@ -288,8 +288,8 @@ public class CourseServiceImpl implements CourseService{
 		return courseMapper.selectReplyNum(course_num);
 	}
 	@Override
-	public List<String> selectCourseAddress() {
-		return courseMapper.selectCourseAddress();
+	public List<CourseVO> selectCourseAddress(Map<String, Object> map) {
+		return courseMapper.selectCourseAddress(map);
 	}
 	
 }

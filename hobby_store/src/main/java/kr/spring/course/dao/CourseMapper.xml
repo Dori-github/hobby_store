@@ -105,7 +105,9 @@
 			<include refid="courseLoc"></include>
 		ORDER BY <include refid="courseOrder"></include>
 	</select>
-	 
+	
+	
+	
 	<select id="selectCourseList" parameterType="map" resultType="courseVO">
 		SELECT * FROM 
 		(SELECT a.*,rownum rnum FROM 
@@ -203,14 +205,14 @@
                                LEFT OUTER JOIN 
                                <if test="mem_num!=null">
                                (SELECT *  FROM (SELECT reply_num, COUNT(reply_num) AS fav_cnt
-                                                FROM course_reply_fav group by reply_num)a 
-                                                     LEFT OUTER JOIN 
-                                                     (SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num})b 
-                                                     USING(reply_num))f 
+                                    FROM course_reply_fav group by reply_num)a 
+                                         LEFT OUTER JOIN 
+                                         (SELECT * FROM course_reply_fav WHERE fmem_num=#{mem_num})b 
+                                         USING(reply_num))f 
                                </if>
                                <if test="mem_num==null">
                                (SELECT reply_num, COUNT(reply_num) AS fav_cnt 
-                               FROM course_reply_fav group by reply_num)f
+                               		FROM course_reply_fav group by reply_num)f
                                </if>                       
                                USING(reply_num) 
                                ORDER BY <include refid="replyOrder"></include>)m) 
@@ -240,5 +242,34 @@
 
   		WHERE reply_num=#{reply_num}    
   	</update>
+  	
+  	
+  	
+  	
+  	<!-- kakao map 주소 검색 -->
+  	<sql id="mapSearch">
+  		<if test="sido!='시/도 선택'">
+  			AND course_address1 LIKE '%'|| #{sido} ||'%' AND course_address1 LIKE '%'|| #{gugun} ||'%'
+  		</if>
+  		<if test="keyword!=null and keyword!=''">
+			AND (course_address1 LIKE '%'|| #{keyword} ||'%'
+				OR course_name LIKE '%'|| #{keyword} ||'%'
+				OR course_content LIKE '%'|| #{keyword} ||'%'
+				OR mem_store LIKE '%'|| #{keyword} ||'%')
+  		</if>		
+	</sql>
+	
+	
+	<select id="selectCourseAddress" parameterType="map" resultType="courseVO">
+		SELECT mem_store,
+			CASE WHEN course_address1 LIKE '%(%' THEN SUBSTR(course_address1,1,INSTR(course_address1,'(')-1) 
+	            ELSE course_address1
+	        END AS course_address1 
+		FROM course JOIN member_detail USING (mem_num) 
+		WHERE NOT course_address1 IS NULL <include refid="mapSearch"></include>
+	</select>
+  	
+  	
+  	
 	
 </mapper> 
