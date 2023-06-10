@@ -10,6 +10,10 @@
 <script src="${pageContext.request.contextPath}/js/itemsReply.js"></script>
 
 
+
+
+
+
 <div class="course-info">
 	<!-- 왼쪽 대표 이미지 -->
 	<div class="left-img">
@@ -155,7 +159,7 @@
 		</ul>
 
 
-	<form class="mb-3" name="reply_form" id="reply_form" <c:if test="${empty user}">style="height:370px;"</c:if>>
+	<form class="mb-3" name="reply_form" id="reply_form" enctype="multipart/form-data" <c:if test="${empty user}">style="height:370px;"</c:if>>
 	<c:if test="${!empty user}">
 		<div class="reply_star">
 			별점
@@ -179,7 +183,7 @@
 		<div class="reply-photo">
 			<ul class="image">
 				<li>
-					<img class="course-photo1">
+					<img class="items-photo1">
 					<label for="upload1" class="label1 l1">
 						<i class="fa-solid fa-circle-plus"></i><br>
 					</label>
@@ -187,7 +191,7 @@
 					<input type="file" name="upload1" id="upload1" style="display:none;" accept="image/jpeg,image/png,image/gif">
 				</li>
 				<li>
-					<img class="course-photo2">
+					<img class="items-photo2">
 					<label for="upload2" class="label1 l2">
 						<i class="fa-solid fa-circle-plus"></i><br>
 					</label>
@@ -195,7 +199,7 @@
 					<input type="file" name="upload2" id="upload2" style="display:none;" accept="image/jpeg,image/png,image/gif">
 				</li>
 				<li>
-					<img class="course-photo3">
+					<img class="items-photo3">
 					<label for="upload3" class="label1 l3">
 						<i class="fa-solid fa-circle-plus"></i><br>
 					</label>
@@ -227,7 +231,7 @@
 	<!-- 후기 목록 출력 -->
 	<div id="output"></div>
 
-	<div class="paging-button" style="display: none;"></div>
+	<div class="paging-btn"></div>
 	
 	<div id="loading" style="display: none;">
 		<img src="${pageContext.request.contextPath}/images/loading.gif"

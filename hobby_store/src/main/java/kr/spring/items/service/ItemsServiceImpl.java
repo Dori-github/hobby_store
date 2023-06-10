@@ -41,8 +41,8 @@ public class ItemsServiceImpl implements ItemsService  {
 	}
 
 	@Override
-	public void updateItems(ItemsVO itemsVO) {
-		// TODO Auto-generated method stub
+	public void updateItemsAll(ItemsVO itemsVO) {
+		itemsMapper.updateItemsAll(itemsVO);
 		
 	}
 
@@ -343,6 +343,38 @@ public class ItemsServiceImpl implements ItemsService  {
 		// TODO Auto-generated method stub
 		return itemsMapper.selectChildCate2(cate_num);
 	}
+
+	@Override
+	public ItemsVO selectPhoto(Integer items_num) {
+		// TODO Auto-generated method stub
+		return itemsMapper.selectPhoto(items_num);
+	}
+
+	@Override
+	public ItemsReplyVO replyPhoto(Integer reply_num) {
+		// TODO Auto-generated method stub
+		return itemsMapper.replyPhoto(reply_num);
+	}
+
+
+	@Override
+	public void updateReplyContent(ItemsReplyVO itemsReply) {
+		// TODO Auto-generated method stub
+		itemsMapper.updateReplyContent(itemsReply);
+		
+	}
+
+	@Override
+	public void updateReplyAll(ItemsReplyVO itemsReply) {
+		itemsMapper.updateReplyAll(itemsReply);
+		
+	}
+
+	@Override
+	public void updateFormDelete(ItemsReplyVO itemsReply) {
+		itemsMapper.updateFormDelete(itemsReply);
+	}
+
 
 	
 

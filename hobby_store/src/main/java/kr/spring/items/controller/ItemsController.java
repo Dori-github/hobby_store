@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,9 @@ import kr.spring.items.vo.ItemsReplyVO;
 import kr.spring.items.vo.ItemsVO;
 import kr.spring.member.vo.MemberVO;
 import kr.spring.util.PagingUtil;
+import kr.spring.util.ConvertUtils;
+
+
 
 @Controller
 public class ItemsController {
@@ -42,6 +47,7 @@ public class ItemsController {
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(ItemsController.class);
+	
 
 	// 1-1 등록 폼 호출//
 	@GetMapping("/items/itemsRegister.do")
@@ -131,14 +137,12 @@ public class ItemsController {
 		// 자식 카테고리 찾기 
 		ItemsVO items_child = itemsService.selectChildCate2(cate_num);
 
-		// select option 1개만 입력된 부모 카테고리를 넣고 나머지는 foreach로 뿌려야 되나 ..
+
 		List<ItemsVO> parent_list = itemsService.selectCate1();
 		
 		ItemsVO itemsVO = itemsService.selectItems(items_num);
 		
-
-		logger.debug("카테고리 번호, 이름 =" + cateSearch);
-		logger.debug("부모 카테고리  =" + parent_list);
+		logger.debug("아이템 정보 :" + itemsVO);
 
 		// 1.선택된 부모 카테고리 정보를 넘김
 		mav.addObject("cateSearch", cateSearch);
@@ -154,12 +158,74 @@ public class ItemsController {
 
 		return mav;
 	}
+	// 1-5 아이템 수정 데이터 처리 
+		@PostMapping("/items/modify.do")
+		public ModelAndView updateSubmit(ItemsVO vo, BindingResult result, HttpServletRequest request, HttpSession session) {
+			ModelAndView mav = new ModelAndView();
 
+			logger.debug("<<상품 수정 :>>" + vo);
+
+			// 이미지 유효성 체크 (photo1만 not null)
+			if (vo.getItems_photo_name1().length() == 0) {
+				// upload1은 자바빈(vo)에 필드가 없기때문에 명시할 수 없음
+				result.rejectValue("items_photo1", "required");
+			}
+			// 이미지 용량 체크
+			if (vo.getItems_photo1().length > 5 * 1024 * 1024) {// 5MB
+				result.rejectValue("photo1", "limitUploadSize", new Object[] { "5MB" }, null);
+			}
+			if (vo.getItems_photo2().length > 5 * 1024 * 1024) {
+				result.rejectValue("photo2", "limitUploadSize", new Object[] { "5MB" }, null);
+			}
+			if (vo.getItems_photo3().length > 5 * 1024 * 1024) {
+				result.rejectValue("photo3", "limitUploadSize", new Object[] { "5MB" }, null);
+			}
+			// 유효성 쳌
+			if (result.hasErrors()) {
+				return form();
+			}
+			// 회원번호 조회 후 회원번호 -> VO에 저장
+			vo.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
+			vo.setMem_nickname(((MemberVO) session.getAttribute("user")).getMem_nickname());
+			
+			//동적 쿼리에 필요한 파라미터 값이 너무 많아 vo -> map 전체를 변환
+			Map<String, Object> convertMap = ConvertUtils.convertToMap(vo);
+			
+			/* 생략한 과정 
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("items_num", vo.getItems_num());
+			map.put("items_name", vo.getItems_name());
+			map.put("items_price", vo.getItems_price());
+			map.put("items_quantity", vo.getItems_quantity());
+			map.put("items_content", vo.getItems_content());
+			map.put("status", vo.getStatus());
+			map.put("packaging", vo.getPackaging());
+			map.put("items_address1", vo.getItems_address1());
+			map.put("items_address2", vo.getItems_address2());
+			map.put("items_photo1", vo.getItems_photo1());
+			map.put("items_photo2", vo.getItems_photo2());
+			map.put("items_photo3", vo.getItems_photo3());
+			map.put("items_photo_name1", vo.getItems_photo_name1());
+			map.put("items_photo_name2", vo.getItems_photo_name2());
+			map.put("items_photo_name3", vo.getItems_photo_name3());
+			*/
+			
+			// 상품 수정
+			itemsService.updateItemsAll(vo);
+			
+			mav.setViewName("itemsModify");
+			
+			return mav;
+		}
 	// 2. 상품 목록
 	@RequestMapping("/items/itemsList.do")
 	public ModelAndView process(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage,
-			@RequestParam(value = "check", defaultValue = "1") String check, String packaging, String keyfield,
-			String keyword, String cate, HttpSession session) {
+			@RequestParam(value = "check", defaultValue = "1") String check, 
+			@RequestParam(value = "packagin", defaultValue = "1") String packaging, 
+			@RequestParam(value = "cate", defaultValue = "전체") String cate, 
+			String keyfield,
+			String keyword, 
+			HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		// 검색
 		map.put("keyfield", keyfield);
@@ -187,7 +253,7 @@ public class ItemsController {
 		// 가격 정렬 적용
 		logger.debug("<<상품 목록>> :  " + count);
 
-		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 12, 4, "itemsList.do");
+		PagingUtil page = new PagingUtil(keyfield, keyword, currentPage, count, 12, 4, "itemsList.do","&cate="+cate+"&packaging="+packaging+"&check="+check);
 
 		List<ItemsVO> list = null;
 
@@ -449,7 +515,19 @@ public class ItemsController {
 
 		return mapJson;
 	}
-
+	// 6- 후기 수정 폼 호출
+	@RequestMapping("items/UpdateReplyForm.do")
+	@ResponseBody
+	public Map<String, Object> modifyReplyForm(@RequestParam int reply_num){
+		Map<String, Object> mapJson = new HashMap<String, Object>();
+		
+		//reply_num에 해당하는 수정할 사진 정보 탐색
+		ItemsReplyVO replyPhoto = itemsService.replyPhoto(reply_num);
+		mapJson.put("replyPhoto", replyPhoto);
+	
+		return mapJson;
+	}
+	
 	// 6-3 후기 수정
 	@RequestMapping("items/itemsUpdateReply.do")
 	@ResponseBody
@@ -457,20 +535,54 @@ public class ItemsController {
 		logger.debug("후기 수정 :" + reply);
 
 		Map<String, String> mapJson = new HashMap<String, String>();
-
 		MemberVO user = (MemberVO) session.getAttribute("user");
 		ItemsReplyVO selectReply = itemsService.selectReply(reply.getReply_num());
+		
+		/*
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reply_photo_name1", reply.getReply_photo_name1());
+		map.put("reply_photo_name2", reply.getReply_photo_name2());
+		map.put("reply_photo_name3", reply.getReply_photo_name3());
+		map.put("reply_content", reply.getReply_content());
+		map.put("reply_num", reply.getReply_num());
+		*/
+		Map<String, Object> convertMap = ConvertUtils.convertToMap(reply);
 
+		
 		if (user == null) {
 			// 로그인이 안 되어있는 경우
 			mapJson.put("result", "logout");
-		} else if (user != null && user.getMem_num() == selectReply.getMem_num()) {
-			// 후기 수정
-			itemsService.updateReply(reply);
-		} else {
+		} 
+		else if (user != null && user.getMem_num() == selectReply.getMem_num()) {
+			
+			if(reply.getDelete_check1() == 4 || reply.getDelete_check2() == 4 || reply.getDelete_check3() == 4) {
+				
+			if(reply.getDelete_check1() == 4) {
+				reply.setReply_photo_name1(null);
+				reply.setReply_photo1(null);
+			}
+			else if (reply.getDelete_check2() == 4) {
+				reply.setReply_photo_name2(null);
+				reply.setReply_photo2(null);	
+			}
+			else if (reply.getDelete_check3() == 4) {
+				reply.setReply_photo_name3(null);
+				reply.setReply_photo3(null);	
+			}
+			convertMap = ConvertUtils.convertToMap(reply);
+			itemsService.updateFormDelete(reply);
+			}
+
+			else {
+				itemsService.updateReplyAll(reply);
+			}
+			
+			
+			mapJson.put("result", "success");
+		} 
+		else {
 			mapJson.put("result", "wrongAccess");
 		}
-
 		return mapJson;
 	}
 

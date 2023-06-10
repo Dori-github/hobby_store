@@ -1,7 +1,7 @@
 $(function() {
 	//페이지와 관련된 정보를 가지는 변수
 	let pageSize = 5;//화면에 보여줄 레코드 수
-	let pageBlock = 3;//페이지 표시 단위
+	let pageBlock = (pageSize / 4) + 1;//페이지 표시 단위
 	let currentPage;//현재 보고 있는 화면
 	let totalItem;//총 레코드 수 
 
@@ -35,7 +35,7 @@ $(function() {
 
 				$('#star_per').text(param.star5_per + '% 의 고객이 5점을 주었어요 !');
 
-				$('#starAvg2').append(param.itemsStar);
+				$('#starAvg2').text(param.itemsStar);
 
 				//호출시 해당 ID의 div의 내부 내용물 제거
 				$('#output').empty();
@@ -51,7 +51,6 @@ $(function() {
 					output += '</span>';
 
 					output += '<span class="r-list-fav" data-num="' + item.reply_num + '">';
-
 					if (item.fav_num != 0) {
 						output += '<i class="fa-regular fa-thumbs-up" style ="color :#FF4E02;"></i>' + item.favcount + '</span></div>';
 					}
@@ -79,7 +78,7 @@ $(function() {
 					output += '<div class="sub-item">';
 					output += '<p>' + item.reply_content.replace(/\r\n/g, '<br>') + '</p>';
 					if (item.reply_photo_name1 != null || item.reply_photo_name2 != null || item.reply_photo_name3 != null) {
-						output += '<div class="look-photo">사진 보기</div>';
+						output += '<div class="look-photo">사진</div>';
 					}
 					output += '<p class="list-photos">';
 					if (item.reply_photo_name1 != null) {
@@ -91,6 +90,7 @@ $(function() {
 					if (item.reply_photo_name3 != null) {
 						output += '<img src="replyImageView.do?reply_num=' + item.reply_num + '&reply_type=3" width="100" height="100" class="photo3 modal-p">';
 					}
+
 					output += '</p>';
 					if (param.user_num == item.mem_num) {
 						output += '<div class="reply-btn">';
@@ -194,11 +194,11 @@ $(function() {
 
 
 
-
 	//후기 목록 사진보기 클릭
 	$(document).on('click', '.look-photo', function() {
-		$(this).parent().find('.list-photos').show();
-		$(this).hide();
+
+		$(this).parent().find('.list-photos').toggle();
+
 	});
 
 
@@ -269,7 +269,8 @@ $(function() {
 	function initForm() {
 		$('textarea').val('');
 		$('#reply_form .letter-count').text('300/300');
-		$('.reply_star label').css('text-shadow', '0 0 0 #f0f0f0');
+		/*$('.reply_star label').css('text-shadow', '0 0 0 #f0f0f0'); */
+		$("input:radio[name='star_auth']").prop('checked', false);
 		$('#upload1').val('');
 		$('#upload2').val('');
 		$('#upload3').val('');
@@ -305,8 +306,9 @@ $(function() {
 	//후기 수정
 	//후기 수정 버튼 클릭시 수정폼 노출
 	$(document).on('click', '.modify-btn', function() {
-		//댓글 글번호 
+		//댓글 번호 
 		let reply_num = $(this).attr('data-num');
+
 		//댓글 내용
 		let content = $(this).parents('.item').find('p').html().replace(/<br>/g, '\r\n');
 
@@ -315,60 +317,141 @@ $(function() {
 			photo2: $(this).parents('.item').find('.photo2').attr('src'),
 			photo3: $(this).parents('.item').find('.photo3').attr('src')
 		}
+		$.ajax({
+			url: 'UpdateReplyForm.do',
+			type: 'get',
+			data: { reply_num: reply_num },
+			dataType: 'json',
+			contentType: false,
+			context: this,
+			async: false,
+			success: function(param) {
+				console.log(param);
+			
+				//후기 수정 폼 UI
+				let modifyUI = '<form id="mreply_form" enctype="multipart/form-data">';
+				modifyUI += '<input type="hidden" name="reply_num" id="mreply_num" value="' + reply_num + '">';
+				modifyUI += '<span class="letter-count mletter-count">300 / 300</span>';
+				modifyUI += '<textarea rows="3" cols="50" name="reply_content" id="mreply_content" class="reply-content">' + content + '</textarea>';
+				modifyUI += '<div class="reply-photo">';
+				modifyUI += '<ul class="image">';
+				for (let i = 1; i <= 3; i++) {
+					modifyUI += '<li>';
+					if (photos_src["photo" + i] != null) {
+						modifyUI += '<img src="' + photos_src["photo" + i] + '" class="items-photo' + (i + 3) + '" style="display:inline-block;">';
+						modifyUI += '<label for="upload' + (i + 3) + '" class="label1 l' + i + '">';
+						modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+						modifyUI += '</label>';
+						modifyUI += '<i class="fa-solid fa-circle-xmark d' + (i + 3) + '"></i>';
+						modifyUI += '<input type="hidden" id ="delete_check'+i+'"name ="delete_check' + i + '" value="' +i+'">';
+						
+					} else {
+						
+						modifyUI += '<img class="items-photo' + (i + 3) + '">';
+						modifyUI += '<label for="upload' + (i + 3) + '" class="label1 l' + i + '">';
+						modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
+						modifyUI += '</label>';
+						modifyUI += '<i class="fa-solid fa-circle-xmark d' + (i + 3) + '"></i>';
+						
+						
+					}
+					modifyUI += '<input type="file" name="upload' + (i + 3) + '" id="upload' + (i + 3) + '" style="display:none;" accept="image/jpeg,image/png,image/gif">';
+					modifyUI += '</li>';
+				}
+				modifyUI += '</ul>';
+				modifyUI += ' <input type="button" value="취소" class="reply-reset">';
+				modifyUI += '<input type="submit" value="수정" class="submit-btn">';
+				modifyUI += '</div>';
+				modifyUI += '</form>';
+
+				//이전에 이미 수정하는 댓글이 있을 경우 수정버튼을 클릭하면 숨김
+				//sub-item을 환원시키고 수정 폼을 초기화함
+				initModifyForm();
+				//지금 클릭해서 수정하고자 하는 데이터는 감추기
+				//수정버튼을 감싸고 있는 div
+				$(this).parents('.sub-item').hide();
+
+				//수정폼을 수정하고자 하는 데이터가 있는 div에 노출
+				$(this).parents('.item').append(modifyUI);
+
+				//입력한 글자수 셋팅
+				let inputLength = $('#mreply_content').val().length;
+				let remain = 300 - inputLength;
+				remain += ' / 300';
 
 
-		//댓글수정 폼 UI
-		let modifyUI = '<form id="mreply_form">';
-		modifyUI += '<input type="hidden" name="reply_num" id="mreply_num" value="' + reply_num + '">';
-		modifyUI += '<span class="letter-count mletter-count">300 / 300</span>';
-		modifyUI += '<textarea rows="3" cols="50" name="reply_content" id="mreply_content" class="reply-content">' + content + '</textarea>';
-		modifyUI += '<div class="reply-photo">';
-		modifyUI += '<ul class="image">';
-		for (let i = 1; i <= 3; i++) {
-			modifyUI += '<li>';
-			if (photos_src["photo" + i] != null) {
-				modifyUI += '<img src="' + photos_src["photo" + i] + '" class="course-photo' + i + '" style="display:inline-block;">';
-				modifyUI += '<label for="upload' + i + '" class="label1 l' + i + '" style="display:none;">';
-				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
-				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d' + i + '" style="display:inline-block;"></i>';
-			} else {
-				modifyUI += '<img class="course-photo' + i + '">';
-				modifyUI += '<label for="upload' + i + '" class="label1 l' + i + '">';
-				modifyUI += '<i class="fa-solid fa-circle-plus"></i><br>';
-				modifyUI += '</label>';
-				modifyUI += '<i class="fa-solid fa-circle-xmark d' + i + '"></i>';
+				//미리보기 제어 스크립트
+				$('#upload4').on('change', function() {
+					readURL4(this);
+				});
+				$('#upload5').on('change', function() {
+					readURL5(this);
+				});
+				$('#upload6').on('change', function() {
+					readURL6(this);
+				});
+
+
+				function readURL4(input) {
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$('.items-photo4').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(input.files[0]);
+					}
+				}
+				function readURL5(input) {
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$('.items-photo5').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(input.files[0]);
+					}
+				}
+				function readURL6(input) {
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$('.items-photo6').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(input.files[0]);
+					}
+				}
+
+
+				$('.d4').click(function() {
+					$('#delete_check1').val('4');
+					$('.items-photo4').removeAttr('src');
+				});
+				$('.d5').click(function() {
+					$('#delete_check2').val('4');
+					$('.items-photo5').removeAttr('src');
+				});
+				$('.d6').click(function() {
+					$('#delete_check3').val('4');
+					$('.items-photo6').removeAttr('src');
+				});
+
+				//문서 객체에 반영
+				$('#mreply_form .letter-count').text(remain);
+
+
+			},
+			error: function() {
+				Swal.fire({
+					icon: 'error',
+					title: '네트워크 오류 발생',
+					showCancelButton: false,
+					confirmButtonText: "확인",
+					confirmButtonColor: "#FF4E02"
+				});
 			}
-			modifyUI += '<input type="file" name="upload' + i + '" id="upload' + i + '" style="display:none;" accept="image/jpeg,image/png,image/gif">';
-			modifyUI += '</li>';
-		}
-		modifyUI += '</ul>';
-		modifyUI += ' <input type="button" value="취소" class="reply-reset">';
-		modifyUI += '<input type="submit" value="수정" class="submit-btn">';
-		modifyUI += '</div>';
-		modifyUI += '</form>';
+		});
 
-		//이전에 이미 수정하는 댓글이 있을 경우 수정버튼을 클릭하면 숨김
-		//sub-item을 환원시키고 수정 폼을 초기화함
-		initModifyForm();
-		//지금 클릭해서 수정하고자 하는 데이터는 감추기
-		//수정버튼을 감싸고 있는 div
-		$(this).parents('.sub-item').hide();
-
-		//수정폼을 수정하고자 하는 데이터가 있는 div에 노출
-		$(this).parents('.item').append(modifyUI);
-
-		//입력한 글자수 셋팅
-		let inputLength = $('#mreply_content').val().length;
-		let remain = 300 - inputLength;
-		remain += ' / 300';
-
-
-
-		//문서 객체에 반영
-		$('#mreply_form .letter-count').text(remain);
 	});
-
+	
 
 
 	//수정폼에서 취소 버튼 클릭시 수정폼 초기화
@@ -418,6 +501,18 @@ $(function() {
 			processData: false,
 			contentType: false,
 			success: function(param) {
+				/*
+				// FormData의 key 확인
+				var formData = new FormData($('#mreply_form')[0]);
+				for (var key of formData.keys()) {
+					console.log(key);
+				}
+				// FormData의 value 확인
+				for (var value of formData.values()) {
+					console.log(value);
+				}
+				*/
+
 				if (param.result == 'logout') {
 					Swal.fire({
 						icon: 'warning',
@@ -427,17 +522,10 @@ $(function() {
 						confirmButtonColor: "#FF4E02"
 					});
 				} else if (param.result == 'success') {
-					//수정 데이터 표시
-					$('#mreply_form').parent().find('p').html($('#mreply_content').val()
-						.replace(/</g, '&lt;')
-						.replace(/>/g, '&gt;')
-						.replace(/\r\n/g, '<br>')
-						.replace(/\r/g, '<br>')
-						.replace(/\n/g, '<br>'));
-					//최근 수정일 표시
-					$('#mreply_form').parent().find('.modify-date').text('최근 수정일 : 5초미만');
 					//수정 폼 초기화
 					initModifyForm();
+					//목록 새로고침
+					selectList(currentPage);
 				} else if (param.result == 'wrongAccess') {
 					Swal.fire({
 						icon: 'warning',
@@ -564,13 +652,11 @@ $(function() {
 					});
 				} else if (param.result == 'success') {
 					if (param.status == 'yesFav') {
-						replyFav.find('.fa-thumbs-up').css('color', '#FF4E02');
-						replyFav.find('.fa-thumbs-up').css('transform', 'scale(1.2)');
-						replyFav.find('.fa-thumbs-up').text(param.count);
+
+						replyFav.html('<i class="fa-regular fa-thumbs-up" style ="color :#FF4E02;"></i>' + param.count);
 					} else {
-						replyFav.find('.fa-thumbs-up').css('color', '#000');
-						replyFav.find('.fa-thumbs-up').css('transform', 'none');
-						replyFav.find('.fa-thumbs-up').text(param.count);
+
+						replyFav.html('<i class="fa-regular fa-thumbs-up" style ="color :#000;"></i>' + param.count);
 					}
 				} else {
 					Swal.fire({
@@ -594,6 +680,74 @@ $(function() {
 		});
 
 	});
+
+
+
+
+
+	$('#upload1').on('change', function() {
+		readURL1(this);
+	});
+	$('#upload2').on('change', function() {
+		readURL2(this);
+	});
+
+	$('#upload3').on('change', function() {
+		readURL3(this);
+	});
+
+
+	//사진삭제 
+	$('.d1').click(function() {
+		$('#upload1').val('');
+		$('.items-photo1').removeAttr('src');
+
+	});
+	$('.d2').click(function() {
+		$('#upload2').val('');
+		$('.items-photo2').removeAttr('src');
+
+	});
+	$('.d3').click(function() {
+		$('#upload3').val('');
+		$('.items-photo3').removeAttr('src');
+
+	});
+
+	//추가한 파일 미리보기 (readURL)
+	function readURL1(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('.items-photo1').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	function readURL2(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('.items-photo2').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	function readURL3(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('.items-photo3').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+
+
+
+
+
 
 
 

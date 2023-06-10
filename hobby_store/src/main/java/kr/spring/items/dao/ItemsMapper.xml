@@ -32,6 +32,7 @@
 	<!-- ========================================================================== -->
 	<sql id="itemspackaging">
 		<if test="packaging != null">
+			<if test="packaging == 1"> and packaging = 2 or packaging = 3  </if>
 			<if test="packaging == 2"> and packaging = 2</if>
 			<if test="packaging == 3"> and packaging = 3</if>
 		</if>
@@ -131,7 +132,70 @@
 
       
 	</select>
-	<select id="select"></select>
+	<!-- ========================================================================== -->
+	<update id="updateReplyAll" parameterType="map">
+		
+		UPDATE items_reply 
+		SET 
+		reply_content = #{reply_content}, reply_mdate = SYSDATE
+
+		<if test = "reply_photo_name1.length() != 0 or reply_photo_name1 == null">
+		,reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}
+		</if>
+		<if test = "reply_photo_name2.length() != 0">
+		,reply_photo2 = #{reply_photo2,jdbcType=BLOB}, reply_photo_name2 = #{reply_photo_name2,jdbcType=VARCHAR}
+		</if>
+		<if test = "reply_photo_name3.length() != 0">
+		,reply_photo3 = #{reply_photo3,jdbcType=BLOB}, reply_photo_name3 = #{reply_photo_name3,jdbcType=VARCHAR}
+		</if>
+		<if test = "reply_photo_name1 == null">
+		,reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}
+		</if>		
+		
+		WHERE reply_num = #{reply_num}
+
+	</update>
+	<!-- ========================================================================== -->
+	<update id="updateFormDelete" parameterType="map">
+		
+		UPDATE items_reply 
+		SET 
+		reply_content = #{reply_content}, reply_mdate = SYSDATE
+		<if test = "reply_photo_name1 == null">
+		,reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}
+		</if>
+		<if test = "reply_photo_name2 == null">
+		,reply_photo2 = #{reply_photo2,jdbcType=BLOB}, reply_photo_name2 = #{reply_photo_name2,jdbcType=VARCHAR}
+		</if>
+		<if test = "reply_photo_name3 == null">
+		,reply_photo3 = #{reply_photo3,jdbcType=BLOB}, reply_photo_name3 = #{reply_photo_name3,jdbcType=VARCHAR}
+		</if>
+		
+		
+		WHERE reply_num = #{reply_num}
+
+	</update>
+	<!-- ========================================================================== -->
+	<update id="updateItemsAll" parameterType="map">
+	UPDATE items SET cate_num=#{cate_num}, items_name=#{items_name}, 
+		   items_price=#{items_price}, items_quantity=#{items_quantity},
+		   items_content=#{items_content}, status=#{status}, packaging=#{packaging}, items_zipcode=#{items_zipcode}, 
+		   items_address1=#{items_address1}, items_address2=#{items_address2}
+		   <if test = "items_photo_name1.length() != 0">
+		   , items_photo1 = #{items_photo1,jdbcType=BLOB}, items_photo_name1 = #{items_photo_name1,jdbcType=VARCHAR}	
+		   </if>
+		   <if test = "items_photo_name2.length() != 0">
+		   , items_photo2 = #{items_photo2,jdbcType=BLOB}, items_photo_name2 = #{items_photo_name2,jdbcType=VARCHAR}	
+		   </if>
+		   <if test = "items_photo_name3.length() != 0">
+		   , items_photo3 = #{items_photo3,jdbcType=BLOB}, items_photo_name3 = #{items_photo_name3,jdbcType=VARCHAR}	
+		   </if>
+		   
+		   WHERE items_num = #{items_num}
+		   
+</update>
+	<!-- ========================================================================== -->
+
 </mapper>
 
 

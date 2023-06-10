@@ -30,7 +30,7 @@ public interface ItemsMapper {
 	@Select("SELECT * FROM items WHERE items_num = #{items_num}")
 	public ItemsVO selectItems(Integer items_num);
 	//상품 수정
-	public void updateItems(ItemsVO itemsVO);
+	public void updateItemsAll(ItemsVO itemsVO);
 	//상품 삭제 
 	@Delete("DELETE FROM items WHERE items_num = #{items_num}")
 	public void deleteItems(Integer items_num);
@@ -89,8 +89,15 @@ public interface ItemsMapper {
 	public void insertReply(ItemsReplyVO itemsReply);
 	@Select("SELECT * FROM items_reply WHERE reply_num = #{reply_num}")
 	public ItemsReplyVO selectReply(Integer reply_num);
-	@Update("UPDATE items_reply SET reply_content = {reply_content}, reply_mdate = SYSDATE, reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}, reply_photo2 = #{reply_photo2,jdbcType=BLOB}, reply_photo_name2 = #{reply_photo_name2,jdbcType=VARCHAR}, reply_photo3 = #{reply_photo3,jdbcType=BLOB}, reply_photo_name3 = #{reply_photo_name3,jdbcType=VARCHAR}")
+	//후기 사진 갱신 
+	@Update("UPDATE items_reply SET reply_content = #{reply_content}, reply_mdate = SYSDATE, reply_photo1 = #{reply_photo1,jdbcType=BLOB}, reply_photo_name1 = #{reply_photo_name1,jdbcType=VARCHAR}, reply_photo2 = #{reply_photo2,jdbcType=BLOB}, reply_photo_name2 = #{reply_photo_name2,jdbcType=VARCHAR}, reply_photo3 = #{reply_photo3,jdbcType=BLOB}, reply_photo_name3 = #{reply_photo_name3,jdbcType=VARCHAR} WHERE reply_num = #{reply_num}")
 	public void updateReply(ItemsReplyVO itemsReply);
+	@Update("UPDATE items_reply SET reply_content = #{reply_content}, reply_mdate = SYSDATE WHERE reply_num = #{reply_num}")
+	public void updateReplyContent(ItemsReplyVO itemsReply);
+	public void updateReplyAll(ItemsReplyVO itemsReply);
+	public void updateFormDelete(ItemsReplyVO itemsReply);
+	
+	
 	@Delete("DELETE FROM items_reply WHERE items_num = #{items_num}")
 	public void deleteReply2(Integer items_num);
 	
@@ -153,4 +160,15 @@ public interface ItemsMapper {
 	public void deleteReplytoFav(Integer reply_num);
 	@Delete("DELETE FROM items_cart WHERE items_num = #{items_num}")
 	public void deleteItemsCart(Integer items_num);
+	
+	//상품 수정시 필요한 사진 정보
+	@Select("SELECT items_photo_name1, items_photo_name2, items_photo_name3 FROM items WHERE items_num = #{items_num}")
+	public ItemsVO selectPhoto(Integer items_num);
+	
+	//후기의 사진 정보
+	@Select("SELECT reply_photo1, reply_photo_name1, reply_photo2, reply_photo_name2, reply_photo3, reply_photo_name3 FROM items_reply WHERE reply_num = #{reply_num}")
+	public ItemsReplyVO replyPhoto(Integer reply_num);
+	
+	
 }
+

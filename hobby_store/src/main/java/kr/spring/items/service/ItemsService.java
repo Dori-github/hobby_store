@@ -23,7 +23,7 @@ public interface ItemsService {
 	//상품 선택
 	public ItemsVO selectItems(Integer items_num);
 	//상품 수정
-	public void updateItems(ItemsVO itemsVO);
+	public void updateItemsAll(ItemsVO itemsVO);
 	//상품 삭제
 	public void deleteItems(Integer items_num);
 	
@@ -64,6 +64,12 @@ public interface ItemsService {
 	public ItemsReplyVO selectReply(Integer reply_num);
 	
 	public void updateReply(ItemsReplyVO itemsReply);
+	public void updateReplyContent(ItemsReplyVO itemsReply);
+	public void updateReplyAll(ItemsReplyVO itemsReply);
+	public void updateFormDelete(ItemsReplyVO itemsReply);
+	
+
+	
 	public void deleteReply(ItemsVO reply);
 	public void deleteReply2(Integer items_num);
 	public void deleteFavByReplyNum(ItemsVO reply_num);
@@ -108,5 +114,11 @@ public interface ItemsService {
 	public void deleteReplyItems(Integer items_num);
 	public void deleteReplytoFav(Integer reply_num);
 	public void deleteItemsCart(Integer items_num);
+	
+	//상품 수정시 필요한 사진 정보
+	public ItemsVO selectPhoto(Integer items_num);
+	//후기의 수정시 필요한 사진 정보
+	public ItemsReplyVO replyPhoto(Integer reply_num);
+	
 	
 }
