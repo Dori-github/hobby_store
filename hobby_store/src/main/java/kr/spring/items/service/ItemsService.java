@@ -24,8 +24,10 @@ public interface ItemsService {
 	public ItemsVO selectItems(Integer items_num);
 	//상품 수정
 	public void updateItemsAll(ItemsVO itemsVO);
+	public void updateItemsPhoto(ItemsVO vo);
 	//상품 삭제
 	public void deleteItems(Integer items_num);
+	
 	
 	//상품 수정 관련
 	//카테고리 이름 찾기

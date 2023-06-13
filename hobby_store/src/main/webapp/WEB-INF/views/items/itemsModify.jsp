@@ -18,6 +18,7 @@
 <script src="${pageContext.request.contextPath}/js/uploadAdapter.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/items.js"></script>
+
 <!--  중앙 컨텐츠 시작 -->
 <div class="page-1">
 	<div class="container">
@@ -26,18 +27,18 @@
 				<h1 class="align-center">상품 수정</h1>
 
 				<form name="modify_items" id="modify_items"
-					enctype="multipart/form-data" action="modify.do">
+					enctype="multipart/form-data">
 					<table class="table table-condensed table-bordered mt-4">
 						<thead>
 							<tr>
 								<th colspan="2" class="align-center">
-									<h3>Items Modify</h3>
+									<h3>상품 정보</h3>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td width="20%"><b>카테고리</b></td>
+								<td width="20%">카테고리</td>
 								<td width="80%">
 								<select name="cate_parent" id="category_parent">
 
@@ -48,26 +49,21 @@
 								</select></td>
 							</tr>
 						</tbody>
-					</table>
+				
 				</form>
-			</div>
-		</div>
-	</div>
-</div>
-	<form:form modelAttribute="itemsVO" name="register_items2"
+				<form:form modelAttribute="itemsVO" name="register_items2"
 					id="register_items2" enctype="multipart/form-data"
-					action="modify2.do">
-					<table class="table table-condensed table-bordered mt-4">
+					action="modify.do">
+					
 						<thead>
-							<tr>
-								<th colspan="2" class="align-center">
-									<h3>Items Register2</h3>
-								</th>
-							</tr>
+							
 						</thead>
 						<tbody>
+						<tr>
+							<td><input type="hidden" name="items_num" value="${itemsVO.items_num}"id="items_num"></td>
+						</tr>
 							<tr>
-								<td width="20%"><b>세부 카테고리</b></td>
+								<td width="20%">세부 카테고리</td>
 								<td width="80%"><select name="cate_num" id="cate_child">
 										<option id="child" value="${items_child.cate_num}">${items_child.cate_name}</option>
 								</select></td>
@@ -124,21 +120,44 @@
 							</tr>
 							<tr>
 								<td width="20%">상품사진1</td>
-								<td width="80%"><input type="file" name="upload1"
-									id="upload1" accept="image/gif,image/png,image/jpeg"> <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>
-									<form:errors path="items_photo1" cssClass="error-color" /></td>
+								<td width="80%">
+								<label for = "upload1">
+									<i class="fa-solid fa-circle-plus"></i><br>
+								</label>
+								<input type="file" name="upload1"
+									id="upload1" style="display:none;" accept="image/gif,image/png,image/jpeg"> <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>
+									<form:errors path="items_photo1" cssClass="error-color" />
+									<i class="fa-solid fa-circle-xmark d1"></i>
+									<input type = "hidden" id = "delete_check1" name = "delete_check1" value =1 >
+									<img id = "photo1" class = "photo1" src = "imageView.do?items_num=${itemsVO.items_num}&items_type=1" width = "50" alt ="선택한 사진">
+									
+									</td>
 							</tr>
 							<tr>
 								<td width="20%">상품사진2</td>
-								<td width="80%"><input type="file" name="upload2"
-									id="upload2" accept="image/gif,image/png,image/jpeg"> <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>
-									<form:errors path="items_photo2" cssClass="error-color" /></td>
+								<td width="80%">
+								<label for = "upload2">
+									<i class="fa-solid fa-circle-plus"></i><br>
+								</label>
+								<input type="file" name="upload2"
+									id="upload2" style="display:none;" accept="image/gif,image/png,image/jpeg"> <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>
+									<form:errors path="items_photo2" cssClass="error-color" /> 
+									<i class="fa-solid fa-circle-xmark d2"></i>
+									<input type = "hidden" id = "delete_check2" name = "delete_check2" value =1 >
+									<img id = "photo2" class = "photo2" src = "imageView.do?items_num=${itemsVO.items_num}&items_type=2" width = "50" alt ="선택한 사진"></td>
 							</tr>
 							<tr>
 								<td width="20%">상품사진3</td>
-								<td width="80%"><input type="file" name="upload3"
-									id="upload3" accept="image/gif,image/png,image/jpeg"> <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>
-									<form:errors path="items_photo3" cssClass="error-color" /></td>
+								<td width="80%">
+								<label for = "upload3">
+									<i class="fa-solid fa-circle-plus"></i><br>
+								</label>
+								<input type="file" name="upload3"
+									id="upload3" style="display:none;" accept="image/gif,image/png,image/jpeg"> <%--(주의) upload1은 자바빈(vo)에 필드가 없기 때문에 명시하면 오류발생 --%>
+									<form:errors path="items_photo3" cssClass="error-color" />
+									<i class="fa-solid fa-circle-xmark d3"></i>
+									<input type = "hidden" id = "delete_check3" name = "delete_check3" value =1 >
+									<img id = "photo3" class = "photo3" src = "imageView.do?items_num=${itemsVO.items_num}&items_type=3" width = "50" alt ="선택한 사진"></td>
 							</tr>
 							<tr>
 								<td width="20%">상세 설명</td>
@@ -165,9 +184,14 @@
 					</table>
 					<input type="submit" value="전송">
 					<input type="button" value="목록"
-						onclick="location.href ='main/main.do'">
+						onclick="location.href ='itemsList.do'">
 				</form:form>
-
+				
+			</div>
+		</div>
+	</div>
+</div>
+	
 
 			</div>
 		</div>

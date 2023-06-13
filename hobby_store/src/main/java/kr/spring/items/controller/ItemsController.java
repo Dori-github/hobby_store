@@ -121,7 +121,8 @@ public class ItemsController {
 
 		mav.setViewName("itemsList");
 		mav.addObject("itemsVO", vo);
-		mav.addObject("url", request.getContextPath() + "/items/itemsList.do");
+		mav.setViewName("redirect:/items/itemsList.do");
+		
 		return mav;
 	}
 	
@@ -182,12 +183,12 @@ public class ItemsController {
 			}
 			// 유효성 쳌
 			if (result.hasErrors()) {
-				return form();
+				return formUpdate(vo.getItems_num());
 			}
 			// 회원번호 조회 후 회원번호 -> VO에 저장
 			vo.setMem_num(((MemberVO) session.getAttribute("user")).getMem_num());
 			vo.setMem_nickname(((MemberVO) session.getAttribute("user")).getMem_nickname());
-			
+		
 			//동적 쿼리에 필요한 파라미터 값이 너무 많아 vo -> map 전체를 변환
 			Map<String, Object> convertMap = ConvertUtils.convertToMap(vo);
 			
@@ -210,10 +211,27 @@ public class ItemsController {
 			map.put("items_photo_name3", vo.getItems_photo_name3());
 			*/
 			
-			// 상품 수정
-			itemsService.updateItemsAll(vo);
+			if(vo.getDelete_check2() == 4 || vo.getDelete_check3() == 4) {
+				if (vo.getDelete_check2() == 4) {
+					vo.setItems_photo2(null);
+					vo.setItems_photo_name2(null);
+					logger.debug("사진 2 정보 :  " + vo.getItems_photo_name2());
+				}
+				else if (vo.getDelete_check3() == 4) {
+					vo.setItems_photo3(null);
+					vo.setItems_photo_name3(null);	
+					logger.debug("사진 3 정보 :  " + vo.getItems_photo_name3());
+				}
+				convertMap = ConvertUtils.convertToMap(vo);
+				itemsService.updateItemsPhoto(vo);
+				}
 			
-			mav.setViewName("itemsModify");
+			// 상품 수정
+			else {
+			itemsService.updateItemsAll(vo);
+			}
+			//mav.setViewName(request.getContextPath()+"/items/modify.do?items_num="+vo.getItems_num());
+			mav.setViewName("redirect:/items/itemsList.do");
 			
 			return mav;
 		}
@@ -221,7 +239,7 @@ public class ItemsController {
 	@RequestMapping("/items/itemsList.do")
 	public ModelAndView process(@RequestParam(value = "pageNum", defaultValue = "1") int currentPage,
 			@RequestParam(value = "check", defaultValue = "1") String check, 
-			@RequestParam(value = "packagin", defaultValue = "1") String packaging, 
+			@RequestParam(value = "packaging", defaultValue = "1") String packaging, 
 			@RequestParam(value = "cate", defaultValue = "전체") String cate, 
 			String keyfield,
 			String keyword, 

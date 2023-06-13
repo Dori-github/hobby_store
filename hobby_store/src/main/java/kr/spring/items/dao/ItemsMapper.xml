@@ -195,7 +195,20 @@
 		   
 </update>
 	<!-- ========================================================================== -->
+<update id="updateItemsPhoto" parameterType="map">
+		
+		UPDATE items SET 
+		   cate_num=#{cate_num}, items_name=#{items_name}, 
+		   items_price=#{items_price}, items_quantity=#{items_quantity},
+		   items_content=#{items_content}, status=#{status}, packaging=#{packaging}, items_zipcode=#{items_zipcode}, 
+		   items_address1=#{items_address1}, items_address2=#{items_address2},
+		   items_photo1 = #{items_photo1,jdbcType=BLOB}, items_photo_name1 = #{items_photo_name1,jdbcType=VARCHAR},	
+		   items_photo2 = #{items_photo2,jdbcType=BLOB}, items_photo_name2 = #{items_photo_name2,jdbcType=VARCHAR},	
+		   items_photo3 = #{items_photo3,jdbcType=BLOB}, items_photo_name3 = #{items_photo_name3,jdbcType=VARCHAR}	
 
+		WHERE items_num = #{items_num}
+
+	</update>
 </mapper>
 
 

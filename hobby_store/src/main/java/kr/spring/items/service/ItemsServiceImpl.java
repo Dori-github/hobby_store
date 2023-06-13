@@ -375,6 +375,12 @@ public class ItemsServiceImpl implements ItemsService  {
 		itemsMapper.updateFormDelete(itemsReply);
 	}
 
+	@Override
+	public void updateItemsPhoto(ItemsVO vo) {
+		itemsMapper.updateItemsPhoto(vo);
+		
+	}
+
 
 	
 

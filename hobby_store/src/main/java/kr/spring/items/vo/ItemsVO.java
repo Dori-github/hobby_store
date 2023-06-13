@@ -53,7 +53,12 @@ public class ItemsVO {
 	public int getStatus() {
 		return status;
 	}
-
+	///////////////////////////////////////////
+	public int delete_check1;
+	public int delete_check2;
+	public int delete_check3;
+	
+	
 	public void setStatus(int status) {
 		this.status = status;
 	}
@@ -313,6 +318,32 @@ public class ItemsVO {
 	public void setReplycount(int replycount) {
 		this.replycount = replycount;
 	}
+	
+	
+
+	public int getDelete_check1() {
+		return delete_check1;
+	}
+
+	public void setDelete_check1(int delete_check1) {
+		this.delete_check1 = delete_check1;
+	}
+
+	public int getDelete_check2() {
+		return delete_check2;
+	}
+
+	public void setDelete_check2(int delete_check2) {
+		this.delete_check2 = delete_check2;
+	}
+
+	public int getDelete_check3() {
+		return delete_check3;
+	}
+
+	public void setDelete_check3(int delete_check3) {
+		this.delete_check3 = delete_check3;
+	}
 
 	// 업로드 파일 처리
 	public void setUpload1(MultipartFile upload1) throws IOException {
@@ -346,8 +377,11 @@ public class ItemsVO {
 				+ ", items_address1=" + items_address1 + ", items_address2=" + items_address2 + ", mem_num=" + mem_num
 				+ ", mem_nickname=" + mem_nickname + ", fav_num=" + fav_num + ", fmem_num=" + fmem_num + ", favcount="
 				+ favcount + ", favcount1=" + favcount1 + ", reply_num=" + reply_num + ", starcount=" + starcount
-				+ ", replycount=" + replycount + "]";
+				+ ", replycount=" + replycount + ", delete_check1=" + delete_check1 + ", delete_check2=" + delete_check2
+				+ ", delete_check3=" + delete_check3 + "]";
 	}
+
+
 
 
 	

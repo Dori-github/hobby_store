@@ -79,6 +79,7 @@ public interface ItemsMapper {
 	public void deleteItemsAllFav(Integer items_num);
 	@Delete("DELETE FROM items_reply WHERE reply_num = #{reply_num}")
 	public void deleteReply(ItemsVO reply);
+	public void updateItemsPhoto(ItemsVO vo);
 	
 	
 	//후기
