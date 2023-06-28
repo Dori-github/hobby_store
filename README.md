@@ -1,7 +1,6 @@
-# 🥕Hobby Store :: 취미상점
+# 🥕Hobby Store :: 취미상점 
 <img width="712" alt="image" src="https://user-images.githubusercontent.com/63274664/234850495-e63e84be-b1f2-421a-94d0-2a059e91cb93.png">  
-# 🖥️ UI 
-https://www.figma.com/file/MFDTUqsT9U1XqDontweDwO/final-project?type=design&mode=design&t=FdPiuMwRBswcbTW9-0
+[UI바로가기](https://www.figma.com/file/MFDTUqsT9U1XqDontweDwO/final-project?type=design&mode=design&t=FdPiuMwRBswcbTW9-0)
 
 ## 📚프로젝트 개요
 클래스,스토어,공간대여를 한 곳에 구현한 공방 사이트 입니다.
